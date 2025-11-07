@@ -3,4 +3,5 @@ export const PAGE_TITLES_BY_PATH: Record<string, string> = {
   "/search": "Tìm kiếm",
   "/favorites": "Yêu thích",
   "/profile": "Trang cá nhân",
+  "/activity": "Hoạt động",
 };

@@ -18,11 +18,13 @@ const Navbar: React.FC = () => {
           icon={<Home size={30} strokeWidth={2} />}
           active={activeNav === "home"}
           onClick={() => setActiveNav("home")}
+          link="/"
         />
         <NavItem
           icon={<Search size={30} strokeWidth={2} />}
           active={activeNav === "search"}
           onClick={() => setActiveNav("search")}
+          link="/search"
         />
         <NavItem
           icon={
@@ -34,16 +36,19 @@ const Navbar: React.FC = () => {
           }
           active={activeNav === "write"}
           onClick={() => setActiveNav("write")}
+          link="/write"
         />
         <NavItem
           icon={<Heart size={30} strokeWidth={2} />}
           active={activeNav === "activity"}
           onClick={() => setActiveNav("activity")}
+          link="/activity"
         />
         <NavItem
           icon={<User size={30} strokeWidth={2} />}
           active={activeNav === "profile"}
           onClick={() => setActiveNav("profile")}
+          link="/profile"
         />
       </div>
 
