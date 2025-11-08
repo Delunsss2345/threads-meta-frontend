@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Instagram } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 export default function LoginCard() {
   return (
@@ -24,9 +25,12 @@ export default function LoginCard() {
             <span>Continue with Instagram</span>
           </Button>
 
-          <p className="text-sm text-gray-500 hover:underline cursor-pointer">
+          <NavLink
+            to={"/login"}
+            className="text-sm text-gray-500 hover:underline cursor-pointer"
+          >
             Log in with username instead
-          </p>
+          </NavLink>
         </CardContent>
       </Card>
     </div>

@@ -1,6 +1,5 @@
 import { InstagramLoginButton } from "@/components/InstagramLoginButton";
 import { LoginForm } from "@/components/LoginForm";
-import { Helmet } from "react-helmet";
 
 const Login = () => {
   const handleLogin = (username: string, password: string) => {
@@ -9,10 +8,6 @@ const Login = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Threads · Đăng nhập</title>
-      </Helmet>
-
       <div className="space-y-6">
         <LoginForm onLogin={handleLogin} />
 
