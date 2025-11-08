@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+@theme extend {
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: #ffffff;
+  --color-card-foreground: #000000;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #000000;
+  --color-primary: #000000;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f0f2f5;
+  --color-secondary-foreground: #000000;
+  --color-muted: #f0f2f5;
+  --color-muted-foreground: #65676b;
+  --color-accent: #e4e6ea;
+  --color-accent-foreground: #000000;
+  --color-destructive: #e0245e;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #dadde1;
+  --color-input: #f0f2f5;
+  --color-ring: #000000;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+.dark {
+  color-scheme: dark;
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-card: #121212;
+  --color-card-foreground: #ffffff;
+  --color-popover: #121212;
+  --color-popover-foreground: #ffffff;
+  --color-primary: #ffffff;
+  --color-primary-foreground: #000000;
+  --color-secondary: #242424;
+  --color-secondary-foreground: #ffffff;
+  --color-muted: #242424;
+  --color-muted-foreground: #b0b3b8;
+  --color-accent: #242424;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #ea3943;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #404040;
+  --color-input: #242424;
+  --color-ring: #ffffff;
+}
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}

@@ -2,7 +2,7 @@ const Logo = () => {
   return (
     <svg
       aria-label="Threads"
-      fill="rgb(243, 245, 247)"
+      fill="bg-background"
       height="100%"
       role="img"
       viewBox="0 0 192 192"

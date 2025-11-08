@@ -11,7 +11,7 @@ export const InstagramLoginButton = ({
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center justify-between bg-[#121212] border border-[#2a2a2a] rounded-xl px-4 py-3 hover:bg-[#1a1a1a] transition-colors"
+      className="w-full flex items-center justify-between bg-card border border-border rounded-xl px-4 py-3 hover:bg-accent transition-colors"
     >
       <div className="flex items-center gap-3">
         <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 flex items-center justify-center">
@@ -24,12 +24,14 @@ export const InstagramLoginButton = ({
           </svg>
         </div>
         <div className="text-left">
-          <div className="text-sm text-gray-400">Tiếp tục bằng Instagram</div>
-          <div className="text-sm font-medium">{username}</div>
+          <div className="text-sm text-muted-foreground">
+            Tiếp tục bằng Instagram
+          </div>
+          <div className="text-sm font-medium text-foreground">{username}</div>
         </div>
       </div>
       <svg
-        className="w-5 h-5 text-gray-500"
+        className="w-5 h-5 text-muted-foreground"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -44,6 +46,3 @@ export const InstagramLoginButton = ({
     </button>
   );
 };
-
-
-

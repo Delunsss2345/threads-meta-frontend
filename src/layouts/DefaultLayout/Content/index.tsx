@@ -1,16 +1,23 @@
+import LoginCard from "@/components/LoginPanel";
 import Header from "../Header";
 
-// Content Area Component
+
 interface ContentProps {
   children: React.ReactNode;
 }
 
 const Content: React.FC<ContentProps> = ({ children }) => {
+  const isAuth = false;
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-background text-foreground">
       <Header />
-      <div className="max-w-2xl mx-auto  border-x border-gray-900 p-2 rounded-2xl">
-        {children}
+      <div
+        className={`flex ${
+          !isAuth ? "max-w-5xl" : "max-w-3xl"
+        } gap-4 mx-auto items-start mt-4`}
+      >
+        <div className="flex-1 shadow border p-2 rounded-2xl">{children}</div>
+        {!isAuth ? <LoginCard /> : null}
       </div>
     </main>
   );

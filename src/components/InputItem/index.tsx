@@ -21,11 +21,11 @@ export const InputItem = ({
       onChange={(e) => onChange(e.target.value)}
       className="
         w-90
-        bg-[#121212]
+        bg-background
         border
-        border-[#2e2e2e]
-        text-white
-        placeholder:text-gray-500
+        border-border
+        text-foreground
+        placeholder:text-muted-foreground
         h-12
         rounded-2xl
         px-4

@@ -36,14 +36,14 @@ export const LoginForm = ({ onLogin }: LoginFormProps) => {
 
       <Button
         type="submit"
-        className="w-90 bg-white text-black hover:bg-gray-200 h-11 rounded-xl font-semibold"
+        className="w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
       >
         Đăng nhập
       </Button>
 
       <button
         type="button"
-        className="w-90 text-sm text-gray-400 hover:text-white transition-colors mt-4 block text-center"
+        className="w-90 text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
       >
         Quên mật khẩu?
       </button>

@@ -6,7 +6,7 @@ const Header = () => {
   const title = PAGE_TITLES_BY_PATH[pathname] || "Ứng dụng";
 
   return (
-    <div className="sticky top-0 bg-black/80">
+    <div className="sticky top-0 bg-background z-5">
       <h1 className="text-center py-4 font-semibold text-lg">{title}</h1>
     </div>
   );
