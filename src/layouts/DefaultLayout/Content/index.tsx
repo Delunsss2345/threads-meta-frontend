@@ -13,7 +13,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
     Boolean(useSelector((state: RootState) => console.log(state.auth))) !==
     null;
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-hidden ">
+    <main className="min-h-screen bg-background text-foreground overflow-hidden">
       <Header />
       <HeaderMobile />
       <div
@@ -21,7 +21,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
           !isAuth ? "max-w-5xl" : "max-w-2xl"
         } gap-4 mx-auto items-start mt-4`}
       >
-        <div className="flex-1 shadow bg-primary-foreground  rounded-4xl mt-10 sm:mt-15">
+        <div className="pt-4 flex-1 shadow bg-primary-foreground rounded-4xl mt-10 sm:mt-15 overflow-hidden">
           {children}
         </div>
         {!isAuth ? <LoginCard /> : null}

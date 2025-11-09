@@ -46,7 +46,7 @@ const Post: React.FC<PostProps> = ({
   };
 
   return (
-    <div className="border-border border-t border-b transition-colors cursor-pointer ">
+    <div className="border-border border-t border-b cursor-pointer ">
       <div className="flex gap-3 px-6 py-3 relative">
         {/* Avatar */}
         {avatar ? (

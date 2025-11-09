@@ -18,7 +18,7 @@ const NavItem: React.FC<NavItemProps> = ({
     <div
       onClick={onClick}
       className={clsx(
-        `cursor-pointer flex items-center justify-center gap-4 px-4 py-3 rounded-xl transition-all w-full ${
+        `cursor-pointer transition-none flex items-center justify-center gap-4 px-4 py-3 rounded-xl w-full ${
           active
             ? "bg-accent text-foreground"
             : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"

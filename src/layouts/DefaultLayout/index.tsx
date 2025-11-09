@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Content from "./Content";
 import Navbar from "./Navbar";
-import NavMobile from "./NavMobile";
+import NavMobile from "./Navbar/NavMobile";
 
 interface DefaultLayoutProps {
   requireAuth?: boolean;

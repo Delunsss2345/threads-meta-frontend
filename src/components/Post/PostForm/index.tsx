@@ -14,7 +14,7 @@ export default function PostForm() {
   };
 
   return (
-    <Card className="mt-4 border-0 transition-colors bg-primary-foreground cursor-pointer shadow-none px-4 py-0 rounded-l-3xl">
+    <Card className="p-4 border-0 bg-primary-foreground cursor-pointer shadow-none px-4 py-0 rounded-none">
       <CardContent className="flex items-start p-0">
         <Avatar className="w-10 h-10">
           <AvatarImage src="/avatar.png" alt="user" />
@@ -26,14 +26,14 @@ export default function PostForm() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Có gì mới?"
-            className="placeholder:align-middle h-auto !bg-transparent px-2 text-foreground-100 border-none resize-none focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
+            className="placeholder:align-middle h-auto !bg-transparent rounded-none  px-2 text-foreground-100 border-none resize-none focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
             rows={1}
           />
         </div>
 
         <Button
           onClick={handlePost}
-          className="border-foreground border !bg-primary-foreground text-foreground cursor-pointer"
+          className="border-foreground border transition-none !bg-primary-foreground text-foreground cursor-pointer"
         >
           Đăng
         </Button>

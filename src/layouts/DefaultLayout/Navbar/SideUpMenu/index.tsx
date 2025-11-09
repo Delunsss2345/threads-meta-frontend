@@ -3,15 +3,20 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
+import i18n from "@/i18n";
 import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import { LanguageMenu } from "./LanguageMenu";
+import { MainMenu } from "./MainMenu";
+import { ThemeMenu } from "./ThemeMenu";
 
 const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
-  const [activeMenu, setActiveMenu] = useState<"main" | "theme">("main");
+  const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
+    "main"
+  );
   const { setTheme } = useTheme();
   const mainMenu = [
     { label: "Giao diện", onClick: () => setActiveMenu("theme") },
@@ -20,19 +25,33 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
     { label: "Bảng feed" },
     { label: "Đã lưu" },
     { label: "Đã thích" },
-    { label: "Đổi ngôn ngữ" },
+    { label: "Đổi ngôn ngữ", onClick: () => setActiveMenu("language") },
     { label: "Đăng xuất", danger: true },
   ];
 
   const themeMenu = [
-    { label: "Sáng", onClick: () => setTheme("light") },
-    { label: "Tối", onClick: () => setTheme("dark") },
-    { label: "Tự động", onClick: () => setTheme("system") },
-    { label: "← Quay lại", onClick: () => setActiveMenu("main") },
+    { label: "Sáng", onClick: () => setTheme("light"), value: "light" },
+    { label: "Tối", onClick: () => setTheme("dark"), value: "dark" },
+    { label: "Tự động", onClick: () => setTheme("system"), value: "system" },
+    { label: "Quay lại", onClick: () => setActiveMenu("main") },
   ];
-
-  const items = activeMenu === "main" ? mainMenu : themeMenu;
-
+  const languageMenu = [
+    {
+      label: "Tiếng Việt",
+      value: "vi",
+      onClick: () => i18n.changeLanguage("vi"),
+    },
+    {
+      label: "English",
+      value: "en",
+      onClick: () => i18n.changeLanguage("en"),
+    },
+    {
+      label: "Quay lại",
+      icon: <ArrowLeft size={16} />,
+      onClick: () => setActiveMenu("main"),
+    },
+  ];
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -53,20 +72,9 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
             transition={{ duration: 0.2 }}
             className="w-56 rounded-xl border border-gray-200 bg-primary-foreground p-1 shadow-lg"
           >
-            {items.map((item, index) => (
-              <DropdownMenuItem
-                key={index}
-                onSelect={(e) => {
-                  e.preventDefault();
-                  item.onClick?.();
-                }}
-                className={cn(
-                  "cursor-pointer px-3 py-2 text-sm transition-colors"
-                )}
-              >
-                {item.label}
-              </DropdownMenuItem>
-            ))}
+            {activeMenu === "main" && <MainMenu items={mainMenu} />}
+            {activeMenu === "theme" && <ThemeMenu items={themeMenu} />}
+            {activeMenu === "language" && <LanguageMenu items={languageMenu} />}
           </motion.div>
         </DropdownMenuContent>
       </AnimatePresence>

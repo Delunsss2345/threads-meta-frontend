@@ -4,7 +4,7 @@ import { useCurrentUser } from "@/features/auth/hook";
 import { Heart, Home, Menu, Plus, Search, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavItem from "../NavItem";
+import NavItem from "./NavItem";
 import SlideUpMenu from "./SideUpMenu";
 
 const navItems = [
