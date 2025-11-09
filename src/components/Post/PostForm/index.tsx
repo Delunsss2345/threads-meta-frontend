@@ -14,7 +14,7 @@ export default function PostForm() {
   };
 
   return (
-    <Card className="mt-4 border-0 transition-colors cursor-pointer shadow-none px-4 py-0 rounded-l-3xl">
+    <Card className="mt-4 border-0 transition-colors bg-primary-foreground cursor-pointer shadow-none px-4 py-0 rounded-l-3xl">
       <CardContent className="flex items-start p-0">
         <Avatar className="w-10 h-10">
           <AvatarImage src="/avatar.png" alt="user" />
@@ -33,7 +33,7 @@ export default function PostForm() {
 
         <Button
           onClick={handlePost}
-          className="border-foreground border dark:bg-foreground !bg-white text-foreground cursor-pointer"
+          className="border-foreground border !bg-primary-foreground text-foreground cursor-pointer"
         >
           Đăng
         </Button>

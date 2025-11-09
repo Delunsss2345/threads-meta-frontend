@@ -1,10 +1,11 @@
 import AuthSocialModal from "@/components/LoginModal";
 import Logo from "@/components/Logo";
 import { useCurrentUser } from "@/features/auth/hook";
-import { Heart, Home, Menu, Pin, Plus, Search, User } from "lucide-react";
+import { Heart, Home, Menu, Plus, Search, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavItem from "../NavItem";
+import SlideUpMenu from "./SideUpMenu";
 
 const navItems = [
   { key: "home", icon: <Home size={30} />, link: "/" },
@@ -70,8 +71,15 @@ const Navbar: React.FC = () => {
 
       {/* Bottom Items */}
       <div className="space-y-1 border-t border-border pt-4">
-        <NavItem icon={<Pin size={24} />} />
-        <NavItem icon={<Menu size={24} />} />
+        {/* <NavItem icon={<Pin size={24} />} />
+         */}
+
+        <SlideUpMenu>
+          <NavItem
+            className="hover:bg-transparent hover:text-current"
+            icon={<Menu size={24} />}
+          />
+        </SlideUpMenu>
       </div>
 
       {/* Auth Modal */}

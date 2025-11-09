@@ -1,9 +1,9 @@
-const Logo = ({className} : {className?: string}) => {
+const Logo = ({ className }: { className?: string }) => {
   return (
     <svg
       className={className}
       aria-label="Threads"
-      fill="bg-background"
+      fill="currentColor"
       height="100%"
       role="img"
       viewBox="0 0 192 192"

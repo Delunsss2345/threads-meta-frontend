@@ -9,12 +9,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
+import { useLanguage } from "../LanguageProvider";
 
 interface RegisterFormProps {
   onRegister: (values: RegisterSchemaBodyType) => void;
 }
 
 export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
+  const { t } = useLanguage();
   const form = useForm<RegisterSchemaBodyType>({
     resolver: zodResolver(RegisterSchemaBody),
     mode: "onSubmit",
@@ -40,7 +42,10 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           name="username"
           render={({ field }) => (
             <FormItem className="w-90">
-              <Input placeholder="Tên người dùng" {...field} />
+              <Input
+                placeholder={t("auth", "usernamePlaceholder")}
+                {...field}
+              />
               <FormMessage />
             </FormItem>
           )}
@@ -52,7 +57,11 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           name="email"
           render={({ field }) => (
             <FormItem className="w-90">
-              <Input placeholder="Email" type="email" {...field} />
+              <Input
+                placeholder={t("auth", "emailPlaceholder")}
+                type="email"
+                {...field}
+              />
               <FormMessage />
             </FormItem>
           )}
@@ -64,7 +73,11 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           name="password"
           render={({ field }) => (
             <FormItem className="w-90">
-              <Input type="password" placeholder="Mật khẩu" {...field} />
+              <Input
+                type="password"
+                placeholder={t("auth", "passwordPlaceholder")}
+                {...field}
+              />
               <FormMessage />
             </FormItem>
           )}
@@ -78,7 +91,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
             <FormItem className="w-90">
               <Input
                 type="password"
-                placeholder="Xác nhận mật khẩu"
+                placeholder={t("auth", "confirmPasswordPlaceholder")}
                 {...field}
               />
               <FormMessage />
@@ -91,7 +104,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           type="submit"
           className="w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
         >
-          Đăng ký
+          {t("auth", "register")}
         </Button>
 
         {/* Link */}
@@ -99,7 +112,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           to="/login"
           className="w-90 text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
         >
-          Đã có tài khoản? Đăng nhập
+          {t("auth", "alreadyHaveAccount")}
         </NavLink>
       </form>
     </Form>

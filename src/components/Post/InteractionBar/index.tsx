@@ -14,7 +14,7 @@ const InteractionBar = ({
   share = 0,
 }: InteractionBarProps) => {
   return (
-    <div className="flex gap-6 mt-3 text-gray-500">
+    <div className="flex gap-6 mt-3 text-foreground">
       {/* Like */}
       <button className="hover:text-red-500 transition-colors flex items-center gap-1">
         <Heart size={18} />

@@ -46,17 +46,17 @@ const Post: React.FC<PostProps> = ({
   };
 
   return (
-    <div className="border-border border-t border-b transition-colors cursor-pointer hover:bg-muted/30">
-      <div className="flex gap-3 p-4 relative">
+    <div className="border-border border-t border-b transition-colors cursor-pointer ">
+      <div className="flex gap-3 px-6 py-3 relative">
         {/* Avatar */}
         {avatar ? (
           <img
             src={avatar}
             alt={`${author} avatar`}
-            className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+            className="w-10 h-10 rounded-full object-cover "
           />
         ) : (
-          <div className="w-10 h-10 rounded-full bg-gradient-to-from from-purple-600 to-pink-600 flex-shrink-0" />
+          <div className="w-10 h-10 rounded-full " />
         )}
 
         {/* Nội dung */}
@@ -115,7 +115,7 @@ const Post: React.FC<PostProps> = ({
             </Popover>
           </div>
 
-          <p className="text-muted-foreground text-sm leading-relaxed mb-2">
+          <p className="text-foreground text-sm leading-relaxed mb-2">
             {content}
           </p>
 
