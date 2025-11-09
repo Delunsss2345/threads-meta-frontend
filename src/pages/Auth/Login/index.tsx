@@ -1,24 +1,12 @@
-import { InstagramLoginButton } from "@/components/InstagramLoginButton";
-import { LoginForm } from "@/components/LoginForm";
+import LoginForm from "@/components/LoginForm";
+import type { LoginSchemaBodyType } from "@/schema/auth.schema";
 
 const Login = () => {
-  const handleLogin = (username: string, password: string) => {
-    console.log("Login with:", { username, password });
-  };
+  const handleLogin = (values: LoginSchemaBodyType) => {};
 
   return (
     <>
-      <div className="space-y-6">
-        <LoginForm onLogin={handleLogin} />
-
-        <div className="flex items-center gap-4 my-6">
-          <div className="flex-1 h-px bg-gray-700" />
-          <span className="text-gray-500 text-sm">hoặc</span>
-          <div className="flex-1 h-px bg-gray-700" />
-        </div>
-
-        <InstagramLoginButton username="huydarealest" />
-      </div>
+      <LoginForm onLogin={handleLogin} />
     </>
   );
 };

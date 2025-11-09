@@ -1,6 +1,7 @@
-const Logo = () => {
+const Logo = ({className} : {className?: string}) => {
   return (
     <svg
+      className={className}
       aria-label="Threads"
       fill="bg-background"
       height="100%"

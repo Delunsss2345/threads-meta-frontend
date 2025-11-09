@@ -1,36 +1,73 @@
-// src/components/login/LoginForm.tsx
-import { InputItem } from "@/components/InputItem";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useDebounceInput } from "@/hook/useDebouceInput";
+import {
+  ForgotPasswordSchemaBody,
+  type ForgotPasswordSchemaBodyType,
+} from "@/schema/auth.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { NavLink } from "react-router-dom";
+import { Button } from "../ui/button";
+import { Form, FormField, FormItem, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
 
-interface ForgotPasswordProps {
-  onForgotPassword?: (username: string) => void;
+interface ForgotPasswordFormProps {
+  onForgotPassword: (values: ForgotPasswordSchemaBodyType) => void;
 }
 
-export const ForgotPassword = ({ onForgotPassword }: ForgotPasswordProps) => {
-  const [username, setUsername] = useState("");
+export const ForgotPasswordForm = ({
+  onForgotPassword,
+}: ForgotPasswordFormProps) => {
+  const form = useForm<ForgotPasswordSchemaBodyType>({
+    resolver: zodResolver(ForgotPasswordSchemaBody),
+    mode: "onSubmit",
+    defaultValues: {
+      email: "",
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
-
+  useDebounceInput<ForgotPasswordSchemaBodyType>({ form });
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-3 flex flex-col items-center"
-    >
-      <InputItem
-        value={username}
-        onChange={setUsername}
-        placeholder="Tên người dùng, số điện thoại hoặc email"
-      />
+    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+      <h1 className="text-2xl font-semibold mb-6 text-foreground">
+        Quên mật khẩu
+      </h1>
 
-      <Button
-        type="submit"
-        className="w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
-      >
-        Send Login Link
-      </Button>
-    </form>
+      <p className="text-sm text-muted-foreground mb-6 text-center max-w-sm">
+        Nhập email của bạn để nhận liên kết đặt lại mật khẩu.
+      </p>
+
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onForgotPassword)}
+          className="space-y-4 flex flex-col items-center w-full max-w-sm"
+          noValidate
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <Input type="email" placeholder="Email" {...field} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
+          >
+            Gửi liên kết đặt lại
+          </Button>
+
+          <NavLink
+            to="/login"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
+          >
+            Quay lại đăng nhập
+          </NavLink>
+        </form>
+      </Form>
+    </div>
   );
 };

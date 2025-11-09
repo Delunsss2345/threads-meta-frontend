@@ -1,4 +1,15 @@
-import { InteractionBar } from "./InteractionBar";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { AnimatePresence } from "framer-motion";
+import { Ellipsis } from "lucide-react"; // icon 3 chấm gọn nhẹ
+import { useRef, useState } from "react";
+import { UserPreviewCard } from "../UserPreview";
+import InteractionBar from "./InteractionBar";
+import Menu from "./Menu";
 
 interface PostProps {
   author: string;
@@ -9,7 +20,7 @@ interface PostProps {
   message?: number;
   repost?: number;
   share?: number;
-  avatar?: string; // ✅ Thêm ảnh đại diện
+  avatar?: string;
 }
 
 const Post: React.FC<PostProps> = ({
@@ -21,11 +32,22 @@ const Post: React.FC<PostProps> = ({
   message = 0,
   repost = 0,
   share = 0,
-  avatar, // ✅ nhận prop avatar
+  avatar,
 }) => {
+  const [open, setOpen] = useState(false);
+  const hoverTimer = useRef<any | null>(null);
+  const handleMouseEnter = () => {
+    hoverTimer.current = setTimeout(() => setOpen(true), 500);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    setOpen(false);
+  };
+
   return (
-    <div className="border-border p-4 hover:bg-accent/50 transition-colors cursor-pointer">
-      <div className="flex gap-3">
+    <div className="border-border border-t border-b transition-colors cursor-pointer hover:bg-muted/30">
+      <div className="flex gap-3 p-4 relative">
         {/* Avatar */}
         {avatar ? (
           <img
@@ -34,28 +56,66 @@ const Post: React.FC<PostProps> = ({
             className="w-10 h-10 rounded-full object-cover flex-shrink-0"
           />
         ) : (
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex-shrink-0" />
+          <div className="w-10 h-10 rounded-full bg-gradient-to-from from-purple-600 to-pink-600 flex-shrink-0" />
         )}
 
         {/* Nội dung */}
         <div className="flex-1">
           {/* Header */}
-          <div className="flex items-center gap-2 mb-1">
-            <span className="font-semibold text-foreground">{author}</span>
-            {verified && (
-              <svg
-                className="w-4 h-4 text-blue-500"
-                viewBox="0 0 24 24"
-                fill="currentColor"
+          <div className="flex items-center justify-between mb-1 ">
+            <div className="flex items-center gap-2">
+              <span
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                className="relative font-semibold text-foreground"
               >
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            )}
-            <span className="text-gray-500 text-sm">{time}</span>
+                {author}
+                <AnimatePresence>
+                  {open && (
+                    <UserPreviewCard
+                      name="Sue mingze"
+                      username="nthg_sue"
+                      bio="糸🪣"
+                      followers={50}
+                      avatar="https://i.imgur.com/FbQHdT0.jpg"
+                    />
+                  )}
+                </AnimatePresence>
+              </span>
+              {verified && (
+                <svg
+                  className="w-4 h-4 text-blue-500"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              )}
+              <span className="text-muted-foreground text-sm relative">
+                {time}
+              </span>
+            </div>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
+                >
+                  <Ellipsis className="w-4 h-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                align="end"
+                className="w-64 p-0 rounded-xl border-border bg-card text-card-foreground"
+              >
+                <Menu />
+              </PopoverContent>
+            </Popover>
           </div>
 
-          {/* Nội dung bài viết */}
-          <p className="text-gray-300 text-sm leading-relaxed mb-2">
+          <p className="text-muted-foreground text-sm leading-relaxed mb-2">
             {content}
           </p>
 

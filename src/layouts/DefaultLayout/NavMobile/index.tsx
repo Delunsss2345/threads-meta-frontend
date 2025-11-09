@@ -1,14 +1,13 @@
 import AuthSocialModal from "@/components/LoginModal";
-import Logo from "@/components/Logo";
+import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/features/auth/hook";
-import { Heart, Home, Menu, Pin, Plus, Search, User } from "lucide-react";
+import { Heart, Home, Plus, Search, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavItem from "../NavItem";
 
 const navItems = [
-  { key: "home", icon: <Home size={30} />, link: "/" },
-  { key: "search", icon: <Search size={30} />, link: "/search" },
+  { key: "home", icon: <Home size={26} />, link: "/" },
+  { key: "search", icon: <Search size={26} />, link: "/search" },
   {
     key: "write",
     icon: <Plus size={20} strokeWidth={2.5} />,
@@ -17,18 +16,19 @@ const navItems = [
   },
   {
     key: "activity",
-    icon: <Heart size={30} />,
+    icon: <Heart size={26} />,
     link: "/activity",
     isAuth: true,
   },
   {
     key: "profile",
-    icon: <User size={30} />,
+    icon: <User size={26} />,
     link: "/profile",
     isAuth: true,
   },
 ];
-const Navbar: React.FC = () => {
+
+const NavMobile: React.FC = () => {
   const [activeNav, setActiveNav] = useState("home");
   const currentUser = useCurrentUser();
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -44,37 +44,28 @@ const Navbar: React.FC = () => {
   };
 
   const closeAuthModal = () => setShowAuthModal(false);
-  const handleLogin = () => {
-    setShowAuthModal(false);
-  };
+  const handleLogin = () => setShowAuthModal(false);
 
   return (
-    <nav className="bg-background border-border h-screen fixed left-0 top-0 flex flex-col p-4 z-20">
-      {/* Logo */}
-      <div className="mb-8 size-10 hover:scale-110 transition cursor-pointer">
-        <Logo />
-      </div>
-
-      {/* Navigation Items */}
-      <div className="space-y-1 flex-1 gap-5 flex flex-col justify-center">
+    <>
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border flex justify-around items-center py-2 ">
         {navItems.map((item) => (
-          <NavItem
+          <Button
             key={item.key}
-            icon={item.icon}
-            active={activeNav === item.key}
+            variant="ghost"
+            size="icon"
+            className={`rounded-full transition ${
+              activeNav === item.key
+                ? "text-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
             onClick={() => handleNavClick(item)}
-            link={item.link}
-          />
+          >
+            {item.icon}
+          </Button>
         ))}
-      </div>
+      </nav>
 
-      {/* Bottom Items */}
-      <div className="space-y-1 border-t border-border pt-4">
-        <NavItem icon={<Pin size={24} />} />
-        <NavItem icon={<Menu size={24} />} />
-      </div>
-
-      {/* Auth Modal */}
       {showAuthModal && (
         <AuthSocialModal
           open={showAuthModal}
@@ -84,8 +75,8 @@ const Navbar: React.FC = () => {
           description="Join Threads to share thoughts, find out what's going on, follow your people and more."
         />
       )}
-    </nav>
+    </>
   );
 };
 
-export default Navbar;
+export default NavMobile;

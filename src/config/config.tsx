@@ -2,7 +2,9 @@ import PrivateRouter from "@/components/AppRoutes/PrivateRouter";
 import AuthLayout from "@/layouts/AuthLayout";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import ActivityPage from "@/pages/ActivityPage";
+import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import Login from "@/pages/Auth/Login";
+import Register from "@/pages/Auth/Register";
 import Home from "@/pages/Home";
 import ProfilePage from "@/pages/Profile";
 import SearchPage from "@/pages/Search";
@@ -45,6 +47,14 @@ export const config: RouteObject[] = [
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
       },
     ],
   },

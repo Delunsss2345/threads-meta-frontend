@@ -1,6 +1,6 @@
-// src/components/login/LoginForm.tsx
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { useDebounceInput } from "@/hook/useDebouceInput";
 import {
   LoginSchemaBody,
   type LoginSchemaBodyType,
@@ -10,10 +10,10 @@ import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import { Input } from "../ui/input";
 interface LoginFormProps {
-  onLogin?: (username: string, password: string) => void;
+  onLogin: (values: LoginSchemaBodyType) => void;
 }
 
-export const LoginForm = ({ onLogin }: LoginFormProps) => {
+const LoginForm = ({ onLogin }: LoginFormProps) => {
   const form = useForm<LoginSchemaBodyType>({
     resolver: zodResolver(LoginSchemaBody),
     defaultValues: {
@@ -21,15 +21,11 @@ export const LoginForm = ({ onLogin }: LoginFormProps) => {
       password: "",
     },
   });
-
-  const onSubmit = (values: LoginSchemaBodyType) => {
-    console.log(values);
-  };
-
+  useDebounceInput<LoginSchemaBodyType>({ form });
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onLogin)}
         className="space-y-3 flex flex-col items-center"
         noValidate
       >
@@ -83,3 +79,5 @@ export const LoginForm = ({ onLogin }: LoginFormProps) => {
     </Form>
   );
 };
+
+export default LoginForm;

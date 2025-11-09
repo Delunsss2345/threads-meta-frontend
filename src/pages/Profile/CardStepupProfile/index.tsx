@@ -1,6 +1,6 @@
 import { Check, Edit, Users } from "lucide-react";
 
-export function CardStepupProfile() {
+const CardStepupProfile = () => {
   const cards = [
     {
       id: "follow",
@@ -59,4 +59,6 @@ export function CardStepupProfile() {
       ))}
     </div>
   );
-}
+};
+
+export default CardStepupProfile;

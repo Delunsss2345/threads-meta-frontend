@@ -13,7 +13,7 @@ import {
   Star,
 } from "lucide-react";
 import { useState } from "react";
-import { CardStepupProfile } from "./CardStepupProfile";
+import CardStepupProfile from "./CardStepupProfile";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("thread");

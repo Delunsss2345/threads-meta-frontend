@@ -1,8 +1,16 @@
+import FeedTabs from "@/components/FeedTabs";
 import Post from "@/components/Post";
+import PostForm from "@/components/Post/PostForm";
 
 const Home = () => {
   return (
-    <div className="max-w-xl mx-auto py-6 space-y-4">
+    <>
+      <div className="md:block hidden">
+        <PostForm />
+      </div>
+      <div className="md:hidden block">
+        <FeedTabs />
+      </div>
       <Post
         author="babyboo.258258"
         time="19 giờ trước"
@@ -113,7 +121,7 @@ const Home = () => {
         repost={97}
         share={45}
       />
-    </div>
+    </>
   );
 };
 

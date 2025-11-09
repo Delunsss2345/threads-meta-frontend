@@ -7,12 +7,12 @@ interface InteractionBarProps {
   share?: number;
 }
 
-export function InteractionBar({
+const InteractionBar = ({
   like = 0,
   message = 0,
   repost = 0,
   share = 0,
-}: InteractionBarProps) {
+}: InteractionBarProps) => {
   return (
     <div className="flex gap-6 mt-3 text-gray-500">
       {/* Like */}
@@ -40,4 +40,6 @@ export function InteractionBar({
       </button>
     </div>
   );
-}
+};
+
+export default InteractionBar;

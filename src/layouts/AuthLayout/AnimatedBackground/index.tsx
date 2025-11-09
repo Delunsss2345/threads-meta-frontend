@@ -3,7 +3,7 @@ import loginLogo from "@/assets/images/logoLogin.png";
 
 export const AnimatedBackground = () => {
   return (
-    <div className="absolute inset-0 pointer-events-none hidden sm:block">
+    <div className="w-full absolute inset-0 pointer-events-none hidden sm:block overflow-hidden">
       <img src={loginLogo} alt="Logo" />
 
       {/* <div className="animate-spin-slow-reverse absolute bottom-10 right-20 w-52 h-52">

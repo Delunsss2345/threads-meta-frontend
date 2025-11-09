@@ -1,10 +1,8 @@
-// src/pages/SearchPage.tsx
 import FollowSuggestionList from "@/components/FollowSuggestion/FollowSuggestionList";
 import type { FollowSuggestion } from "@/components/FollowSuggestion/types";
 import { Input } from "@/components/ui/input";
 import { Search, X } from "lucide-react";
 import { useState } from "react";
-// src/data/mockSuggestions.ts
 
 export const mockSuggestions: FollowSuggestion[] = [
   {
@@ -34,12 +32,12 @@ export const mockSuggestions: FollowSuggestion[] = [
   },
   // ... thêm nếu cần
 ];
-export default function SearchPage() {
+const SearchPage = () => {
   const [query, setQuery] = useState("");
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Search Bar - Sticky */}
+      {/* Search Bar */}
       <div className="sticky top-0 z-10 bg-background border-b border-border">
         <div className="max-w-2xl mx-auto p-4">
           <div className="relative">
@@ -82,4 +80,6 @@ export default function SearchPage() {
       </div>
     </div>
   );
-}
+};
+
+export default SearchPage;

@@ -22,8 +22,10 @@ const RegisterSchemaBody = LoginSchemaBody.extend({
   }
 });
 
-const ForgotPasswordSchemaBody = LoginSchemaBody.pick({
-  username: true,
+const ForgotPasswordSchemaBody = z.object({
+  email: z
+    .string({ message: "Email không hợp lệ" })
+    .email({ message: "Email không hợp lệ" }),
 });
 
 type LoginSchemaBodyType = z.infer<typeof LoginSchemaBody>;
