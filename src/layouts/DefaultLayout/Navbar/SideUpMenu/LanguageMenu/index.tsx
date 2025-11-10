@@ -20,7 +20,7 @@ export function LanguageMenu({ items }: LanguageMenuProps) {
 
   useEffect(() => {
     const handleChange = (lng: string) => setLanguage(lng);
-    i18n.on("languageChanged", handleChange);
+    i18n.on("languageChanged", handleChange); //giong socket io
     return () => {
       i18n.off("languageChanged", handleChange);
     };

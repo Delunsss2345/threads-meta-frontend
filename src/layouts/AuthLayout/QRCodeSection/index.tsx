@@ -1,17 +1,22 @@
-// src/components/login/QRCodeSection.tsx
+import useWindow from "@/hook/useWindown";
 import { useTranslation } from "react-i18next";
+import { QRCodeSvg } from "../QRCodeSVG";
+import { Zoom } from "../Zoom";
 
-export const QRCodeSection = () => {
+function QRCodeSection() {
+  const { isMobile } = useWindow();
   const { t } = useTranslation();
-
-  return (
-    <div className="absolute bottom-8 right-8   flex-col items-end gap-4 hidden sm:block">
-      <div className="text-xs text-muted-foreground mx-auto mb-2">
+  return isMobile ? null : (
+    <div className="fixed right-2 bottom-2 lg:right-10 lg:bottom-10 flex flex-col justify-center items-center gap-5 z-50 scale-75 lg:scale-100">
+      <span className="text-[#777777] text-[13px] tracking-wide">
         {t("qr.scanToDownload")}
-      </div>
-      <div className="w-32 h-32 bg-card border border-border p-2 rounded-lg">
-        <div className="w-full h-full bg-accent rounded"></div>
+      </span>
+      <div className="hover:scale-105 flex items-center justify-center transform active:scale-95 transition-transform select-none">
+        <Zoom>
+          <QRCodeSvg className="w-[175px] flex items-center justify-center h-[175px] cursor-pointer border border-[#393939] rounded-2xl bg-[#181818]" />
+        </Zoom>
       </div>
     </div>
   );
-};
+}
+export default QRCodeSection;

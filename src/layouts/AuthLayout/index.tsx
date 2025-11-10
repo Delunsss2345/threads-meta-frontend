@@ -1,8 +1,8 @@
 import Logo from "@/components/Logo";
 import { AnimatedBackground } from "@/layouts/AuthLayout/AnimatedBackground";
 import { FooterLinks } from "@/layouts/AuthLayout/FooterLinks";
-import { QRCodeSection } from "@/layouts/AuthLayout/QRCodeSection";
 import { Outlet } from "react-router-dom";
+import QRCodeSection from "./QRCodeSection";
 
 const AuthLayout = () => {
   return (
