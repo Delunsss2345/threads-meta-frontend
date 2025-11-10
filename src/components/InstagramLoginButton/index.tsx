@@ -1,4 +1,6 @@
 // src/components/login/InstagramLoginButton.tsx
+import { useLanguage } from "@/components/LanguageProvider";
+
 interface InstagramLoginButtonProps {
   username: string;
   onClick?: () => void;
@@ -8,6 +10,8 @@ export const InstagramLoginButton = ({
   username,
   onClick,
 }: InstagramLoginButtonProps) => {
+  const { t } = useLanguage();
+
   return (
     <button
       onClick={onClick}
@@ -25,7 +29,7 @@ export const InstagramLoginButton = ({
         </div>
         <div className="text-left">
           <div className="text-sm text-muted-foreground">
-            Tiếp tục bằng Instagram
+            {t("auth", "continueWithInstagram")}
           </div>
           <div className="text-sm font-medium text-foreground">{username}</div>
         </div>

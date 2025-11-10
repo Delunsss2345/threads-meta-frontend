@@ -1,33 +1,27 @@
+import { useLanguage } from "@/components/LanguageProvider";
 import { Check, Edit, Users } from "lucide-react";
 
 const CardStepupProfile = () => {
+  const { t } = useLanguage();
+
   const cards = [
     {
       id: "follow",
       icon: <Users className="w-6 h-6 text-white" />,
-      title: "Theo dõi 10 trang cá nhân",
-      desc: "Hãy lập đầy bảng feed bằng những thread bạn quan tâm.",
-      //   buttonLabel: follow?.completed ? "Đã xong" : "Xem trang cá nhân",
-      //   onClick: follow?.onClick,
-      //   completed: follow?.completed,
+      title: t("profileSetup", "follow10Profiles"),
+      desc: t("profileSetup", "follow10ProfilesDesc"),
     },
     {
       id: "story",
       icon: <Edit className="w-6 h-6 text-white" />,
-      title: "Thêm tiểu sử",
-      desc: "Hãy giới thiệu về bản thân và cho mọi người biết bạn thích gì.",
-      //   buttonLabel: story?.completed ? "Đã thêm" : "Thêm",
-      //   onClick: story?.onClick,
-      //   completed: story?.completed,
+      title: t("profileSetup", "addBio"),
+      desc: t("profileSetup", "addBioDesc"),
     },
     {
       id: "createThread",
       icon: <Check className="w-6 h-6 text-white" />,
-      title: "Tạo thread",
-      desc: "Cho mọi người biết bạn đang nghĩ gì hoặc chia sẻ về một hoạt động mới.",
-      //   buttonLabel: createThread?.completed ? "Đã tạo" : "Tạo ngay",
-      //   onClick: createThread?.onClick,
-      //   completed: createThread?.completed,
+      title: t("profileSetup", "createThread"),
+      desc: t("profileSetup", "createThreadDesc"),
     },
   ];
 

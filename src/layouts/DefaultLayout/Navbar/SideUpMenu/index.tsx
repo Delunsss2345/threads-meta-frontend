@@ -1,3 +1,4 @@
+import { useLanguage } from "@/components/LanguageProvider";
 import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import {
@@ -5,7 +6,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import i18n from "@/i18n";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
@@ -17,6 +17,7 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
     "main"
   );
+  const { changeLanguage } = useLanguage();
   const { setTheme } = useTheme();
   const mainMenu = [
     { label: "Giao diện", onClick: () => setActiveMenu("theme") },
@@ -39,12 +40,12 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
     {
       label: "Tiếng Việt",
       value: "vi",
-      onClick: () => i18n.changeLanguage("vi"),
+      onClick: () => changeLanguage("vi"),
     },
     {
       label: "English",
       value: "en",
-      onClick: () => i18n.changeLanguage("en"),
+      onClick: () => changeLanguage("en"),
     },
     {
       label: "Quay lại",

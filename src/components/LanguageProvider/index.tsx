@@ -6,7 +6,7 @@ const LanguageType = ["vi", "en"] as const;
 const LanguageContext = createContext<{
   language: string;
   changeLanguage: (newLang: string) => void;
-  t: (key: string, field: string, params?: Record<string, string>) => string;
+  t: (key: string, field: string) => string;
 } | null>(null);
 
 function LanguageProvider({ children }: { children: React.ReactNode }) {

@@ -1,3 +1,4 @@
+import { useLanguage } from "@/components/LanguageProvider";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -16,6 +17,8 @@ export const UserPreviewCard = ({
   followers = 0,
   avatar,
 }: UserPreviewCardProps) => {
+  const { t } = useLanguage();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -42,11 +45,11 @@ export const UserPreviewCard = ({
       {bio && <p className="text-sm mb-2">{bio}</p>}
 
       <p className="text-muted-foreground text-sm mb-3">
-        {followers} người theo dõi
+        {followers} {t("common", "followers")}
       </p>
 
       <Button className="w-full bg-foreground text-background font-semibold rounded-lg hover:opacity-90 transition">
-        Theo dõi
+        {t("common", "follow")}
       </Button>
     </motion.div>
   );

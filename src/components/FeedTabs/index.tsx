@@ -1,13 +1,15 @@
+import { useLanguage } from "@/components/LanguageProvider";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-const tabs = [
-  { key: "foryou", label: "Dành cho bạn" },
-  { key: "following", label: "Đang theo dõi" },
-];
-
 const FeedTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState("foryou");
+  const { t } = useLanguage();
+
+  const tabs = [
+    { key: "foryou", label: t("feed", "forYou") },
+    { key: "following", label: t("feed", "following") },
+  ];
 
   return (
     <div className="sticky top-12 z-30 bg-background border-b border-border">

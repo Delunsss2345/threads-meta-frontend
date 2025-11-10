@@ -1,3 +1,4 @@
+import { useLanguage } from "@/components/LanguageProvider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +18,7 @@ import CardStepupProfile from "./CardStepupProfile";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("thread");
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -37,7 +39,7 @@ const Profile = () => {
 
         {/* Followers Count */}
         <div className="flex items-center justify-between mb-6">
-          <p className="text-gray-400">0 người theo dõi</p>
+          <p className="text-gray-400">0 {t("common", "followers")}</p>
           <div className="flex gap-3">
             <Button
               variant="ghost"
@@ -58,7 +60,7 @@ const Profile = () => {
 
         {/* Edit Profile Button */}
         <Button variant="outline" className="w-full mb-6">
-          Chỉnh sửa trang cá nhân
+          {t("profile", "editProfile")}
         </Button>
 
         {/* Tabs */}
@@ -68,28 +70,28 @@ const Profile = () => {
               value="thread"
               className="flex-1 rounded-none data-[state=active]:border-b-2 data-[state=active]:bg-transparent py-3 text-muted-foreground data-[state=active]:text-foreground"
             >
-              Thread
+              {t("profile", "thread")}
             </TabsTrigger>
             <TabsTrigger
               onClick={() => setActiveTab("replies")}
               value="replies"
               className="flex-1 rounded-none data-[state=active]:border-b-2 data-[state=active]:bg-transparent py-3 text-muted-foreground data-[state=active]:text-foreground"
             >
-              Thread trả lời
+              {t("profile", "threadReplies")}
             </TabsTrigger>
             <TabsTrigger
               onClick={() => setActiveTab("media")}
               value="media"
               className="flex-1 rounded-none data-[state=active]:border-b-2 data-[state=active]:bg-transparent py-3 text-muted-foreground data-[state=active]:text-foreground"
             >
-              File phương tiện
+              {t("profile", "mediaFiles")}
             </TabsTrigger>
             <TabsTrigger
               onClick={() => setActiveTab("reposts")}
               value="reposts"
               className="flex-1 rounded-none data-[state=active]:border-b-2 data-[state=active]:bg-transparent py-3 text-muted-foreground data-[state=active]:text-foreground"
             >
-              Bài đăng lại
+              {t("common", "reposts")}
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -102,16 +104,18 @@ const Profile = () => {
           </Avatar>
           <Input
             type="text"
-            placeholder="Có gì mới?"
+            placeholder={t("profile", "whatsNew")}
             className="flex-1 bg-transparent border-none text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
           />
-          <Button variant="outline">Đăng</Button>
+          <Button variant="outline">{t("common", "post")}</Button>
         </div>
 
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Hoàn tất trang cá nhân</h2>
-            <span className="text-gray-400">Còn 2</span>
+            <h2 className="text-lg font-semibold">
+              {t("profile", "completeProfile")}
+            </h2>
+            <span className="text-gray-400">{t("profile", "remaining")} 2</span>
           </div>
 
           <CardStepupProfile />
@@ -120,13 +124,13 @@ const Profile = () => {
         {/* First Thread */}
         <div className="flex items-center gap-3 mb-4">
           <Star className="w-5 h-5 text-gray-500" />
-          <span className="text-gray-400">Thread đầu tiên</span>
+          <span className="text-gray-400">{t("profile", "firstThread")}</span>
         </div>
 
         {/* Thread Post */}
         <div className="flex gap-3">
           <Avatar className="w-10 h-10">
-            <AvatarFallback className="bg-gradient-to-br from-pink-500 to-red-500 text-white">
+            <AvatarFallback className="bg-gradient-to-from from-pink-500 to-red-500 text-white">
               PH
             </AvatarFallback>
           </Avatar>

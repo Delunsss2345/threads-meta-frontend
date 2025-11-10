@@ -1,3 +1,4 @@
+import { useLanguage } from "@/components/LanguageProvider";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useDebounceInput } from "@/hook/useDebouceInput";
@@ -14,6 +15,7 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
+  const { t } = useLanguage();
   const form = useForm<LoginSchemaBodyType>({
     resolver: zodResolver(LoginSchemaBody),
     defaultValues: {
@@ -35,7 +37,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           render={({ field }) => (
             <FormItem className="w-90">
               <Input
-                placeholder="Tên người dùng, số điện thoại hoặc email"
+                placeholder={t("auth", "usernamePlaceholder")}
                 {...field}
               />
               <FormMessage />
@@ -48,7 +50,11 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           name="password"
           render={({ field }) => (
             <FormItem className="w-90">
-              <Input type="password" placeholder="Mật khẩu" {...field} />
+              <Input
+                type="password"
+                placeholder={t("auth", "passwordPlaceholder")}
+                {...field}
+              />
               <FormMessage />
             </FormItem>
           )}
@@ -58,7 +64,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           type="submit"
           className="w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
         >
-          Đăng nhập
+          {t("auth", "login")}
         </Button>
 
         {/* Links */}
@@ -66,14 +72,14 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           to="/forgot-password"
           className="w-90 text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
         >
-          Quên mật khẩu?
+          {t("auth", "forgotPassword")}
         </NavLink>
 
         <NavLink
           to="/register"
           className="w-90 text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
         >
-          Bạn chưa có tài khoản? Đăng ký
+          {t("auth", "dontHaveAccount")} {t("auth", "register")}
         </NavLink>
       </form>
     </Form>

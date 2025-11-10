@@ -1,19 +1,23 @@
 // src/components/login/FooterLinks.tsx
+import { useLanguage } from "@/components/LanguageProvider";
+
 export const FooterLinks = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-600 space-x-4">
-      <span>© 2025</span>
+      <span>{t("footer", "copyright")}</span>
       <a href="#" className="hover:text-gray-400">
-        Điều khoản của Threads
+        {t("footer", "termsOfThreads")}
       </a>
       <a href="#" className="hover:text-gray-400">
-        Chính sách quyền riêng tư
+        {t("footer", "privacyPolicy")}
       </a>
       <a href="#" className="hover:text-gray-400">
-        Chính sách cookie
+        {t("footer", "cookiePolicy")}
       </a>
       <a href="#" className="hover:text-gray-400">
-        Báo cáo sự cố
+        {t("footer", "reportProblem")}
       </a>
     </div>
   );
