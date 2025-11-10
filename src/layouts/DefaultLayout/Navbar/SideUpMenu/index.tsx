@@ -17,40 +17,48 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
     "main"
   );
-  const { i18n } = useTranslation();
-  const changeLanguage = (lng: string) => i18n.changeLanguage(lng);
-  
+  const { t, i18n } = useTranslation();
+
   const { setTheme } = useTheme();
   const mainMenu = [
-    { label: "Giao diện", onClick: () => setActiveMenu("theme") },
-    { label: "Thông tin chi tiết" },
-    { label: "Cài đặt" },
-    { label: "Bảng feed" },
-    { label: "Đã lưu" },
-    { label: "Đã thích" },
-    { label: "Đổi ngôn ngữ", onClick: () => setActiveMenu("language") },
-    { label: "Đăng xuất", danger: true },
+    { label: t("menu.appearance"), onClick: () => setActiveMenu("theme") },
+    { label: t("menu.profileInfo") },
+    { label: t("menu.settings") },
+    { label: t("menu.feed") },
+    { label: t("menu.saved") },
+    { label: t("menu.liked") },
+    { label: t("menu.language"), onClick: () => setActiveMenu("language") },
+    { label: t("menu.logout"), danger: true },
   ];
 
   const themeMenu = [
-    { label: "Sáng", onClick: () => setTheme("light"), value: "light" },
-    { label: "Tối", onClick: () => setTheme("dark"), value: "dark" },
-    { label: "Tự động", onClick: () => setTheme("system"), value: "system" },
-    { label: "Quay lại", onClick: () => setActiveMenu("main") },
+    {
+      label: t("menu.light"),
+      onClick: () => setTheme("light"),
+      value: "light",
+    },
+    { label: t("menu.dark"), onClick: () => setTheme("dark"), value: "dark" },
+    {
+      label: t("menu.system"),
+      onClick: () => setTheme("system"),
+      value: "system",
+    },
+    { label: t("menu.back"), onClick: () => setActiveMenu("main") },
   ];
+
   const languageMenu = [
     {
-      label: "Tiếng Việt",
+      label: t("menu.vietnamese"),
       value: "vi",
-      onClick: () => changeLanguage("vi"),
+      onClick: () => i18n.changeLanguage("vi"),
     },
     {
-      label: "English",
+      label: t("menu.english"),
       value: "en",
-      onClick: () => changeLanguage("en"),
+      onClick: () => i18n.changeLanguage("en"),
     },
     {
-      label: "Quay lại",
+      label: t("menu.back"),
       icon: <ArrowLeft size={16} />,
       onClick: () => setActiveMenu("main"),
     },

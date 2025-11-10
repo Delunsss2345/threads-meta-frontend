@@ -1,6 +1,7 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 interface LanguageMenuItem {
   label: string;
@@ -14,10 +15,21 @@ interface LanguageMenuProps {
 }
 
 export function LanguageMenu({ items }: LanguageMenuProps) {
+  const { i18n } = useTranslation();
+  const [language, setLanguage] = useState(i18n.language);
+
+  useEffect(() => {
+    const handleChange = (lng: string) => setLanguage(lng);
+    i18n.on("languageChanged", handleChange);
+    return () => {
+      i18n.off("languageChanged", handleChange);
+    };
+  }, [i18n]);
   return (
     <>
       {items.map((item, index) => {
-        const isActive = item.value === localStorage.getItem("appLanguage");
+        const isActive = item.value === language;
+
         return (
           <>
             <DropdownMenuItem

@@ -103,5 +103,21 @@
     "hourAgo": "{{count}} giờ",
     "dayAgo": "{{count}} ngày",
     "weekAgo": "{{count}} tuần"
+  },
+   "menu": {
+    "appearance": "Giao diện",
+    "profileInfo": "Thông tin chi tiết",
+    "settings": "Cài đặt",
+    "feed": "Bảng feed",
+    "saved": "Đã lưu",
+    "liked": "Đã thích",
+    "language": "Đổi ngôn ngữ",
+    "logout": "Đăng xuất",
+    "light": "Sáng",
+    "dark": "Tối",
+    "system": "Tự động",
+    "back": "Quay lại",
+    "vietnamese": "Tiếng Việt",
+    "english": "English"
   }
 }

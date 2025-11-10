@@ -103,5 +103,21 @@
     "hourAgo": "{{count}}h",
     "dayAgo": "{{count}}d",
     "weekAgo": "{{count}}w"
+  },
+  "menu": {
+    "appearance": "Appearance",
+    "profileInfo": "Profile Info",
+    "settings": "Settings",
+    "feed": "Feed Board",
+    "saved": "Saved",
+    "liked": "Liked",
+    "language": "Change Language",
+    "logout": "Log out",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System Default",
+    "back": "Back",
+    "vietnamese": "Vietnamese",
+    "english": "English"
   }
 }
