@@ -1,0 +1,107 @@
+{
+  "common": {
+    "or": "or",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "post": "Post",
+    "follow": "Follow",
+    "following": "Following",
+    "followers": "followers",
+    "threads": "Threads",
+    "replies": "Replies",
+    "media": "Media",
+    "reposts": "Reposts"
+  },
+  "nav": {
+    "home": "Home",
+    "search": "Search",
+    "activity": "Activity",
+    "profile": "Profile",
+    "favorites": "Favorites"
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Sign up",
+    "logout": "Log out",
+    "loginWithInstagram": "Log in with Instagram account",
+    "continueWithInstagram": "Continue with Instagram",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordTitle": "Forgot password",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "backToLogin": "Back to login",
+    "usernamePlaceholder": "Username, phone number or email",
+    "passwordPlaceholder": "Password",
+    "emailPlaceholder": "Email",
+    "namePlaceholder": "Name",
+    "phonePlaceholder": "Phone number",
+    "confirmPasswordPlaceholder": "Confirm password"
+  },
+  "profile": {
+    "editProfile": "Edit profile",
+    "completeProfile": "Complete your profile",
+    "remaining": "Remaining",
+    "thread": "Threads",
+    "threadReplies": "Replies",
+    "mediaFiles": "Media",
+    "repost": "Reposts",
+    "firstThread": "First thread",
+    "whatsNew": "What's new?"
+  },
+  "profileSetup": {
+    "follow10Profiles": "Follow 10 profiles",
+    "follow10ProfilesDesc": "Fill your feed with threads you're interested in.",
+    "viewProfiles": "View profiles",
+    "addBio": "Add bio",
+    "addBioDesc": "Introduce yourself and let people know what you like.",
+    "add": "Add",
+    "added": "Added",
+    "createThread": "Create thread",
+    "createThreadDesc": "Let people know what you're thinking or share about a new activity.",
+    "createNow": "Create now",
+    "created": "Created",
+    "done": "Done"
+  },
+  "activity": {
+    "recentActivity": "Recent activity",
+    "suggestedFollow": "Suggested follow",
+    "suggestions": "Suggested for you"
+  },
+  "feed": {
+    "forYou": "For you",
+    "following": "Following"
+  },
+  "post": {
+    "whatsNew": "What's new?",
+    "post": "Post",
+    "reply": "Reply",
+    "repost": "Repost",
+    "like": "Like",
+    "share": "Share"
+  },
+  "modal": {
+    "signUpTitle": "Sign up to use",
+    "signUpDesc": "Join Threads to share ideas, ask questions, post spontaneous thoughts and more.",
+    "loginTitle": "Log in to Threads",
+    "joinThreads": "Join Threads to share thoughts, find out what's going on, follow your people and more."
+  },
+  "footer": {
+    "copyright": "© 2025",
+    "termsOfThreads": "Threads Terms",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy",
+    "reportProblem": "Report a problem"
+  },
+  "qr": {
+    "scanToDownload": "Scan to download app"
+  },
+  "time": {
+    "now": "Just now",
+    "minuteAgo": "{{count}}m",
+    "hourAgo": "{{count}}h",
+    "dayAgo": "{{count}}d",
+    "weekAgo": "{{count}}w"
+  }
+}

@@ -8,15 +8,15 @@ import {
 } from "@/schema/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
-import { useLanguage } from "../LanguageProvider";
 
 interface RegisterFormProps {
   onRegister: (values: RegisterSchemaBodyType) => void;
 }
 
 export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const form = useForm<RegisterSchemaBodyType>({
     resolver: zodResolver(RegisterSchemaBody),
     mode: "onSubmit",
@@ -42,10 +42,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           name="username"
           render={({ field }) => (
             <FormItem className="w-90">
-              <Input
-                placeholder={t("auth", "usernamePlaceholder")}
-                {...field}
-              />
+              <Input placeholder={t("auth.usernamePlaceholder")} {...field} />
               <FormMessage />
             </FormItem>
           )}
@@ -58,7 +55,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           render={({ field }) => (
             <FormItem className="w-90">
               <Input
-                placeholder={t("auth", "emailPlaceholder")}
+                placeholder={t("auth.emailPlaceholder")}
                 type="email"
                 {...field}
               />
@@ -75,7 +72,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
             <FormItem className="w-90">
               <Input
                 type="password"
-                placeholder={t("auth", "passwordPlaceholder")}
+                placeholder={t("auth.passwordPlaceholder")}
                 {...field}
               />
               <FormMessage />
@@ -91,7 +88,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
             <FormItem className="w-90">
               <Input
                 type="password"
-                placeholder={t("auth", "confirmPasswordPlaceholder")}
+                placeholder={t("auth.confirmPasswordPlaceholder")}
                 {...field}
               />
               <FormMessage />
@@ -104,7 +101,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           type="submit"
           className="w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
         >
-          {t("auth", "register")}
+          {t("auth.register")}
         </Button>
 
         {/* Link */}
@@ -112,7 +109,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           to="/login"
           className="w-90 text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
         >
-          {t("auth", "alreadyHaveAccount")}
+          {t("auth.alreadyHaveAccount")}
         </NavLink>
       </form>
     </Form>

@@ -1,4 +1,3 @@
-import { useLanguage } from "@/components/LanguageProvider";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useDebounceInput } from "@/hook/useDebouceInput";
@@ -8,6 +7,7 @@ import {
 } from "@/schema/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { Input } from "../ui/input";
 interface LoginFormProps {
@@ -15,7 +15,7 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const form = useForm<LoginSchemaBodyType>({
     resolver: zodResolver(LoginSchemaBody),
     defaultValues: {
@@ -36,10 +36,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           name="username"
           render={({ field }) => (
             <FormItem className="w-90">
-              <Input
-                placeholder={t("auth", "usernamePlaceholder")}
-                {...field}
-              />
+              <Input placeholder={t("auth.usernamePlaceholder")} {...field} />
               <FormMessage />
             </FormItem>
           )}
@@ -52,7 +49,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
             <FormItem className="w-90">
               <Input
                 type="password"
-                placeholder={t("auth", "passwordPlaceholder")}
+                placeholder={t("auth.passwordPlaceholder")}
                 {...field}
               />
               <FormMessage />
@@ -64,7 +61,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           type="submit"
           className="w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
         >
-          {t("auth", "login")}
+          {t("auth.login")}
         </Button>
 
         {/* Links */}
@@ -72,14 +69,14 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           to="/forgot-password"
           className="w-90 text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
         >
-          {t("auth", "forgotPassword")}
+          {t("auth.forgotPassword")}
         </NavLink>
 
         <NavLink
           to="/register"
           className="w-90 text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
         >
-          {t("auth", "dontHaveAccount")} {t("auth", "register")}
+          {t("auth.dontHaveAccount")} {t("auth.register")}
         </NavLink>
       </form>
     </Form>

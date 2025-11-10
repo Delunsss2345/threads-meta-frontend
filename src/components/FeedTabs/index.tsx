@@ -1,14 +1,14 @@
-import { useLanguage } from "@/components/LanguageProvider";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const FeedTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState("foryou");
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   const tabs = [
-    { key: "foryou", label: t("feed", "forYou") },
-    { key: "following", label: t("feed", "following") },
+    { key: "foryou", label: t("feed.forYou") },
+    { key: "following", label: t("feed.following") },
   ];
 
   return (

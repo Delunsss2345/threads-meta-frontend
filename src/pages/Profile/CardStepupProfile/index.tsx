@@ -1,27 +1,27 @@
-import { useLanguage } from "@/components/LanguageProvider";
 import { Check, Edit, Users } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const CardStepupProfile = () => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   const cards = [
     {
       id: "follow",
       icon: <Users className="w-6 h-6 text-white" />,
-      title: t("profileSetup", "follow10Profiles"),
-      desc: t("profileSetup", "follow10ProfilesDesc"),
+      title: t("profileSetup.follow10Profiles"),
+      desc: t("profileSetup.follow10ProfilesDesc"),
     },
     {
       id: "story",
       icon: <Edit className="w-6 h-6 text-white" />,
-      title: t("profileSetup", "addBio"),
-      desc: t("profileSetup", "addBioDesc"),
+      title: t("profileSetup.addBio"),
+      desc: t("profileSetup.addBioDesc"),
     },
     {
       id: "createThread",
       icon: <Check className="w-6 h-6 text-white" />,
-      title: t("profileSetup", "createThread"),
-      desc: t("profileSetup", "createThreadDesc"),
+      title: t("profileSetup.createThread"),
+      desc: t("profileSetup.createThreadDesc"),
     },
   ];
 

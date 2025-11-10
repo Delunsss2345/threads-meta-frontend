@@ -1,6 +1,6 @@
-import { useLanguage } from "@/components/LanguageProvider";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 interface UserPreviewCardProps {
   name: string;
@@ -17,7 +17,7 @@ export const UserPreviewCard = ({
   followers = 0,
   avatar,
 }: UserPreviewCardProps) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   return (
     <motion.div
@@ -45,7 +45,7 @@ export const UserPreviewCard = ({
       {bio && <p className="text-sm mb-2">{bio}</p>}
 
       <p className="text-muted-foreground text-sm mb-3">
-        {followers} {t("common", "followers")}
+        {followers} {t("common.followers")}
       </p>
 
       <Button className="w-full bg-foreground text-background font-semibold rounded-lg hover:opacity-90 transition">

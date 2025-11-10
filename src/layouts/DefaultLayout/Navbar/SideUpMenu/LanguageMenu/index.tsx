@@ -1,6 +1,6 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 interface LanguageMenuItem {
   label: string;
@@ -16,21 +16,27 @@ interface LanguageMenuProps {
 export function LanguageMenu({ items }: LanguageMenuProps) {
   return (
     <>
-      {items.map((item, index) => (
-        <DropdownMenuItem
-          key={index}
-          onSelect={(e) => {
-            e.preventDefault();
-            item.onClick?.();
-          }}
-          className={cn(
-            "flex items-center gap-2 cursor-pointer px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-          )}
-        >
-          {item.icon}
-          <span>{item.label}</span>
-        </DropdownMenuItem>
-      ))}
+      {items.map((item, index) => {
+        const isActive = item.value === localStorage.getItem("appLanguage");
+        return (
+          <>
+            <DropdownMenuItem
+              key={index}
+              onSelect={(e) => {
+                e.preventDefault();
+                item.onClick?.();
+              }}
+              className={cn(
+                "flex items-center gap-2 cursor-pointer px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
+                `${isActive ? "bg-accent text-accent-foreground" : ""}}`
+              )}
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </DropdownMenuItem>
+          </>
+        );
+      })}
     </>
   );
 }

@@ -1,5 +1,5 @@
 // src/components/login/InstagramLoginButton.tsx
-import { useLanguage } from "@/components/LanguageProvider";
+import { useTranslation } from "react-i18next";
 
 interface InstagramLoginButtonProps {
   username: string;
@@ -10,7 +10,7 @@ export const InstagramLoginButton = ({
   username,
   onClick,
 }: InstagramLoginButtonProps) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   return (
     <button
@@ -29,7 +29,7 @@ export const InstagramLoginButton = ({
         </div>
         <div className="text-left">
           <div className="text-sm text-muted-foreground">
-            {t("auth", "continueWithInstagram")}
+            {t("auth.continueWithInstagram")}
           </div>
           <div className="text-sm font-medium text-foreground">{username}</div>
         </div>

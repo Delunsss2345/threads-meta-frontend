@@ -1,4 +1,3 @@
-import { useLanguage } from "@/components/LanguageProvider";
 import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +8,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LanguageMenu } from "./LanguageMenu";
 import { MainMenu } from "./MainMenu";
 import { ThemeMenu } from "./ThemeMenu";
@@ -17,7 +17,9 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
     "main"
   );
-  const { changeLanguage } = useLanguage();
+  const { i18n } = useTranslation();
+  const changeLanguage = (lng: string) => i18n.changeLanguage(lng);
+  
   const { setTheme } = useTheme();
   const mainMenu = [
     { label: "Giao diện", onClick: () => setActiveMenu("theme") },
