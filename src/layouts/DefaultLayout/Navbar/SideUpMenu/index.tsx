@@ -1,11 +1,5 @@
+import MenuPopup from "@/components/MenuPopup";
 import { useTheme } from "@/components/ThemeProvider";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -64,32 +58,11 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
     },
   ];
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost">{children}</Button>
-      </DropdownMenuTrigger>
-      <AnimatePresence mode="wait">
-        <DropdownMenuContent
-          asChild
-          sideOffset={8}
-          forceMount
-          onCloseAutoFocus={(e) => e.preventDefault()}
-        >
-          <motion.div
-            key={activeMenu}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 20 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.2 }}
-            className="w-56 rounded-xl border border-gray-200 bg-primary-foreground p-1 shadow-lg"
-          >
-            {activeMenu === "main" && <MainMenu items={mainMenu} />}
-            {activeMenu === "theme" && <ThemeMenu items={themeMenu} />}
-            {activeMenu === "language" && <LanguageMenu items={languageMenu} />}
-          </motion.div>
-        </DropdownMenuContent>
-      </AnimatePresence>
-    </DropdownMenu>
+    <MenuPopup active={activeMenu} buttonActive={children}>
+      {activeMenu === "main" && <MainMenu items={mainMenu} />}
+      {activeMenu === "theme" && <ThemeMenu items={themeMenu} />}
+      {activeMenu === "language" && <LanguageMenu items={languageMenu} />}
+    </MenuPopup>
   );
 };
 

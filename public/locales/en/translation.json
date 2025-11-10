@@ -29,6 +29,7 @@
     "continueWithInstagram": "Continue with Instagram",
     "forgotPassword": "Forgot password?",
     "forgotPasswordTitle": "Forgot password",
+    "sendResetLink": "Send reset link",
     "dontHaveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account?",
     "backToLogin": "Back to login",
@@ -79,12 +80,20 @@
     "reply": "Reply",
     "repost": "Repost",
     "like": "Like",
-    "share": "Share"
+    "share": "Share",
+    "newThread": "New thread",
+    "replyTo": "Reply",
+    "addToThread": "Add to thread"
+  },
+  "search": {
+    "placeholder": "Search",
+    "noResults": "No results found"
   },
   "modal": {
     "signUpTitle": "Sign up to use",
     "signUpDesc": "Join Threads to share ideas, ask questions, post spontaneous thoughts and more.",
     "loginTitle": "Log in to Threads",
+    "loginToContinue": "Login to continue",
     "joinThreads": "Join Threads to share thoughts, find out what's going on, follow your people and more."
   },
   "footer": {

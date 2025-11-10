@@ -29,6 +29,7 @@
     "continueWithInstagram": "Tiếp tục bằng Instagram",
     "forgotPassword": "Quên mật khẩu?",
     "forgotPasswordTitle": "Quên mật khẩu",
+    "sendResetLink": "Gửi liên kết đặt lại",
     "dontHaveAccount": "Bạn chưa có tài khoản?",
     "alreadyHaveAccount": "Đã có tài khoản?",
     "backToLogin": "Quay lại đăng nhập",
@@ -79,12 +80,20 @@
     "reply": "Trả lời",
     "repost": "Đăng lại",
     "like": "Thích",
-    "share": "Chia sẻ"
+    "share": "Chia sẻ",
+    "newThread": "Thread mới",
+    "replyTo": "Phản hồi",
+    "addToThread": "Thêm vào thread"
+  },
+  "search": {
+    "placeholder": "Tìm kiếm",
+    "noResults": "Không tìm thấy kết quả"
   },
   "modal": {
     "signUpTitle": "Đăng ký để dùng",
     "signUpDesc": "Tham gia Threads để chia sẻ ý tưởng, đặt câu hỏi, đăng những suy nghĩ bất chợt và hơn thế nữa.",
     "loginTitle": "Đăng nhập vào Threads",
+    "loginToContinue": "Đăng nhập để tiếp tục",
     "joinThreads": "Join Threads to share thoughts, find out what's going on, follow your people and more."
   },
   "footer": {
@@ -104,7 +113,7 @@
     "dayAgo": "{{count}} ngày",
     "weekAgo": "{{count}} tuần"
   },
-   "menu": {
+  "menu": {
     "appearance": "Giao diện",
     "profileInfo": "Thông tin chi tiết",
     "settings": "Cài đặt",

@@ -5,6 +5,7 @@ import {
 } from "@/schema/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Form, FormField, FormItem, FormMessage } from "../ui/form";
@@ -17,6 +18,7 @@ interface ForgotPasswordFormProps {
 export const ForgotPasswordForm = ({
   onForgotPassword,
 }: ForgotPasswordFormProps) => {
+  const { t } = useTranslation();
   const form = useForm<ForgotPasswordSchemaBodyType>({
     resolver: zodResolver(ForgotPasswordSchemaBody),
     mode: "onSubmit",
@@ -47,7 +49,11 @@ export const ForgotPasswordForm = ({
             name="email"
             render={({ field }) => (
               <FormItem className="w-full">
-                <Input type="email" placeholder="Email" {...field} />
+                <Input
+                  type="email"
+                  placeholder={t("auth.emailPlaceholder")}
+                  {...field}
+                />
                 <FormMessage />
               </FormItem>
             )}
@@ -57,14 +63,14 @@ export const ForgotPasswordForm = ({
             type="submit"
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
           >
-            Gửi liên kết đặt lại
+            {t("auth.sendResetLink")}
           </Button>
 
           <NavLink
             to="/login"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
           >
-            Quay lại đăng nhập
+            {t("auth.backToLogin")}
           </NavLink>
         </form>
       </Form>

@@ -10,20 +10,9 @@ import { useRef, useState } from "react";
 import { UserPreviewCard } from "../UserPreview";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
+import type { PostProps } from "./type";
 
-interface PostProps {
-  author: string;
-  time: string;
-  content: string;
-  verified?: boolean;
-  like?: number;
-  message?: number;
-  repost?: number;
-  share?: number;
-  avatar?: string;
-}
-
-const Post: React.FC<PostProps> = ({
+const Post = ({
   author,
   time,
   content,
@@ -33,7 +22,7 @@ const Post: React.FC<PostProps> = ({
   repost = 0,
   share = 0,
   avatar,
-}) => {
+}: PostProps) => {
   const [open, setOpen] = useState(false);
   const hoverTimer = useRef<any | null>(null);
   const handleMouseEnter = () => {
@@ -121,6 +110,7 @@ const Post: React.FC<PostProps> = ({
 
           {/* Thanh tương tác */}
           <InteractionBar
+            user={{ avatar, username: author, content: content }}
             like={like}
             message={message}
             repost={repost}

@@ -5,6 +5,7 @@ import { useCurrentUser } from "@/features/auth/hook";
 import { AnimatePresence } from "framer-motion";
 import { Heart, Home, Menu, Plus, Search, User } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
 import SlideUpMenu from "./SideUpMenu";
@@ -37,6 +38,7 @@ const Navbar: React.FC = () => {
   const currentUser = useCurrentUser();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleNavClick = (item: (typeof navItems)[0]) => {
     if (item.isAuth && !Boolean(currentUser)) {
@@ -98,8 +100,8 @@ const Navbar: React.FC = () => {
           open={showAuthModal}
           onClose={closeAuthModal}
           onContinue={handleLogin}
-          title="Login to continue"
-          description="Join Threads to share thoughts, find out what's going on, follow your people and more."
+          title={t("modal.loginToContinue")}
+          description={t("modal.joinThreads")}
         />
       )}
     </nav>

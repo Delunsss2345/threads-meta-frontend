@@ -1,5 +1,3 @@
-// src/components/follow-suggestion/FollowSuggestionList.tsx
-
 import { useTranslation } from "react-i18next";
 import FollowSuggestionItem from "../FollowSuggestionItem";
 import type { FollowSuggestion } from "../types";

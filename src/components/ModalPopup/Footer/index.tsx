@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 
-const Footer = ({content} : {content: string}) => {
+const Footer = ({ content }: { content: string }) => {
   return (
     <>
-      <CardFooter className="flex items-center justify-between px-4 py-4">
+      <CardFooter className="flex items-center justify-between p-3">
         <button className="text-muted-foreground/60 hover:text-muted-foreground text-sm flex items-center gap-2 transition-colors">
           Các lựa chọn để kiểm soát câu trả lời
         </button>

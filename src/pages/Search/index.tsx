@@ -4,6 +4,7 @@ import SkeletonSearch from "@/components/Skeleton/SkeletonSearch";
 import { Input } from "@/components/ui/input";
 import { Search, X } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const mockSuggestions: FollowSuggestion[] = [
   {
@@ -34,6 +35,7 @@ export const mockSuggestions: FollowSuggestion[] = [
 ];
 const SearchPage = () => {
   const [query, setQuery] = useState("");
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-background">
@@ -42,7 +44,7 @@ const SearchPage = () => {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
-              placeholder="Tìm kiếm"
+              placeholder={t("search.placeholder")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="pl-10 pr-10 h-11 rounded-full bg-muted/50 focus:bg-background"

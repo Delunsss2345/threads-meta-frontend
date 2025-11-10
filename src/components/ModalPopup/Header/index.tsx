@@ -2,7 +2,13 @@ import { Button } from "@/components/ui/button";
 import { CardHeader } from "@/components/ui/card";
 import { Layers, MoreHorizontal } from "lucide-react";
 
-const Header = ({ onClose }: { onClose: () => void }) => {
+const Header = ({
+  onClose,
+  headerText,
+}: {
+  onClose: () => void;
+  headerText: string;
+}) => {
   return (
     <>
       <CardHeader className="flex flex-row items-center border-b space-y-0 !py-2">
@@ -16,7 +22,9 @@ const Header = ({ onClose }: { onClose: () => void }) => {
           </Button>
         </div>
 
-        <div className="font-bold text-base flex-1 text-center">Thread mới</div>
+        <div className="font-bold text-base flex-1 text-center">
+          {headerText}
+        </div>
 
         <div className="flex-1 flex justify-end gap-2">
           <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">

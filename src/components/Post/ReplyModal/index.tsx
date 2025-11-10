@@ -7,8 +7,9 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
+import type { User } from "../type";
 
-function NewPostModal({ onClose }: { onClose: () => void }) {
+function ReplyModal({ onClose, user }: { onClose: () => void; user: User }) {
   const [content, setContent] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { t } = useTranslation();
@@ -22,10 +23,29 @@ function NewPostModal({ onClose }: { onClose: () => void }) {
   }, [content]);
 
   return (
-    <ModalPopup onClose={onClose}>
+    <ModalPopup className="bg-transparent" onClose={onClose}>
       <Card className="p-0 gap-0 " onClick={(e) => e.stopPropagation()}>
-        <Header headerText={t("post.newThread")} onClose={onClose} />
+        <Header headerText={t("post.replyTo")} onClose={onClose} />
         <CardContent className="p-4 pt-5">
+          <div className="flex gap-3">
+            <div className="flex flex-col items-center">
+              <Avatar className="w-10 h-10 cursor-pointer hover:opacity-90 transition-opacity">
+                <AvatarImage src={`${user.avatar}`} alt="@huydarealest" />
+                <AvatarFallback>HD</AvatarFallback>
+              </Avatar>
+              <div className="w-[2px] flex-1 bg-border my-2 min-h-[40px] rounded-full"></div>
+            </div>
+
+            <div className="flex-1 space-y-4 pt-1">
+              <div>
+                <div className="font-semibold text-sm leading-none mb-1">
+                  <span>{user.username}</span>
+                </div>
+
+                <span>{user.content}</span>
+              </div>
+            </div>
+          </div>
           <div className="flex gap-3">
             <div className="flex flex-col items-center">
               <Avatar className="w-10 h-10 cursor-pointer hover:opacity-90 transition-opacity">
@@ -84,4 +104,4 @@ function NewPostModal({ onClose }: { onClose: () => void }) {
   );
 }
 
-export default NewPostModal;
+export default ReplyModal;
