@@ -1,3 +1,5 @@
+import { Loading } from "@/components/Loading";
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Content from "./Content";
 import Navbar from "./Navbar";
@@ -9,19 +11,21 @@ interface DefaultLayoutProps {
 
 const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
   return (
-    <div className="bg-black min-h-screen">
-      <div className="hidden lg:block">
-        <Navbar />
-      </div>
+    <Suspense fallback={<Loading />}>
+      <div className="bg-black min-h-screen">
+        <div className="hidden lg:block">
+          <Navbar />
+        </div>
 
-      <div className="block lg:hidden">
-        <NavMobile />
-      </div>
+        <div className="block lg:hidden">
+          <NavMobile />
+        </div>
 
-      <Content>
-        <Outlet />
-      </Content>
-    </div>
+        <Content>
+          <Outlet />
+        </Content>
+      </div>
+    </Suspense>
   );
 };
 export default DefaultLayout;

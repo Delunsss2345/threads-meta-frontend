@@ -1,6 +1,8 @@
 import AuthSocialModal from "@/components/LoginModal";
 import Logo from "@/components/Logo";
+import NewPostModal from "@/components/Post/NewPostModal";
 import { useCurrentUser } from "@/features/auth/hook";
+import { AnimatePresence } from "framer-motion";
 import { Heart, Home, Menu, Plus, Search, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,29 +10,30 @@ import NavItem from "./NavItem";
 import SlideUpMenu from "./SideUpMenu";
 
 const navItems = [
-  { key: "home", icon: <Home size={30} />, link: "/" },
-  { key: "search", icon: <Search size={30} />, link: "/search" },
+  { key: "home", icon: <Home size={25} />, link: "/" },
+  { key: "search", icon: <Search size={25} />, link: "/search" },
   {
     key: "write",
     icon: <Plus size={20} strokeWidth={2.5} />,
-    link: "/write",
+
     isAuth: true,
   },
   {
     key: "activity",
-    icon: <Heart size={30} />,
+    icon: <Heart size={25} />,
     link: "/activity",
     isAuth: true,
   },
   {
     key: "profile",
-    icon: <User size={30} />,
+    icon: <User size={25} />,
     link: "/profile",
     isAuth: true,
   },
 ];
 const Navbar: React.FC = () => {
   const [activeNav, setActiveNav] = useState("home");
+  const [openPostModal, setOpenPostModal] = useState(false);
   const currentUser = useCurrentUser();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const navigate = useNavigate();
@@ -41,7 +44,7 @@ const Navbar: React.FC = () => {
       return;
     }
     setActiveNav(item.key);
-    navigate(item.link);
+    if (item.link) navigate(item.link);
   };
 
   const closeAuthModal = () => setShowAuthModal(false);
@@ -50,7 +53,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-background border-border h-screen fixed left-0 top-0 flex flex-col p-4 z-20">
+    <nav className="bg-background border-border h-screen fixed left-0 top-0 flex flex-col items-center p-3 z-20">
       {/* Logo */}
       <div className="mb-8 size-10 hover:scale-110 transition cursor-pointer">
         <Logo />
@@ -63,17 +66,24 @@ const Navbar: React.FC = () => {
             key={item.key}
             icon={item.icon}
             active={activeNav === item.key}
-            onClick={() => handleNavClick(item)}
+            onClick={
+              item.key === "write"
+                ? () => setOpenPostModal(!openPostModal)
+                : () => handleNavClick(item)
+            }
             link={item.link}
           />
         ))}
+
+        {openPostModal ? (
+          <AnimatePresence>
+            <NewPostModal onClose={() => setOpenPostModal(false)} />
+          </AnimatePresence>
+        ) : null}
       </div>
 
       {/* Bottom Items */}
       <div className="space-y-1 border-t border-border pt-4">
-        {/* <NavItem icon={<Pin size={24} />} />
-         */}
-
         <SlideUpMenu>
           <NavItem
             className="hover:bg-transparent hover:text-current"

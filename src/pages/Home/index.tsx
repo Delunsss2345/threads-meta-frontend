@@ -1,6 +1,6 @@
 import FeedTabs from "@/components/FeedTabs";
-import Post from "@/components/Post";
 import PostForm from "@/components/Post/PostForm";
+import SkeletonPost from "@/components/Skeleton/SkeletonPost";
 
 const Home = () => {
   return (
@@ -11,7 +11,16 @@ const Home = () => {
       <div className="md:hidden block">
         <FeedTabs />
       </div>
-      <Post
+      {Array.from({ length: 10 }).map((_, index) => (
+        <SkeletonPost key={index} />
+      ))}
+    </>
+  );
+};
+
+export default Home;
+{
+  /* <Post
         author="babyboo.258258"
         time="19 giờ trước"
         content="TÀI XẾ TAXI ĐANG CHỞ KHÁCH... KẸT TIỀN CHƯA KỊP DONATE ĐÃ BỊ IDOL LIVESTREAM GỌI VÃ THẲNG 🤡‼️"
@@ -120,9 +129,5 @@ const Home = () => {
         message={203}
         repost={97}
         share={45}
-      />
-    </>
-  );
-};
-
-export default Home;
+      /> */
+}

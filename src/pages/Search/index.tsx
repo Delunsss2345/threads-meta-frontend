@@ -1,5 +1,6 @@
 import FollowSuggestionList from "@/components/FollowSuggestion/FollowSuggestionList";
 import type { FollowSuggestion } from "@/components/FollowSuggestion/types";
+import SkeletonSearch from "@/components/Skeleton/SkeletonSearch";
 import { Input } from "@/components/ui/input";
 import { Search, X } from "lucide-react";
 import { useState } from "react";
@@ -30,14 +31,12 @@ export const mockSuggestions: FollowSuggestion[] = [
     bio: "music and love is my family",
     followerCount: "142K",
   },
-  // ... thêm nếu cần
 ];
 const SearchPage = () => {
   const [query, setQuery] = useState("");
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Search Bar */}
       <div className="sticky top-0 z-10 bg-background border-b border-border">
         <div className="max-w-2xl mx-auto p-4">
           <div className="relative">
@@ -60,7 +59,6 @@ const SearchPage = () => {
         </div>
       </div>
 
-      {/* Nội dung */}
       <div className="max-w-2xl mx-auto p-4 pb-20">
         {query ? (
           <div className="mt-6">
@@ -68,8 +66,10 @@ const SearchPage = () => {
               Kết quả cho "
               <span className="font-medium text-foreground">{query}</span>"
             </p>
-            <div className="bg-muted/30 rounded-lg p-8 text-center text-muted-foreground">
-              Chưa có kết quả nào.
+            <div className="bg-muted/30 rounded-lg space-y-3 text-center text-muted-foreground">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <SkeletonSearch key={index} />
+              ))}
             </div>
           </div>
         ) : (
