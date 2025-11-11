@@ -1,6 +1,6 @@
 import MenuPopup from "@/components/MenuPopup";
 import { useTheme } from "@/components/ThemeProvider";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageMenu } from "./LanguageMenu";
@@ -15,13 +15,21 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
 
   const { setTheme } = useTheme();
   const mainMenu = [
-    { label: t("menu.appearance"), onClick: () => setActiveMenu("theme") },
+    {
+      label: t("menu.appearance"),
+      icon: <ChevronRight size={16} />,
+      onClick: () => setActiveMenu("theme"),
+    },
     { label: t("menu.profileInfo") },
     { label: t("menu.settings") },
     { label: t("menu.feed") },
     { label: t("menu.saved") },
     { label: t("menu.liked") },
-    { label: t("menu.language"), onClick: () => setActiveMenu("language") },
+    {
+      label: t("menu.language"),
+      icon: <ChevronRight size={16} />,
+      onClick: () => setActiveMenu("language"),
+    },
     { label: t("menu.logout"), danger: true },
   ];
 

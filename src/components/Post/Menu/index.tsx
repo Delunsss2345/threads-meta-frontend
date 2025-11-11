@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import MenuPopup from "@/components/MenuPopup";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   BellOff,
   Bookmark,
@@ -8,51 +9,50 @@ import {
   UserMinus,
   UserX,
 } from "lucide-react";
-import MenuItem from "../MenuItem";
+import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
-const Menu = () => {
+const Menu = ({ buttonActive }: { buttonActive: ReactNode }) => {
+  const { t } = useTranslation();
+
+  const items = [
+    { label: t("menu.addToFeed"), isHeader: true },
+    { icon: Bookmark, label: t("menu.save") },
+    { icon: EyeOff, label: t("menu.notInterested") },
+    { icon: BellOff, label: t("menu.muteNotifications") },
+    { icon: UserMinus, label: t("menu.restrict") },
+    {
+      icon: UserX,
+      label: t("menu.block"),
+      className: "text-destructive hover:bg-destructive/10",
+    },
+    {
+      icon: Shield,
+      label: t("menu.report"),
+      className: "text-destructive hover:bg-destructive/10",
+    },
+    { icon: Link2, label: t("menu.copyLink") },
+  ];
+
   return (
-    <motion.div
-      className="w-64 bg-card text-card-foreground rounded-xl shadow-md border border-border py-1"
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{
-        duration: 0.18,
-        ease: [0.22, 1, 0.36, 1],
+    <MenuPopup
+      buttonActive={buttonActive}
+      motionProps={{
+        initial: { opacity: 0, x: -60, scale: 0.96 },
+        animate: { opacity: 1, x: -60, scale: 1 },
       }}
     >
-      <div className="px-3 py-2 text-sm hover:bg-accent cursor-pointer rounded-t-lg">
-        Thêm vào bảng feed
-      </div>
-
-      <div className="h-px bg-border my-1" />
-
-      <MenuItem icon={<Bookmark className="w-4 h-4" />}>Lưu</MenuItem>
-      <MenuItem icon={<EyeOff className="w-4 h-4" />}>Không quan tâm</MenuItem>
-      <MenuItem icon={<BellOff className="w-4 h-4" />}>Tắt thông báo</MenuItem>
-      <MenuItem icon={<UserMinus className="w-4 h-4" />}>Hạn chế</MenuItem>
-
-      <MenuItem
-        icon={<UserX className="w-4 h-4 text-destructive" />}
-        className="text-destructive hover:bg-destructive/10"
-      >
-        Chặn
-      </MenuItem>
-
-      <MenuItem
-        icon={<Shield className="w-4 h-4 text-destructive" />}
-        className="text-destructive hover:bg-destructive/10"
-      >
-        Báo cáo
-      </MenuItem>
-
-      <div className="h-px bg-border my-1" />
-
-      <MenuItem icon={<Link2 className="w-4 h-4" />}>
-        Sao chép liên kết
-      </MenuItem>
-    </motion.div>
+      {items.map((item, i) => (
+        <DropdownMenuItem
+          key={i}
+          className={`flex items-center gap-2 ${item.className || ""}`}
+        >
+          {item.icon && <item.icon className="w-4 h-4" />}
+          <span>{item.label}</span>
+        </DropdownMenuItem>
+      ))}
+    </MenuPopup>
   );
 };
+
 export default Menu;

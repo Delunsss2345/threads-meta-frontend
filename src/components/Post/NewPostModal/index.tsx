@@ -3,23 +3,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
 
 function NewPostModal({ onClose }: { onClose: () => void }) {
-  const [content, setContent] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + "px";
-    }
-  }, [content]);
 
   return (
     <ModalPopup onClose={onClose}>
@@ -52,12 +41,10 @@ function NewPostModal({ onClose }: { onClose: () => void }) {
                 </div>
 
                 <Textarea
-                  ref={textareaRef}
                   placeholder={t("post.whatsNew")}
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
                   className="min-h-[24px] border-none shadow-none resize-none p-0 focus-visible:ring-0 text-base leading-normal overflow-hidden"
                   rows={1}
+                  disabled
                 />
 
                 <div className="flex items-center gap-4 mt-3 text-muted-foreground/60">
@@ -78,7 +65,7 @@ function NewPostModal({ onClose }: { onClose: () => void }) {
           </div>
         </CardContent>
 
-        <Footer content={content} />
+        <Footer />
       </Card>
     </ModalPopup>
   );

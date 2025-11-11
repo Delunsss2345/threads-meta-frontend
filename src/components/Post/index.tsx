@@ -1,9 +1,4 @@
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { AnimatePresence } from "framer-motion";
 import { Ellipsis } from "lucide-react"; // icon 3 chấm gọn nhẹ
 import { useRef, useState } from "react";
@@ -85,23 +80,17 @@ const Post = ({
               </span>
             </div>
 
-            <Popover>
-              <PopoverTrigger asChild>
+            <Menu
+              buttonActive={
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
+                  className="h-8 w-8 p-0 text-muted-foreground hover:!bg-transparent"
                 >
                   <Ellipsis className="w-4 h-4" />
                 </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                align="end"
-                className="w-64 p-0 rounded-xl border-border bg-card text-card-foreground"
-              >
-                <Menu />
-              </PopoverContent>
-            </Popover>
+              }
+            />
           </div>
 
           <p className="text-foreground text-sm leading-relaxed mb-2">

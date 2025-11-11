@@ -127,6 +127,18 @@
     "system": "System Default",
     "back": "Back",
     "vietnamese": "Vietnamese",
-    "english": "English"
+    "english": "English",
+    "addToFeed": "Add to feed",
+    "save": "Save",
+    "notInterested": "Not interested",
+    "muteNotifications": "Mute notifications",
+    "restrict": "Restrict",
+    "block": "Block",
+    "copyLink": "Copy link",
+    "repost": "Repost",
+    "report": "Report",
+    "quote": "Quote",
+    "copyAsImage": "Copy as image",
+    "embedCode": "Get embed code"
   }
 }

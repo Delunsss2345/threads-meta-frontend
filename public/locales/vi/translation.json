@@ -127,6 +127,18 @@
     "system": "Tự động",
     "back": "Quay lại",
     "vietnamese": "Tiếng Việt",
-    "english": "English"
+    "english": "English",
+    "addToFeed": "Thêm vào bảng feed",
+    "save": "Lưu",
+    "notInterested": "Không quan tâm",
+    "muteNotifications": "Tắt thông báo",
+    "restrict": "Hạn chế",
+    "block": "Chặn",
+    "report": "Báo cáo",
+    "repost": "Bài đăng lại",
+    "copyLink": "Sao chép liên kết",
+    "quote": "Trích dẫn",
+    "copyAsImage": "Sao chép dưới dạng hình",
+    "embedCode": "Lấy mã nhúng"
   }
 }

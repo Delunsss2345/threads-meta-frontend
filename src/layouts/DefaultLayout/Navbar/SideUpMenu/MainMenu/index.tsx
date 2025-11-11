@@ -1,10 +1,12 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import type { ReactNode } from "react";
 
 interface MenuItem {
   label: string;
   danger?: boolean;
   onClick?: () => void;
+  icon?: ReactNode;
 }
 
 interface MainMenuProps {
@@ -28,7 +30,8 @@ export function MainMenu({ items }: MainMenuProps) {
               : "text-muted-foreground hover:text-foreground"
           )}
         >
-          {item.label}
+          {item.label}{" "}
+          {item?.icon && <span className="ml-auto">{item.icon}</span>}
         </DropdownMenuItem>
       ))}
     </>

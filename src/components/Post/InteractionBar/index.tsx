@@ -1,6 +1,8 @@
 import { Heart, MessageCircle, Repeat2, Send } from "lucide-react";
 import { useState } from "react";
 import ReplyModal from "../ReplyModal";
+import RepostMenu from "../RepostMenu";
+import ShareMenu from "../ShareMenu";
 import type { InteractionBarProps } from "../type";
 
 const InteractionBar = ({
@@ -22,33 +24,33 @@ const InteractionBar = ({
 
   return (
     <>
-      <div className="flex gap-6 mt-3 text-foreground">
-        {/* Like */}
-        <button className="hover:text-red-500 flex items-center gap-1">
+      <div className="flex gap-6 mt-3 items-center text-foreground">
+        <button className="hover:text-red-500 flex items-center gap-1 cursor-pointer">
           <Heart size={18} />
           <span className="text-xs">{like}</span>
         </button>
 
-        {/* Comment */}
         <button
           onClick={handleReply}
-          className="hover:text-blue-500 flex items-center gap-1"
+          className="hover:text-blue-500 flex items-center gap-1 cursor-pointer"
         >
           <MessageCircle size={18} />
           <span className="text-xs">{message}</span>
         </button>
 
-        {/* Repost */}
-        <button className="hover:text-green-500 flex items-center gap-1">
-          <Repeat2 size={18} />
-          <span className="text-xs">{repost}</span>
-        </button>
+        <RepostMenu>
+          <button className="hover:text-green-500 flex items-center gap-1 cursor-pointer">
+            <Repeat2 size={18} />
+            <span className="text-xs">{repost}</span>
+          </button>
+        </RepostMenu>
 
-        {/* Share */}
-        <button className="hover:text-gray-700 flex items-center gap-1">
-          <Send size={18} />
-          <span className="text-xs">{share}</span>
-        </button>
+        <ShareMenu>
+          <button className="hover:text-gray-700 flex items-center gap-1 cursor-pointer">
+            <Send size={18} />
+            <span className="text-xs">{share}</span>
+          </button>
+        </ShareMenu>
       </div>
 
       {/* Modal Reply */}
