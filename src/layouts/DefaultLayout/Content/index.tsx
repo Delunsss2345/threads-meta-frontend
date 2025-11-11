@@ -13,7 +13,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
     Boolean(useSelector((state: RootState) => console.log(state.auth))) !==
     null;
   return (
-    <main className="w-[640px] h-full mx-auto text-foreground">
+    <main className="w-full sm:w-[640px] h-full mx-auto text-foreground">
       <Header />
       <HeaderMobile />
       <div

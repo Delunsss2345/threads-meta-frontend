@@ -7,7 +7,7 @@ const Header = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="hidden lg:block sticky top-0 bg-primary-foreground z-20 -mx-10">
+    <div className=" hidden lg:block sticky top-0 bg-primary-foreground z-10 -mx-10">
       <h1 className="text-center py-4 font-semibold text-lg">
         {t(`nav.${PAGE_TITLES_BY_PATH[pathname]}`)}
       </h1>
