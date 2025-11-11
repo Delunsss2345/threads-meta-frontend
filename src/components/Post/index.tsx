@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { AnimatePresence } from "framer-motion";
 import { Ellipsis } from "lucide-react"; // icon 3 chấm gọn nhẹ
 import { useRef, useState } from "react";
@@ -80,17 +79,7 @@ const Post = ({
               </span>
             </div>
 
-            <Menu
-              buttonActive={
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 p-0 text-muted-foreground hover:!bg-transparent"
-                >
-                  <Ellipsis className="w-4 h-4" />
-                </Button>
-              }
-            />
+            <Menu buttonActive={<Ellipsis className="w-4 h-4" />} />
           </div>
 
           <p className="text-foreground text-sm leading-relaxed mb-2">

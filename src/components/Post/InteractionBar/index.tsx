@@ -38,18 +38,14 @@ const InteractionBar = ({
           <span className="text-xs">{message}</span>
         </button>
 
-        <RepostMenu>
-          <button className="hover:text-green-500 flex items-center gap-1 cursor-pointer">
-            <Repeat2 size={18} />
-            <span className="text-xs">{repost}</span>
-          </button>
+        <RepostMenu className="hover:text-green-500 flex items-center gap-1 cursor-pointer !px-0">
+          <Repeat2 size={18} />
+          <span className="text-xs">{repost}</span>
         </RepostMenu>
 
-        <ShareMenu>
-          <button className="hover:text-gray-700 flex items-center gap-1 cursor-pointer">
-            <Send size={18} />
-            <span className="text-xs">{share}</span>
-          </button>
+        <ShareMenu className="hover:text-gray-700 flex items-center gap-1 cursor-pointer !px-0">
+          <Send size={18} />
+          <span className="text-xs">{share}</span>
         </ShareMenu>
       </div>
 

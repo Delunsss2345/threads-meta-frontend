@@ -12,7 +12,7 @@ interface DefaultLayoutProps {
 const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
   return (
     <Suspense fallback={<Loading />}>
-      <div className="bg-black min-h-screen">
+      <div className="bg-primary-foreground">
         <div className="hidden lg:block">
           <Navbar />
         </div>
