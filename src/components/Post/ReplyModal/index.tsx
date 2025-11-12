@@ -23,7 +23,7 @@ function ReplyModal({ onClose, user }: { onClose: () => void; user: User }) {
   }, [content]);
 
   return (
-    <ModalPopup className="bg-transparent" onClose={onClose}>
+    <ModalPopup onClose={onClose}>
       <Card className="p-0 gap-0 " onClick={(e) => e.stopPropagation()}>
         <Header headerText={t("post.replyTo")} onClose={onClose} />
         <CardContent className="p-4 pt-5">

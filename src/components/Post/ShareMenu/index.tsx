@@ -2,8 +2,9 @@ import MenuPopup from "@/components/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { Code, Image, Link2 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import ModalShare from "../ModalShare";
 
 const ShareMenu = ({
   children,
@@ -12,6 +13,8 @@ const ShareMenu = ({
   children: ReactNode;
   className: string;
 }) => {
+  const [openModalShareImage, setOpenModalShareImage] = useState(false);
+
   const { t } = useTranslation();
   const shareMenu = [
     {
@@ -21,6 +24,7 @@ const ShareMenu = ({
     {
       icon: <Image />,
       label: t("menu.copyAsImage"),
+      onclick: () => setOpenModalShareImage(true),
     },
     {
       icon: <Code />,
@@ -28,20 +32,27 @@ const ShareMenu = ({
     },
   ];
   return (
-    <MenuPopup
-      className={`${cn(`p-0 hover:!bg-transparent ${className}`)}`}
-      buttonActive={children}
-    >
-      {shareMenu.map((item, i) => (
-        <DropdownMenuItem
-          key={i}
-          className="flex items-center justify-between gap-2"
-        >
-          <span>{item.label}</span>
-          {item.icon}
-        </DropdownMenuItem>
-      ))}
-    </MenuPopup>
+    <>
+      <MenuPopup
+        className={`${cn(`p-0 hover:!bg-transparent ${className}`)}`}
+        buttonActive={children}
+      >
+        {shareMenu.map((item, i) => (
+          <DropdownMenuItem
+            key={i}
+            className="flex items-center justify-between gap-2"
+            onClick={item.onclick}
+          >
+            <span>{item.label}</span>
+            {item.icon}
+          </DropdownMenuItem>
+        ))}
+      </MenuPopup>
+
+      {openModalShareImage && (
+        <ModalShare onClose={() => setOpenModalShareImage(false)} />
+      )}
+    </>
   );
 };
 
