@@ -1,25 +1,28 @@
-import ModalPopup from "@/components/ModalPopup";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { motion } from "framer-motion";
 import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
-
-function NewPostModal({
-  onClose,
-  mode = "auto",
-}: {
-  onClose: () => void;
-  mode?: "subtract" | "auto";
-}) {
+function NewPostCustom({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
 
   return (
-    <ModalPopup mode={mode} onClose={onClose}>
-      <Card className="gap-0 p-0 " onClick={(e) => e.stopPropagation()}>
-        <Header headerText={t("post.newThread")} onClose={onClose} />
+    <motion.div
+      initial={{ opacity: 0, x: 100, y: 100, scale: 0.75 }}
+      animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+      exit={{ opacity: 0, x: 100, y: 100, scale: 0.75 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      style={{ transformOrigin: "bottom right" }}
+      className="w-full absolute -bottom-20 right-[360px] bg-background rounded-3xl mb-20 text-foreground  shadow-xl border-none sm:border"
+    >
+      <Card
+        className="gap-0 p-0 w-[450px] "
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Header mode="x" headerText={t("post.newThread")} onClose={onClose} />
         <CardContent className="p-4 pt-5">
           <div className="flex gap-3">
             <div className="flex flex-col items-center">
@@ -72,8 +75,8 @@ function NewPostModal({
 
         <Footer />
       </Card>
-    </ModalPopup>
+    </motion.div>
   );
 }
 
-export default NewPostModal;
+export default NewPostCustom;

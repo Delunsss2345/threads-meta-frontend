@@ -6,10 +6,12 @@ const ModalPopup = ({
   children,
   onClose,
   className,
+  mode = "auto",
 }: {
   children: ReactNode;
   onClose: () => void;
   className?: string;
+  mode?: "subtract" | "auto";
 }) => {
   return (
     <PortalModal>
@@ -26,7 +28,8 @@ const ModalPopup = ({
         transition={{ duration: 0.25, ease: "easeOut" }}
         className={`${cn(
           "fixed inset-0 bg-black/50 flex items-center pt-[10vh] justify-center z-20",
-          className
+          className,
+          mode === "subtract" ? "block absolute bg-transparent" : ""
         )}`}
       >
         <motion.div

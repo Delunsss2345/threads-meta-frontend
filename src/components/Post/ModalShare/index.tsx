@@ -25,7 +25,7 @@ const ModalShare = ({
         pixelRatio: 2,
       });
       const link = document.createElement("a");
-      link.download = "my-card.png";
+      link.download = "huydz.png";
       link.href = dataUrl;
       link.click();
     } catch (err) {
@@ -39,22 +39,22 @@ const ModalShare = ({
       <div className="p-10 relative rounded-tl-xl rounded-tr-xl bg-[#f5f5f5]">
         <div
           ref={ref}
-          className="relative rounded-2xl p-6 bg-primary-foreground"
+          className="relative p-6 rounded-2xl bg-primary-foreground"
         >
           <div className="flex items-center gap-2 mb-2">
             <Avatar className="w-6 h-6">
               <AvatarImage src={undefined} />
               <AvatarFallback>UB</AvatarFallback>
             </Avatar>
-            <span className="font-semibold text-sm">
+            <span className="text-sm font-semibold">
               {ctxPost?.post.username}
             </span>
           </div>
-          <div className=" text-black inline-block px-2 py-1 rounded text-sm font-medium">
+          <div className="inline-block px-2 py-1 text-sm font-medium text-black rounded ">
             {ctxPost?.post.content}
           </div>
 
-          <div className=" mt-2">
+          <div className="mt-2 ">
             <InteractionBar mode="share" />
           </div>
           <div className="absolute right-4 bottom-4 size-6">
@@ -72,15 +72,15 @@ const ModalShare = ({
           </div>
         </div>
 
-        <div className="absolute bottom-2 left-5 flex items-center gap-3">
+        <div className="absolute flex items-center gap-3 bottom-2 left-5">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 bg-white border-2 !border-blue-500 rounded-full"></div>
-            <div className="w-6 h-6 bg-black rounded-full  "></div>
+            <div className="w-6 h-6 bg-black rounded-full "></div>
           </div>
         </div>
       </div>
 
-      <div className="p-4 border-t flex items-center justify-between">
+      <div className="flex items-center justify-between p-4 border-t">
         <div className="flex items-center gap-2">
           <Checkbox
             className="!p-3 flex items-center border-0 justify-center rounded-full"
@@ -88,7 +88,7 @@ const ModalShare = ({
           />
           <label
             htmlFor="show-numbers"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+            className="text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             Hiển thị số liệu
           </label>

@@ -1,14 +1,15 @@
 import FeedTabs from "@/components/FeedTabs";
+import FixedNewPostButton from "@/components/FixedNewPostButton";
 import Post from "@/components/Post";
 import PostForm from "@/components/Post/PostForm";
 
 const Home = () => {
   return (
     <>
-      <div className="md:block hidden">
+      <div className="hidden md:block">
         <PostForm />
       </div>
-      <div className="md:hidden block">
+      <div className="block md:hidden">
         <FeedTabs />
       </div>
       <Post
@@ -617,6 +618,7 @@ const Home = () => {
         repost={97}
         share={45}
       />
+      <FixedNewPostButton />
     </>
   );
 };

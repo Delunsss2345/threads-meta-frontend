@@ -1,9 +1,14 @@
+import FavoriteIcon from "@/components/Icon/FavoriteIcon";
+import HomeIcon from "@/components/Icon/HomeIcon";
+import SearchIcon from "@/components/Icon/SearchIcon";
+import SubtractIcon from "@/components/Icon/SubtractIcon";
+import UserIcon from "@/components/Icon/UserIcon";
 import AuthSocialModal from "@/components/LoginModal";
 import Logo from "@/components/Logo";
 import NewPostModal from "@/components/Post/NewPostModal";
 import { useCurrentUser } from "@/features/auth/hook";
 import { AnimatePresence } from "framer-motion";
-import { Heart, Home, Menu, Plus, Search, User } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -11,23 +16,23 @@ import NavItem from "./NavItem";
 import SlideUpMenu from "./SideUpMenu";
 
 const navItems = [
-  { key: "home", icon: <Home size={25} />, link: "/" },
-  { key: "search", icon: <Search size={25} />, link: "/search" },
+  { key: "home", icon: <HomeIcon size={25} />, link: "/" },
+  { key: "search", icon: <SearchIcon size={25} />, link: "/search" },
   {
     key: "write",
-    icon: <Plus size={20} strokeWidth={2.5} />,
+    icon: <SubtractIcon size={20} />,
 
     isAuth: true,
   },
   {
     key: "activity",
-    icon: <Heart size={25} />,
+    icon: <FavoriteIcon size={25} />,
     link: "/activity",
     isAuth: true,
   },
   {
     key: "profile",
-    icon: <User size={25} />,
+    icon: <UserIcon size={25} />,
     link: "/profile",
     isAuth: true,
   },
@@ -55,7 +60,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center h-screen p-3 bg-background border-border">
+    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center h-screen py-3 bg-background border-border">
       {/* Logo */}
       <div
         onClick={() => {

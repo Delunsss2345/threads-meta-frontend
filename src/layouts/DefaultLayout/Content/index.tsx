@@ -13,19 +13,19 @@ const Content: React.FC<ContentProps> = ({ children }) => {
     Boolean(useSelector((state: RootState) => console.log(state.auth))) !==
     null;
   return (
-    <main className="main-container w-full h-full mx-auto text-foreground">
+    <main className="w-full h-full min-h-screen mx-auto main-container text-foreground">
       <HeaderMobile />
       <div className="mt-[50px] sm:mt-0 grid grid-flow-col h-full justify-center items-start gap-5 dynamic-columns">
         <div className="column">
           <Header />
-          <div className="column-container h-full  relative z-0 pt-6 flex-1 shadow bg-primary-foreground border-l border-r border-b overflow-hidden">
+          <div className="relative z-0 flex-1 h-full min-h-screen pt-6 overflow-hidden border-b border-l border-r shadow column-container bg-primary-foreground">
             {children}
           </div>
         </div>
 
         {/* <div className=" column">
           <Header />
-          <div className="column-container h-full relative z-0 pt-6 flex-1 shadow bg-primary-foreground border-l border-r border-b overflow-hidden">
+          <div className="relative z-0 flex-1 h-full pt-6 overflow-hidden border-b border-l border-r shadow column-container bg-primary-foreground">
             {children}
           </div>
         </div> */}

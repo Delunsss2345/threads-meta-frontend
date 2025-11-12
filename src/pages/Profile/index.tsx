@@ -1,6 +1,6 @@
 import AvatarGroup from "@/components/AvatarGroup";
+import PostForm from "@/components/Post/PostForm";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   BarChart3,
@@ -86,21 +86,7 @@ const Profile = () => {
         </TabsList>
       </Tabs>
 
-      <div className="flex items-center gap-3 pb-6 mb-8 border-b border-border">
-        <AvatarGroup
-          size={10}
-          url="htt"
-          fallBack="PH"
-          classNameFallback="bg-primary-foreground"
-        />
-        <Input
-          type="text"
-          placeholder={t("profile.whatsNew")}
-          className="flex-1 bg-transparent border-none text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
-        />
-        <Button variant="outline">{t("common.post")}</Button>
-      </div>
-
+      <PostForm />
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">
