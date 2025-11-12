@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.interactionButton {
+  @apply flex items-center gap-1 cursor-pointer;
+}

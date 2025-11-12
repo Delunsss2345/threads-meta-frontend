@@ -3,14 +3,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
-import type { User } from "../type";
+import { PostContext } from "../PostContext";
 
-function ReplyModal({ onClose, user }: { onClose: () => void; user: User }) {
+function ReplyModal({ onClose }: { onClose: () => void }) {
   const [content, setContent] = useState("");
+  const ctxPost = useContext(PostContext);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { t } = useTranslation();
 
@@ -21,7 +22,6 @@ function ReplyModal({ onClose, user }: { onClose: () => void; user: User }) {
         textareaRef.current.scrollHeight + "px";
     }
   }, [content]);
-
   return (
     <ModalPopup onClose={onClose}>
       <Card className="p-0 gap-0 " onClick={(e) => e.stopPropagation()}>
@@ -30,7 +30,10 @@ function ReplyModal({ onClose, user }: { onClose: () => void; user: User }) {
           <div className="flex gap-3">
             <div className="flex flex-col items-center">
               <Avatar className="w-10 h-10 cursor-pointer hover:opacity-90 transition-opacity">
-                <AvatarImage src={`${user.avatar}`} alt="@huydarealest" />
+                <AvatarImage
+                  src={`${ctxPost?.post.avatar}`}
+                  alt="@huydarealest"
+                />
                 <AvatarFallback>HD</AvatarFallback>
               </Avatar>
               <div className="w-[2px] flex-1 bg-border my-2 min-h-[40px] rounded-full"></div>
@@ -39,10 +42,10 @@ function ReplyModal({ onClose, user }: { onClose: () => void; user: User }) {
             <div className="flex-1 space-y-4 pt-1">
               <div>
                 <div className="font-semibold text-sm leading-none mb-1">
-                  <span>{user.username}</span>
+                  <span>{ctxPost?.post.username}</span>
                 </div>
 
-                <span>{user.content}</span>
+                <span>{ctxPost?.post.content}</span>
               </div>
             </div>
           </div>

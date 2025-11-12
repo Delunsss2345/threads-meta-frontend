@@ -27,6 +27,7 @@ export const UserPreviewCard = ({
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="absolute z-50 w-64 bg-card text-card-foreground rounded-xl shadow-lg border border-border p-4"
     >
+      {/* Header */}
       <div className="flex items-center gap-3 mb-3">
         <img
           src={
@@ -42,14 +43,17 @@ export const UserPreviewCard = ({
         </div>
       </div>
 
+      {/* Bio */}
       {bio && <p className="text-sm mb-2">{bio}</p>}
 
+      {/* Followers */}
       <p className="text-muted-foreground text-sm mb-3">
         {followers} {t("common.followers")}
       </p>
 
+      {/* Follow button */}
       <Button className="w-full bg-foreground text-background font-semibold rounded-lg hover:opacity-90 transition">
-        {t("common", "follow")}
+        {t("common.follow")}
       </Button>
     </motion.div>
   );

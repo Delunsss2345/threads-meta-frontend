@@ -1,5 +1,5 @@
 interface PostProps {
-  author: string;
+  username: string;
   time: string;
   content: string;
   verified?: boolean;
@@ -13,19 +13,24 @@ interface PostProps {
 }
 
 interface InteractionBarProps {
-  like?: number;
-  message?: number;
-  repost?: number;
-  share?: number;
-  user: User;
+  mode: "auto" | "share";
 }
 
 interface User {
   avatar?: string;
   username: string;
+}
+
+interface Post extends User {
+  like?: number;
+  message?: number;
+  repost?: number;
+  verified: boolean;
+  share?: number;
+  time: String;
   content: string;
-  file?: File;
+  file?: File | undefined;
   image?: string | string[];
 }
 
-export type { InteractionBarProps, PostProps, User };
+export type { InteractionBarProps, Post, PostProps, User };

@@ -14,7 +14,12 @@ const ModalPopup = ({
   return (
     <PortalModal>
       <motion.div
-        onClick={onClose}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            onClose();
+            e.stopPropagation();
+          }
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

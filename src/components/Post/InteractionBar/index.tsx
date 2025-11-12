@@ -1,22 +1,15 @@
 import { Heart, MessageCircle, Repeat2, Send } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PostContext } from "../PostContext";
 import ReplyModal from "../ReplyModal";
 import RepostMenu from "../RepostMenu";
 import ShareMenu from "../ShareMenu";
 import type { InteractionBarProps } from "../type";
+import styles from "./interactionbar.module.css";
 
-const InteractionBar = ({
-  like = 0,
-  message = 0,
-  repost = 0,
-  share = 0,
-  user,
-}: InteractionBarProps) => {
-  const { avatar, username, content } = user;
+const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
+  const ctx = useContext(PostContext);
   const [openModalReply, setOpenModalReply] = useState(false);
-  if (!avatar || !username || !content) {
-    return null;
-  }
 
   const handleReply = () => {
     setOpenModalReply(true);
@@ -24,34 +17,38 @@ const InteractionBar = ({
 
   return (
     <>
-      <div className="flex gap-6 mt-3 items-center text-foreground">
-        <button className="hover:text-red-500 flex items-center gap-1 cursor-pointer">
+      <div
+        className={`flex text-foreground items-center gap-4 ${
+          mode === "share" ? "pointer-events-none opacity-50" : ""
+        }`}
+      >
+        <button className={`hover:text-red-500 ${styles.interactionButton}`}>
           <Heart size={18} />
-          <span className="text-xs">{like}</span>
+          <span className="text-xs">{ctx?.post.like || 0}</span>
         </button>
 
         <button
           onClick={handleReply}
-          className="hover:text-blue-500 flex items-center gap-1 cursor-pointer"
+          className={`hover:text-blue-500 ${styles.interactionButton}`}
         >
           <MessageCircle size={18} />
-          <span className="text-xs">{message}</span>
+          <span className="text-xs">{ctx?.post.message || 0}</span>
         </button>
 
-        <RepostMenu className="hover:text-green-500 flex items-center gap-1 cursor-pointer !px-0">
+        <RepostMenu className={`hover:text-green-500 !px-0 ${styles.interactionButton}`}>
           <Repeat2 size={18} />
-          <span className="text-xs">{repost}</span>
+          <span className="text-xs">{ctx?.post.repost || 0}</span>
         </RepostMenu>
 
-        <ShareMenu className="hover:text-gray-700 flex items-center gap-1 cursor-pointer !px-0">
+        <ShareMenu className={`hover:text-gray-700 !px-0 ${styles.interactionButton}`}>
           <Send size={18} />
-          <span className="text-xs">{share}</span>
+          <span className="text-xs">{ctx?.post.share || 0}</span>
         </ShareMenu>
       </div>
 
       {/* Modal Reply */}
       {openModalReply && (
-        <ReplyModal user={user} onClose={() => setOpenModalReply(false)} />
+        <ReplyModal onClose={() => setOpenModalReply(false)} />
       )}
     </>
   );

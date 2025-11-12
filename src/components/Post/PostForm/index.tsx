@@ -28,7 +28,7 @@ export default function PostForm() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder={t("post.whatsNew")}
-            className="placeholder:align-middle h-auto !bg-transparent rounded-none  px-2 text-foreground-100 border-none resize-none focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
+            className="placeholder:align-middle h-auto !bg-transparent rounded-none px-2 text-foreground-100 border-none resize-none focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
             rows={1}
           />
         </div>

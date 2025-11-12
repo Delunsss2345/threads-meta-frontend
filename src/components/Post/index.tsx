@@ -1,13 +1,14 @@
 import { AnimatePresence } from "framer-motion";
-import { Ellipsis } from "lucide-react"; // icon 3 chấm gọn nhẹ
+import { Ellipsis } from "lucide-react";
 import { useRef, useState } from "react";
 import { UserPreviewCard } from "../UserPreview";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
+import PostProvider from "./PostContext";
 import type { PostProps } from "./type";
 
 const Post = ({
-  author,
+  username,
   time,
   content,
   verified = false,
@@ -15,6 +16,8 @@ const Post = ({
   message = 0,
   repost = 0,
   share = 0,
+  file,
+  image,
   avatar,
 }: PostProps) => {
   const [open, setOpen] = useState(false);
@@ -29,30 +32,30 @@ const Post = ({
   };
 
   return (
-    <div className="border-border border-t border-b cursor-pointer ">
+    <div className="border-border border-t border-b cursor-pointer">
       <div className="flex gap-3 px-6 py-3 relative">
         {/* Avatar */}
         {avatar ? (
           <img
             src={avatar}
-            alt={`${author} avatar`}
-            className="w-10 h-10 rounded-full object-cover "
+            alt={`${username} avatar`}
+            className="w-10 h-10 rounded-full object-cover"
           />
         ) : (
-          <div className="w-10 h-10 rounded-full " />
+          <div className="w-10 h-10 rounded-full" />
         )}
 
         {/* Nội dung */}
         <div className="flex-1">
           {/* Header */}
-          <div className="flex items-center justify-between mb-1 ">
+          <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-2">
               <span
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 className="relative font-semibold text-foreground"
               >
-                {author}
+                {username}
                 <AnimatePresence>
                   {open && (
                     <UserPreviewCard
@@ -86,14 +89,23 @@ const Post = ({
             {content}
           </p>
 
-          {/* Thanh tương tác */}
-          <InteractionBar
-            user={{ avatar, username: author, content: content }}
-            like={like}
-            message={message}
-            repost={repost}
-            share={share}
-          />
+          <PostProvider
+            post={{
+              username,
+              time,
+              content,
+              verified,
+              like,
+              message,
+              repost,
+              share,
+              file: undefined,
+              image,
+              avatar,
+            }}
+          >
+            <InteractionBar mode="auto" />
+          </PostProvider>
         </div>
       </div>
     </div>

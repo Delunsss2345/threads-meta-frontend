@@ -12,6 +12,7 @@ const ShareMenu = ({
 }: {
   children: ReactNode;
   className: string;
+  post?: any;
 }) => {
   const [openModalShareImage, setOpenModalShareImage] = useState(false);
 

@@ -1,4 +1,3 @@
-// src/components/activity/ActivityItem.tsx
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Eye, Heart, MessageCircle, Repeat2 } from "lucide-react";
