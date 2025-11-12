@@ -33,7 +33,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onRegister)}
-        className="space-y-3 flex flex-col items-center"
+        className="flex flex-col items-center space-y-3"
         noValidate
       >
         {/* Username */}
@@ -99,7 +99,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
         {/* Submit button */}
         <Button
           type="submit"
-          className="w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
+          className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >
           {t("auth.register")}
         </Button>
@@ -107,7 +107,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
         {/* Link */}
         <NavLink
           to="/login"
-          className="w-90 text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
+          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground"
         >
           {t("auth.alreadyHaveAccount")}
         </NavLink>

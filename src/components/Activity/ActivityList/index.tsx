@@ -10,11 +10,11 @@ export default function ActivityList({ activities }: Props) {
   const { t } = useTranslation();
 
   return (
-    <div className="bg-card rounded-xl p-4">
-      <h2 className="text-lg font-semibold mb-4">
+    <div className="h-full px-6 bg-primary-foreground rounded-xl">
+      <h2 className="mb-4 text-lg font-semibold">
         {t("activity.recentActivity")}
       </h2>
-      <div className="space-y-0">
+      <div className="h-full space-y-0 ">
         {activities.map((act) => (
           <ActivityItem key={act.id} activity={act} />
         ))}

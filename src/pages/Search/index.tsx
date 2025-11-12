@@ -38,37 +38,39 @@ const SearchPage = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="sticky top-0 z-10 bg-background border-b border-border">
-        <div className="max-w-2xl mx-auto p-4">
+    <div className="h-full min-h-screen bg-primary-foreground">
+      <div className="sticky top-0 z-10 border-b bg-primary-foreground border-border">
+        <div className="max-w-2xl p-4 mx-auto">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Search className="absolute w-5 h-5 -translate-y-1/2 left-3 top-1/2 text-muted-foreground" />
             <Input
               placeholder={t("search.placeholder")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="pl-10 pr-10 h-11 rounded-full bg-muted/50 focus:bg-background"
+              className="pl-10 pr-10 rounded-full h-11 bg-muted/50 focus:bg-private name() {
+                
+              }"
             />
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute -translate-y-1/2 right-3 top-1/2 text-muted-foreground hover:text-foreground"
               >
-                <X className="h-5 w-5" />
+                <X className="w-5 h-5" />
               </button>
             )}
           </div>
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto p-4 pb-20">
+      <div className="max-w-2xl p-4 pb-20 mx-auto">
         {query ? (
           <div className="mt-6">
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="mb-4 text-sm text-muted-foreground">
               Kết quả cho "
               <span className="font-medium text-foreground">{query}</span>"
             </p>
-            <div className="bg-muted/30 rounded-lg space-y-3 text-center text-muted-foreground">
+            <div className="space-y-3 text-center rounded-lg bg-muted/30 text-muted-foreground">
               {Array.from({ length: 10 }).map((_, index) => (
                 <SkeletonSearch key={index} />
               ))}

@@ -6,12 +6,12 @@ interface Props {
   suggestions: FollowSuggestion[];
 }
 
-export default function FollowSuggestionList({ suggestions }: Props) {
+const FollowSuggestionList = ({ suggestions }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <div className="bg-card rounded-xl p-4">
-      <h3 className="text-sm font-semibold text-muted-foreground mb-3">
+    <div className="p-4 bg-primary-foreground rounded-xl">
+      <h3 className="mb-3 text-sm font-semibold text-muted-foreground">
         {t("activity.suggestions")}
       </h3>
       <div className="space-y-1">
@@ -21,4 +21,6 @@ export default function FollowSuggestionList({ suggestions }: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default FollowSuggestionList;

@@ -1,5 +1,4 @@
 import AvatarGroup from "@/components/AvatarGroup";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -22,11 +21,11 @@ const Profile = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="px-6">
+    <div className="h-full px-6 mb-10">
       {/* Header Section */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold mb-1">Phạm Thanh Huy</h1>
+          <h1 className="mb-1 text-2xl font-bold">Phạm Thanh Huy</h1>
           <p className="text-gray-400">huydarealest</p>
         </div>
         <AvatarGroup
@@ -44,14 +43,14 @@ const Profile = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="transition-colors text-muted-foreground hover:text-foreground"
           >
             <BarChart3 className="size-6" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="transition-colors text-muted-foreground hover:text-foreground"
           >
             <Instagram className="size-6" />
           </Button>
@@ -62,39 +61,32 @@ const Profile = () => {
         {t("profile.editProfile")}
       </Button>
 
-      <Tabs defaultValue={activeTab} className="mb-6">
-        <TabsList className="w-full bg-transparent border-b border-border rounded-none h-auto p-0">
-          <TabsTrigger
-            value="thread"
-            className="flex-1 py-3 border-0 rounded-none text-muted-foreground transition-colors data-[state=active]:text-foreground data-[state=active]:border-b-2 data-[state=active]:border-foreground"
-          >
-            {t("profile.thread")}
-          </TabsTrigger>
-          <TabsTrigger
-            onClick={() => setActiveTab("replies")}
-            value="replies"
-            className="flex-1 py-3 border-0 rounded-none text-muted-foreground transition-colors data-[state=active]:text-foreground data-[state=active]:border-b-2 data-[state=active]:border-foreground"
-          >
-            {t("profile.threadReplies")}
-          </TabsTrigger>
-          <TabsTrigger
-            onClick={() => setActiveTab("media")}
-            value="media"
-            className="flex-1 py-3 border-0 rounded-none text-muted-foreground transition-colors data-[state=active]:text-foreground data-[state=active]:border-b-2 data-[state=active]:border-foreground"
-          >
-            {t("profile.mediaFiles")}
-          </TabsTrigger>
-          <TabsTrigger
-            onClick={() => setActiveTab("reposts")}
-            value="reposts"
-            className="flex-1 py-3 border-0 rounded-none text-muted-foreground transition-colors data-[state=active]:text-foreground data-[state=active]:border-b-2 data-[state=active]:border-foreground"
-          >
-            {t("common.reposts")}
-          </TabsTrigger>
+      <Tabs defaultValue={activeTab} className="mb-4">
+        <TabsList className="w-full h-auto p-0 bg-transparent border-b rounded-none border-border/60">
+          {[
+            { value: "thread", label: t("profile.thread") },
+            { value: "replies", label: t("profile.threadReplies") },
+            { value: "media", label: t("profile.mediaFiles") },
+            { value: "reposts", label: t("common.reposts") },
+          ].map((tab) => (
+            <TabsTrigger
+              key={tab.value}
+              value={tab.value}
+              onClick={() => setActiveTab(tab.value)}
+              className="flex-1 py-2 text-sm font-medium border-0 rounded-none 
+          text-muted-foreground transition-all duration-150 !shadow-none
+          data-[state=active]:text-foreground data-[state=active]:border-b-[1px] data-[state=active]:!border-b-accent-foreground
+          hover:text-foreground/90 data-[state=active]:!bg-transparent
+          focus-visible:ring-0 focus-visible:ring-offset-0
+          active:shadow-none focus:shadow-none transition-none"
+            >
+              {tab.label}
+            </TabsTrigger>
+          ))}
         </TabsList>
       </Tabs>
 
-      <div className="flex gap-3 items-center mb-8 pb-6 border-b border-border">
+      <div className="flex items-center gap-3 pb-6 mb-8 border-b border-border">
         <AvatarGroup
           size={10}
           url="htt"
@@ -120,27 +112,26 @@ const Profile = () => {
         <CardStepupProfile />
       </div>
 
-      {/* First Thread */}
       <div className="flex items-center gap-3 mb-4">
         <Star className="w-5 h-5 text-gray-500" />
         <span className="text-gray-400">{t("profile.firstThread")}</span>
       </div>
 
-      {/* Thread Post */}
       <div className="flex gap-3">
-        <Avatar className="w-10 h-10">
-          <AvatarFallback className="bg-gradient-to-r from-pink-500 to-red-500 text-white">
-            PH
-          </AvatarFallback>
-        </Avatar>
+        <AvatarGroup
+          size={8}
+          url="l"
+          fallBack="PH"
+          classNameFallback="bg-primary-foreground"
+        ></AvatarGroup>
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
             <span className="font-semibold">huydarealest</span>
-            <span className="text-muted-foreground text-sm">1 phút</span>
+            <span className="text-sm text-muted-foreground">1 phút</span>
             <Button
               variant="ghost"
               size="icon"
-              className="ml-auto text-muted-foreground hover:text-foreground h-8 w-8"
+              className="w-8 h-8 ml-auto text-muted-foreground hover:text-foreground"
             >
               <MoreHorizontal className="w-5 h-5" />
             </Button>
@@ -150,28 +141,28 @@ const Profile = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+              className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
             >
               <Heart className="w-5 h-5" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+              className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
             >
               <MessageCircle className="w-5 h-5" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+              className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
             >
               <Repeat2 className="w-5 h-5" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+              className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
             >
               <Send className="w-5 h-5" />
             </Button>

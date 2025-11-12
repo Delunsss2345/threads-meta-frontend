@@ -55,14 +55,20 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-background border-border h-screen fixed left-0 top-0 flex flex-col items-center p-3 z-20">
+    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center h-screen p-3 bg-background border-border">
       {/* Logo */}
-      <div className="mb-8 size-10 hover:scale-110 transition cursor-pointer">
+      <div
+        onClick={() => {
+          navigate("/");
+          setActiveNav("home");
+        }}
+        className="mb-8 transition cursor-pointer size-10 hover:scale-110"
+      >
         <Logo />
       </div>
 
       {/* Navigation Items */}
-      <div className="space-y-1 flex-1 gap-5 flex flex-col justify-center">
+      <div className="flex flex-col justify-center flex-1 gap-5 space-y-1">
         {navItems.map((item) => (
           <NavItem
             key={item.key}
@@ -85,7 +91,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Bottom Items */}
-      <div className="space-y-1 border-t border-border pt-4">
+      <div className="pt-4 space-y-1 border-t border-border">
         <SlideUpMenu>
           <NavItem
             className="hover:bg-transparent hover:text-current"

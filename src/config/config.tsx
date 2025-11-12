@@ -6,6 +6,7 @@ import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import Home from "@/pages/Home";
+import PostDetail from "@/pages/PostDetail";
 import ProfilePage from "@/pages/Profile";
 import SearchPage from "@/pages/Search";
 import { type RouteObject } from "react-router-dom";
@@ -30,6 +31,10 @@ export const config: RouteObject[] = [
       {
         path: "/search",
         element: <SearchPage />,
+      },
+      {
+        path: "/detail",
+        element: <PostDetail />,
       },
       {
         path: "/activity",

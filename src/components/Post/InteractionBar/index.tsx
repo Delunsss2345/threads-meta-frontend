@@ -35,19 +35,23 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
           <span className="text-xs">{ctx?.post.message || 0}</span>
         </button>
 
-        <RepostMenu className={`hover:text-green-500 !px-0 ${styles.interactionButton}`}>
+        <RepostMenu
+          className={`hover:text-green-500 !px-0 ${styles.interactionButton}`}
+        >
           <Repeat2 size={18} />
           <span className="text-xs">{ctx?.post.repost || 0}</span>
         </RepostMenu>
 
-        <ShareMenu className={`hover:text-gray-700 !px-0 ${styles.interactionButton}`}>
+        <ShareMenu
+          className={`hover:text-gray-700 !px-0 ${styles.interactionButton}`}
+        >
           <Send size={18} />
           <span className="text-xs">{ctx?.post.share || 0}</span>
         </ShareMenu>
       </div>
 
       {/* Modal Reply */}
-      {openModalReply && (
+      {mode === "auto" && openModalReply && (
         <ReplyModal onClose={() => setOpenModalReply(false)} />
       )}
     </>

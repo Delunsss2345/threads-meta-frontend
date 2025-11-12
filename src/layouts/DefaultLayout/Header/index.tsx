@@ -7,20 +7,22 @@ const Header = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="hidden lg:block sticky top-0 bg-primary-foreground z-4 -mx-5">
-      <h1 className="text-center py-4 font-semibold text-lg">
-        {t(`nav.${PAGE_TITLES_BY_PATH[pathname]}`)}
+    <div className="sticky top-0 hidden -mx-5 lg:block bg-background z-4">
+      <h1 className="py-4 text-lg font-semibold text-center">
+        {!PAGE_TITLES_BY_PATH[pathname]
+          ? "Threads"
+          : t(`nav.${PAGE_TITLES_BY_PATH[pathname]}`)}
       </h1>
 
-      <div className="absolute top-[60px] left-1/2 -translate-x-1/2 w-[640px] flex  justify-between">
-        <div className="absolute -left-3 bg-primary-foreground -top-[12px] overflow-hidden w-[36px] h-[36px]">
-          <div className="absolute w-[48px] h-[48px] top-[12px] left-[12px] rounded-full border border shadow-sm"></div>
+      <div className="absolute top-[60px] left-1/2  -translate-x-1/2 w-[640px] flex  justify-between">
+        <div className="absolute -left-3  bg-background   -top-[12px] overflow-hidden w-[36px] h-[36px]">
+          <div className="absolute w-[48px] h-[48px] bg-primary-foreground  top-[12px] left-[12px] rounded-full border border shadow-sm"></div>
         </div>
 
         <div className="flex-1 h-[2px]  border-t border-gray-200"></div>
-        <div className="absolute -right-3 -top-[12px] bg-primary-foreground overflow-hidden w-[36px] h-[36px]">
+        <div className="absolute -right-3 -top-[12px] bg-background overflow-hidden w-[36px] h-[36px]">
           <div
-            className="absolute w-[48px] h-[48px] top-[12px] right-[12px] rounded-full 
+            className="absolute w-[48px] h-[48px] top-[12px] right-[12px]  bg-primary-foreground  rounded-full 
                border border 
                shadow-sm"
           ></div>

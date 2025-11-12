@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { Input } from "../ui/input";
-
 interface LoginFormProps {
   onLogin: (values: LoginSchemaBodyType) => void;
 }
@@ -24,34 +23,30 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       password: "",
     },
   });
-
   useDebounceInput<LoginSchemaBodyType>({ form });
-
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onLogin)}
-        className="space-y-3 flex flex-col items-center"
+        className="flex flex-col items-center space-y-3"
         noValidate
       >
-        {/* Username */}
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem className="w-[22.5rem]">
+            <FormItem className="w-90">
               <Input placeholder={t("auth.usernamePlaceholder")} {...field} />
               <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* Password */}
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem className="w-[22.5rem]">
+            <FormItem className="w-90">
               <Input
                 type="password"
                 placeholder={t("auth.passwordPlaceholder")}
@@ -62,10 +57,9 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           )}
         />
 
-        {/* Submit */}
         <Button
           type="submit"
-          className="w-[22.5rem] bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
+          className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >
           {t("auth.login")}
         </Button>
@@ -73,14 +67,14 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         {/* Links */}
         <NavLink
           to="/forgot-password"
-          className="w-[22.5rem] text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
+          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground"
         >
           {t("auth.forgotPassword")}
         </NavLink>
 
         <NavLink
           to="/register"
-          className="w-[22.5rem] text-sm text-muted-foreground hover:text-foreground transition-colors mt-2 block text-center"
+          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground"
         >
           {t("auth.dontHaveAccount")} {t("auth.register")}
         </NavLink>

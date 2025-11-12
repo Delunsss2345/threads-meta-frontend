@@ -10,18 +10,16 @@ interface Props {
 export default function ActivityItem({ activity }: Props) {
   return (
     <div className="flex gap-3 py-3 border-b border-border last:border-0">
-      {/* Avatar + loại hoạt động */}
       <div className="flex flex-col items-center">
-        <Avatar className="h-10 w-10">
+        <Avatar className="w-10 h-10">
           <AvatarImage src={activity.avatar} alt={activity.username} />
           <AvatarFallback>{activity.displayName[0]}</AvatarFallback>
         </Avatar>
         {activity.type === "follow" && (
-          <div className="h-8 w-px bg-border mt-2" />
+          <div className="w-px h-8 mt-2 bg-border" />
         )}
       </div>
-        
-      {/* Nội dung */}
+
       <div className="flex-1">
         <div className="flex items-center gap-1 text-xs text-muted-foreground">
           <span className="font-medium text-foreground">
@@ -32,35 +30,34 @@ export default function ActivityItem({ activity }: Props) {
         </div>
 
         {activity.type === "thread" ? (
-          <p className="text-sm mt-1 text-foreground">{activity.content}</p>
+          <p className="mt-1 text-sm text-foreground">{activity.content}</p>
         ) : (
-          <p className="text-sm mt-1 text-muted-foreground">Gợi ý theo dõi</p>
+          <p className="mt-1 text-sm text-muted-foreground">Gợi ý theo dõi</p>
         )}
 
-        {/* Thống kê (chỉ có ở thread) */}
         {activity.type === "thread" && (
           <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
             {activity.likes !== undefined && (
-              <button className="flex items-center gap-1 hover:text-red-500 transition-colors">
-                <Heart className="h-4 w-4" />
+              <button className="flex items-center gap-1 transition-colors hover:text-red-500">
+                <Heart className="w-4 h-4" />
                 <span>{activity.likes}</span>
               </button>
             )}
             {activity.comments !== undefined && (
-              <button className="flex items-center gap-1 hover:text-blue-500 transition-colors">
-                <MessageCircle className="h-4 w-4" />
+              <button className="flex items-center gap-1 transition-colors hover:text-blue-500">
+                <MessageCircle className="w-4 h-4" />
                 <span>{activity.comments}</span>
               </button>
             )}
             {activity.reposts !== undefined && (
-              <button className="flex items-center gap-1 hover:text-green-500 transition-colors">
-                <Repeat2 className="h-4 w-4" />
+              <button className="flex items-center gap-1 transition-colors hover:text-green-500">
+                <Repeat2 className="w-4 h-4" />
                 <span>{activity.reposts}</span>
               </button>
             )}
             {activity.views !== undefined && (
               <div className="flex items-center gap-1">
-                <Eye className="h-4 w-4" />
+                <Eye className="w-4 h-4" />
                 <span>{activity.views}</span>
               </div>
             )}
@@ -68,9 +65,8 @@ export default function ActivityItem({ activity }: Props) {
         )}
       </div>
 
-      {/* Nút Theo dõi (chỉ ở gợi ý) */}
       {activity.type === "follow" && (
-        <Button size="sm" className="rounded-full h-8">
+        <Button size="sm" className="h-8 rounded-full">
           Theo dõi
         </Button>
       )}

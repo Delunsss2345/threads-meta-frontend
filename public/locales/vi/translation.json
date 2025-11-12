@@ -63,7 +63,15 @@
     "createThreadDesc": "Cho mọi người biết bạn đang nghĩ gì hoặc chia sẻ về một hoạt động mới.",
     "createNow": "Tạo ngay",
     "created": "Đã tạo",
-    "done": "Đã xong"
+    "done": "Đã xong",
+    "addAvatar": "Thêm ảnh đại diện",
+    "addAvatarDesc": "Giúp mọi người dễ dàng nhận ra bạn hơn",
+    "button": {
+      "follow": "Theo dõi",
+      "addBio": "Thêm tiểu sử",
+      "postThread": "Đăng bài viết",
+      "uploadAvatar": "Tải ảnh đại diện"
+    }
   },
   "activity": {
     "recentActivity": "Hoạt động gần đây",

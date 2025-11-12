@@ -12,8 +12,8 @@ const FeedTabs: React.FC = () => {
   ];
 
   return (
-    <div className="sticky top-12 z-30 bg-background border-b border-border">
-      <div className="flex justify-around text-sm font-medium text-muted-foreground relative">
+    <div className="sticky z-30 border-b top-12 bg-primary-foreground border-border">
+      <div className="relative flex justify-around text-sm font-medium text-muted-foreground">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.key;
           return (

@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type AvatarGroupProps = {
   size: number;
-  classNameFallback: string;
+  classNameFallback?: string;
   url: string;
   fallBack?: string;
 };

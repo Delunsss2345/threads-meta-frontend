@@ -63,7 +63,15 @@
     "createThreadDesc": "Let people know what you're thinking or share about a new activity.",
     "createNow": "Create now",
     "created": "Created",
-    "done": "Done"
+    "done": "Done",
+    "addAvatar": "Add avatar",
+    "addAvatarDesc": "Help people easily recognize you",
+    "button": {
+      "follow": "Follow",
+      "addBio": "Add bio",
+      "postThread": "Post thread",
+      "uploadAvatar": "Upload avatar"
+    }
   },
   "activity": {
     "recentActivity": "Recent activity",
