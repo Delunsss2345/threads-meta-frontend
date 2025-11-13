@@ -61,7 +61,7 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
 }
 
 .column > .column-container {
-  height: auto;
+  height: calc(100vh - 60px);
 }
 
 @media (min-width: 640px) {
@@ -85,6 +85,7 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
 
   .dynamic-columns:has(> .column:nth-child(3)) > .column {
     width: 480px;
+    height: 20px;
     flex-shrink: 0;
   }
 
@@ -92,9 +93,8 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
     width: 480px;
   }
 
-  .dynamic-columns:has(> .column:nth-child(2)) .column-container {
-    height: 100vh;
-    overflow-y: scroll !important;
+  .dynamic-columns:has(> .column:nth-child(3)) .column-container {
+    overflow-y: auto;
   }
 }
 
