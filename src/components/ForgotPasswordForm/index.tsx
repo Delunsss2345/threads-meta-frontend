@@ -6,7 +6,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Form, FormField, FormItem, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
@@ -26,6 +26,7 @@ export const ForgotPasswordForm = ({
       email: "",
     },
   });
+  const navigate = useNavigate();
 
   useDebounceInput<ForgotPasswordSchemaBodyType>({ form });
   return (
@@ -66,12 +67,12 @@ export const ForgotPasswordForm = ({
             {t("auth.sendResetLink")}
           </Button>
 
-          <NavLink
-            to="/login"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center"
+          <p
+            onClick={() => navigate("/login", { replace: true })}
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block text-center cursor-pointer"
           >
             {t("auth.backToLogin")}
-          </NavLink>
+          </p>
         </form>
       </Form>
     </div>

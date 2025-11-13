@@ -151,5 +151,10 @@
     "search": "Tìm kiếm",
     "activity": "Hoạt động",
     "profile": "Trang cá nhân"
+  },
+  "notFound": {
+    "title": "Không phải cứ biến mất là mất tích, nhưng trang này thì mất tích thật rồi",
+    "description": "Liên kết không hoạt động hoặc trang này không còn nữa. Hãy quay lại để khám phá tiếp.",
+    "back": "Quay lại"
   }
 }

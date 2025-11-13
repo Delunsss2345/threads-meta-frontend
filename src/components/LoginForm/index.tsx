@@ -8,7 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Input } from "../ui/input";
 interface LoginFormProps {
   onLogin: (values: LoginSchemaBodyType) => void;
@@ -23,6 +23,8 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       password: "",
     },
   });
+  const navigate = useNavigate();
+
   useDebounceInput<LoginSchemaBodyType>({ form });
   return (
     <Form {...form}>
@@ -65,19 +67,19 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         </Button>
 
         {/* Links */}
-        <NavLink
-          to="/forgot-password"
-          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground"
+        <p
+          onClick={() => navigate("/forgot-password", { replace: true })}
+          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground cursor-pointer"
         >
           {t("auth.forgotPassword")}
-        </NavLink>
+        </p>
 
-        <NavLink
-          to="/register"
-          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground"
+        <p
+          onClick={() => navigate("/register", { replace: true })}
+          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground cursor-pointer"
         >
           {t("auth.dontHaveAccount")} {t("auth.register")}
-        </NavLink>
+        </p>
       </form>
     </Form>
   );

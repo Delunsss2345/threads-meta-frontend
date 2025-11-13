@@ -9,7 +9,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterFormProps {
   onRegister: (values: RegisterSchemaBodyType) => void;
@@ -27,6 +27,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
       confirmPassword: "",
     },
   });
+  const navigate = useNavigate();
 
   useDebounceInput<RegisterSchemaBodyType>({ form });
   return (
@@ -105,12 +106,12 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
         </Button>
 
         {/* Link */}
-        <NavLink
-          to="/login"
-          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground"
+        <p
+          onClick={() => navigate("/login", { replace: true })}
+          className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground cursor-pointer"
         >
           {t("auth.alreadyHaveAccount")}
-        </NavLink>
+        </p>
       </form>
     </Form>
   );

@@ -6,6 +6,7 @@ import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import Home from "@/pages/Home";
+import NotFound from "@/pages/NotFound";
 import PostDetail from "@/pages/PostDetail";
 import ProfilePage from "@/pages/Profile";
 import SearchPage from "@/pages/Search";
@@ -62,6 +63,10 @@ export const config: RouteObject[] = [
         element: <ForgotPassword />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ];
 

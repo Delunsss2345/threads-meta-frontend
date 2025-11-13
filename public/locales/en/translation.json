@@ -151,5 +151,10 @@
     "search": "Search",
     "activity": "Activity",
     "profile": "Profile"
+  },
+  "notFound": {
+    "title": "Not everything that disappears is missing, but this page truly is.",
+    "description": "The link is broken or the page no longer exists. Go back to continue exploring.",
+    "back": "Go back"
   }
 }
