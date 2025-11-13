@@ -1,17 +1,3 @@
-interface PostProps {
-  username: string;
-  time: string;
-  content: string;
-  verified?: boolean;
-  like?: number;
-  message?: number;
-  repost?: number;
-  share?: number;
-  avatar?: string;
-  file?: string;
-  image?: string | string[];
-}
-
 interface InteractionBarProps {
   mode: "auto" | "share";
 }
@@ -22,15 +8,21 @@ interface User {
 }
 
 interface Post extends User {
+  time: string;
+  content: string;
+  verified?: boolean;
   like?: number;
   message?: number;
   repost?: number;
-  verified: boolean;
   share?: number;
-  time: String;
-  content: string;
-  file?: File | undefined;
-  image?: string | string[];
+  images?: string[];
+  file?: {
+    url: string;
+    name: string;
+    type: "audio" | "other";
+    mime?: string;
+    sources?: string[];
+  };
 }
 
-export type { InteractionBarProps, Post, PostProps, User };
+export type { InteractionBarProps, Post, User };

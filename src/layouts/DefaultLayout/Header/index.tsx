@@ -14,17 +14,17 @@ const Header = () => {
           : t(`nav.${PAGE_TITLES_BY_PATH[pathname]}`)}
       </h1>
 
-      <div className="absolute top-[60px] left-1/2  -translate-x-1/2 w-[640px] flex  justify-between">
-        <div className="absolute -left-3  bg-background   -top-[12px] overflow-hidden w-[36px] h-[36px]">
-          <div className="absolute w-[48px] h-[48px] bg-primary-foreground  top-[12px] left-[12px] rounded-full border border shadow-sm"></div>
+      <div className="absolute top-[60px] left-1/2  -translate-x-1/2 w-[640px] flex  justify-between z-1">
+        <div className="absolute -left-3  -top-[12px] overflow-hidden w-[36px] h-[36px] z-1">
+          <div className="shadow-[0_0_12px_0_rgba(0,0,0,0.04),_0_0_0_48px_rgb(250,250,250)] absolute w-[48px] h-[48px] top-[12px] left-[12px] rounded-full border border "></div>
         </div>
 
         <div className="flex-1 h-[2px]  border-t border-gray-200"></div>
-        <div className="absolute -right-3 -top-[12px] bg-background overflow-hidden w-[36px] h-[36px]">
+        <div className="absolute -right-3 -top-[12px]  overflow-hidden w-[36px] h-[36px] z-1">
           <div
-            className="absolute w-[48px] h-[48px] top-[12px] right-[12px]  bg-primary-foreground  rounded-full 
+            className="absolute shadow-[0_0_12px_0_rgba(0,0,0,0.04),_0_0_0_48px_rgb(250,250,250)] w-[48px] h-[48px] top-[12px] right-[12px] rounded-full 
                border border 
-               shadow-sm"
+             "
           ></div>
         </div>
       </div>
