@@ -55,3 +55,37 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
 }
+
+body:has(.main-container .dynamic-columns > .column:nth-child(1)) {
+  overflow-y: hidden;
+}
+
+/* .main-container {
+  overflow-y: auto;
+} */
+@layer components {
+}
+
+@media (min-width: 640px) {
+  .dynamic-columns > .column {
+    width: 640px;
+  }
+
+  .dynamic-columns:has(> .column:nth-child(3)) > .column {
+    width: 480px;
+  }
+  .dynamic-columns:has(> .column:nth-child(3)) .header-column-extra {
+    width: 480px;
+  }
+  .dynamic-columns:has(> .column:nth-child(4)) .main-container {
+    overflow-x: scroll;
+    width: 100%;
+  }
+}
+
+.main-container:has(.dynamic-columns > .column:nth-child(2))
+  .dynamic-columns
+  > .column
+  > .column-container {
+  overflow-y: auto !important;
+}

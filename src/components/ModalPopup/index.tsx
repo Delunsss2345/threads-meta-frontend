@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import PortalModal from "../PortalModal";
 const ModalPopup = ({
   children,

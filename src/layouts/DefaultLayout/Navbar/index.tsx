@@ -1,5 +1,6 @@
 import FavoriteIcon from "@/components/Icon/FavoriteIcon";
 import HomeIcon from "@/components/Icon/HomeIcon";
+import MenuIcon from "@/components/Icon/MenuIcon";
 import SearchIcon from "@/components/Icon/SearchIcon";
 import SubtractIcon from "@/components/Icon/SubtractIcon";
 import UserIcon from "@/components/Icon/UserIcon";
@@ -8,7 +9,6 @@ import Logo from "@/components/Logo";
 import NewPostModal from "@/components/Post/NewPostModal";
 import { useCurrentUser } from "@/features/auth/hook";
 import { AnimatePresence } from "framer-motion";
-import { Menu } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center h-screen py-3 bg-background border-border">
+    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center pl-2 h-screen py-3 px-2 backdrop-blur-[15px] bg-background/90 border-border">
       {/* Logo */}
       <div
         onClick={() => {
@@ -99,8 +99,8 @@ const Navbar: React.FC = () => {
       <div className="pt-4 space-y-1 border-t border-border">
         <SlideUpMenu>
           <NavItem
-            className="hover:bg-transparent hover:text-current"
-            icon={<Menu size={24} />}
+            className="hover:bg-transparent hover:text-current !p-0"
+            icon={<MenuIcon size={26} />}
           />
         </SlideUpMenu>
       </div>

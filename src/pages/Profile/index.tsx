@@ -15,147 +15,157 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CardStepupProfile from "./CardStepupProfile";
+import ProfileSettings from "./ProfileSettings";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("thread");
   const { t } = useTranslation();
-
+  const [openModalEdit, setOpenModalEdit] = useState(false);
   return (
-    <div className="h-full px-6 mb-10">
-      {/* Header Section */}
-      <div className="flex items-start justify-between">
-        <div>
-          <h1 className="mb-1 text-2xl font-bold">Phạm Thanh Huy</h1>
-          <p className="text-gray-400">huydarealest</p>
+    <>
+      <div className="h-full px-6 mb-10">
+        {/* Header Section */}
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="mb-1 text-2xl font-bold">Phạm Thanh Huy</h1>
+            <p className="text-gray-400">huydarealest</p>
+          </div>
+          <AvatarGroup
+            size={20}
+            url="htt"
+            fallBack="PH"
+            classNameFallback="bg-primary-foreground"
+          />
         </div>
-        <AvatarGroup
-          size={20}
-          url="htt"
-          fallBack="PH"
-          classNameFallback="bg-primary-foreground"
-        />
-      </div>
 
-      {/* Followers Count */}
-      <div className="flex items-center justify-between mb-6">
-        <p className="text-gray-400">0 {t("common.followers")}</p>
-        <div className="flex">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="transition-colors text-muted-foreground hover:text-foreground"
-          >
-            <BarChart3 className="size-6" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="transition-colors text-muted-foreground hover:text-foreground"
-          >
-            <Instagram className="size-6" />
-          </Button>
+        {/* Followers Count */}
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-gray-400">0 {t("common.followers")}</p>
+          <div className="flex">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="transition-colors text-muted-foreground hover:text-foreground"
+            >
+              <BarChart3 className="size-6" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="transition-colors text-muted-foreground hover:text-foreground"
+            >
+              <Instagram className="size-6" />
+            </Button>
+          </div>
         </div>
-      </div>
 
-      <Button variant="outline" className="w-full mb-6">
-        {t("profile.editProfile")}
-      </Button>
+        <Button
+          onClick={() => setOpenModalEdit(true)}
+          variant="outline"
+          className="w-full mb-6"
+        >
+          {t("profile.editProfile")}
+        </Button>
 
-      <Tabs defaultValue={activeTab} className="mb-4">
-        <TabsList className="w-full h-auto p-0 bg-transparent border-b rounded-none border-border/60">
-          {[
-            { value: "thread", label: t("profile.thread") },
-            { value: "replies", label: t("profile.threadReplies") },
-            { value: "media", label: t("profile.mediaFiles") },
-            { value: "reposts", label: t("common.reposts") },
-          ].map((tab) => (
-            <TabsTrigger
-              key={tab.value}
-              value={tab.value}
-              onClick={() => setActiveTab(tab.value)}
-              className="flex-1 py-2 text-sm font-medium border-0 rounded-none 
+        <Tabs defaultValue={activeTab} className="mb-4">
+          <TabsList className="w-full h-auto p-0 bg-transparent border-b rounded-none border-border/60">
+            {[
+              { value: "thread", label: t("profile.thread") },
+              { value: "replies", label: t("profile.threadReplies") },
+              { value: "media", label: t("profile.mediaFiles") },
+              { value: "reposts", label: t("common.reposts") },
+            ].map((tab) => (
+              <TabsTrigger
+                key={tab.value}
+                value={tab.value}
+                onClick={() => setActiveTab(tab.value)}
+                className="flex-1 py-2 text-sm font-medium border-0 rounded-none 
           text-muted-foreground transition-all duration-150 !shadow-none
           data-[state=active]:text-foreground data-[state=active]:border-b-[1px] data-[state=active]:!border-b-accent-foreground
           hover:text-foreground/90 data-[state=active]:!bg-transparent
           focus-visible:ring-0 focus-visible:ring-offset-0
           active:shadow-none focus:shadow-none transition-none"
-            >
-              {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
+              >
+                {tab.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
 
-      <PostForm />
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">
-            {t("profile.completeProfile")}
-          </h2>
-          <span className="text-gray-400">{t("profile.remaining")} 2</span>
+        <PostForm />
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">
+              {t("profile.completeProfile")}
+            </h2>
+            <span className="text-gray-400">{t("profile.remaining")} 2</span>
+          </div>
+
+          <CardStepupProfile />
         </div>
 
-        <CardStepupProfile />
-      </div>
+        <div className="flex items-center gap-3 mb-4">
+          <Star className="w-5 h-5 text-gray-500" />
+          <span className="text-gray-400">{t("profile.firstThread")}</span>
+        </div>
 
-      <div className="flex items-center gap-3 mb-4">
-        <Star className="w-5 h-5 text-gray-500" />
-        <span className="text-gray-400">{t("profile.firstThread")}</span>
-      </div>
-
-      <div className="flex gap-3">
-        <AvatarGroup
-          size={8}
-          url="l"
-          fallBack="PH"
-          classNameFallback="bg-primary-foreground"
-        ></AvatarGroup>
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="font-semibold">huydarealest</span>
-            <span className="text-sm text-muted-foreground">1 phút</span>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="w-8 h-8 ml-auto text-muted-foreground hover:text-foreground"
-            >
-              <MoreHorizontal className="w-5 h-5" />
-            </Button>
-          </div>
-          <p className="mb-4 text-foreground">a</p>
-          <div className="flex gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
-            >
-              <Heart className="w-5 h-5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
-            >
-              <MessageCircle className="w-5 h-5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
-            >
-              <Repeat2 className="w-5 h-5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
-            >
-              <Send className="w-5 h-5" />
-            </Button>
+        <div className="flex gap-3">
+          <AvatarGroup
+            size={8}
+            url="l"
+            fallBack="PH"
+            classNameFallback="bg-primary-foreground"
+          ></AvatarGroup>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="font-semibold">huydarealest</span>
+              <span className="text-sm text-muted-foreground">1 phút</span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-8 h-8 ml-auto text-muted-foreground hover:text-foreground"
+              >
+                <MoreHorizontal className="w-5 h-5" />
+              </Button>
+            </div>
+            <p className="mb-4 text-foreground">a</p>
+            <div className="flex gap-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
+              >
+                <Heart className="w-5 h-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
+              >
+                <MessageCircle className="w-5 h-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
+              >
+                <Repeat2 className="w-5 h-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
+              >
+                <Send className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {openModalEdit && (
+        <ProfileSettings onClose={() => setOpenModalEdit(false)} />
+      )}
+    </>
   );
 };
 
