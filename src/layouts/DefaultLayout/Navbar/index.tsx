@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center pl-2 h-screen py-3 px-2 backdrop-blur-[15px] bg-background/90 border-border">
+    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center pl-2 h-screen py-3 px-2 backdrop-blur-[15px] bg-background/85 border-border">
       {/* Logo */}
       <div
         onClick={() => {
