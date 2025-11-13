@@ -1,4 +1,5 @@
 import { authSlice } from "@/features/auth";
+import { columnsSlice } from "@/features/column";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   FLUSH,
@@ -26,6 +27,7 @@ const authPersistConfig = {
 
 export const rootReducer = combineReducers({
   [authSlice.reducerPath]: persistReducer(authPersistConfig, authSlice.reducer),
+  [columnsSlice.reducerPath]: columnsSlice.reducer,
 });
 
 const store = configureStore({
