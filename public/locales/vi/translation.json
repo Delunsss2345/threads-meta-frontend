@@ -147,6 +147,9 @@
     "copyLink": "Sao chép liên kết",
     "quote": "Trích dẫn",
     "copyAsImage": "Sao chép dưới dạng hình",
-    "embedCode": "Lấy mã nhúng"
+    "embedCode": "Lấy mã nhúng",
+    "search": "Tìm kiếm",
+    "activity": "Hoạt động",
+    "profile": "Trang cá nhân"
   }
 }

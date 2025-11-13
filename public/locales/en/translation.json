@@ -147,6 +147,9 @@
     "report": "Report",
     "quote": "Quote",
     "copyAsImage": "Copy as image",
-    "embedCode": "Get embed code"
+    "embedCode": "Get embed code",
+    "search": "Search",
+    "activity": "Activity",
+    "profile": "Profile"
   }
 }
