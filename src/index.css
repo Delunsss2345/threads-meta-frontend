@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+:root {
+  --width-header: 60px;
+  --width-sidebar: 320px;
+  --height-header: 50px;
+  --col-1-lg: 640px;
+  --col-1-sm: 480px;
+}
 @theme extend {
   --color-background: #fafafa;
   --color-foreground: #000000;
@@ -61,12 +68,11 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
 }
 
 .column > .column-container {
-  height: calc(100vh - 60px);
 }
 
 @media (min-width: 640px) {
   .dynamic-columns > .column {
-    width: 640px;
+    width: var(--col-1-lg);
     flex-shrink: 0;
   }
 
@@ -75,8 +81,6 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
   }
 
   .dynamic-columns:has(> .column:nth-child(3)) {
-    width: 100vw;
-    max-width: 100%;
     height: 100vh;
     overflow-x: auto !important;
     overflow-y: hidden;
@@ -84,17 +88,34 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
   }
 
   .dynamic-columns:has(> .column:nth-child(3)) > .column {
-    width: 480px;
+    width: var(--col-1-sm);
     height: 20px;
     flex-shrink: 0;
   }
 
-  .dynamic-columns:has(> .column:nth-child(3)) .header-column-extra {
-    width: 480px;
+  .dynamic-columns:has(> .column:nth-child(2)) .header-column-extra {
+    display: none;
+    width: var(--col-1-sm);
   }
 
-  .dynamic-columns:has(> .column:nth-child(3)) .column-container {
+  .dynamic-columns:has(> .column:nth-child(3)) > .column > .column-container {
     overflow-y: auto;
+    height: calc(100vh - var(--width-header));
+  }
+  .dynamic-columns:has(.column:nth-child(1)) > .column > .column-container {
+    height: 100%;
+  }
+
+  .dynamic-columns:has(.column:nth-child(2)) > .column > .column-container {
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    height: calc(100vh - var(--width-header));
+    overflow-y: auto;
+  }
+
+  .dynamic-columns:has(.column:nth-child(2)) > .column > .header-container {
+    cursor: grab;
+    background-color: transparent;
   }
 }
 
@@ -102,5 +123,5 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
   .dynamic-columns
   > .column
   > .column-container {
-  overflow-y: auto !important;
+  overflow-y: auto;
 }

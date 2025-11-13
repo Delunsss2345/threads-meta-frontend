@@ -1,3 +1,4 @@
+import FixedNewPostButton from "@/components/FixedNewPostButton";
 import { Loading } from "@/components/Loading";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
@@ -24,6 +25,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
         <Content>
           <Outlet />
         </Content>
+        <FixedNewPostButton />
       </div>
     </Suspense>
   );

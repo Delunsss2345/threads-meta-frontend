@@ -1,5 +1,4 @@
 import FeedTabs from "@/components/FeedTabs";
-import FixedNewPostButton from "@/components/FixedNewPostButton";
 import Post from "@/components/Post";
 import PostForm from "@/components/Post/PostForm";
 import iivCognAvatar from "public/images/Avatariiv_cogn.jpg";
@@ -55,8 +54,6 @@ const Home = () => {
         share={14}
         images={[tes8, tes6, test5]}
       />
-
-      <FixedNewPostButton />
     </>
   );
 };
