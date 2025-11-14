@@ -1,28 +1,34 @@
+import FavoriteIcon from "@/components/Icon/FavoriteIcon";
+import HomeIcon from "@/components/Icon/HomeIcon";
+import SubtractIcon from "@/components/Icon/SubtractIcon";
+import UserIcon from "@/components/Icon/UserIcon";
 import AuthSocialModal from "@/components/LoginModal";
+import NewPostModal from "@/components/Post/NewPostModal";
 import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/features/auth/hook";
-import { Heart, Home, Plus, Search, User } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { AnimatePresence } from "framer-motion";
+import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const navItems = [
-  { key: "home", icon: <Home size={26} />, link: "/" },
-  { key: "search", icon: <Search size={26} />, link: "/search" },
+  { key: "home", icon: <HomeIcon size={26} />, link: "/" },
+  { key: "search", icon: <SearchIcon size={26} />, link: "/search" },
   {
     key: "write",
-    icon: <Plus size={20} strokeWidth={2.5} />,
-    link: "/write",
+    icon: <SubtractIcon size={20} />,
     isAuth: true,
   },
   {
     key: "activity",
-    icon: <Heart size={26} />,
+    icon: <FavoriteIcon size={26} />,
     link: "/activity",
     isAuth: true,
   },
   {
     key: "profile",
-    icon: <User size={26} />,
+    icon: <UserIcon size={26} />,
     link: "/profile",
     isAuth: true,
   },
@@ -32,15 +38,18 @@ const NavMobile: React.FC = () => {
   const [activeNav, setActiveNav] = useState("home");
   const currentUser = useCurrentUser();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const navigate = useNavigate();
+  const [openPostModal, setOpenPostModal] = useState(false);
 
+  const navigate = useNavigate();
+  const isMobile = useIsMobile();
+  if (!isMobile) return;
   const handleNavClick = (item: (typeof navItems)[0]) => {
     if (item.isAuth && !Boolean(currentUser)) {
       setShowAuthModal(true);
       return;
     }
     setActiveNav(item.key);
-    navigate(item.link);
+    if (item.link) navigate(item.link);
   };
 
   const closeAuthModal = () => setShowAuthModal(false);
@@ -59,13 +68,21 @@ const NavMobile: React.FC = () => {
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground"
             }`}
-            onClick={() => handleNavClick(item)}
+            onClick={
+              item.key === "write"
+                ? () => setOpenPostModal(!openPostModal)
+                : () => handleNavClick(item)
+            }
           >
             {item.icon}
           </Button>
         ))}
       </nav>
-
+      {openPostModal ? (
+        <AnimatePresence>
+          <NewPostModal onClose={() => setOpenPostModal(false)} />
+        </AnimatePresence>
+      ) : null}
       {showAuthModal && (
         <AuthSocialModal
           open={showAuthModal}

@@ -90,7 +90,9 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
 .column > .column-container {
   width: 100%;
 }
-
+.column {
+  width: 100%;
+}
 @media (min-width: 640px) {
   .dynamic-columns > .column {
     width: var(--col-1-lg);

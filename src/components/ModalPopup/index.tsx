@@ -27,7 +27,7 @@ const ModalPopup = ({
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
         className={`${cn(
-          "fixed inset-0 bg-black/50 flex items-center pt-[10vh] justify-center z-20",
+          "fixed inset-0 bg-black/50 flex items-center pt-[10vh] justify-center z-50",
           className,
           mode === "subtract" ? "block absolute bg-transparent" : ""
         )}`}

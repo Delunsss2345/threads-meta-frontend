@@ -44,7 +44,7 @@ const SidebarSettings = () => {
   }, []);
 
   return (
-    <SidebarMenu className="space-y-1 w-[var(--sidebar-menu)] border-r-1 pr-4 pt-5">
+    <SidebarMenu className="space-y-1 w-full md:w-[var(--sidebar-menu)] border-r-1 pr-4 pt-5">
       {items.map((item) => {
         const isActive = location.pathname === item.url;
 
@@ -54,7 +54,7 @@ const SidebarSettings = () => {
               <NavLink
                 to={item.url}
                 className={`
-              flex items-center gap-3 p-5 rounded-xl w-full transition-colors
+               flex items-center gap-3 p-5 rounded-xl transition-colors
               ${isActive ? "bg-muted text-foreground" : "text-foreground"}
             `}
               >

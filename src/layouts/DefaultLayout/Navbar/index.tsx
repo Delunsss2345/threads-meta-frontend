@@ -21,7 +21,6 @@ const navItems = [
   {
     key: "write",
     icon: <SubtractIcon size={20} />,
-
     isAuth: true,
   },
   {

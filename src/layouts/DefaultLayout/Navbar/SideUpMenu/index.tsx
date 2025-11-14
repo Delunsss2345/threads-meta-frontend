@@ -7,7 +7,18 @@ import { LanguageMenu } from "./LanguageMenu";
 import { MainMenu } from "./MainMenu";
 import { ThemeMenu } from "./ThemeMenu";
 
-const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
+const SlideUpMenu = ({
+  children,
+  motionProps,
+}: {
+  children: React.ReactNode;
+  motionProps?: {
+    initial?: Record<string, any>;
+    animate?: Record<string, any>;
+    exit?: Record<string, any>;
+    transition?: Record<string, any>;
+  };
+}) => {
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
     "main"
   );
@@ -22,8 +33,8 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
     { label: t("menu.profileInfo") },
     { label: t("menu.settings"), pathName: "settings" },
     { label: t("menu.feed") },
-    { label: t("menu.saved") },
-    { label: t("menu.liked") },
+    { label: t("menu.saved"), pathName: "saved" },
+    { label: t("menu.liked"), pathName: "liked" },
     {
       label: t("menu.language"),
       icon: <ChevronRight size={16} />,
@@ -65,7 +76,7 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
     },
   ];
   return (
-    <MenuPopup buttonActive={children}>
+    <MenuPopup motionProps={motionProps} buttonActive={children}>
       {activeMenu === "main" && <MainMenu items={mainMenu} />}
       {activeMenu === "theme" && <ThemeMenu items={themeMenu} />}
       {activeMenu === "language" && <LanguageMenu items={languageMenu} />}
