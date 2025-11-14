@@ -18,8 +18,12 @@ const Column = ({
     return (
       <div className="column">
         <Header textHeader={pathName} />
-        <div className="column-container relative z-2 flex-1 pt-6 border-b border-l border-r shadow  bg-primary-foreground">
-          <div className="h-full min-h-screen">{children}</div>
+        <div
+          className={`column-container relative z-2 flex-1 pt-6 border-b border-l border-r shadow  bg-primary-foreground ${
+            pathName?.startsWith("/settings/") ? "settings-page px-4 !pt-0" : ""
+          }`}
+        >
+          <div className="h-full min-h-screen mx-auto">{children}</div>
         </div>
       </div>
     );

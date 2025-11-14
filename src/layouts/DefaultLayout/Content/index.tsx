@@ -1,4 +1,3 @@
-import AddColumnIcon from "@/components/Icon/AddColIcon";
 import LoginCard from "@/components/LoginPanel";
 import Home from "@/pages/Home";
 import type { RootState } from "@/types/redux.type";
@@ -18,7 +17,6 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Column from "../Column";
 import HeaderMobile from "../HeaderMobile";
-import MenuAddContent from "./MenuAddContent";
 interface ContentProps {
   children: React.ReactNode;
 }
@@ -78,16 +76,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
           </DndContext>
         ) : (
           <>
-            <Column>{children}</Column>
-            <div className="fixed top-0 bottom-0 right-0 h-screen w-[460px]">
-              <div className="absolute top-1/2">
-                <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
-                  <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
-                    <AddColumnIcon size={20} />
-                  </MenuAddContent>
-                </div>
-              </div>
-            </div>
+            <Column pathName={location.pathname}>{children}</Column>
           </>
         )}
         {!isAuth ? <LoginCard /> : null}

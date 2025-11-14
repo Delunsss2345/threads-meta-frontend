@@ -9,6 +9,7 @@
   --height-header: 50px;
   --col-1-lg: 640px;
   --col-1-sm: 480px;
+  --col-settings: 840px;
   --sidebar: hsl(0 0% 98%);
   --sidebar-foreground: hsl(240 5.3% 26.1%);
   --sidebar-primary: hsl(240 5.9% 10%);
@@ -17,6 +18,7 @@
   --sidebar-accent-foreground: hsl(240 5.9% 10%);
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --sidebar-menu: 304px;
 }
 @theme extend {
   --color-background: #fafafa;
@@ -115,6 +117,17 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
   .dynamic-columns:has(> .column:nth-child(2)) .header-column-extra {
     display: none;
     width: var(--col-1-sm);
+  }
+
+  .dynamic-columns:has(.settings-page) > .column {
+    width: var(--col-settings);
+  }
+  .dynamic-columns:has(.settings-page) > .header-container {
+    width: var(--col-settings);
+  }
+
+  .dynamic-columns:has(.settings-page) .header-column-extra {
+    width: var(--col-settings);
   }
 
   .dynamic-columns:has(> .column:nth-child(3)) > .column > .column-container {

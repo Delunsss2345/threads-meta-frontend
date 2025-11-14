@@ -1,6 +1,8 @@
 import FeedTabs from "@/components/FeedTabs";
+import AddColumnIcon from "@/components/Icon/AddColIcon";
 import Post from "@/components/Post";
 import PostForm from "@/components/Post/PostForm";
+import MenuAddContent from "@/pages/Home/MenuAddContent";
 import iivCognAvatar from "public/images/Avatariiv_cogn.jpg";
 import iivCogn1 from "public/images/iiv_cogn1.jpg";
 import iivCogn2 from "public/images/iiv_cogn2.jpg";
@@ -54,6 +56,16 @@ const Home = () => {
         share={14}
         images={[tes8, tes6, test5]}
       />
+
+      <div className="fixed top-0 bottom-0 right-0 h-screen w-[460px]">
+        <div className="absolute top-1/2">
+          <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
+            <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
+              <AddColumnIcon size={20} />
+            </MenuAddContent>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

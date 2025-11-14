@@ -12,7 +12,6 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
     "main"
   );
   const { t, i18n } = useTranslation();
-
   const { setTheme } = useTheme();
   const mainMenu = [
     {
@@ -21,7 +20,7 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
       onClick: () => setActiveMenu("theme"),
     },
     { label: t("menu.profileInfo") },
-    { label: t("menu.settings") },
+    { label: t("menu.settings"), pathName: "settings" },
     { label: t("menu.feed") },
     { label: t("menu.saved") },
     { label: t("menu.liked") },
@@ -66,7 +65,7 @@ const SlideUpMenu = ({ children }: { children: React.ReactNode }) => {
     },
   ];
   return (
-    <MenuPopup active={activeMenu} buttonActive={children}>
+    <MenuPopup buttonActive={children}>
       {activeMenu === "main" && <MainMenu items={mainMenu} />}
       {activeMenu === "theme" && <ThemeMenu items={themeMenu} />}
       {activeMenu === "language" && <LanguageMenu items={languageMenu} />}
