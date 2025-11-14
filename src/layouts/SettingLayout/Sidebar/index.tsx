@@ -18,13 +18,13 @@ const items = [
   },
   {
     title: "Trạng thái tài khoản",
-    url: "/settings/user-privacy",
+    url: "/settings/account_status",
     icon: UserPrivacyIcon,
   },
 
   {
     title: "Tài khoản",
-    url: "/settings/account-privacy",
+    url: "/settings/account",
     icon: AccountPrivacyIcon,
   },
   {

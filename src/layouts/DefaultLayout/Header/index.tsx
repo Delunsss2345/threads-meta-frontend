@@ -13,7 +13,7 @@ const Header = ({
   const { pathname } = useLocation();
 
   return (
-    <div className="bg-background header-container sticky top-0 hidden -mx-5 lg:block z-4">
+    <div className="bg-background header-container sticky top-0 hidden -mx-5 md:block z-4">
       <h1
         to={textHeader ?? pathname}
         {...dragHandleProps}

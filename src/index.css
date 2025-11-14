@@ -87,8 +87,8 @@ body {
 body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
   overflow-y: hidden;
 }
-
 .column > .column-container {
+  width: 100%;
 }
 
 @media (min-width: 640px) {
@@ -107,37 +107,19 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
     overflow-y: hidden;
     justify-content: flex-start;
   }
-
   .dynamic-columns:has(> .column:nth-child(3)) > .column {
     width: var(--col-1-sm);
     height: 20px;
     flex-shrink: 0;
   }
-
-  .dynamic-columns:has(> .column:nth-child(2)) .header-column-extra {
-    display: none;
-    width: var(--col-1-sm);
-  }
-
-  .dynamic-columns:has(.settings-page) > .column {
-    width: var(--col-settings);
-  }
-  .dynamic-columns:has(.settings-page) > .header-container {
-    width: var(--col-settings);
-  }
-
-  .dynamic-columns:has(.settings-page) .header-column-extra {
-    width: var(--col-settings);
-  }
-
   .dynamic-columns:has(> .column:nth-child(3)) > .column > .column-container {
     overflow-y: auto;
     height: calc(100vh - var(--width-header));
   }
+
   .dynamic-columns:has(.column:nth-child(1)) > .column > .column-container {
     height: 100%;
   }
-
   .dynamic-columns:has(.column:nth-child(2)) > .column > .column-container {
     border-top-left-radius: 24px;
     border-top-right-radius: 24px;
@@ -149,8 +131,18 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
     cursor: grab;
     background-color: transparent;
   }
-}
 
+  .dynamic-columns:has(.settings-page) > .column,
+  .dynamic-columns:has(.settings-page) > .header-container,
+  .dynamic-columns:has(.settings-page) .header-column-extra {
+    width: var(--col-settings);
+  }
+
+  .dynamic-columns:has(> .column:nth-child(2)) .header-column-extra {
+    display: none;
+    width: var(--col-1-sm);
+  }
+}
 .main-container:has(.dynamic-columns > .column:nth-child(2))
   .dynamic-columns
   > .column

@@ -14,11 +14,11 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div className="bg-background main-container">
-        <div className="hidden lg:block">
+        <div className="hidden md:block">
           <Navbar />
         </div>
 
-        <div className="block lg:hidden">
+        <div className="block md:hidden">
           <NavMobile />
         </div>
 

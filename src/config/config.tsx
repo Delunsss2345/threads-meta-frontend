@@ -2,10 +2,13 @@ import PrivateRouter from "@/components/AppRoutes/PrivateRouter";
 import AuthLayout from "@/layouts/AuthLayout";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import SettingsLayout from "@/layouts/SettingLayout";
+import AccountStatus from "@/pages/AccounStatus";
+import Account from "@/pages/Account";
 import ActivityPage from "@/pages/ActivityPage";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
+import Help from "@/pages/Help";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 import PostDetail from "@/pages/PostDetail";
@@ -57,7 +60,9 @@ export const config: RouteObject[] = [
         element: <SettingsLayout />,
         children: [
           { path: "privacy", element: <PrivacyPage /> },
-          { path: "security" },
+          { path: "help", element: <Help /> },
+          { path: "account", element: <Account /> },
+          { path: "account_status", element: <AccountStatus /> },
         ],
       },
     ],

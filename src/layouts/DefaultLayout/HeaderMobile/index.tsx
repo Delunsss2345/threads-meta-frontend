@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 
 const HeaderMobile: React.FC = () => {
   return (
-    <header className=" lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between bg-background border-b border-border h-12 px-4 ">
+    <header className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between bg-background border-b border-border h-12 px-4 ">
       <div className="w-6" />
 
       <div className="flex-1 flex justify-center">

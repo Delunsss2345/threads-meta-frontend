@@ -19,7 +19,7 @@ const Column = ({
       <div className="column">
         <Header textHeader={pathName} />
         <div
-          className={`column-container relative z-2 flex-1 pt-6 border-b border-l border-r shadow  bg-primary-foreground ${
+          className={`column-container relative z-2 flex-1 md:pt-6 border-b border-l border-r shadow  bg-primary-foreground ${
             pathName?.startsWith("/settings/") ? "settings-page px-4 !pt-0" : ""
           }`}
         >

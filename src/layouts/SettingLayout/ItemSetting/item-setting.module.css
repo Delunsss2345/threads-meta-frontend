@@ -1,0 +1,25 @@
+@import "tailwindcss";
+.menuItemBase {
+  @apply w-full flex justify-between items-center font-normal text-[16px]
+         px-0 h-auto rounded-none bg-transparent hover:bg-transparent;
+}
+
+.menuItemText {
+  @apply text-gray-900;
+}
+
+.menuItemDescription {
+  @apply text-sm text-gray-500;
+}
+
+.menuItemIconRight {
+  @apply w-5 h-5 text-gray-400;
+}
+
+.menuItemCheckWrapper {
+  @apply w-6 h-6 rounded-full bg-black flex items-center justify-center;
+}
+
+.menuItemCheckIcon {
+  @apply w-4 h-4 text-white;
+}

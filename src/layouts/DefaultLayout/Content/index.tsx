@@ -54,7 +54,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
   return (
     <main className="w-full h-full mx-auto text-foreground">
       <HeaderMobile />
-      <div className="pl-[100px] dynamic-columns mt-[50px] h-full sm:mt-0 flex items-start gap-5 ">
+      <div className="md:pl-[100px] dynamic-columns mt-[50px] h-full sm:mt-0 flex items-start gap-5 ">
         {location.pathname === "/" && columns.length > 1 ? (
           <DndContext
             sensors={sensors}

@@ -28,18 +28,13 @@ const MenuAddContent = ({
         motionProps={{
           initial: {
             opacity: 0,
-            x: -60,
-            scale: 0.96,
+            y: 0,
+            x: -30,
           },
           animate: {
             opacity: 1,
-            x: -60,
-            scale: 1,
-          },
-          exit: {
-            opacity: 0,
-            x: -60,
-            scale: 0.96,
+            y: 5,
+            x: -30,
           },
           transition: {
             duration: 0.18,

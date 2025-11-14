@@ -57,7 +57,7 @@ const Home = () => {
         images={[tes8, tes6, test5]}
       />
 
-      <div className="fixed top-0 bottom-0 right-0 h-screen w-[460px]">
+      <div className="hidden md:block fixed top-0 bottom-0 right-0 h-screen w-[460px]">
         <div className="absolute top-1/2">
           <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
             <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
