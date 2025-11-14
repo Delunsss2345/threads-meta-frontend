@@ -19,7 +19,8 @@
     "search": "Tìm kiếm",
     "activity": "Hoạt động",
     "profile": "Trang cá nhân",
-    "favorites": "Yêu thích"
+    "favorites": "Yêu thích",
+    "settings": "Cài đặt"
   },
   "auth": {
     "login": "Đăng nhập",

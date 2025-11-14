@@ -19,7 +19,8 @@
     "search": "Search",
     "activity": "Activity",
     "profile": "Profile",
-    "favorites": "Favorites"
+    "favorites": "Favorites",
+    "settings": "Settings"
   },
   "auth": {
     "login": "Log in",

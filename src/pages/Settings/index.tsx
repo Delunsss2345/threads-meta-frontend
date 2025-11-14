@@ -1,0 +1,79 @@
+import AccountPrivacyIcon from "@/components/Icon/AccountPrivacyIcon";
+import HelpPrivacyIcon from "@/components/Icon/HelpPrivacyIcon";
+import PrivacyIcon from "@/components/Icon/PrivacyIcon";
+import UserPrivacyIcon from "@/components/Icon/UserPrivacyIcon";
+import {
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
+import { ChevronRight } from "lucide-react";
+import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
+
+const items = [
+  {
+    title: "Quyền riêng tư",
+    url: "/settings/privacy",
+    icon: PrivacyIcon,
+  },
+  {
+    title: "Trạng thái tài khoản",
+    url: "/settings/user-privacy",
+    icon: UserPrivacyIcon,
+  },
+
+  {
+    title: "Tài khoản",
+    url: "/settings/account-privacy",
+    icon: AccountPrivacyIcon,
+  },
+  {
+    title: "Trợ giúp",
+    url: "/settings/help",
+    icon: HelpPrivacyIcon,
+  },
+];
+
+const SettingsPage = () => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  return (
+    <SidebarProvider>
+      <SidebarGroup>
+        <SidebarGroupContent>
+          <SidebarMenu className="space-y-4 ">
+            {items.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton className="hover:!bg-transparent" asChild>
+                  <NavLink
+                    className="w-full flex items-center justify-between"
+                    to={item.url}
+                  >
+                    <div className="flex items-center gap-5">
+                      <item.icon size={25} className="text-foreground" />
+                      <span className="text-[16px]">{item.title}</span>
+                    </div>
+                    <span>
+                      <ChevronRight size={20} className="text-[#ccc]" />
+                    </span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarProvider>
+  );
+};
+
+export default SettingsPage;

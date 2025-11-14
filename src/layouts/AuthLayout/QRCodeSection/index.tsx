@@ -1,4 +1,4 @@
-import useWindow from "@/hook/useWindown";
+import useWindow from "@/hooks/useWindown";
 import { useTranslation } from "react-i18next";
 import { QRCodeSvg } from "../QRCodeSVG";
 import { Zoom } from "../Zoom";

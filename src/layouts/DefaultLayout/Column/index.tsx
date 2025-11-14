@@ -16,16 +16,13 @@ const Column = ({
 }) => {
   if (!id) {
     return (
-    <div
-      className="column"
-  
-    >
-      <Header textHeader={pathName} />
-      <div className="column-container relative z-2 flex-1 pt-6 border-b border-l border-r shadow  bg-primary-foreground">
-        {children}
+      <div className="column">
+        <Header textHeader={pathName} />
+        <div className="column-container relative z-2 flex-1 pt-6 border-b border-l border-r shadow  bg-primary-foreground">
+          <div className="h-full min-h-screen">{children}</div>
+        </div>
       </div>
-    </div>
-  );
+    );
   }
   const {
     attributes,

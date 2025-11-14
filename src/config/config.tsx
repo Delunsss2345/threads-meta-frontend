@@ -10,6 +10,7 @@ import NotFound from "@/pages/NotFound";
 import PostDetail from "@/pages/PostDetail";
 import ProfilePage from "@/pages/Profile";
 import SearchPage from "@/pages/Search";
+import SettingsPage from "@/pages/Settings";
 import { type RouteObject } from "react-router-dom";
 
 export const config: RouteObject[] = [
@@ -44,6 +45,10 @@ export const config: RouteObject[] = [
             <ActivityPage />
           </PrivateRouter>
         ),
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
       },
     ],
   },

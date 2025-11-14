@@ -38,7 +38,7 @@ const SearchPage = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="h-full min-h-screen bg-primary-foreground">
+    <>
       <div className="sticky top-0 z-10 border-b bg-primary-foreground border-border">
         <div className="max-w-2xl p-4 mx-auto">
           <div className="relative">
@@ -82,7 +82,7 @@ const SearchPage = () => {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

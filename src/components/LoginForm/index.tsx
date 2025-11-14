@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { useDebounceInput } from "@/hook/useDebouceInput";
+import { useDebounceInput } from "@/hooks/useDebouceInput";
 import {
   LoginSchemaBody,
   type LoginSchemaBodyType,
