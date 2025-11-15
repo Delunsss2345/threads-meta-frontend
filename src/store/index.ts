@@ -16,7 +16,7 @@ import storage from "redux-persist/lib/storage";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: [authSlice.reducerPath],
+  blacklist: [authSlice.reducerPath, columnsSlice.reducerPath],
 };
 
 const authPersistConfig = {

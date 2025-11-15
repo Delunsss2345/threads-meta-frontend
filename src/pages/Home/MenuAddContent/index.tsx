@@ -1,10 +1,12 @@
 import MenuPopup from "@/components/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { columnsSlice } from "@/features/column";
 import { cn } from "@/lib/utils";
+import type { RootState } from "@/types/redux.type";
 import { ChevronRight } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-
+import { useDispatch, useSelector } from "react-redux";
 const MenuAddContent = ({
   children,
   className,
@@ -12,16 +14,40 @@ const MenuAddContent = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const [openModalShareImage, setOpenModalShareImage] = useState(false);
-
+  const dispatch = useDispatch();
+  const columns = useSelector((state: RootState) => state.columns.columns);
   const { t } = useTranslation();
   const menuItems = [
-    { label: t("menu.search") },
-    { label: t("menu.activity") },
-    { label: t("menu.profile") },
+    {
+      label: t("menu.search"),
+      onClick: () => {
+        handleAddMenu("Search");
+      },
+    },
+    {
+      label: t("menu.activity"),
+      onClick: () => {
+        handleAddMenu("Activity");
+      },
+    },
+    {
+      label: t("menu.profile"),
+      onClick: () => {
+        handleAddMenu("Profile");
+      },
+    },
     { label: t("menu.profileInfo") },
     { label: t("menu.feed"), icon: <ChevronRight /> },
   ];
+  const handleAddMenu = (component: string) => {
+    dispatch(
+      columnsSlice.actions.addColumn({
+        id: Number(columns.length + 1),
+        pathName: `/${component.toLowerCase()}`,
+        element: component,
+      })
+    );
+  };
   return (
     <>
       <MenuPopup
@@ -48,7 +74,7 @@ const MenuAddContent = ({
           <DropdownMenuItem
             key={i}
             className="flex items-center justify-between gap-2"
-            // onClick={item.onclick}
+            {...(item?.onClick && { onClick: item.onClick })}
           >
             <span>{item.label}</span>
             {item.icon}

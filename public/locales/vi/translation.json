@@ -20,7 +20,11 @@
     "activity": "Hoạt động",
     "profile": "Trang cá nhân",
     "favorites": "Yêu thích",
-    "settings": "Cài đặt"
+    "settings": "Cài đặt",
+    "help": "Trợ giúp",
+    "privacy": "Quyền riêng tư",
+    "account": "Tài khoản",
+    "account_status": "Trạng thái tài khoản"
   },
   "auth": {
     "login": "Đăng nhập",

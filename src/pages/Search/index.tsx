@@ -44,12 +44,11 @@ const SearchPage = () => {
           <div className="relative">
             <Search className="absolute w-5 h-5 -translate-y-1/2 left-3 top-1/2 text-muted-foreground" />
             <Input
+              autoFocus
               placeholder={t("search.placeholder")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="pl-10 pr-10 rounded-full h-11 bg-muted/50 focus:bg-private name() {
-                
-              }"
+              className="pl-10 pr-10 rounded-full h-11 bg-muted/50 focus:bg-private focus:ring-0"
             />
             {query && (
               <button

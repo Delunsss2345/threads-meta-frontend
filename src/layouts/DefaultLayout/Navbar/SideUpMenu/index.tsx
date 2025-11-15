@@ -31,7 +31,7 @@ const SlideUpMenu = ({
       onClick: () => setActiveMenu("theme"),
     },
     { label: t("menu.profileInfo") },
-    { label: t("menu.settings"), pathName: "settings" },
+    { label: t("menu.settings"), pathName: "settings/privacy" },
     { label: t("menu.feed") },
     { label: t("menu.saved"), pathName: "saved" },
     { label: t("menu.liked"), pathName: "liked" },

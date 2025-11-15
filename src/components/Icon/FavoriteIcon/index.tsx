@@ -1,11 +1,15 @@
 type FavoriteIconProps = {
   size?: number | string;
   color?: string;
+  className?: string;
+  active?: boolean;
 };
 
 const FavoriteIcon = ({
   size = 30,
   color = "currentColor",
+  className,
+  active = false,
 }: FavoriteIconProps) => {
   return (
     <svg
@@ -14,8 +18,9 @@ const FavoriteIcon = ({
       viewBox="0 0 32 32"
       width={size}
       height={size}
-      fill="none"
-      stroke={color}
+      className={className}
+      fill={active ? color : "none"}
+      stroke={active ? color : "#ccc"}
     >
       <title>Thông báo</title>
       <path

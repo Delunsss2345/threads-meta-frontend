@@ -2,12 +2,14 @@ type UserIconProps = {
   size?: number | string;
   color?: string;
   className?: string;
+  active?: boolean;
 };
 
 const UserIcon = ({
   size = 24,
   color = "currentColor",
   className,
+  active = false,
 }: UserIconProps) => {
   return (
     <svg
@@ -16,9 +18,9 @@ const UserIcon = ({
       viewBox="0 0 26 26"
       width={size}
       height={size}
-      fill="none"
-      stroke={color}
       className={className}
+      fill={active ? color : "none"}
+      stroke={active ? color : "#ccc"}
     >
       <title>Trang cá nhân</title>
       <circle cx="13" cy="7.25" r="4" strokeWidth="2.5" />

@@ -20,7 +20,11 @@
     "activity": "Activity",
     "profile": "Profile",
     "favorites": "Favorites",
-    "settings": "Settings"
+    "settings": "Settings",
+    "help": "Help",
+    "privacy": "Privacy",
+    "account": "Account",
+    "account_status": "Account status"
   },
   "auth": {
     "login": "Log in",

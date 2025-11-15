@@ -2,7 +2,6 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { ReactNode } from "react";
 import Header from "../Header";
-
 const Column = ({
   id,
   pathName,
@@ -18,6 +17,7 @@ const Column = ({
     return (
       <div className="column">
         <Header textHeader={pathName} />
+        {/* Nếu là settings thì thay đổi độ rộng của column */}
         <div
           className={`column-container relative z-2 flex-1 md:pt-6 border-b border-l border-r shadow  bg-primary-foreground ${
             pathName?.startsWith("/settings/") ? "settings-page px-4 !pt-0" : ""
@@ -36,6 +36,7 @@ const Column = ({
     transition,
     isDragging,
   } = useSortable({ id });
+  
   return (
     <div
       className="column"
@@ -48,7 +49,7 @@ const Column = ({
       }}
       {...attributes}
     >
-      <Header dragHandleProps={listeners} textHeader={pathName} />
+      <Header id={id} dragHandleProps={listeners} textHeader={pathName} />
       <div className="column-container relative z-2 flex-1 pt-6 border-b border-l border-r shadow  bg-primary-foreground">
         {children}
       </div>
@@ -57,3 +58,8 @@ const Column = ({
 };
 
 export default Column;
+
+//  initial={{ scale: 0, opacity: 0 }}
+//  animate={{ scale: 1, opacity: 1 }}
+//  exit={{ scale: 0, opacity: 0 }}
+//  transition={{ duration: 0.2, ease: "easeOut" }}

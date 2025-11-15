@@ -1,5 +1,8 @@
+import AddColumnIcon from "@/components/Icon/AddColIcon";
 import LoginCard from "@/components/LoginPanel";
-import Home from "@/pages/Home";
+import { COMPONENTS_MAP } from "@/constant/componentsMap";
+import { type ColumnType } from "@/features/column";
+import MenuAddContent from "@/pages/Home/MenuAddContent";
 import type { RootState } from "@/types/redux.type";
 import {
   DndContext,
@@ -12,7 +15,6 @@ import {
   rectSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Column from "../Column";
@@ -27,10 +29,8 @@ const Content: React.FC<ContentProps> = ({ children }) => {
     Boolean(useSelector((state: RootState) => console.log(state.auth))) !==
     null;
 
-  const [columns, setColumns] = useState([
-    { id: 1, pathName: "/", element: <Home /> },
-  ]);
-
+  const columns = useSelector((state: RootState) => state.columns.columns);
+  console.log(columns);
   const sensors = useSensors(useSensor(PointerSensor));
 
   const handleDragEnd = ({ active, over }: { active: any; over: any }) => {
@@ -41,20 +41,18 @@ const Content: React.FC<ContentProps> = ({ children }) => {
     if (active.id == over.id) {
       return;
     }
-
-    setColumns((items) => {
-      return arrayMove(
-        items,
-        items.findIndex((it) => it.id == active.id),
-        items.findIndex((it) => it.id == over.id)
-      );
-    });
+    const newColumns = arrayMove(
+      columns,
+      columns.findIndex((it: ColumnType) => it.id == active.id),
+      columns.findIndex((it: ColumnType) => it.id == over.id)
+    );
+    // dispatch(columnsSlice.actions.addColumn(newColumns));
   };
 
   return (
     <main className="w-full h-full mx-auto text-foreground">
       <HeaderMobile />
-      <div className="md:pl-[100px] dynamic-columns mt-[50px] h-full sm:mt-0 flex items-start gap-5 ">
+      <div className="md:pl-[100px] dynamic-columns mt-[50px] h-full sm:mt-0 flex gap-5 ">
         {location.pathname === "/" && columns.length > 1 ? (
           <DndContext
             sensors={sensors}
@@ -63,23 +61,46 @@ const Content: React.FC<ContentProps> = ({ children }) => {
             }}
           >
             <SortableContext items={columns} strategy={rectSortingStrategy}>
-              {columns.map((column) => (
-                <Column
-                  pathName={column.pathName}
-                  key={column.id}
-                  id={column.id}
-                >
-                  {column.element}
-                </Column>
-              ))}
+              {columns.map((column: ColumnType) => {
+                if (column.pathName === location.pathname) {
+                  return (
+                    <Column
+                      pathName={column.pathName}
+                      key={column.id}
+                      id={column.id}
+                    >
+                      {COMPONENTS_MAP[column.pathName]}
+                    </Column>
+                  );
+                }
+                return (
+                  <Column
+                    pathName={column.pathName}
+                    key={column.id}
+                    id={column.id}
+                  >
+                    {COMPONENTS_MAP[column.pathName]}
+                  </Column>
+                );
+              })}
             </SortableContext>
           </DndContext>
         ) : (
           <>
+            {/* Có pathname khớp thì dùng tên được gắn ở constant */}
             <Column pathName={location.pathname}>{children}</Column>
           </>
         )}
         {!isAuth ? <LoginCard /> : null}
+        <div className="hidden relative md:block h-screen">
+          <div className="absolute top-1/2">
+            <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
+              <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
+                <AddColumnIcon size={20} />
+              </MenuAddContent>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );

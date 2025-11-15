@@ -17,6 +17,7 @@ import PrivacyPage from "@/pages/PrivacyPage";
 import ProfilePage from "@/pages/Profile";
 import Saved from "@/pages/Saved";
 import SearchPage from "@/pages/Search";
+import SettingsPage from "@/pages/Settings";
 import { type RouteObject } from "react-router-dom";
 
 export const config: RouteObject[] = [
@@ -59,6 +60,10 @@ export const config: RouteObject[] = [
       {
         path: "/saved",
         element: <Saved />,
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
       },
       {
         path: "/settings",

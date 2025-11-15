@@ -1,34 +1,29 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-export interface Column {
+export interface ColumnType {
   id: number;
   pathName: string;
+  element: string;
 }
 
 interface ColumnState {
-  columns: Column[];
+  columns: ColumnType[];
 }
 
 const initialState: ColumnState = {
-  columns: JSON.parse(localStorage.getItem("columns") || "[]") || [
-    { id: 1, pathName: "/" },
-  ],
+  columns: [{ id: 1, pathName: "/", element: "Home" }],
 };
 
 export const columnsSlice = createSlice({
   name: "columns",
   initialState,
   reducers: {
-    addColumn: (state, action: PayloadAction<Column>) => {
+    addColumn: (state, action: PayloadAction<ColumnType>) => {
       state.columns.push(action.payload);
-      localStorage.setItem("columns", JSON.stringify(state.columns));
+      localStorage.setItem("column", JSON.stringify(state.columns));
     },
     removeColumn(state, action: PayloadAction<number>) {
       state.columns = state.columns.filter((i) => i.id !== action.payload);
-      localStorage.setItem("columns", JSON.stringify(state.columns));
-    },
-    clearColumns(state) {
-      state.columns = [{ id: 1, pathName: "/" }];
       localStorage.setItem("columns", JSON.stringify(state.columns));
     },
   },

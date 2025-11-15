@@ -99,7 +99,7 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
     flex-shrink: 0;
   }
 
-  .dynamic-columns:not(:has(> .column:nth-child(3))) {
+  .dynamic-columns:not(:has(> .column:nth-child(4))) {
     justify-content: center;
   }
 
@@ -107,8 +107,12 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
     height: 100vh;
     overflow-x: auto !important;
     overflow-y: hidden;
+  }
+
+  .dynamic-columns:has(> .column:nth-child(3)) {
     justify-content: flex-start;
   }
+
   .dynamic-columns:has(> .column:nth-child(3)) > .column {
     width: var(--col-1-sm);
     height: 20px;
@@ -170,4 +174,53 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+/* styles.css */
+.column {
+  transform-origin: center;
+  /* giữ layout đúng trạng thái cuối cùng của animation */
+  animation-fill-mode: both;
+}
+
+/* animation khi mount */
+@keyframes col-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.02) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-in {
+  animation-name: col-enter;
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(.22,.9,.27,1);
+}
+
+/* tuỳ chọn exit (khi bạn muốn animate trước khi remove) */
+@keyframes col-exit {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.92) translateY(6px);
+  }
+}
+
+.animate-out {
+  animation-name: col-exit;
+  animation-duration: 180ms;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
 }
