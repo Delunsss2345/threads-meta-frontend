@@ -1,7 +1,7 @@
 import AddColumnIcon from "@/components/Icon/AddColIcon";
 import LoginCard from "@/components/LoginPanel";
 import { COMPONENTS_MAP } from "@/constant/componentsMap";
-import { type ColumnType } from "@/features/column";
+import { columnsSlice, type ColumnType } from "@/features/column";
 import MenuAddContent from "@/pages/Home/MenuAddContent";
 import type { RootState } from "@/types/redux.type";
 import {
@@ -15,7 +15,7 @@ import {
   rectSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Column from "../Column";
 import HeaderMobile from "../HeaderMobile";
@@ -30,7 +30,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
     null;
 
   const columns = useSelector((state: RootState) => state.columns.columns);
-  console.log(columns);
+  const dispatch = useDispatch();
   const sensors = useSensors(useSensor(PointerSensor));
 
   const handleDragEnd = ({ active, over }: { active: any; over: any }) => {
@@ -41,12 +41,19 @@ const Content: React.FC<ContentProps> = ({ children }) => {
     if (active.id == over.id) {
       return;
     }
+    console.log(
+      arrayMove(
+        columns,
+        columns.findIndex((it: ColumnType) => it.id == active.id),
+        columns.findIndex((it: ColumnType) => it.id == over.id)
+      )
+    );
     const newColumns = arrayMove(
       columns,
       columns.findIndex((it: ColumnType) => it.id == active.id),
       columns.findIndex((it: ColumnType) => it.id == over.id)
     );
-    // dispatch(columnsSlice.actions.addColumn(newColumns));
+    // dispatch(columnsSlice.actions.addNewState(newColumns));
   };
 
   return (

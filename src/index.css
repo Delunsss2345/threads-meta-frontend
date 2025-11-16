@@ -176,15 +176,11 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
   }
 }
 
-
-/* styles.css */
 .column {
   transform-origin: center;
-  /* giữ layout đúng trạng thái cuối cùng của animation */
   animation-fill-mode: both;
 }
 
-/* animation khi mount */
 @keyframes col-enter {
   0% {
     opacity: 0;
@@ -203,10 +199,9 @@ body:has(.main-container .dynamic-columns > .column:nth-child(2)) {
 .animate-in {
   animation-name: col-enter;
   animation-duration: 220ms;
-  animation-timing-function: cubic-bezier(.22,.9,.27,1);
+  animation-timing-function: cubic-bezier(0.22, 0.9, 0.27, 1);
 }
 
-/* tuỳ chọn exit (khi bạn muốn animate trước khi remove) */
 @keyframes col-exit {
   0% {
     opacity: 1;

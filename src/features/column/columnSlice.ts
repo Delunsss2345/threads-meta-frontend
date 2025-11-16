@@ -18,6 +18,10 @@ export const columnsSlice = createSlice({
   name: "columns",
   initialState,
   reducers: {
+    addNewState: (state, action: PayloadAction<ColumnType[]>) => {
+      state.columns = action.payload;
+      localStorage.setItem("column", JSON.stringify(state.columns));
+    },
     addColumn: (state, action: PayloadAction<ColumnType>) => {
       state.columns.push(action.payload);
       localStorage.setItem("column", JSON.stringify(state.columns));

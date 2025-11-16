@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import Header from "../Header";
 const Column = ({
   id,
@@ -36,7 +36,7 @@ const Column = ({
     transition,
     isDragging,
   } = useSortable({ id });
-  
+
   return (
     <div
       className="column"
@@ -46,6 +46,11 @@ const Column = ({
         transition:
           transition || "transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
         zIndex: isDragging ? 9999 : 1,
+        animation: `${
+          pathName === "/" || isDragging
+            ? ""
+            : "col-enter 200ms cubic-bezier(.22,.9,.27,1) both"
+        }`,
       }}
       {...attributes}
     >
