@@ -8,93 +8,97 @@ import AuthSocialModal from "@/components/LoginModal";
 import Logo from "@/components/Logo";
 import NewPostModal from "@/components/Post/NewPostModal";
 import { useCurrentUser } from "@/features/auth/hook";
-import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useModal } from "@/hooks/use-modal";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
 import SlideUpMenu from "./SideUpMenu";
 
-const navItems = [
-  { key: "home", icon: <HomeIcon size={25} />, link: "/" },
-  { key: "search", icon: <SearchIcon size={25} />, link: "/search" },
-  {
-    key: "write",
-    icon: <SubtractIcon size={20} />,
-    isAuth: true,
-  },
-  {
-    key: "activity",
-    icon: <FavoriteIcon size={25} />,
-    link: "/activity",
-    isAuth: true,
-  },
-  {
-    key: "profile",
-    icon: <UserIcon size={25} />,
-    link: "/profile",
-    isAuth: true,
-  },
+const NAV_CONFIG = [
+  { key: "home", Icon: HomeIcon, link: "/" },
+  { key: "search", Icon: SearchIcon, link: "/search" },
+  { key: "write", Icon: SubtractIcon, isAuth: true },
+  { key: "activity", Icon: FavoriteIcon, link: "/activity", isAuth: true },
+  { key: "profile", Icon: UserIcon, link: "/profile", isAuth: true },
 ];
+
 const Navbar: React.FC = () => {
-  const [activeNav, setActiveNav] = useState("home");
-  const [openPostModal, setOpenPostModal] = useState(false);
+  const location = useLocation();
   const currentUser = useCurrentUser();
-  const [showAuthModal, setShowAuthModal] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const modal = useModal();
 
-  const handleNavClick = (item: (typeof navItems)[0]) => {
-    if (item.isAuth && !Boolean(currentUser)) {
-      setShowAuthModal(true);
+  const activeNav = useMemo(() => {
+    const current = NAV_CONFIG.find((item) => item.link === location.pathname);
+    return current?.key || "home";
+  }, [location.pathname]);
+
+  const handleNavClick = (item: (typeof NAV_CONFIG)[number]) => {
+    if (item?.isAuth && !currentUser) {
+      modal.show(
+        <AuthSocialModal
+          onClose={() => modal.hide()}
+          onContinue={() => {
+            modal.hide();
+            navigate("/login");
+          }}
+          title={t("modal.loginToContinue")}
+          description={t("modal.joinThreads")}
+        />
+      );
       return;
     }
-    setActiveNav(item.key);
-    if (item.link) navigate(item.link);
+    if (item?.link) navigate(item?.link);
   };
 
-  const closeAuthModal = () => setShowAuthModal(false);
-  const handleLogin = () => {
-    setShowAuthModal(false);
+  const handleWriteClick = () => {
+    if (!currentUser) {
+      modal.show(
+        <AuthSocialModal
+          onClose={() => modal.hide()}
+          onContinue={() => {
+            modal.hide();
+            navigate("/login");
+          }}
+          title={t("modal.loginToContinue")}
+          description={t("modal.joinThreads")}
+        />
+      );
+      return;
+    }
+
+    modal.show(<NewPostModal onClose={() => modal.hide()} />);
   };
 
   return (
-    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center pl-2 h-screen py-3 px-2 backdrop-blur-[15px] bg-background/85 border-border">
+    <nav className="fixed top-0 left-0 z-20 flex flex-col items-center h-screen py-3 px-2 backdrop-blur-[15px] bg-background/85 border-border">
       {/* Logo */}
-      <div
-        onClick={() => {
-          navigate("/");
-          setActiveNav("home");
-        }}
-        className="mb-8 transition cursor-pointer size-10 hover:scale-110"
+      <button
+        onClick={() => navigate("/")}
+        className="mb-8 transition size-10 hover:scale-110"
+        aria-label="Go to home"
       >
         <Logo />
-      </div>
+      </button>
 
       {/* Navigation Items */}
-      <div className="flex flex-col justify-center flex-1 gap-5 space-y-1">
-        {navItems.map((item) => (
+      <div className="flex flex-col justify-center flex-1 gap-5">
+        {NAV_CONFIG.map((item) => (
           <NavItem
             key={item.key}
-            icon={item.icon}
+            icon={<item.Icon size={25} />}
             active={activeNav === item.key}
             onClick={
               item.key === "write"
-                ? () => setOpenPostModal(!openPostModal)
+                ? handleWriteClick
                 : () => handleNavClick(item)
             }
-            link={item.link}
           />
         ))}
-
-        {openPostModal ? (
-          <AnimatePresence>
-            <NewPostModal onClose={() => setOpenPostModal(false)} />
-          </AnimatePresence>
-        ) : null}
       </div>
 
-      {/* Bottom Items */}
       <div className="pt-4 space-y-1 border-t border-border">
         <SlideUpMenu>
           <NavItem
@@ -103,17 +107,6 @@ const Navbar: React.FC = () => {
           />
         </SlideUpMenu>
       </div>
-
-      {/* Auth Modal */}
-      {showAuthModal && (
-        <AuthSocialModal
-          open={showAuthModal}
-          onClose={closeAuthModal}
-          onContinue={handleLogin}
-          title={t("modal.loginToContinue")}
-          description={t("modal.joinThreads")}
-        />
-      )}
     </nav>
   );
 };

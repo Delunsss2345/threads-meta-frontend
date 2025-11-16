@@ -65,12 +65,12 @@ const Header = ({
                 if (id) handleDelCol(id);
               }}
             >
-              Gỡ cột <MinusCircle />
+              {t("menu.removeColumn")} <MinusCircle />
             </DropdownMenuItem>
           </MenuPopup>
         </div>
       )}
-      <div className="!bg-transparent header-column-extra absolute top-[50px] left-1/2  -translate-x-1/2 w-[var(--col-1-lg)] flex  justify-between z-1">
+      <div className="!bg-transparent header-column-extra absolute top-[52px] left-1/2  -translate-x-1/2 w-[var(--col-1-lg)] flex  justify-between z-1">
         <div className="absolute -left-3  -top-[12px] overflow-hidden w-[36px] h-[36px] z-1">
           <div className="shadow-[0_0_12px_0_rgba(0,0,0,0.04),_0_0_0_48px_var(--color-background)] overflow-hidden absolute w-[48px] h-[48px] top-[12px] left-[12px] rounded-full border border "></div>
         </div>

@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentUser } from "@/features/auth/hook";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import NewPostModal from "../NewPostModal";
@@ -9,10 +10,11 @@ import NewPostModal from "../NewPostModal";
 const PostForm = () => {
   const [openModalNewPost, setOpenModalNewContent] = useState(false);
   const { t } = useTranslation();
-
+  const currentUser = useCurrentUser();
+  if (!currentUser) return null;
   return (
     <>
-      <Card className="px-6 py-0 border-0 rounded-none shadow-none cursor-pointer bg-primary-foreground">
+      <Card className="px-6 py-0 border-0 rounded-none shadow-none cursor-pointer bg-primary-foreground mb-6">
         <CardContent className="flex items-start p-0">
           <Avatar className="w-10 h-10">
             <AvatarImage src="/avatar.png" alt="user" />

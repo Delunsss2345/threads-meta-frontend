@@ -5,15 +5,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { ChevronRight, Lock } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
+  const { t } = useTranslation();
   return (
     <ModalPopup onClose={onClose}>
       <Card className="!p-0">
         <CardContent className="p-0">
           <div className="flex items-center justify-between p-4">
             <div className="flex-1">
-              <h3 className="font-semibold mb-1">Tên</h3>
+              <h3 className="font-semibold mb-1">{t("profileSettings.name")}</h3>
               <div className="flex items-center gap-2 text-sm">
                 <Lock className="w-4 h-4" />
                 <span>Phạm Thanh Huy (@huydarealest)</span>
@@ -28,7 +30,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
           <Separator />
 
           <div className="p-4">
-            <h3 className="font-semibold mb-1">Tiểu sử</h3>
+            <h3 className="font-semibold mb-1">{t("profileSettings.bio")}</h3>
             <p className="text-sm text-muted-foreground">
               dev dang test ui dùng qtam tui nhé
             </p>
@@ -41,8 +43,8 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
             className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
           >
             <div>
-              <h3 className="font-semibold text-left">Mối quan tâm</h3>
-              <p className="text-sm text-muted-foreground">Thêm mối quan tâm</p>
+              <h3 className="font-semibold text-left">{t("profileSettings.interests")}</h3>
+              <p className="text-sm text-muted-foreground">{t("profileSettings.addInterests")}</p>
             </div>
           </Button>
 
@@ -52,7 +54,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
             variant="ghost"
             className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
           >
-            <span className="font-semibold">Liên kết</span>
+            <span className="font-semibold">{t("profileSettings.links")}</span>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </Button>
 
@@ -61,11 +63,10 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
           <div className="flex items-start justify-between p-4">
             <div className="flex-1">
               <h3 className="font-semibold mb-1">
-                Hiển thị biểu tượng Instagram
+                {t("profileSettings.showInstagramBadge")}
               </h3>
               <p className="text-sm text-muted-foreground">
-                Khi bật tắt, biểu tượng Threads trên trang cá nhân Instagram
-                cũng sẽ biến mất.
+                {t("profileSettings.showInstagramBadgeDesc")}
               </p>
             </div>
             <Switch defaultChecked className="ml-4" />
@@ -79,16 +80,14 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
           >
             <div className="flex-1 text-left">
               <h3 className="font-semibold mb-1">
-                Quyền riêng tư của trang cá nhân
+                {t("profileSettings.profilePrivacy")}
               </h3>
               <p className="text-sm text-muted-foreground whitespace-break-spaces">
-                If you switch to private, only followers can see your threads.
-                Your replies will be visible to followers and individual
-                profiles you reply to.
+                {t("profileSettings.profilePrivacyDesc")}
               </p>
             </div>
             <div className="flex items-center gap-2 ml-4">
-              <span className="text-sm text-muted-foreground">Công khai</span>
+              <span className="text-sm text-muted-foreground">{t("profileSettings.public")}</span>
               <ChevronRight className="w-5 h-5 text-muted-foreground" />
             </div>
           </Button>
@@ -97,7 +96,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
 
           <div className="p-4">
             <Button className="w-full bg-black hover:bg-black/90 text-white h-12 rounded-xl font-semibold">
-              Xong
+              {t("profileSettings.done")}
             </Button>
           </div>
         </CardContent>

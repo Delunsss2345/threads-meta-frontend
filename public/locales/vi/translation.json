@@ -107,7 +107,7 @@
     "signUpDesc": "Tham gia Threads để chia sẻ ý tưởng, đặt câu hỏi, đăng những suy nghĩ bất chợt và hơn thế nữa.",
     "loginTitle": "Đăng nhập vào Threads",
     "loginToContinue": "Đăng nhập để tiếp tục",
-    "joinThreads": "Join Threads to share thoughts, find out what's going on, follow your people and more."
+    "joinThreads": "Tham gia Threads để chia sẻ suy nghĩ, tìm hiểu những gì đang diễn ra, theo dõi mọi người và hơn thế nữa."
   },
   "footer": {
     "copyright": "© 2025",
@@ -155,11 +155,42 @@
     "embedCode": "Lấy mã nhúng",
     "search": "Tìm kiếm",
     "activity": "Hoạt động",
-    "profile": "Trang cá nhân"
+    "profile": "Trang cá nhân",
+    "removeColumn": "Gỡ cột"
   },
   "notFound": {
     "title": "Không phải cứ biến mất là mất tích, nhưng trang này thì mất tích thật rồi",
     "description": "Liên kết không hoạt động hoặc trang này không còn nữa. Hãy quay lại để khám phá tiếp.",
     "back": "Quay lại"
+  },
+  "profileSettings": {
+    "name": "Tên",
+    "bio": "Tiểu sử",
+    "interests": "Mối quan tâm",
+    "addInterests": "Thêm mối quan tâm",
+    "links": "Liên kết",
+    "showInstagramBadge": "Hiển thị biểu tượng Instagram",
+    "showInstagramBadgeDesc": "Khi bật tắt, biểu tượng Threads trên trang cá nhân Instagram cũng sẽ biến mất.",
+    "profilePrivacy": "Quyền riêng tư của trang cá nhân",
+    "profilePrivacyDesc": "If you switch to private, only followers can see your threads. Your replies will be visible to followers and individual profiles you reply to.",
+    "public": "Công khai",
+    "done": "Xong"
+  },
+  "loginCard": {
+    "title": "Đăng nhập hoặc đăng ký Threads",
+    "description": "Xem mọi người đang nói về điều gì và tham gia cuộc trò chuyện.",
+    "loginWithUsername": "Đăng nhập bằng tên người dùng"
+  },
+  "authModal": {
+    "signUpToPost": "Đăng ký để đăng bài",
+    "continueWithLogin": "Tiếp tục với đăng nhập",
+    "signUpToLike": "Đăng ký để thích",
+    "signUpToLikeDesc": "Bạn cần một tài khoản để thích bài đăng.",
+    "signUpToReply": "Đăng ký để trả lời",
+    "signUpToReplyDesc": "Tham gia cuộc trò chuyện bằng cách trả lời bài đăng.",
+    "signUpToRepost": "Đăng ký để đăng lại",
+    "signUpToRepostDesc": "Đăng lại và chia sẻ ý tưởng khi bạn đã đăng nhập.",
+    "signUpToShare": "Đăng ký để chia sẻ",
+    "signUpToShareDesc": "Chia sẻ có sẵn khi bạn tạo tài khoản."
   }
 }

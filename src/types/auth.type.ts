@@ -7,4 +7,5 @@ interface CurrentUser {
 export type InitStateAuth = {
   currentUser: CurrentUser | null;
   fetching: boolean;
+  isLoggedIn: boolean;
 };

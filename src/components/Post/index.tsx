@@ -1,6 +1,10 @@
 import { AnimatePresence } from "framer-motion";
 import { Ellipsis } from "lucide-react";
 import { useRef, useState } from "react";
+import "swiper/css";
+import { FreeMode } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import { UserPreviewCard } from "../UserPreview";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
@@ -34,24 +38,24 @@ const Post = ({
 
   return (
     <div className="border-border border-t border-b cursor-pointer">
-      <div className="flex px-6 py-3 gap-3 relative ">
+      <div className="flex px-6 py-3 gap-3 relative overflow-x-hidden">
         {avatar ? (
           <img
             src={avatar}
             alt={`${username} avatar`}
-            className="w-10 h-10 rounded-full object-cover translate-y-2"
+            className="w-10 h-10 rounded-full object-cover translate-y-2 flex-shrink-0"
           />
         ) : (
-          <div className="w-10 h-10 bg-muted rounded-full" />
+          <div className="w-10 h-10 bg-muted rounded-full flex-shrink-0" />
         )}
 
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="relative font-semibold text-sm text-foreground"
+                className="relative font-semibold text-sm text-foreground truncate"
               >
                 {username}
 
@@ -70,7 +74,7 @@ const Post = ({
 
               {verified && (
                 <svg
-                  className="w-4 h-4 text-blue-500"
+                  className="w-4 h-4 text-blue-500 flex-shrink-0"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -78,37 +82,48 @@ const Post = ({
                 </svg>
               )}
 
-              <span className="text-muted-foreground text-xs">{time}</span>
+              <span className="text-muted-foreground text-xs flex-shrink-0">
+                {time}
+              </span>
             </div>
 
             <Menu buttonActive={<Ellipsis className="w-2 h-2" />} />
           </div>
 
           {content && (
-            <p className="text-foreground text-sm leading-relaxed">{content}</p>
+            <p className="text-foreground text-sm leading-relaxed mt-1">
+              {content}
+            </p>
           )}
 
           {images.length > 0 && (
-            <div className="relative mt-3 pr-[24px] z-10">
-              <div
-                className={`grid gap-2 ${
-                  images.length === 1
-                    ? "grid-cols-1"
-                    : images.length === 2
-                    ? "grid-cols-2"
-                    : "grid-cols-3"
-                }`}
+            <div className="mt-3 -mr-6">
+              <Swiper
+                modules={[FreeMode]}
+                spaceBetween={8}
+                slidesPerView="auto" //set width tự ăn
+                freeMode={true}
+                grabCursor={true}
+                className="w-full"
               >
                 {images.map((img, i) => (
-                  <img
-                    key={i}
-                    src={img}
-                    className={`w-full rounded-lg object-cover ${
-                      images.length === 1 ? "h-auto" : "aspect-[4/5]"
-                    }`}
-                  />
+                  <SwiperSlide key={i} style={{ width: "210px" }}>
+                    <div
+                      className={`rounded-lg overflow-hidden`}
+                      style={{
+                        width: "210px",
+                        height: "280px",
+                      }}
+                    >
+                      <img
+                        src={img}
+                        alt={`Image ${i + 1}`}
+                        className="block w-full h-full object-cover"
+                      />
+                    </div>
+                  </SwiperSlide>
                 ))}
-              </div>
+              </Swiper>
             </div>
           )}
 

@@ -1,6 +1,4 @@
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import Header from "../Header";
 const Column = ({
   id,
@@ -19,7 +17,7 @@ const Column = ({
         <Header textHeader={pathName} />
         {/* Nếu là settings thì thay đổi độ rộng của column */}
         <div
-          className={`column-container relative z-2 flex-1 md:pt-6 border-b border-l border-r shadow  bg-primary-foreground ${
+          className={`column-container relative z-2 flex-1 border-b border-l border-r shadow  bg-primary-foreground ${
             pathName?.startsWith("/settings/") ? "settings-page px-4 !pt-0" : ""
           }`}
         >
@@ -28,34 +26,47 @@ const Column = ({
       </div>
     );
   }
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
+  // const {
+  //   attributes,
+  //   listeners,
+  //   setNodeRef,
+  //   transform,
+  //   transition,
+  //   isDragging,
+  // } = useSortable({ id });
+  const [isAnimating, setIsAnimating] = useState(pathName !== "/");
 
+  const handleAnimationEnd = () => {
+    setIsAnimating(false);
+  };
   return (
     <div
       className="column"
-      ref={setNodeRef}
+      // ref={setNodeRef}
+      // style={{
+      //   // transform: CSS.Transform.toString(transform),
+      //   // transition:
+      //   //   transition || "transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
+      //   // zIndex: isDragging ? 9999 : 1,
+      //   animation: `${
+      //     pathName === "/"
+      //       ? ""
+      //       : "col-enter 200ms cubic-bezier(.22,.9,.27,1) both"
+      //   }`,
+      // }}
       style={{
-        transform: CSS.Transform.toString(transform),
-        transition:
-          transition || "transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
-        zIndex: isDragging ? 9999 : 1,
-        animation: `${
-          pathName === "/" || isDragging
-            ? ""
-            : "col-enter 200ms cubic-bezier(.22,.9,.27,1) both"
-        }`,
+        animation: isAnimating
+          ? "col-enter 200ms cubic-bezier(.22,.9,.27,1) both"
+          : undefined,
       }}
-      {...attributes}
+      onAnimationEnd={handleAnimationEnd}
+      // {...attributes}
     >
-      <Header id={id} dragHandleProps={listeners} textHeader={pathName} />
-      <div className="column-container relative z-2 flex-1 pt-6 border-b border-l border-r shadow  bg-primary-foreground">
+      <Header
+        id={id}
+        /**dragHandleProps={listeners} **/ textHeader={pathName}
+      />
+      <div className="column-container relative z-2  flex-1 pt-6 border-b border-l border-r shadow  bg-primary-foreground">
         {children}
       </div>
     </div>

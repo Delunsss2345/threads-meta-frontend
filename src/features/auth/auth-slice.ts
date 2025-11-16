@@ -2,11 +2,8 @@ import type { InitStateAuth } from "@/types/auth.type";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: InitStateAuth = {
-  currentUser: {
-    email: "huydarealest",
-    id: "1",
-    name: "huydarealest",
-  },
+  currentUser: null,
+  isLoggedIn: false,
   fetching: true,
 };
 

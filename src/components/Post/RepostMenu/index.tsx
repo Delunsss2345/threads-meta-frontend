@@ -8,22 +8,28 @@ import { useTranslation } from "react-i18next";
 const RepostMenu = ({
   children,
   className,
+  isAuth,
+  onUnauthorizedClick,
 }: {
   children: ReactNode;
   className: string;
+  isAuth: boolean;
+  onUnauthorizedClick?: () => void;
 }) => {
   const { t } = useTranslation();
-
   const repostMenu = [
-    {
-      icon: <Repeat2 />,
-      label: t("menu.repost"),
-    },
-    {
-      icon: <MessageSquareQuote />,
-      label: t("menu.quote"),
-    },
+    { icon: <Repeat2 />, label: t("menu.repost") },
+    { icon: <MessageSquareQuote />, label: t("menu.quote") },
   ];
+
+  if (!isAuth) {
+    return (
+      <button className="flex items-center gap-1" onClick={onUnauthorizedClick}>
+        {children}
+      </button>
+    );
+  }
+
   return (
     <MenuPopup
       className={`${cn(`p-0 hover:!bg-transparent ${className}`)}`}

@@ -1,4 +1,4 @@
-import { useDebounceInput } from "@/hooks/useDebouceInput";
+import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
   ForgotPasswordSchemaBody,
   type ForgotPasswordSchemaBodyType,

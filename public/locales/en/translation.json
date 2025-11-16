@@ -155,11 +155,42 @@
     "embedCode": "Get embed code",
     "search": "Search",
     "activity": "Activity",
-    "profile": "Profile"
+    "profile": "Profile",
+    "removeColumn": "Remove column"
   },
   "notFound": {
     "title": "Not everything that disappears is missing, but this page truly is.",
     "description": "The link is broken or the page no longer exists. Go back to continue exploring.",
     "back": "Go back"
+  },
+  "profileSettings": {
+    "name": "Name",
+    "bio": "Bio",
+    "interests": "Interests",
+    "addInterests": "Add interests",
+    "links": "Links",
+    "showInstagramBadge": "Show Instagram badge",
+    "showInstagramBadgeDesc": "When turned off, the Threads badge on your Instagram profile will also disappear.",
+    "profilePrivacy": "Profile privacy",
+    "profilePrivacyDesc": "If you switch to private, only followers can see your threads. Your replies will be visible to followers and individual profiles you reply to.",
+    "public": "Public",
+    "done": "Done"
+  },
+  "loginCard": {
+    "title": "Log in or sign up for Threads",
+    "description": "See what people are talking about and join the conversation.",
+    "loginWithUsername": "Log in with username instead"
+  },
+  "authModal": {
+    "signUpToPost": "Sign up to post",
+    "continueWithLogin": "Continue with login",
+    "signUpToLike": "Sign up to like",
+    "signUpToLikeDesc": "You need an account to like posts.",
+    "signUpToReply": "Sign up to reply",
+    "signUpToReplyDesc": "Join the conversation by replying to posts.",
+    "signUpToRepost": "Sign up to repost",
+    "signUpToRepostDesc": "Repost and share ideas once you're logged in.",
+    "signUpToShare": "Sign up to share",
+    "signUpToShareDesc": "Sharing is available once you create an account."
   }
 }

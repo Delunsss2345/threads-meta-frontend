@@ -1,1 +1,1 @@
-export * from "./columnSlice";
+export * from "./column-slice";

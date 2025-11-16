@@ -9,13 +9,17 @@ import ModalShare from "../ModalShare";
 const ShareMenu = ({
   children,
   className,
+  isAuth,
+  onUnauthorizedClick,
 }: {
   children: ReactNode;
   className: string;
+  isAuth: boolean;
+  onUnauthorizedClick?: () => void;
 }) => {
   const [openModalShareImage, setOpenModalShareImage] = useState(false);
-
   const { t } = useTranslation();
+
   const shareMenu = [
     {
       icon: <Link2 />,
@@ -31,6 +35,18 @@ const ShareMenu = ({
       label: t("menu.embedCode"),
     },
   ];
+
+  if (!isAuth) {
+    return (
+      <button
+        className="flex items-center gap-1 cursor-pointer"
+        onClick={onUnauthorizedClick}
+      >
+        {children}
+      </button>
+    );
+  }
+
   return (
     <>
       <MenuPopup

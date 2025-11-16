@@ -1,3 +1,9 @@
+import { CommentIconThreads } from "@/components/Icon/CommentIconThreads";
+import { RepostIconThreads } from "@/components/Icon/RepostIconThreads";
+import { TymIconThreads } from "@/components/Icon/TymIconThreads";
+import i18n from "@/i18n";
+import { Send } from "lucide-react";
+
 export const PAGE_TITLES_BY_PATH: Record<string, string> = {
   "/": "home",
   "/search": "search",
@@ -25,3 +31,52 @@ export const NAV_LINKS = [
   "/profile",
   "/activity",
 ];
+
+export type ActionKey = "like" | "reply" | "repost" | "share";
+type InteractionType = Record<
+  ActionKey,
+  {
+    title: string;
+    description: string;
+    buttonText: string;
+    Icon: any;
+    iconGradient: string;
+  }
+>;
+
+export const getInteractionAuthConfig = (): InteractionType => ({
+  like: {
+    title: i18n.t("authModal.signUpToLike"),
+    description: i18n.t("authModal.signUpToLikeDesc"),
+    buttonText: i18n.t("auth.continueWithInstagram"),
+    Icon: TymIconThreads,
+    iconGradient: "from-pink-500 via-red-500 to-yellow-400",
+  },
+
+  reply: {
+    title: i18n.t("authModal.signUpToReply"),
+    description: i18n.t("authModal.signUpToReplyDesc"),
+    buttonText: i18n.t("auth.continueWithInstagram"),
+    Icon: CommentIconThreads,
+    iconGradient: "from-blue-500 via-sky-400 to-cyan-300",
+  },
+
+  repost: {
+    title: i18n.t("authModal.signUpToRepost"),
+    description: i18n.t("authModal.signUpToRepostDesc"),
+    buttonText: i18n.t("auth.continueWithInstagram"),
+    Icon: RepostIconThreads,
+    iconGradient: "from-green-500 via-lime-400 to-yellow-300",
+  },
+
+  share: {
+    title: i18n.t("authModal.signUpToShare"),
+    description: i18n.t("authModal.signUpToShareDesc"),
+    buttonText: i18n.t("auth.continueWithInstagram"),
+    Icon: Send,
+    iconGradient: "from-purple-500 via-fuchsia-500 to-pink-400",
+  },
+});
+
+// For backward compatibility
+export const INTERACTION_AUTH_CONFIG = getInteractionAuthConfig();

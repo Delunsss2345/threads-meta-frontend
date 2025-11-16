@@ -1,20 +1,11 @@
 import AddColumnIcon from "@/components/Icon/AddColIcon";
 import LoginCard from "@/components/LoginPanel";
 import { COMPONENTS_MAP } from "@/constant/componentsMap";
-import { columnsSlice, type ColumnType } from "@/features/column";
+import { type ColumnType } from "@/features/column";
 import MenuAddContent from "@/pages/Home/MenuAddContent";
 import type { RootState } from "@/types/redux.type";
-import {
-  DndContext,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
-  rectSortingStrategy,
-  SortableContext,
-} from "@dnd-kit/sortable";
+import { PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Column from "../Column";
@@ -25,9 +16,9 @@ interface ContentProps {
 
 const Content: React.FC<ContentProps> = ({ children }) => {
   const location = useLocation();
-  const isAuth =
-    Boolean(useSelector((state: RootState) => console.log(state.auth))) !==
-    null;
+  const isAuth = Boolean(
+    useSelector((state: RootState) => state.auth.currentUser)
+  );
 
   const columns = useSelector((state: RootState) => state.columns.columns);
   const dispatch = useDispatch();
@@ -59,55 +50,54 @@ const Content: React.FC<ContentProps> = ({ children }) => {
   return (
     <main className="w-full h-full mx-auto text-foreground">
       <HeaderMobile />
-      <div className="md:pl-[100px] dynamic-columns mt-[50px] h-full sm:mt-0 flex gap-5 ">
+      <div className="md:pl-[100px] dynamic-columns mt-[50px] h-full sm:mt-0 flex items-start gap-5 ">
         {location.pathname === "/" && columns.length > 1 ? (
-          <DndContext
-            sensors={sensors}
-            onDragEnd={(e) => {
-              handleDragEnd(e);
-            }}
-          >
-            <SortableContext items={columns} strategy={rectSortingStrategy}>
-              {columns.map((column: ColumnType) => {
-                if (column.pathName === location.pathname) {
-                  return (
-                    <Column
-                      pathName={column.pathName}
-                      key={column.id}
-                      id={column.id}
-                    >
-                      {COMPONENTS_MAP[column.pathName]}
-                    </Column>
-                  );
-                }
-                return (
-                  <Column
-                    pathName={column.pathName}
-                    key={column.id}
-                    id={column.id}
-                  >
-                    {COMPONENTS_MAP[column.pathName]}
-                  </Column>
-                );
-              })}
-            </SortableContext>
-          </DndContext>
+          // <DndContext
+          //   sensors={sensors}
+          //   onDragEnd={(e) => {
+          //     handleDragEnd(e);
+          //   }}
+          // >
+          // <SortableContext items={columns} strategy={rectSortingStrategy}>
+          columns.map((column: ColumnType) => {
+            if (column.pathName === location.pathname) {
+              return (
+                <Column
+                  pathName={column.pathName}
+                  key={column.id}
+                  id={column.id}
+                >
+                  {COMPONENTS_MAP[column.pathName]}
+                </Column>
+              );
+            }
+            return (
+              <Column pathName={column.pathName} key={column.id} id={column.id}>
+                {COMPONENTS_MAP[column.pathName]}
+              </Column>
+            );
+          })
         ) : (
+          // {/* </SortableContext> */}
+          // </DndContext>
           <>
             {/* Có pathname khớp thì dùng tên được gắn ở constant */}
             <Column pathName={location.pathname}>{children}</Column>
           </>
         )}
-        {!isAuth ? <LoginCard /> : null}
-        <div className="hidden relative md:block h-screen">
-          <div className="absolute top-1/2">
-            <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
-              <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
-                <AddColumnIcon size={20} />
-              </MenuAddContent>
+        {!isAuth ? (
+          <LoginCard />
+        ) : (
+          <div className="hidden relative md:block h-screen">
+            <div className="absolute top-1/2">
+              <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
+                <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
+                  <AddColumnIcon size={20} />
+                </MenuAddContent>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   );
