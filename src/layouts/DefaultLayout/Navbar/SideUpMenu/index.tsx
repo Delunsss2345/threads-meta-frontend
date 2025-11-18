@@ -1,3 +1,5 @@
+import { DarkIcon } from "@/components/Icon/DarkIcon";
+import LightModeIcon from "@/components/Icon/LightModeIcon";
 import MenuPopup from "@/components/MenuPopup";
 import { useTheme } from "@/components/ThemeProvider";
 import { useLogout } from "@/features/auth/hook";
@@ -55,17 +57,19 @@ const SlideUpMenu = ({
 
   const themeMenu = [
     {
-      label: t("menu.light"),
+      label: "Light",
+      icon: <LightModeIcon className="w-4 h-4" />,
       onClick: () => setTheme("light"),
-      value: "light",
     },
-    { label: t("menu.dark"), onClick: () => setTheme("dark"), value: "dark" },
     {
-      label: t("menu.system"),
-      onClick: () => setTheme("system"),
-      value: "system",
+      label: "Dark",
+      icon: <DarkIcon className="w-4 h-4" />,
+      onClick: () => setTheme("dark"),
     },
-    { label: t("menu.back"), onClick: () => setActiveMenu("main") },
+    {
+      label: "Auto",
+      onClick: () => setTheme("system"),
+    },
   ];
 
   const languageMenu = [
@@ -82,7 +86,6 @@ const SlideUpMenu = ({
     {
       label: t("menu.back"),
       icon: <ArrowLeft size={16} />,
-      onClick: () => setActiveMenu("main"),
     },
   ];
   return (
@@ -92,7 +95,9 @@ const SlideUpMenu = ({
       buttonActive={children}
     >
       {activeMenu === "main" && <MainMenu items={mainMenu} />}
-      {activeMenu === "theme" && <ThemeMenu items={themeMenu} />}
+      {activeMenu === "theme" && (
+        <ThemeMenu onClick={() => setActiveMenu("main")} items={themeMenu} />
+      )}
       {activeMenu === "language" && <LanguageMenu items={languageMenu} />}
     </MenuPopup>
   );

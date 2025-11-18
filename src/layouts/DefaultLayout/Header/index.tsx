@@ -44,7 +44,7 @@ const Header = ({
           : t(`nav.${PAGE_TITLES_BY_PATH[textHeader || pathname]}`)}
       </h1>
 
-      {textHeader !== "/" && (
+      {textHeader !== "/" && pathname === "/" && (
         <div className="absolute right-0 top-1/2 -translate-y-1/2 -translate-x-1/2">
           <MenuPopup
             className="
