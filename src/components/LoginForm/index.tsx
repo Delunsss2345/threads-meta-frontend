@@ -5,7 +5,7 @@ import {
   LoginSchemaBody,
   type LoginSchemaBodyType,
 } from "@/schema/auth.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {   zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -16,10 +16,12 @@ interface LoginFormProps {
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
   const { t } = useTranslation();
+
+
   const form = useForm<LoginSchemaBodyType>({
     resolver: zodResolver(LoginSchemaBody),
     defaultValues: {
-      username: "",
+      login: "",
       password: "",
     },
   });
@@ -35,7 +37,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       >
         <FormField
           control={form.control}
-          name="username"
+          name="login"
           render={({ field }) => (
             <FormItem className="w-90">
               <Input placeholder={t("auth.usernamePlaceholder")} {...field} />

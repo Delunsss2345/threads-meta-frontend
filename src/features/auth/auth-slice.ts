@@ -1,6 +1,20 @@
+import type {
+  LoginPayload,
+  LoginResponse,
+  RegisterPayload,
+  RegisterResponse,
+} from "@/types/auth";
+import type { ApiUser, UserResponse } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "./auth-api";
-import type { AuthResponse, AuthState, LoginPayload, User } from "./auth-type";
+
+export type AuthState = {
+  currentUser: ApiUser | null;
+  accessToken: string | null;
+  loadingUser: boolean;
+  loggingIn: boolean;
+  initialized: boolean;
+};
 
 const initialState: AuthState = {
   currentUser: null,
@@ -10,19 +24,32 @@ const initialState: AuthState = {
   initialized: false,
 };
 
-export const login = createAsyncThunk<AuthResponse, LoginPayload>(
+export const login = createAsyncThunk<LoginResponse, LoginPayload>(
   "auth/login",
   async (payload, { rejectWithValue }) => {
     try {
       const res = await authApi.login(payload);
       return res;
     } catch (error: any) {
-      return rejectWithValue(error.message ?? "Đăng nhập thất bại");
+      return rejectWithValue(error.response?.data || "Đăng ký thất bại");
     }
   }
 );
 
-export const getCurrentUser = createAsyncThunk<User>(
+export const register = createAsyncThunk<RegisterResponse, RegisterPayload>(
+  "auth/register",
+
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await authApi.register(payload);
+      return res;
+    } catch (error: any) {
+      return rejectWithValue(error.message ?? "Đăng ký thất bại");
+    }
+  }
+);
+
+export const getCurrentUser = createAsyncThunk<UserResponse>(
   "auth/getCurrentUser",
   async (_, { rejectWithValue }) => {
     try {
@@ -63,26 +90,53 @@ export const authSlice = createSlice({
     builder.addCase(login.pending, (state) => {
       state.loggingIn = true;
     });
+
     builder.addCase(login.fulfilled, (state, action) => {
       state.loggingIn = false;
-      state.currentUser = action.payload.user;
-      state.accessToken = action.payload.accessToken;
-      localStorage.setItem("accessToken", action.payload.accessToken);
+      state.currentUser = action.payload.data.user;
+
+      state.accessToken = action.payload.data.access_token;
+
+      localStorage.setItem("accessToken", action.payload.data.access_token);
+      localStorage.setItem("refreshToken", action.payload.data.refresh_token);
     });
-    builder.addCase(login.rejected, (state, _) => {
+
+    builder.addCase(login.rejected, (state) => {
       state.loggingIn = false;
       state.currentUser = null;
       state.accessToken = null;
     });
 
-    // Get me
-    builder.addCase(getCurrentUser.pending, (state) => {
-      state.loadingUser = true;
+    // Register auth
+    builder.addCase(register.pending, (state) => {
+      state.loggingIn = true;
     });
+
+    builder.addCase(register.fulfilled, (state, action) => {
+      state.loggingIn = false;
+      state.currentUser = action.payload.data.user;
+      state.accessToken = action.payload.data.access_token;
+
+      localStorage.setItem("accessToken", action.payload.data.access_token);
+      localStorage.setItem("refreshToken", action.payload.data.refresh_token);
+    });
+
+    builder.addCase(register.rejected, (state) => {
+      state.loggingIn = false;
+      state.currentUser = null;
+      state.accessToken = null;
+    }),
+      // Get me
+      builder.addCase(getCurrentUser.pending, (state) => {
+        state.loadingUser = true;
+      });
+
+    // fulfilled trả về ApiUser
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
       state.loadingUser = false;
-      state.currentUser = action.payload;
+      state.currentUser = action.payload.data;
     });
+
     builder.addCase(getCurrentUser.rejected, (state) => {
       state.loadingUser = false;
       state.currentUser = null;
@@ -98,6 +152,7 @@ export const authSlice = createSlice({
       state.currentUser = null;
       state.accessToken = null;
     });
+
     builder.addCase(logout.rejected, (state) => {
       state.loggingIn = false;
       state.currentUser = null;

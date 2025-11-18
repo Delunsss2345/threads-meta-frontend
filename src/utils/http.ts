@@ -124,9 +124,10 @@ class AxiosHttp {
     } catch (error: any) {
       const err: ApiError = {
         status: error.response?.status || 500,
-        message:
-          error.response?.data?.message || error.message || "Server Error",
+        message: error.response?.data?.message || "Server Error",
+        errors: error.response?.data?.errors,
       };
+
       throw err;
     }
   };

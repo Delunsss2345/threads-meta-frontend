@@ -89,16 +89,14 @@ const Post = ({
           </div>
 
           {content && (
-            <p className="mt-2 text-foreground text-sm leading-relaxed">
-              {content}
-            </p>
+            <p className="text-foreground text-sm leading-relaxed">{content}</p>
           )}
         </div>
       </div>
 
       {images.length > 0 && (
         <div className="relative mt-3 ">
-          <div className="-ml-[48px] pl-[48px] overflow-visible w-auto">
+          <div className="ml-[12px] pl-[48px] overflow-visible w-auto">
             <Swiper
               modules={[FreeMode]}
               spaceBetween={8}
@@ -126,7 +124,7 @@ const Post = ({
         </div>
       )}
 
-      <div className="mt-3">
+      <div className="mt-3 ">
         <PostProvider
           post={{
             username,
@@ -142,7 +140,9 @@ const Post = ({
             avatar,
           }}
         >
-          <InteractionBar mode="auto" />
+          <div className="pl-[58px]">
+            <InteractionBar mode="auto" />
+          </div>
         </PostProvider>
       </div>
     </div>

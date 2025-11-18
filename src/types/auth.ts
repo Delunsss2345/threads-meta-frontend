@@ -10,7 +10,7 @@ export interface RegisterPayload {
   username: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  password_confirmation: string;
 }
 
 export interface RegisterData {

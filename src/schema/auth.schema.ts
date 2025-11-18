@@ -1,7 +1,7 @@
 import z from "zod";
 
 const LoginSchemaBody = z.object({
-  username: z
+  login: z
     .string({ message: "Tên đăng nhập không hợp lệ" })
     .min(6, { message: "Tên đăng nhập không hợp lệ" }),
   password: z
@@ -9,18 +9,26 @@ const LoginSchemaBody = z.object({
     .min(8, { message: "Mật khẩu tối thiểu 8 ký tự" }),
 });
 
-const RegisterSchemaBody = LoginSchemaBody.extend({
-  email: z.string({ message: "Email không hợp lệ" }).email(),
-  confirmPassword: z.string().min(8),
-}).superRefine(({ confirmPassword, password }, ctx) => {
-  if (confirmPassword !== password) {
-    ctx.addIssue({
-      code: "custom",
-      message: "Mật khẩu không khớp",
-      path: ["confirmPassword"],
-    });
-  }
-});
+const RegisterSchemaBody = z
+  .object({
+    username: z
+      .string({ message: "Tên đăng nhập không hợp lệ" })
+      .min(6, { message: "Tên đăng nhập không hợp lệ" }),
+    email: z.string({ message: "Email không hợp lệ" }).email(),
+    password: z
+      .string({ message: "Mật khẩu không hợp lệ" })
+      .min(8, { message: "Mật khẩu tối thiểu 8 ký tự" }),
+    password_confirmation: z.string().min(8),
+  })
+  .superRefine(({ password_confirmation, password }, ctx) => {
+    if (password_confirmation !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Mật khẩu không khớp",
+        path: ["password_confirmation"],
+      });
+    }
+  });
 
 const ForgotPasswordSchemaBody = z.object({
   email: z

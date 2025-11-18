@@ -14,7 +14,7 @@ const PostForm = () => {
   if (!currentUser) return null;
   return (
     <>
-      <Card className="px-6 py-0 border-0 rounded-none shadow-none cursor-pointer bg-primary-foreground mb-6">
+      <Card className="px-6 py-3 border-0 rounded-none shadow-none cursor-pointer bg-primary-foreground ">
         <CardContent className="flex items-start p-0">
           <Avatar className="w-10 h-10">
             <AvatarImage src="/avatar.png" alt="user" />

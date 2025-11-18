@@ -1,10 +1,21 @@
-import type { LoginPayload } from "@/types/auth";
+import type { MessageResponse } from "@/types/api";
+import type {
+  LoginPayload,
+  LoginResponse,
+  RegisterPayload,
+  RegisterResponse,
+} from "@/types/auth";
+import type { UserResponse } from "@/types/user";
 import { http } from "@/utils/http";
 
 export const authApi = {
-  login: (payload: LoginPayload) => http.post("/auth/login", payload),
+  login: (payload: LoginPayload) =>
+    http.post<LoginResponse>("/auth/login", payload),
 
-  getCurrentUser: () => http.get("/auth/me"),
+  register: (payload: RegisterPayload) =>
+    http.post<RegisterResponse>("/auth/register", payload),
 
-  logout: () => http.post("/auth/logout"),
+  getCurrentUser: () => http.get<UserResponse>("/auth/user"),
+
+  logout: () => http.post<MessageResponse>("/auth/logout"),
 };

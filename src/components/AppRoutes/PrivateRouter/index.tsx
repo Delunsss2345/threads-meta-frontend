@@ -1,6 +1,5 @@
-import type { RootState } from "@/types/redux";
+import { useAuth } from "@/features/auth/hook";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface PrivateRouterProps {
@@ -8,12 +7,11 @@ interface PrivateRouterProps {
 }
 
 const PrivateRouter: React.FC<PrivateRouterProps> = ({ children }) => {
-  const isAuth =
-    Boolean(useSelector((state: RootState) => state.auth.currentUser)) !== null;
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isAuth) navigate("/login");
+    if (!isAuthenticated) navigate("/login");
   }, [location.pathname]);
 
   return <>{children}</>;

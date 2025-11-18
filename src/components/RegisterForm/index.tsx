@@ -6,6 +6,8 @@ import {
   RegisterSchemaBody,
   type RegisterSchemaBodyType,
 } from "@/schema/auth.schema";
+import { useAppSelector } from "@/store";
+import type { RootState } from "@/types/redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -17,6 +19,7 @@ interface RegisterFormProps {
 
 export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
   const { t } = useTranslation();
+  const { loggingIn } = useAppSelector((state: RootState) => state.auth);
   const form = useForm<RegisterSchemaBodyType>({
     resolver: zodResolver(RegisterSchemaBody),
     mode: "onSubmit",
@@ -24,7 +27,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
       username: "",
       email: "",
       password: "",
-      confirmPassword: "",
+      password_confirmation: "",
     },
   });
   const navigate = useNavigate();
@@ -84,7 +87,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
         {/* Confirm Password */}
         <FormField
           control={form.control}
-          name="confirmPassword"
+          name="password_confirmation"
           render={({ field }) => (
             <FormItem className="w-90">
               <Input
@@ -99,6 +102,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
 
         {/* Submit button */}
         <Button
+          disabled={loggingIn}
           type="submit"
           className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >

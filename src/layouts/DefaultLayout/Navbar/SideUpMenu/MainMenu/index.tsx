@@ -1,4 +1,5 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/features/auth/hook";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ interface MenuItem {
   onClick?: () => void;
   icon?: ReactNode;
   pathName?: string;
+  isAuth?: boolean;
 }
 
 interface MainMenuProps {
@@ -17,6 +19,8 @@ interface MainMenuProps {
 
 export function MainMenu({ items }: MainMenuProps) {
   const navigator = useNavigate();
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
       {items.map((item, index) => (
@@ -32,6 +36,7 @@ export function MainMenu({ items }: MainMenuProps) {
           }}
           className={cn(
             "cursor-pointer px-3 py-2 text-sm transition-colors",
+            isAuthenticated !== item.isAuth ? "hidden" : "",
             item.danger
               ? "text-red-500 hover:bg-red-500/10 hover:text-red-600"
               : "text-muted-foreground hover:text-foreground"

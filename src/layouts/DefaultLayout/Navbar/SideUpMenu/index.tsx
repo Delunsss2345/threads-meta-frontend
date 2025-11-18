@@ -1,10 +1,9 @@
 import MenuPopup from "@/components/MenuPopup";
 import { useTheme } from "@/components/ThemeProvider";
-import { authSlice } from "@/features/auth";
+import { useLogout } from "@/features/auth/hook";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import { LanguageMenu } from "./LanguageMenu";
 import { MainMenu } from "./MainMenu";
 import { ThemeMenu } from "./ThemeMenu";
@@ -21,7 +20,7 @@ const SlideUpMenu = ({
     transition?: Record<string, any>;
   };
 }) => {
-  const dispatch = useDispatch();
+  const logout = useLogout();
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
     "main"
   );
@@ -32,12 +31,13 @@ const SlideUpMenu = ({
       label: t("menu.appearance"),
       icon: <ChevronRight size={16} />,
       onClick: () => setActiveMenu("theme"),
+      isAuth: false,
     },
-    { label: t("menu.profileInfo") },
-    { label: t("menu.settings"), pathName: "settings/privacy" },
-    { label: t("menu.feed") },
-    { label: t("menu.saved"), pathName: "saved" },
-    { label: t("menu.liked"), pathName: "liked" },
+    { label: t("menu.profileInfo"), isAuth: true },
+    { label: t("menu.settings"), pathName: "settings/privacy", isAuth: true },
+    { label: t("menu.feed"), isAuth: true },
+    { label: t("menu.saved"), pathName: "saved", isAuth: true },
+    { label: t("menu.liked"), pathName: "liked", isAuth: true },
     {
       label: t("menu.language"),
       icon: <ChevronRight size={16} />,
@@ -45,8 +45,9 @@ const SlideUpMenu = ({
     },
     {
       label: t("menu.logout"),
-      onClick: () => dispatch(authSlice.actions.setCurrentUser(null)),
+      onClick: () => logout,
       danger: true,
+      isAuth: true,
     },
   ];
 

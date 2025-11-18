@@ -1,3 +1,4 @@
+import { useAuth } from "@/features/auth/hook";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { Card, CardContent } from "../ui/card";
@@ -5,9 +6,10 @@ import NewPostCustom from "./NewPostCustom";
 
 const FixedNewPostButton = () => {
   const [openModalNewPost, setOpenModalNewContent] = useState(false);
+  const { isAuthenticated } = useAuth();
   const fixedCreate = document.getElementById("fixed-create-thread");
   if (!fixedCreate) return null;
-
+  if (!isAuthenticated) return null;
   return createPortal(
     <>
       <Card
