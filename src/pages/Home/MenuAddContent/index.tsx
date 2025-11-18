@@ -2,7 +2,7 @@ import MenuPopup from "@/components/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { columnsSlice } from "@/features/column";
 import { cn } from "@/lib/utils";
-import type { RootState } from "@/types/redux.type";
+import type { RootState } from "@/types/redux";
 import { ChevronRight } from "lucide-react";
 import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";

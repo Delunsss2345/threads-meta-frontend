@@ -3,7 +3,7 @@ import LoginCard from "@/components/LoginPanel";
 import { COMPONENTS_MAP } from "@/constant/componentsMap";
 import { type ColumnType } from "@/features/column";
 import MenuAddContent from "@/pages/Home/MenuAddContent";
-import type { RootState } from "@/types/redux.type";
+import type { RootState } from "@/types/redux";
 import { PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,5 +1,5 @@
+import type { LoginPayload } from "@/types/auth";
 import { http } from "@/utils/http";
-import type { LoginPayload } from "./auth-type";
 
 export const authApi = {
   login: (payload: LoginPayload) => http.post("/auth/login", payload),

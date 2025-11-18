@@ -2,7 +2,7 @@
 // import { useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 
-import type { RootStateReduce } from "@/types/redux.type";
+import type { RootStateReduce } from "@/types/redux";
 import { useSelector } from "react-redux";
 
 // export const useFetchCurrentUser = () => {

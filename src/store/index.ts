@@ -1,7 +1,7 @@
 import { authSlice } from "@/features/auth";
 import { columnsSlice } from "@/features/column";
 import { modalSlice } from "@/features/modal/modal-slice";
-import type { AppDispatch, RootState } from "@/types/redux.type";
+import type { AppDispatch, RootState } from "@/types/redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import {
