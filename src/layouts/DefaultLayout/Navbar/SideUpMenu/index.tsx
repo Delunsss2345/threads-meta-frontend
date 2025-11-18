@@ -11,6 +11,7 @@ import { ThemeMenu } from "./ThemeMenu";
 const SlideUpMenu = ({
   children,
   motionProps,
+  customPopup,
 }: {
   children: React.ReactNode;
   motionProps?: {
@@ -19,6 +20,7 @@ const SlideUpMenu = ({
     exit?: Record<string, any>;
     transition?: Record<string, any>;
   };
+  customPopup?: string;
 }) => {
   const logout = useLogout();
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
@@ -84,7 +86,11 @@ const SlideUpMenu = ({
     },
   ];
   return (
-    <MenuPopup motionProps={motionProps} buttonActive={children}>
+    <MenuPopup
+      customPopup={customPopup}
+      motionProps={motionProps}
+      buttonActive={children}
+    >
       {activeMenu === "main" && <MainMenu items={mainMenu} />}
       {activeMenu === "theme" && <ThemeMenu items={themeMenu} />}
       {activeMenu === "language" && <LanguageMenu items={languageMenu} />}

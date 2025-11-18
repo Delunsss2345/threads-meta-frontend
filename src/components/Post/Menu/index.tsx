@@ -40,9 +40,10 @@ const Menu = ({ buttonActive }: { buttonActive: ReactNode }) => {
   return (
     <MenuPopup
       buttonActive={buttonActive}
+      customPopup="-translate-x-20"
       motionProps={{
-        initial: { opacity: 0, x: -60, scale: 0.96 },
-        animate: { opacity: 1, x: -60, scale: 1 },
+        initial: { opacity: 0, x: 0, scale: 0.96 },
+        animate: { opacity: 1, x: 0, scale: 1 },
       }}
     >
       {items.map((item, i) => (

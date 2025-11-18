@@ -100,7 +100,13 @@ const Navbar: React.FC = () => {
       </div>
 
       <div className="pt-4 space-y-1 border-t border-border">
-        <SlideUpMenu>
+        <SlideUpMenu
+          customPopup="translate-x-5"
+          motionProps={{
+            initial: { opacity: 0, x: 0, scale: 0.96 },
+            animate: { opacity: 1, x: 0, scale: 1 },
+          }}
+        >
           <NavItem
             className="hover:bg-transparent hover:text-current !p-0"
             icon={<MenuIcon size={26} />}

@@ -10,6 +10,7 @@ interface MenuPopupProps {
   buttonActive: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  customPopup?: string;
   motionProps?: {
     initial?: Record<string, any>;
     animate?: Record<string, any>;
@@ -23,6 +24,7 @@ const MenuPopup = ({
   children,
   motionProps,
   className,
+  customPopup,
 }: MenuPopupProps) => {
   return (
     <DropdownMenu modal={false}>
@@ -63,8 +65,10 @@ const MenuPopup = ({
               ease: "easeOut",
               ...(motionProps?.transition || {}),
             }}
-            className="w-56 rounded-xl border border-gray-200 p-2 bg-primary-foreground 
-                       *:text-[15px] *:py-3 *:font-semibold *:rounded-xl shadow-lg"
+            className={`w-56 rounded-xl border border-gray-200 p-2 bg-primary-foreground 
+                       *:text-[15px] *:py-3 *:font-semibold *:rounded-xl shadow-lg ${
+                         customPopup || ""
+                       }`}
           >
             {children}
           </motion.div>
