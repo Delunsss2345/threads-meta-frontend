@@ -1,6 +1,7 @@
 import type { AppDispatch, RootStateReduce } from "@/types/redux";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getFeeds } from "../post";
 import { getCurrentUser, logout } from "./auth-slice";
 
 export const useFetchCurrentUser = () => {
@@ -8,6 +9,7 @@ export const useFetchCurrentUser = () => {
 
   useEffect(() => {
     dispatch(getCurrentUser());
+    dispatch(getFeeds());
   }, [dispatch]);
 };
 

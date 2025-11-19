@@ -1,8 +1,33 @@
 import { createContext } from "react";
-import type { Post } from "../type";
+
+export interface PostProps {
+  id: number;
+
+  avatar: string | null;
+  username: string;
+  name: string;
+
+  verified: boolean;
+
+  time: string;
+
+  content: string;
+  images: string[];
+
+  like: number;
+  message: number;
+  repost: number;
+  share: number;
+
+  original_post?: {
+    username: string;
+    content: string;
+    avatar: string | null;
+  } | null;
+}
 
 export const PostContext = createContext<{
-  post: Post;
+  post: PostProps;
 } | null>(null);
 
 const PostProvider = ({
@@ -10,7 +35,7 @@ const PostProvider = ({
   post,
 }: {
   children: React.ReactNode;
-  post: Post;
+  post: PostProps;
 }) => {
   return (
     <PostContext.Provider value={{ post }}>{children}</PostContext.Provider>

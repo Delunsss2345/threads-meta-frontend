@@ -16,7 +16,11 @@ export const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("accessToken");
 
-  if (accessToken) {
+  const isPublicApi =
+    config.url?.startsWith("/posts/feed") ||
+    config.url?.startsWith("/auth/login");
+
+  if (!isPublicApi && accessToken) {
     config.headers.set("Authorization", `Bearer ${accessToken}`);
   }
 
@@ -43,13 +47,12 @@ const processQueue = (error: any) => {
 // Gọi refreshToken
 const refreshToken = async () => {
   try {
-    const result = await axios.post(`${baseURL}/auth/refresh-token`, {
+    const result = await http.post(`${baseURL}/auth/refresh`, {
       refresh_token: localStorage.getItem("refreshToken"),
     });
-
     // Attach all token
-    localStorage.setItem("accessToken", result.data.data.access_token);
-    localStorage.setItem("refreshToken", result.data.data.refresh_token);
+    localStorage.setItem("accessToken", result.data.access_token);
+    localStorage.setItem("refreshToken", result.data.refresh_token);
 
     // Gắn queue  null nếu thành công
     processQueue(null);

@@ -5,28 +5,30 @@ import "swiper/css";
 import { FreeMode } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import type { PostItem } from "@/types/post";
 import { UserPreviewCard } from "../UserPreview";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
 import PostProvider from "./PostContext";
-import type { Post } from "./type";
 
-const Post = ({
-  username,
-  time,
-  content,
-  verified = false,
-  like = 0,
-  message = 0,
-  repost = 0,
-  share = 0,
-  file,
-  images = [],
-  avatar,
-}: Post) => {
+const formatTime = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleString("vi-VN");
+};
+
+const Post = ({ post }: { post: PostItem }) => {
   const [open, setOpen] = useState(false);
   const hoverTimer = useRef<any | null>(null);
-
+  const username = post.user.username;
+  const avatar = post.user.avatar_url;
+  const verified = post.user.verified;
+  const content = post.content;
+  const images = post.media_urls;
+  const like = post.likes_count;
+  const message = post.replies_count;
+  const repost = post.reposts_and_quotes_count;
+  const share = 0;
+  const time = formatTime(post.created_at);
   const handleMouseEnter = () => {
     hoverTimer.current = setTimeout(() => setOpen(true), 500);
   };
@@ -39,6 +41,7 @@ const Post = ({
   return (
     <div className="px-6 py-3 border-t border-b border-border cursor-pointer">
       <div className="grid [grid-template-columns:48px_minmax(0,1fr)] gap-3 w-full">
+        {/* Avatar */}
         <div>
           {avatar ? (
             <img src={avatar} className="w-10 h-10 rounded-full object-cover" />
@@ -60,11 +63,11 @@ const Post = ({
                 <AnimatePresence>
                   {open && (
                     <UserPreviewCard
-                      name="Sue mingze"
-                      username="nthg_sue"
-                      bio="糸🪣"
-                      followers={50}
-                      avatar="https://i.imgur.com/FbQHdT0.jpg"
+                      name={post.user.name}
+                      username={post.user.username}
+                      bio={post.user.bio || ""}
+                      followers={0}
+                      avatar={avatar || ""}
                     />
                   )}
                 </AnimatePresence>
@@ -88,12 +91,14 @@ const Post = ({
             <Menu buttonActive={<Ellipsis className="w-2 h-2" />} />
           </div>
 
+          {/* Content */}
           {content && (
             <p className="text-foreground text-sm leading-relaxed">{content}</p>
           )}
         </div>
       </div>
 
+      {/* Images */}
       {images.length > 0 && (
         <div className="relative mt-3 ">
           <div className="ml-[12px] pl-[48px] overflow-visible w-auto">
@@ -127,17 +132,29 @@ const Post = ({
       <div className="mt-3 ">
         <PostProvider
           post={{
-            username,
+            id: post.id,
+
+            avatar: post.user.avatar_url,
+            username: post.user.username,
+            name: post.user.name,
+
+            verified: post.user.verified,
             time,
             content,
-            verified,
+            images,
+
             like,
             message,
             repost,
             share,
-            file,
-            images,
-            avatar,
+
+            original_post: post.original_post
+              ? {
+                  username: post.original_post.user.username,
+                  content: post.original_post.content,
+                  avatar: post.original_post.user.avatar_url,
+                }
+              : null,
           }}
         >
           <div className="pl-[58px]">

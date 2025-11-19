@@ -29,7 +29,6 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
     if (!span) return;
 
     const label = span.dataset.label as ActionKey | undefined | null;
-    // const value = span.textContent;
 
     if (!currentUser) {
       if (!label) {
@@ -65,7 +64,8 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
       );
       return;
     }
-    show(<ReplyModal onClose={hide} />);
+    if (!ctx?.post) return null;
+    show(<ReplyModal post={ctx?.post} onClose={hide} />);
   };
 
   return (

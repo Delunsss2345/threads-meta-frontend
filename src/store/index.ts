@@ -1,6 +1,7 @@
 import { authSlice } from "@/features/auth";
 import { columnsSlice } from "@/features/column";
 import { modalSlice } from "@/features/modal/modal-slice";
+import { postsSlice } from "@/features/post";
 import type { AppDispatch, RootState } from "@/types/redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,6 +37,7 @@ export const rootReducer = combineReducers({
   [authSlice.reducerPath]: persistReducer(authPersistConfig, authSlice.reducer),
   [columnsSlice.reducerPath]: columnsSlice.reducer,
   [modalSlice.reducerPath]: modalSlice.reducer,
+  [postsSlice.reducerPath]: postsSlice.reducer,
 });
 
 const store = configureStore({

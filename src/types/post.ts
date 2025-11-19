@@ -44,6 +44,7 @@ export interface PostItem {
   original_post: OriginalPost | null;
 }
 
+
 export interface PostResponse {
   success: boolean;
   data: PostItem[];

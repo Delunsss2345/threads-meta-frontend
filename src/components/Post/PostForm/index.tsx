@@ -3,15 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/features/auth/hook";
-import { useState } from "react";
+import { useModal } from "@/hooks/use-modal";
 import { useTranslation } from "react-i18next";
 import NewPostModal from "../NewPostModal";
 
 const PostForm = () => {
-  const [openModalNewPost, setOpenModalNewContent] = useState(false);
+  const { show, hide } = useModal();
   const { t } = useTranslation();
-  const { user } = useAuth();
-
+  const { user, isAuthenticated } = useAuth();
+  if (!isAuthenticated) return null;
   return (
     <>
       <Card className="px-6 py-3 border-0 rounded-none shadow-none cursor-pointer bg-primary-foreground ">
@@ -28,7 +28,9 @@ const PostForm = () => {
 
           <div className="flex-1">
             <Textarea
-              onClick={() => setOpenModalNewContent(true)}
+              onClick={() => {
+                show(<NewPostModal onClose={hide} />);
+              }}
               readOnly={true}
               placeholder={t("post.whatsNew")}
               className=" placeholder:align-middle h-auto !bg-transparent rounded-none px-2 text-foreground-100 border-none resize-none focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
@@ -37,17 +39,15 @@ const PostForm = () => {
           </div>
 
           <Button
-            onClick={() => setOpenModalNewContent(true)}
+            onClick={() => {
+              show(<NewPostModal onClose={hide} />);
+            }}
             className="border-foreground border transition-none !bg-primary-foreground text-foreground cursor-pointer"
           >
             {t("common.post")}
           </Button>
         </CardContent>
       </Card>
-
-      {openModalNewPost && (
-        <NewPostModal onClose={() => setOpenModalNewContent(false)} />
-      )}
     </>
   );
 };

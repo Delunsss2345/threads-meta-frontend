@@ -2,17 +2,28 @@ import ModalPopup from "@/components/ModalPopup";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/features/auth/hook";
 import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import "swiper/css";
+import { FreeMode } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
-import { PostContext } from "../PostContext";
+import { type PostProps } from "../PostContext";
 
-function ReplyModal({ onClose }: { onClose: () => void }) {
+function ReplyModal({
+  post,
+  onClose,
+}: {
+  post: PostProps;
+  onClose: () => void;
+}) {
   const [content, setContent] = useState("");
-  const ctxPost = useContext(PostContext);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const { user } = useAuth();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -22,56 +33,99 @@ function ReplyModal({ onClose }: { onClose: () => void }) {
         textareaRef.current.scrollHeight + "px";
     }
   }, [content]);
+
+  if (!post || !user) return null;
+  console.log(post);
   return (
     <ModalPopup onClose={onClose}>
-      <Card className="p-0 gap-0 " onClick={(e) => e.stopPropagation()}>
+      <Card className="p-0 gap-0" onClick={(e) => e.stopPropagation()}>
         <Header headerText={t("post.replyTo")} onClose={onClose} />
+
         <CardContent className="p-4 pt-5">
-          <div className="flex gap-3">
+          <div className="flex gap-3 mb-6">
             <div className="flex flex-col items-center">
               <Avatar className="w-10 h-10 cursor-pointer hover:opacity-90 transition-opacity">
-                <AvatarImage
-                  src={`${ctxPost?.post.avatar}`}
-                  alt="@huydarealest"
-                />
-                <AvatarFallback>HD</AvatarFallback>
+                <AvatarImage src={post.avatar || undefined} />
+                <AvatarFallback>
+                  {post.username.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
-              <div className="w-[2px] flex-1 bg-border my-2 min-h-[40px] rounded-full"></div>
+
+              <div className="w-[2px] flex-1 bg-border my-2 rounded-full" />
             </div>
 
-            <div className="flex-1 space-y-4 pt-1">
-              <div>
-                <div className="font-semibold text-sm leading-none mb-1">
-                  <span>{ctxPost?.post.username}</span>
-                </div>
-
-                <span>{ctxPost?.post.content}</span>
+            {/* Content */}
+            <div className="flex-1 pt-1 space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-sm">{post.username}</span>
+                <span className="text-xs text-muted-foreground">
+                  {post.time}
+                </span>
               </div>
+
+              {post.content && (
+                <div className="text-foreground text-sm leading-relaxed">
+                  {post.content}
+                </div>
+              )}
+              {post.images.length > 0 && (
+                <div className="relative mt-3 ">
+                  <div className="overflow-visible w-auto">
+                    <Swiper
+                      modules={[FreeMode]}
+                      spaceBetween={8}
+                      slidesPerView="auto"
+                      freeMode={true}
+                      grabCursor={true}
+                      className="overflow-visible"
+                    >
+                      {post.images.map((img, i) => (
+                        <SwiperSlide
+                          key={i}
+                          className="overflow-visible"
+                          style={{ width: "210px" }}
+                        >
+                          <div
+                            className="rounded-lg overflow-hidden"
+                            style={{ width: "210px", height: "280px" }}
+                          >
+                            <img
+                              src={img}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+
           <div className="flex gap-3">
             <div className="flex flex-col items-center">
               <Avatar className="w-10 h-10 cursor-pointer hover:opacity-90 transition-opacity">
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@huydarealest"
-                />
-                <AvatarFallback>HD</AvatarFallback>
+                <AvatarImage src={user.avatar_url || undefined} />
+                <AvatarFallback>
+                  {user.username.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
-              <div className="w-[2px] flex-1 bg-border my-2 min-h-[40px] rounded-full"></div>
+
+              <div className="w-[2px] flex-1 bg-border my-2 rounded-full" />
+
               <Avatar className="w-5 h-5 opacity-50">
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@huydarealest"
-                />
-                <AvatarFallback>HD</AvatarFallback>
+                <AvatarImage src={user.avatar_url || undefined} />
+                <AvatarFallback>
+                  {user.username.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </div>
 
             <div className="flex-1 space-y-4 pt-1">
               <div>
                 <div className="font-semibold text-sm leading-none mb-1">
-                  huydarealest
+                  {user.username}
                 </div>
 
                 <Textarea
@@ -88,7 +142,7 @@ function ReplyModal({ onClose }: { onClose: () => void }) {
                   <div className="border border-current rounded-[4px] text-[10px] font-bold px-1 cursor-pointer hover:text-foreground transition-colors">
                     GIF
                   </div>
-                  <AlignLeft className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors rotate-90" />{" "}
+                  <AlignLeft className="w-5 h-5 rotate-90 cursor-pointer hover:text-foreground transition-colors" />
                   <Hash className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
                   <MapPin className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
                 </div>
