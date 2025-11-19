@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { useCurrentUser } from "@/features/auth/hook";
+import { useAuth } from "@/features/auth/hook";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import NewPostModal from "../NewPostModal";
@@ -10,15 +10,20 @@ import NewPostModal from "../NewPostModal";
 const PostForm = () => {
   const [openModalNewPost, setOpenModalNewContent] = useState(false);
   const { t } = useTranslation();
-  const currentUser = useCurrentUser();
-  if (!currentUser) return null;
+  const { user } = useAuth();
+
   return (
     <>
       <Card className="px-6 py-3 border-0 rounded-none shadow-none cursor-pointer bg-primary-foreground ">
         <CardContent className="flex items-start p-0">
           <Avatar className="w-10 h-10">
-            <AvatarImage src="/avatar.png" alt="user" />
-            <AvatarFallback>H</AvatarFallback>
+            <AvatarImage
+              src={user?.avatar_url || undefined}
+              alt={`@${user?.username}`}
+            />
+            <AvatarFallback>
+              {user?.username?.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
 
           <div className="flex-1">
@@ -39,6 +44,7 @@ const PostForm = () => {
           </Button>
         </CardContent>
       </Card>
+
       {openModalNewPost && (
         <NewPostModal onClose={() => setOpenModalNewContent(false)} />
       )}

@@ -1,6 +1,6 @@
 import type { BaseResponse } from "./api";
 
-export interface ApiUser {
+export interface User {
   id: number;
   name: string;
   username: string;
@@ -14,4 +14,4 @@ export interface ApiUser {
   updated_at: string;
 }
 
-export type UserResponse = Omit<BaseResponse<ApiUser>, "message">;
+export type UserResponse = Omit<BaseResponse<User>, "message">;

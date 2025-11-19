@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/features/auth/hook";
 import { motion } from "framer-motion";
 import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -8,7 +9,8 @@ import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
 function NewPostCustom({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
-
+  const { user } = useAuth();
+  console.log(user);
   return (
     <motion.div
       initial={{ opacity: 0, x: 100, y: 100, scale: 0.75 }}
@@ -26,27 +28,36 @@ function NewPostCustom({ onClose }: { onClose: () => void }) {
         <CardContent className="p-4 pt-5">
           <div className="flex gap-3">
             <div className="flex flex-col items-center">
+              {/* Avatar chính */}
               <Avatar className="w-10 h-10 transition-opacity cursor-pointer hover:opacity-90">
                 <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@huydarealest"
+                  src={user?.avatar_url || undefined}
+                  alt={`@${user?.username}`}
                 />
-                <AvatarFallback>HD</AvatarFallback>
+                <AvatarFallback>
+                  {user?.username?.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
+
               <div className="w-[2px] flex-1 bg-border my-2 min-h-[40px] rounded-full"></div>
+
+              {/* Avatar nhỏ dưới */}
               <Avatar className="w-5 h-5 opacity-50">
                 <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@huydarealest"
+                  src={user?.avatar_url || undefined}
+                  alt={`@${user?.username}`}
                 />
-                <AvatarFallback>HD</AvatarFallback>
+                <AvatarFallback>
+                  {user?.username?.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </div>
 
             <div className="flex-1 pt-1 space-y-4">
               <div>
+                {/* Username */}
                 <div className="mb-1 text-sm font-semibold leading-none">
-                  huydarealest
+                  {user?.username}
                 </div>
 
                 <Textarea

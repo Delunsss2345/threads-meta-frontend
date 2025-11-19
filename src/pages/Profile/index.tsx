@@ -2,6 +2,7 @@ import AvatarGroup from "@/components/AvatarGroup";
 import PostForm from "@/components/Post/PostForm";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/features/auth/hook"; // <-- thêm
 import {
   BarChart3,
   Heart,
@@ -21,24 +22,27 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState("thread");
   const { t } = useTranslation();
   const [openModalEdit, setOpenModalEdit] = useState(false);
+
+  const { user } = useAuth();
+  if (!user) return null;
+
   return (
     <>
-      <div className="h-full px-6 mb-10">
-        {/* Header Section */}
+      <div className="h-full px-6 pt-6 mb-10">
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="mb-1 text-2xl font-bold">Phạm Thanh Huy</h1>
-            <p className="text-gray-400">huydarealest</p>
+            <h1 className="mb-1 text-2xl font-bold">{user.name}</h1>
+            <p className="text-gray-400">{user.username}</p>
           </div>
+
           <AvatarGroup
             size={20}
-            url="htt"
-            fallBack="PH"
+            url={user?.avatar_url || ""}
+            fallBack={user?.username?.slice(0, 2).toUpperCase()}
             classNameFallback="bg-primary-foreground"
           />
         </div>
 
-        {/* Followers Count */}
         <div className="flex items-center justify-between mb-6">
           <p className="text-gray-400">0 {t("common.followers")}</p>
           <div className="flex">
@@ -80,11 +84,9 @@ const Profile = () => {
                 value={tab.value}
                 onClick={() => setActiveTab(tab.value)}
                 className="flex-1 py-2 text-sm font-medium border-0 rounded-none 
-          text-muted-foreground transition-all duration-150 !shadow-none
-          data-[state=active]:text-foreground data-[state=active]:border-b-[1px] data-[state=active]:!border-b-accent-foreground
-          hover:text-foreground/90 data-[state=active]:!bg-transparent
-          focus-visible:ring-0 focus-visible:ring-offset-0
-          active:shadow-none focus:shadow-none transition-none"
+                text-muted-foreground transition-all duration-150 !shadow-none
+                data-[state=active]:text-foreground data-[state=active]:border-b-[1px] 
+                data-[state=active]:!border-b-accent-foreground hover:text-foreground/90"
               >
                 {tab.label}
               </TabsTrigger>
@@ -93,6 +95,7 @@ const Profile = () => {
         </Tabs>
 
         <PostForm />
+
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">
@@ -112,14 +115,16 @@ const Profile = () => {
         <div className="flex gap-3">
           <AvatarGroup
             size={8}
-            url="l"
-            fallBack="PH"
+            url={user?.avatar_url || ""}
+            fallBack={user?.username?.slice(0, 2).toUpperCase()}
             classNameFallback="bg-primary-foreground"
-          ></AvatarGroup>
+          />
+
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <span className="font-semibold">huydarealest</span>
+              <span className="font-semibold">{user.username}</span>
               <span className="text-sm text-muted-foreground">1 phút</span>
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -128,33 +133,35 @@ const Profile = () => {
                 <MoreHorizontal className="w-5 h-5" />
               </Button>
             </div>
+
             <p className="mb-4 text-foreground">a</p>
+
             <div className="flex gap-4">
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
+                className="w-8 h-8 text-muted-foreground hover:text-foreground"
               >
                 <Heart className="w-5 h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
+                className="w-8 h-8 text-muted-foreground hover:text-foreground"
               >
                 <MessageCircle className="w-5 h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
+                className="w-8 h-8 text-muted-foreground hover:text-foreground"
               >
                 <Repeat2 className="w-5 h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-8 h-8 transition-colors text-muted-foreground hover:text-foreground"
+                className="w-8 h-8 text-muted-foreground hover:text-foreground"
               >
                 <Send className="w-5 h-5" />
               </Button>
@@ -162,6 +169,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
       {openModalEdit && (
         <ProfileSettings onClose={() => setOpenModalEdit(false)} />
       )}

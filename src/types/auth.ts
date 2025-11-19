@@ -1,5 +1,5 @@
 import type { BaseResponse } from "./api";
-import type { ApiUser } from "./user";
+import type { User } from "./user";
 
 export interface LoginPayload {
   login: string;
@@ -14,7 +14,7 @@ export interface RegisterPayload {
 }
 
 export interface RegisterData {
-  user: ApiUser;
+  user: User;
   access_token: string;
   refresh_token: string;
   expires_in: number;
@@ -23,7 +23,7 @@ export interface RegisterData {
 export type RegisterResponse = BaseResponse<RegisterData>;
 
 export interface LoginData {
-  user: ApiUser;
+  user: User;
   access_token: string;
   refresh_token: string;
   expires_in: number;

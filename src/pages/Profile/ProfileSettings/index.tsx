@@ -1,30 +1,46 @@
+import AvatarGroup from "@/components/AvatarGroup";
 import ModalPopup from "@/components/ModalPopup";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
-import { ChevronRight, Lock } from "lucide-react";
+import { useAuth } from "@/features/auth/hook";
+import { ChevronRight, Globe, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
+
+  if (!user) return null;
+
   return (
     <ModalPopup onClose={onClose}>
       <Card className="!p-0">
         <CardContent className="p-0">
           <div className="flex items-center justify-between p-4">
             <div className="flex-1">
-              <h3 className="font-semibold mb-1">{t("profileSettings.name")}</h3>
+              <h3 className="font-semibold mb-1">
+                {t("profileSettings.name")}
+              </h3>
               <div className="flex items-center gap-2 text-sm">
-                <Lock className="w-4 h-4" />
-                <span>Phạm Thanh Huy (@huydarealest)</span>
+                {user.is_private ? (
+                  <Lock className="w-4 h-4" />
+                ) : (
+                  <Globe className="w-4 h-4" />
+                )}
+                <span>
+                  {user.name} (@{user.username})
+                </span>
               </div>
             </div>
-            <Avatar className="w-12 h-12">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>PH</AvatarFallback>
-            </Avatar>
+
+            <AvatarGroup
+              size={12}
+              url={user?.avatar_url || ""}
+              fallBack={user?.username?.slice(0, 2).toUpperCase()}
+              classNameFallback="bg-primary-foreground"
+            />
           </div>
 
           <Separator />
@@ -32,7 +48,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
           <div className="p-4">
             <h3 className="font-semibold mb-1">{t("profileSettings.bio")}</h3>
             <p className="text-sm text-muted-foreground">
-              dev dang test ui dùng qtam tui nhé
+              {user?.bio ?? "Tài khoản mới tạo làm gì có tiểu sử"}
             </p>
           </div>
 
@@ -43,8 +59,12 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
             className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
           >
             <div>
-              <h3 className="font-semibold text-left">{t("profileSettings.interests")}</h3>
-              <p className="text-sm text-muted-foreground">{t("profileSettings.addInterests")}</p>
+              <h3 className="font-semibold text-left">
+                {t("profileSettings.interests")}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                {t("profileSettings.addInterests")}
+              </p>
             </div>
           </Button>
 
@@ -86,8 +106,13 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                 {t("profileSettings.profilePrivacyDesc")}
               </p>
             </div>
+
             <div className="flex items-center gap-2 ml-4">
-              <span className="text-sm text-muted-foreground">{t("profileSettings.public")}</span>
+              <span className="text-sm text-muted-foreground">
+                {user.is_private
+                  ? t("profileSettings.private")
+                  : t("profileSettings.public")}
+              </span>
               <ChevronRight className="w-5 h-5 text-muted-foreground" />
             </div>
           </Button>
@@ -104,4 +129,5 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
     </ModalPopup>
   );
 };
+
 export default ProfileSettings;

@@ -2,13 +2,15 @@ import { DarkIcon } from "@/components/Icon/DarkIcon";
 import LightModeIcon from "@/components/Icon/LightModeIcon";
 import MenuPopup from "@/components/MenuPopup";
 import { useTheme } from "@/components/ThemeProvider";
-import { useLogout } from "@/features/auth/hook";
+import type { AppDispatch } from "@/types/redux";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import { LanguageMenu } from "./LanguageMenu";
 import { MainMenu } from "./MainMenu";
 import { ThemeMenu } from "./ThemeMenu";
+import { logout } from "@/features/auth";
 
 const SlideUpMenu = ({
   children,
@@ -24,7 +26,8 @@ const SlideUpMenu = ({
   };
   customPopup?: string;
 }) => {
-  const logout = useLogout();
+  const dispatch = useDispatch<AppDispatch>();
+
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
     "main"
   );
@@ -49,7 +52,7 @@ const SlideUpMenu = ({
     },
     {
       label: t("menu.logout"),
-      onClick: () => logout,
+      onClick: () => dispatch(logout()),
       danger: true,
       isAuth: true,
     },

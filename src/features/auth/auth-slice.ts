@@ -4,12 +4,12 @@ import type {
   RegisterPayload,
   RegisterResponse,
 } from "@/types/auth";
-import type { ApiUser, UserResponse } from "@/types/user";
+import type { User, UserResponse } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "./auth-api";
 
 export type AuthState = {
-  currentUser: ApiUser | null;
+  currentUser: User | null;
   accessToken: string | null;
   loadingUser: boolean;
   loggingIn: boolean;
@@ -131,7 +131,7 @@ export const authSlice = createSlice({
         state.loadingUser = true;
       });
 
-    // fulfilled trả về ApiUser
+    // fulfilled trả về User
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
       state.loadingUser = false;
       state.currentUser = action.payload.data;
