@@ -1,10 +1,12 @@
 import AvatarGroup from "@/components/AvatarGroup";
+import MenuPopup from "@/components/MenuPopup";
 import ModalPopup from "@/components/ModalPopup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/features/auth/hook";
+import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { ChevronRight, Globe, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -35,12 +37,42 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
               </div>
             </div>
 
-            <AvatarGroup
-              size={12}
-              url={user?.avatar_url || ""}
-              fallBack={user?.username?.slice(0, 2).toUpperCase()}
-              classNameFallback="bg-primary-foreground"
-            />
+            <MenuPopup
+              className={
+                "hover:!bg-transparent !p-0 size-14 cursor-pointer border rounded-full"
+              }
+              mode="long"
+              buttonActive={
+                <AvatarGroup
+                  size={12}
+                  url={user?.avatar_url || ""}
+                  fallBack={user?.username?.slice(0, 2).toUpperCase()}
+                  classNameFallback="bg-primary-foreground"
+                />
+              }
+              motionProps={{
+                initial: {
+                  opacity: 0,
+                  x: 0,
+                },
+                animate: {
+                  opacity: 1,
+                  x: 0,
+                },
+                exit: {
+                  opacity: 0,
+                  x: 0,
+                },
+              }}
+              customPopup="-translate-x-1/2"
+            >
+              <DropdownMenuItem className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+                <span>Tải ảnh lên</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+                <span className="text-red-500">Gỡ ảnh hiện tại</span>
+              </DropdownMenuItem>
+            </MenuPopup>
           </div>
 
           <Separator />

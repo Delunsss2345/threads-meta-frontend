@@ -1,7 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 
-const Footer = ({ content }: { content?: string }) => {
+const Footer = ({
+  loading = false,
+  onSubmit,
+  content,
+  loadingLabel,
+  label = "Đăng bài",
+}: {
+  loading: boolean;
+  onSubmit?: () => void;
+  content?: string;
+  loadingLabel?: string;
+  label?: string;
+}) => {
   return (
     <>
       <CardFooter className="flex items-center justify-between p-3">
@@ -10,10 +22,12 @@ const Footer = ({ content }: { content?: string }) => {
         </button>
 
         <Button
-          disabled={!content?.trim()}
-          className="rounded-full px-5 font-semibold disabled:opacity-30 bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black"
+          disabled={loading}
+          onClick={onSubmit}
+          type="submit"
+          className={`cursor-pointer rounded-full px-5 font-semibold disabled:opacity-30 bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black`}
         >
-          Đăng
+          {loading ? loadingLabel : label}
         </Button>
       </CardFooter>
     </>

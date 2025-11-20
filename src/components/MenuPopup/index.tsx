@@ -17,6 +17,7 @@ interface MenuPopupProps {
     exit?: Record<string, any>;
     transition?: Record<string, any>;
   };
+  mode?: "short" | "long";
 }
 
 const MenuPopup = ({
@@ -25,6 +26,7 @@ const MenuPopup = ({
   motionProps,
   className,
   customPopup,
+  mode = "short",
 }: MenuPopupProps) => {
   return (
     <DropdownMenu modal={false}>
@@ -65,10 +67,17 @@ const MenuPopup = ({
               ease: "easeOut",
               ...(motionProps?.transition || {}),
             }}
-            className={`w-56 rounded-xl border border-gray-200 p-2 bg-primary-foreground 
+            className={
+              mode === "short"
+                ? `w-56 rounded-xl border border-gray-200 p-2 bg-primary-foreground 
                        *:text-[15px] *:py-3 *:font-semibold *:rounded-xl shadow-lg ${
                          customPopup || ""
-                       }`}
+                       }`
+                : `w-96 rounded-xl border border-gray-200 p-2 bg-primary-foreground 
+                       *:text-[15px] *:py-3 *:px-4 *:font-semibold *:rounded-xl shadow-lg ${
+                         customPopup || ""
+                       }`
+            }
           >
             {children}
           </motion.div>

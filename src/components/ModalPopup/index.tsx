@@ -35,7 +35,6 @@ const ModalPopup = ({
         onClick={handleBackdropClick}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
         className={cn(
           "fixed inset-0 bg-black/50 flex items-center pt-[10vh] justify-center z-20",
@@ -46,7 +45,6 @@ const ModalPopup = ({
         <motion.div
           initial={{ opacity: 0, scale: 0.75 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.75 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
           className={cn(
             "w-full max-w-[630px] bg-background rounded-3xl mb-20 text-foreground shadow-xl border-none sm:border z-50",

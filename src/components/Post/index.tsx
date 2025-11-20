@@ -5,7 +5,9 @@ import "swiper/css";
 import { FreeMode } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import { useAuth } from "@/features/auth/hook";
 import type { PostItem } from "@/types/post";
+import AvatarGroup from "../AvatarGroup";
 import { UserPreviewCard } from "../UserPreview";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
@@ -13,7 +15,13 @@ import PostProvider from "./PostContext";
 
 const formatTime = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleString("vi-VN");
+  const diff = (Date.now() - date.getTime()) / 1000;
+
+  if (diff < 60) return `${Math.floor(diff)} giây trước`;
+  if (diff < 3600) return `${Math.floor(diff / 60)} phút trước`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} giờ trước`;
+
+  return `${Math.floor(diff / 86400)} ngày trước`;
 };
 
 const Post = ({ post }: { post: PostItem }) => {
@@ -29,6 +37,9 @@ const Post = ({ post }: { post: PostItem }) => {
   const repost = post.reposts_and_quotes_count;
   const share = 0;
   const time = formatTime(post.created_at);
+
+  const { user } = useAuth();
+
   const handleMouseEnter = () => {
     hoverTimer.current = setTimeout(() => setOpen(true), 500);
   };
@@ -43,11 +54,11 @@ const Post = ({ post }: { post: PostItem }) => {
       <div className="grid [grid-template-columns:48px_minmax(0,1fr)] gap-3 w-full">
         {/* Avatar */}
         <div>
-          {avatar ? (
-            <img src={avatar} className="w-10 h-10 rounded-full object-cover" />
-          ) : (
-            <div className="w-10 h-10 bg-muted rounded-full" />
-          )}
+          <AvatarGroup
+            size={10}
+            url={avatar ?? ""}
+            fallBack={username.slice(0, 2).toUpperCase()}
+          />
         </div>
 
         <div className="min-w-0">
@@ -88,7 +99,9 @@ const Post = ({ post }: { post: PostItem }) => {
               </span>
             </div>
 
-            <Menu buttonActive={<Ellipsis className="w-2 h-2" />} />
+            {username !== user?.username && (
+              <Menu buttonActive={<Ellipsis className="w-2 h-2" />} />
+            )}
           </div>
 
           {/* Content */}

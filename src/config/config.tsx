@@ -15,6 +15,7 @@ import NotFound from "@/pages/NotFound";
 import PostDetail from "@/pages/PostDetail";
 import PrivacyPage from "@/pages/PrivacyPage";
 import ProfilePage from "@/pages/Profile";
+import ProfileDetail from "@/pages/ProfileDetail";
 import Saved from "@/pages/Saved";
 import SearchPage from "@/pages/Search";
 import SettingsPage from "@/pages/Settings";
@@ -36,6 +37,10 @@ export const config: RouteObject[] = [
             <ProfilePage />
           </PrivateRouter>
         ),
+      },
+      {
+        path: "/:username",
+        element: <ProfileDetail />,
       },
       {
         path: "/search",

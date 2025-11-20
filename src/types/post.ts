@@ -1,4 +1,4 @@
-import type { PaginationResponse } from "./api";
+import type { BaseResponse, PaginationResponse } from "./api";
 import type { User } from "./user";
 
 export interface OriginalPost {
@@ -44,9 +44,14 @@ export interface PostItem {
   original_post: OriginalPost | null;
 }
 
-
 export interface PostResponse {
   success: boolean;
   data: PostItem[];
   pagination: PaginationResponse;
 }
+
+export type CreatePostResponse = BaseResponse<Omit<PostItem, "original_post">>;
+export type CreatePostBody = {
+  content: string;
+  media: File[];
+};
