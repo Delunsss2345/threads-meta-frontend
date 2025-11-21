@@ -8,6 +8,7 @@ import ActivityPage from "@/pages/ActivityPage";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
+import Following from "@/pages/Following";
 import Help from "@/pages/Help";
 import Home from "@/pages/Home";
 import Liked from "@/pages/Liked";
@@ -23,6 +24,23 @@ import { type RouteObject } from "react-router-dom";
 
 export const config: RouteObject[] = [
   {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+    ],
+  },
+  {
     path: "/",
     element: <DefaultLayout />,
     children: [
@@ -37,10 +55,6 @@ export const config: RouteObject[] = [
             <ProfilePage />
           </PrivateRouter>
         ),
-      },
-      {
-        path: "/:username",
-        element: <ProfileDetail />,
       },
       {
         path: "/search",
@@ -67,6 +81,10 @@ export const config: RouteObject[] = [
         element: <Saved />,
       },
       {
+        path: "/following",
+        element : <Following />
+      },
+      {
         path: "/settings",
         element: <SettingsPage />,
       },
@@ -80,26 +98,14 @@ export const config: RouteObject[] = [
           { path: "account_status", element: <AccountStatus /> },
         ],
       },
+
+      {
+        path: "/:username",
+        element: <ProfileDetail />,
+      },
     ],
   },
 
-  {
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/forgot-password",
-        element: <ForgotPassword />,
-      },
-    ],
-  },
   {
     path: "*",
     element: <NotFound />,

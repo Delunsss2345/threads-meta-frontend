@@ -1,15 +1,13 @@
 import FeedTabs from "@/components/FeedTabs";
-import Post from "@/components/Post";
 import PostForm from "@/components/Post/PostForm";
 import SkeletonPost from "@/components/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hook";
 import { getFeeds } from "@/features/post";
-import type { PostItem } from "@/types/post";
 import type { AppDispatch, RootStateReduce } from "@/types/redux";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Home = () => {
+const Following = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { items: feeds, loading } = useSelector(
     (state: RootStateReduce) => state.posts
@@ -35,14 +33,14 @@ const Home = () => {
       {loading &&
         Array.from({ length: 10 }).map((_, i) => <SkeletonPost key={i} />)}
 
-      {!loading &&
+      {/* {!loading &&
         feeds.map((post: PostItem) => {
           if (post.user.username !== user?.username) {
             return <Post key={post.id} post={post} />;
           }
-        })}
+        })} */}
     </>
   );
 };
 
-export default Home;
+export default Following;

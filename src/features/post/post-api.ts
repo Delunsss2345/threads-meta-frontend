@@ -1,3 +1,4 @@
+import type { MessageResponse } from "@/types/api";
 import type { CreatePostResponse, PostResponse } from "@/types/post";
 import { http } from "@/utils/http";
 
@@ -9,4 +10,5 @@ export const postApi = {
         "Content-Type": "multipart/form-data",
       },
     }),
+  deleteThread: (id: number) => http.del<MessageResponse>(`/posts/${id}`),
 };

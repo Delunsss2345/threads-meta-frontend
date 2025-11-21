@@ -24,6 +24,7 @@ const persistConfig = {
     authSlice.reducerPath,
     columnsSlice.reducerPath,
     modalSlice.reducerPath,
+    postsSlice.reducerPath,
   ],
 };
 

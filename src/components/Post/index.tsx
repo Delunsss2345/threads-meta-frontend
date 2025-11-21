@@ -11,6 +11,7 @@ import AvatarGroup from "../AvatarGroup";
 import { UserPreviewCard } from "../UserPreview";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
+import MenuMe from "./MenuMe";
 import PostProvider from "./PostContext";
 
 const formatTime = (dateString: string) => {
@@ -99,7 +100,9 @@ const Post = ({ post }: { post: PostItem }) => {
               </span>
             </div>
 
-            {username !== user?.username && (
+            {username === user?.username ? (
+              <MenuMe threadId={post.id} buttonActive={<Ellipsis className="w-2 h-2" />} />
+            ) : (
               <Menu buttonActive={<Ellipsis className="w-2 h-2" />} />
             )}
           </div>

@@ -6,11 +6,13 @@ import {
   PAGE_CHILDREN_BY_PATH,
   PAGE_TITLES_BY_PATH,
 } from "@/constant/pageTitless";
+import { useAuth } from "@/features/auth/hook";
 import { columnsSlice } from "@/features/column";
 import { MinusCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import ChoiceHome from "./ChoiceHome";
 
 const Header = ({
   id,
@@ -27,8 +29,11 @@ const Header = ({
   const handleDelCol = (id: number) => {
     dispatch(columnsSlice.actions.removeColumn(id));
   };
+  const { isAuthenticated } = useAuth();
   return (
-    <div className="bg-background header-container sticky top-0 hidden -mx-3 md:block z-4">
+    <div
+      className={`bg-background header-container sticky top-0 hidden -mx-3 md:block z-4`}
+    >
       {PAGE_CHILDREN_BY_PATH[pathname] && (
         <div className="absolute top-1/2 -translate-y-1/2 left-10 z-10">
           <BackButton onClick={() => window.history.back()} />
@@ -37,11 +42,18 @@ const Header = ({
       <h1
         to={textHeader ?? pathname}
         {...dragHandleProps}
-        className="block py-4 text-sm font-semibold text-center"
+        className={`block py-4 text-sm font-semibold text-center ${
+          isAuthenticated ? "flex gap-10 justify-center" : ""
+        }`}
       >
-        {!PAGE_TITLES_BY_PATH[textHeader ?? pathname]
-          ? "Threads"
-          : t(`nav.${PAGE_TITLES_BY_PATH[textHeader || pathname]}`)}
+        {!PAGE_TITLES_BY_PATH[textHeader ?? pathname] ? (
+          "Threads"
+        ) : isAuthenticated &&
+          ["/", "/following", "/autoDelete"].includes(pathname) ? (
+          <ChoiceHome />
+        ) : (
+          t(`nav.${PAGE_TITLES_BY_PATH[textHeader || pathname]}`)
+        )}
       </h1>
 
       {textHeader !== "/" && pathname === "/" && (
