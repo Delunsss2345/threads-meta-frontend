@@ -6,15 +6,43 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/features/auth/hook";
+import { uploadApi } from "@/features/upload/upload-api";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { ChevronRight, Globe, Lock } from "lucide-react";
+import { useRef, useState, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
-
+  const [previewAvatar, setPreviewAvatar] = useState<File | null>(null);
   if (!user) return null;
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const handleUploadFile = () => {
+    inputRef.current?.click();
+  };
+
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const image = e.target.files?.[0];
+    if (!image) return;
+    setPreviewAvatar(image);
+  };
+
+  const updateUser = async () => {
+    if (!previewAvatar) return;
+    try {
+      const avatar = new FormData();
+      avatar.append("avatar", previewAvatar || "");
+      const res = await uploadApi.uploadAvatar(avatar || "");
+      console.log(res);
+      toast.success("Thay đổi ảnh đại diện thành công");
+      onClose();
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <ModalPopup onClose={onClose}>
@@ -36,7 +64,13 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                 </span>
               </div>
             </div>
-
+            <input
+              onChange={handleChangeImage}
+              ref={inputRef}
+              accept="image/*"
+              type="file"
+              className="hidden"
+            />
             <MenuPopup
               className={
                 "hover:!bg-transparent !p-0 size-14 cursor-pointer border rounded-full"
@@ -45,7 +79,11 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
               buttonActive={
                 <AvatarGroup
                   size={12}
-                  url={user?.avatar_url || ""}
+                  url={
+                    (previewAvatar && URL.createObjectURL(previewAvatar)) ||
+                    user?.avatar_url ||
+                    ""
+                  }
                   fallBack={user?.username?.slice(0, 2).toUpperCase()}
                   classNameFallback="bg-primary-foreground"
                 />
@@ -66,7 +104,10 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
               }}
               customPopup="-translate-x-1/2"
             >
-              <DropdownMenuItem className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+              <DropdownMenuItem
+                onClick={handleUploadFile}
+                className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
                 <span>Tải ảnh lên</span>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
@@ -152,7 +193,10 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
           <Separator />
 
           <div className="p-4">
-            <Button className="w-full bg-black hover:bg-black/90 text-white h-12 rounded-xl font-semibold">
+            <Button
+              onClick={updateUser}
+              className="w-full bg-black hover:bg-black/90 text-white h-12 rounded-xl font-semibold"
+            >
               {t("profileSettings.done")}
             </Button>
           </div>

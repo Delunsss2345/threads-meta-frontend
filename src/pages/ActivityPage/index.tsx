@@ -86,7 +86,7 @@ export const mockActivities: Activity[] = [
 ];
 export default function ActivityPage() {
   return (
-    <div className="h-full min-h-screen bg-primary-foreground">
+    <div className="h-full min-h-screen bg-primary-foreground pt-4">
       <ActivityList activities={mockActivities} />
     </div>
   );

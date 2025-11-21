@@ -20,34 +20,24 @@ import ProfileDetail from "@/pages/ProfileDetail";
 import Saved from "@/pages/Saved";
 import SearchPage from "@/pages/Search";
 import SettingsPage from "@/pages/Settings";
-import { type RouteObject } from "react-router-dom";
+import type { RouteObject } from "react-router-dom";
 
 export const config: RouteObject[] = [
   {
     element: <AuthLayout />,
     children: [
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/forgot-password",
-        element: <ForgotPassword />,
-      },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
+      { path: "/forgot-password", element: <ForgotPassword /> },
     ],
   },
+
   {
     path: "/",
     element: <DefaultLayout />,
     children: [
-      {
-        index: true,
-        element: <Home />,
-      },
+      { index: true, element: <Home /> },
+
       {
         path: "/profile",
         element: (
@@ -56,14 +46,12 @@ export const config: RouteObject[] = [
           </PrivateRouter>
         ),
       },
-      {
-        path: "/search",
-        element: <SearchPage />,
-      },
-      {
-        path: "/detail",
-        element: <PostDetail />,
-      },
+
+      { path: "/search", element: <SearchPage /> },
+
+      { path: "/@:username/post/:id", element: <PostDetail /> },
+      { path: "/post/:id", element: <PostDetail /> },
+
       {
         path: "/activity",
         element: (
@@ -72,22 +60,12 @@ export const config: RouteObject[] = [
           </PrivateRouter>
         ),
       },
-      {
-        path: "/liked",
-        element: <Liked />,
-      },
-      {
-        path: "/saved",
-        element: <Saved />,
-      },
-      {
-        path: "/following",
-        element : <Following />
-      },
-      {
-        path: "/settings",
-        element: <SettingsPage />,
-      },
+
+      { path: "/liked", element: <Liked /> },
+      { path: "/saved", element: <Saved /> },
+      { path: "/following", element: <Following /> },
+      { path: "/settings", element: <SettingsPage /> },
+
       {
         path: "/settings",
         element: <SettingsLayout />,

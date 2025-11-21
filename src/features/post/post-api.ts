@@ -11,4 +11,8 @@ export const postApi = {
       },
     }),
   deleteThread: (id: number) => http.del<MessageResponse>(`/posts/${id}`),
+  replyThread: (id: number, payload: FormData) =>
+    http.post(`/posts/${id}/reply`, payload),
+
+  getThread: (id: number) => http.get<PostResponse>(`/posts/${id}`),
 };

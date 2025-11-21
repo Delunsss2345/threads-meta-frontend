@@ -30,11 +30,12 @@ const Header = ({
     dispatch(columnsSlice.actions.removeColumn(id));
   };
   const { isAuthenticated } = useAuth();
+  const isPostDetail = /^\/post\/[^/]+$/.test(pathname);
   return (
     <div
       className={`bg-background header-container sticky top-0 hidden -mx-3 md:block z-4`}
     >
-      {PAGE_CHILDREN_BY_PATH[pathname] && (
+      {(PAGE_CHILDREN_BY_PATH[pathname] || isPostDetail) && (
         <div className="absolute top-1/2 -translate-y-1/2 left-10 z-10">
           <BackButton onClick={() => window.history.back()} />
         </div>

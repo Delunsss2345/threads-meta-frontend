@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { useAuth } from "@/features/auth/hook";
 import type { PostItem } from "@/types/post";
+import { useNavigate } from "react-router-dom";
 import AvatarGroup from "../AvatarGroup";
 import { UserPreviewCard } from "../UserPreview";
 import InteractionBar from "./InteractionBar";
@@ -40,7 +41,7 @@ const Post = ({ post }: { post: PostItem }) => {
   const time = formatTime(post.created_at);
 
   const { user } = useAuth();
-
+  const navigator = useNavigate();
   const handleMouseEnter = () => {
     hoverTimer.current = setTimeout(() => setOpen(true), 500);
   };
@@ -51,7 +52,10 @@ const Post = ({ post }: { post: PostItem }) => {
   };
 
   return (
-    <div className="px-6 py-3 border-t border-b border-border cursor-pointer">
+    <div
+      onClick={() => navigator(`/post/${post.id}`)}
+      className="px-6 py-3 border-t border-b border-border cursor-pointer"
+    >
       <div className="grid [grid-template-columns:48px_minmax(0,1fr)] gap-3 w-full">
         {/* Avatar */}
         <div>
@@ -101,7 +105,10 @@ const Post = ({ post }: { post: PostItem }) => {
             </div>
 
             {username === user?.username ? (
-              <MenuMe threadId={post.id} buttonActive={<Ellipsis className="w-2 h-2" />} />
+              <MenuMe
+                threadId={post.id}
+                buttonActive={<Ellipsis className="w-2 h-2" />}
+              />
             ) : (
               <Menu buttonActive={<Ellipsis className="w-2 h-2" />} />
             )}

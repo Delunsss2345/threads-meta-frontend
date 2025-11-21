@@ -14,8 +14,8 @@ const AvatarGroup = ({
 }: AvatarGroupProps) => {
   return (
     <>
-      <Avatar className={`size-${size}`}>
-        <AvatarImage src={url} />
+      <Avatar className={`size-${size} shrink-1`}>
+        <AvatarImage className="object-cover" src={url} />
         <AvatarFallback className={classNameFallback}>
           {fallBack}
         </AvatarFallback>

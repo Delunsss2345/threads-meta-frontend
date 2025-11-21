@@ -3,9 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/features/auth/hook";
+import { replyThreads } from "@/features/post";
+import type { AppDispatch, RootStateReduce } from "@/types/redux";
 import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 import "swiper/css";
 import { FreeMode } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -20,6 +24,8 @@ function ReplyModal({
   post: PostProps;
   onClose: () => void;
 }) {
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading } = useSelector((state: RootStateReduce) => state.posts);
   const [content, setContent] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -34,8 +40,26 @@ function ReplyModal({
     }
   }, [content]);
 
+  const handleReply = async () => {
+    if (!content || !post.id) return;
+
+    const data = new FormData();
+    data.append("content", content);
+
+    await toast.promise(
+      dispatch(replyThreads({ id: post.id, payload: data })).unwrap(),
+      {
+        loading: "Đang bình luận",
+        success: "Bình luận thành công",
+        error: "Có lỗi xảy ra!",
+      }
+    );
+    post.message += 1;
+    onClose();
+    setContent("");
+  };
+
   if (!post || !user) return null;
-  console.log(post);
   return (
     <ModalPopup onClose={onClose}>
       <Card className="p-0 gap-0" onClick={(e) => e.stopPropagation()}>
@@ -155,7 +179,13 @@ function ReplyModal({
           </div>
         </CardContent>
 
-        <Footer content={content} />
+        <Footer
+          loading={loading}
+          loadingLabel="Đang bình luận"
+          onSubmit={handleReply}
+          label="Bình luận"
+          content={content}
+        />
       </Card>
     </ModalPopup>
   );

@@ -11,6 +11,7 @@ import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
 import { useRef, useState, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
 
@@ -52,14 +53,15 @@ function NewPostModal({
 
     const formData = new FormData();
     formData.append("content", content);
-    previewImage?.forEach((f) => formData.append("media[]", f));
-    dispatch(postThreads(formData));
-    hide();
-  };
+    if (previewImage) {
+      previewImage?.forEach((f) => formData.append("media[]", f));
+    }
+    await toast.promise(dispatch(postThreads(formData)).unwrap(), {
+      loading: "Đang đăng bài",
+      success: "Đăng thành công",
+      error: "Có lỗi xảy ra!",
+    });
 
-  const hide = () => {
-    setContent("");
-    setPreviewImage(null);
     onClose();
   };
 

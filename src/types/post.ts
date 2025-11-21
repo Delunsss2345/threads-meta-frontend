@@ -55,3 +55,9 @@ export type CreatePostBody = {
   content: string;
   media: File[];
 };
+
+
+export type CreatePostReplyBody = {
+  content: string;
+  media: File[];
+};

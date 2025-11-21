@@ -13,10 +13,9 @@ export default function App() {
       <ScrollTop />
       <PersistGate persistor={persist}>
         <ReduxProvider store={store}>
-          <Toaster />
+          <Toaster position="bottom-center" />
           <AppRoutes />
           <AuthProvider />
-          {/* <Toaster richColors /> */}
           <ModalProvider />
         </ReduxProvider>
       </PersistGate>

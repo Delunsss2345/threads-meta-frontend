@@ -40,12 +40,27 @@ export const postThreads = createAsyncThunk<CreatePostResponse, FormData>(
     try {
       const res = await postApi.postThread(payload);
       return res;
-    } catch (error : any) {
+    } catch (error: any) {
       console.log(error.message);
       return rejectWithValue(error);
     }
   }
 );
+
+export const replyThreads = createAsyncThunk<
+  CreatePostResponse,
+  {
+    id: number;
+    payload: FormData;
+  }
+>("posts/reply", async (data, { rejectWithValue }) => {
+  try {
+    const res = await postApi.replyThread(data.id, data.payload);
+    return res;
+  } catch (error: any) {
+    return rejectWithValue(error);
+  }
+});
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -76,16 +91,18 @@ export const postsSlice = createSlice({
       state.error = action.payload as string;
     });
 
-    // add thread
-    builder.addCase(postThreads.pending, (state) => {
-      state.loading = true;
+    // reply thread
+    builder.addCase(replyThreads.pending, (state) => {
       state.error = null;
     });
-    builder.addCase(postThreads.fulfilled, (state, action) => {
-      state.loading = false;
+    builder.addCase(replyThreads.fulfilled, (state, action) => {
+      const id = action.meta.arg.id;
+      const post = state.items.find((p) => p.id === id);
+      if (post) {
+        post.replies_count += 1;
+      }
     });
-    builder.addCase(postThreads.rejected, (state, action) => {
-      state.loading = false;
+    builder.addCase(replyThreads.rejected, (state, action) => {
       state.error = action.payload as string;
     });
   },
