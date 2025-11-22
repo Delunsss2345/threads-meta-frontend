@@ -18,6 +18,7 @@ const ButtonHeader = ({
         hover:bg-neutral-100
         active:scale-95
         transition
+        cursor-pointer
       "
     >
       {children}

@@ -1,6 +1,6 @@
 import AvatarGroup from "@/components/AvatarGroup";
 import ModalPopup from "@/components/ModalPopup";
-import SwiperImage from "@/components/SwipterImage";
+import SwiperImage from "@/components/SwiperImage";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/features/auth/hook";

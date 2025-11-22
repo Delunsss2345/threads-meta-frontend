@@ -26,7 +26,7 @@ const formatTime = (dateString: string) => {
   return `${Math.floor(diff / 86400)} ngày trước`;
 };
 
-const Post = ({ post }: { post: PostItem }) => {
+const Post = ({ post, onClick }: { post: PostItem; onClick?: () => void }) => {
   const [open, setOpen] = useState(false);
   const hoverTimer = useRef<any | null>(null);
   const username = post.user.username;
@@ -52,11 +52,11 @@ const Post = ({ post }: { post: PostItem }) => {
   };
 
   return (
-    <div
-      onClick={() => navigator(`/post/${post.id}`)}
-      className="px-6 py-3 border-t border-b border-border cursor-pointer"
-    >
-      <div className="grid [grid-template-columns:48px_minmax(0,1fr)] gap-3 w-full">
+    <div className="px-6 py-3 border-t border-b border-border cursor-pointer">
+      <div
+        onClick={onClick}
+        className=" grid [grid-template-columns:48px_minmax(0,1fr)] gap-3 w-full"
+      >
         {/* Avatar */}
         <div>
           <AvatarGroup

@@ -1,3 +1,4 @@
+import { PER_PAGE } from "@/constant/pagination";
 import type { CreatePostResponse, PostItem, PostResponse } from "@/types/post";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postApi } from "./post-api";
@@ -11,6 +12,7 @@ export interface PostsState {
     total: number;
     last_page: number;
   };
+  continuePage: boolean;
 }
 const initialState: PostsState = {
   items: [],
@@ -21,6 +23,7 @@ const initialState: PostsState = {
     total: 0,
     last_page: 1,
   },
+  continuePage: true,
 };
 export const getFeeds = createAsyncThunk<PostResponse>(
   "posts/feed",
@@ -61,6 +64,17 @@ export const replyThreads = createAsyncThunk<
     return rejectWithValue(error);
   }
 });
+export const loadMoreThreads = createAsyncThunk<PostResponse, number>(
+  "posts/load-more",
+  async (page = 2, { rejectWithValue }) => {
+    try {
+      const res = await postApi.getFeeds(page);
+      return res;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const postsSlice = createSlice({
   name: "posts",
@@ -89,6 +103,24 @@ export const postsSlice = createSlice({
     builder.addCase(getFeeds.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
+    });
+
+    //Load more
+    builder.addCase(loadMoreThreads.pending, (state) => {
+      state.error = null;
+    });
+
+    builder.addCase(loadMoreThreads.fulfilled, (state, action) => {
+      state.items.push(...action.payload.data);
+      state.pagination = action.payload.pagination;
+      state.continuePage =
+        action.payload.pagination.current_page * PER_PAGE <
+        state.pagination.total;
+    });
+
+    builder.addCase(loadMoreThreads.rejected, (state, action) => {
+      state.error = action.payload as string;
+      state.continuePage = false;
     });
 
     // reply thread

@@ -1,9 +1,11 @@
+import { PER_PAGE } from "@/constant/pagination";
 import type { MessageResponse } from "@/types/api";
 import type { CreatePostResponse, PostResponse } from "@/types/post";
 import { http } from "@/utils/http";
 
 export const postApi = {
-  getFeeds: () => http.get<PostResponse>("/posts/feed"),
+  getFeeds: (page: number = 1) =>
+    http.get<PostResponse>(`/posts/feed?page=${page}&per_page=${PER_PAGE}`),
   postThread: (payload: FormData) =>
     http.post<CreatePostResponse>("/posts", payload, {
       headers: {

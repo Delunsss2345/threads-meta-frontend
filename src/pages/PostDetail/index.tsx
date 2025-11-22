@@ -1,39 +1,37 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import type { PostItem } from "@/types/post";
 import type { RootState } from "@/types/redux";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import CommentItem from "./CommentItem";
 import Header from "./Header";
 import EngagementStats from "./Interacter";
-import QuoteCard from "./Quote";
+import QuoteCard from "./QuoteCard";
 
 const PostDetail = () => {
   const { id } = useParams();
   const postId = Number(id);
-
   const postDetail = useSelector((state: RootState) =>
     state.posts.items.find((post: PostItem) => post.id === postId)
   );
-  console.log(postDetail);
   if (!postDetail) return null;
+  console.log(postDetail);
 
   return (
-    <>
-      <Card className="border-0 shadow-none bg-primary-foreground ">
-        <CardContent className="p-4">
+    <div className="px-6 py-2">
+      {/* Post */}
+      <Card className="border-0 shadow-none bg-primary-foreground rounded-none">
+        <CardContent className="space-y-3 !p-0">
           <Header
-            content={postDetail.content}
             username={postDetail.user.username}
             timeAgo={postDetail.time_ago}
             avatarUrl={postDetail.user.avatar_url}
             hasTranslate={true}
           />
 
-          <QuoteCard
-            title="Thông điệp ngẫu nhiên:"
-            content="Bạn sắp được nhận lại những gì xứng đáng thuộc về bạn."
-          />
-
+          <QuoteCard content={postDetail.content} />
           <EngagementStats
             likes={postDetail.likes_count}
             comments={postDetail.replies_count}
@@ -41,15 +39,31 @@ const PostDetail = () => {
             shares={postDetail.shares_count}
           />
 
-          <div className="flex items-center justify-between text-sm">
-            <span className="font-semibold">Hàng đầu</span>
-            <span className="text-blue-500">Xem hoạt động →</span>
+          <Separator />
+          {/* Top section */}
+          <div className="flex items-center justify-between text-sm pt-2">
+            <button className="flex items-center gap-1 font-semibold">
+              Hàng đầu <ChevronDown size={13} />
+            </button>
+            <button className="flex items-center gap-1 text-muted-foreground text-sm">
+              <p>Xem hoạt động</p> <ChevronRight size={13} />
+            </button>
           </div>
         </CardContent>
       </Card>
 
-      <div className="max-w-2xl mx-auto">{/* để yên comment */}</div>
-    </>
+      {/* Comments list container */}
+      <div>
+        <CommentItem
+          username="hadihajhasan21"
+          timeAgo="25 phút"
+          content="Hiz"
+          avatarUrl="/your-avatar.png"
+          likes={1}
+          sends={1}
+        />
+      </div>
+    </div>
   );
 };
 

@@ -3,24 +3,55 @@ import Post from "@/components/Post";
 import PostForm from "@/components/Post/PostForm";
 import SkeletonPost from "@/components/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hook";
-import { getFeeds } from "@/features/post";
+import { getFeeds, loadMoreThreads } from "@/features/post";
 import type { PostItem } from "@/types/post";
 import type { AppDispatch, RootStateReduce } from "@/types/redux";
-import { useEffect } from "react";
+
+import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import {
+  Virtuoso,
+  type StateSnapshot,
+  type VirtuosoHandle,
+} from "react-virtuoso";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { items: feeds, loading } = useSelector(
-    (state: RootStateReduce) => state.posts
-  );
+  const virtuosoRef = useRef<VirtuosoHandle | null>(null);
+
+  const initialState = useMemo(() => {
+    const saved = sessionStorage.getItem("feed_state");
+    return saved ? (JSON.parse(saved) as StateSnapshot) : undefined;
+  }, []);
+  const navigate = useNavigate();
+  const {
+    items: feeds,
+    loading,
+    pagination,
+    continuePage,
+  } = useSelector((state: RootStateReduce) => state.posts);
+
   useEffect(() => {
     if (feeds.length === 0) {
       dispatch(getFeeds());
     }
-  }, [dispatch]);
+  }, []);
 
+  const handleNavigateToDetail = (id: number) => {
+    // const state = virtuosoRef.current?.getState();
+    // console.log(state);
+    // if (state) {
+    //   sessionStorage.setItem("feed_state", JSON.stringify(state));
+    // }
+    navigate(`/post/${id}`);
+  };
   const { user } = useAuth();
+
+  const filteredFeeds = feeds.filter(
+    (post) => post.user.username !== user?.username
+  );
 
   return (
     <>
@@ -32,15 +63,34 @@ const Home = () => {
         <FeedTabs />
       </div>
 
-      {loading &&
-        Array.from({ length: 10 }).map((_, i) => <SkeletonPost key={i} />)}
-
-      {!loading &&
-        feeds.map((post: PostItem) => {
-          if (post.user.username !== user?.username) {
-            return <Post key={post.id} post={post} />;
-          }
-        })}
+      <Virtuoso
+        ref={virtuosoRef}
+        useWindowScroll
+        // restoreStateFrom={initialState || undefined}
+        data={filteredFeeds}
+        endReached={() =>
+          dispatch(loadMoreThreads(pagination.current_page + 1))
+        }
+        itemContent={(index, post: PostItem) => (
+          <Post
+            onClick={() => handleNavigateToDetail(post.id)}
+            key={post.id}
+            post={post}
+          />
+        )}
+        // computeItemKey={(index, post) => post.id}
+        followOutput={false}
+        components={{
+          Footer: () =>
+            !continuePage ? (
+              <div className="text-center py-4 text-muted-foreground">
+                Không còn bài viết
+              </div>
+            ) : (
+              <SkeletonPost />
+            ),
+        }}
+      />
     </>
   );
 };
