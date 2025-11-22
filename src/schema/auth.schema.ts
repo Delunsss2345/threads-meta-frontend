@@ -36,13 +36,26 @@ const ForgotPasswordSchemaBody = z.object({
     .email({ message: "Email không hợp lệ" }),
 });
 
+const ResetPasswordSchemaBody = z.object({
+  token: z.string().min(1),
+  password: z.string().min(6),
+  confirmPassword: z.string().min(6),
+});
+
 type LoginSchemaBodyType = z.infer<typeof LoginSchemaBody>;
 type RegisterSchemaBodyType = z.infer<typeof RegisterSchemaBody>;
 type ForgotPasswordSchemaBodyType = z.infer<typeof ForgotPasswordSchemaBody>;
+type ResetPasswordSchemaBodyType = z.infer<typeof ResetPasswordSchemaBody>;
 
-export { ForgotPasswordSchemaBody, LoginSchemaBody, RegisterSchemaBody };
+export {
+  ForgotPasswordSchemaBody,
+  LoginSchemaBody,
+  RegisterSchemaBody,
+  ResetPasswordSchemaBody,
+};
 export type {
   ForgotPasswordSchemaBodyType,
   LoginSchemaBodyType,
   RegisterSchemaBodyType,
+  ResetPasswordSchemaBodyType,
 };
