@@ -1,4 +1,5 @@
 import type {
+  ForgotPasswordType,
   LoginPayload,
   LoginResponse,
   RegisterPayload,
@@ -14,6 +15,7 @@ export type AuthState = {
   loadingUser: boolean;
   loggingIn: boolean;
   initialized: boolean;
+  loadingRequest: boolean;
 };
 
 const initialState: AuthState = {
@@ -22,6 +24,7 @@ const initialState: AuthState = {
   loadingUser: true,
   loggingIn: false,
   initialized: false,
+  loadingRequest: false,
 };
 
 export const login = createAsyncThunk<LoginResponse, LoginPayload>(
@@ -73,6 +76,17 @@ export const logout = createAsyncThunk<void>(
     } finally {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("accessToken");
+    }
+  }
+);
+
+export const forgotPassword = createAsyncThunk<void, ForgotPasswordType>(
+  "auth/forgotPassword",
+  async (payload, { rejectWithValue }) => {
+    try {
+      return await authApi.forgotPassword(payload);
+    } catch (error: any) {
+      return rejectWithValue(error.message ?? "Gửi mail có sự cố");
     }
   }
 );
@@ -157,6 +171,18 @@ export const authSlice = createSlice({
       state.loggingIn = false;
       state.currentUser = null;
       state.accessToken = null;
+    });
+
+    //forgot password
+    builder.addCase(forgotPassword.pending, (state) => {
+      state.loadingRequest = true;
+    });
+    builder.addCase(forgotPassword.fulfilled, (state) => {
+      state.loadingRequest = false;
+    });
+
+    builder.addCase(forgotPassword.rejected, (state) => {
+      state.loadingRequest = false;
     });
   },
 });

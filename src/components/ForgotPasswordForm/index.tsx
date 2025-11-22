@@ -3,9 +3,11 @@ import {
   ForgotPasswordSchemaBody,
   type ForgotPasswordSchemaBodyType,
 } from "@/schema/auth.schema";
+import type { RootStateReduce } from "@/types/redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Form, FormField, FormItem, FormMessage } from "../ui/form";
@@ -27,7 +29,9 @@ export const ForgotPasswordForm = ({
     },
   });
   const navigate = useNavigate();
-
+  const { loadingRequest } = useSelector(
+    (state: RootStateReduce) => state.auth
+  );
   useDebounceInput<ForgotPasswordSchemaBodyType>({ form });
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
@@ -61,10 +65,13 @@ export const ForgotPasswordForm = ({
           />
 
           <Button
+            disabled={loadingRequest}
             type="submit"
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
           >
-            {t("auth.sendResetLink")}
+            {!loadingRequest
+              ? t("auth.sendResetLink")
+              : t("auth.loadingSendResetLink")}
           </Button>
 
           <p

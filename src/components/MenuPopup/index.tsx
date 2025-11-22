@@ -30,7 +30,7 @@ const MenuPopup = ({
 }: MenuPopupProps) => {
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger onClick={(e) => e.stopPropagation()} asChild>
         <Button className={className} variant="ghost">
           {buttonActive}
         </Button>

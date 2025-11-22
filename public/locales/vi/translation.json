@@ -43,7 +43,8 @@
     "confirmPasswordPlaceholder": "Xác nhận mật khẩu",
     "emailPlaceholder": "Email",
     "namePlaceholder": "Tên",
-    "phonePlaceholder": "Số điện thoại"
+    "phonePlaceholder": "Số điện thoại",
+    "loadingSendResetLink": "Đang gửi liên kết đặt lại"
   },
   "profile": {
     "editProfile": "Chỉnh sửa trang cá nhân",

@@ -20,8 +20,6 @@ export interface RegisterData {
   expires_in: number;
 }
 
-export type RegisterResponse = BaseResponse<RegisterData>;
-
 export interface LoginData {
   user: User;
   access_token: string;
@@ -29,4 +27,15 @@ export interface LoginData {
   expires_in: number;
 }
 
+export type ForgotPasswordType = {
+  email: string;
+};
+export type ValidateEmail = {
+  email: string;
+};
+
+export type RegisterResponse = BaseResponse<RegisterData>;
 export type LoginResponse = BaseResponse<LoginData>;
+export type ValidateEmailResponse = BaseResponse<{
+  available: boolean;
+}>;

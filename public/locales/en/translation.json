@@ -43,7 +43,8 @@
     "emailPlaceholder": "Email",
     "namePlaceholder": "Name",
     "phonePlaceholder": "Phone number",
-    "confirmPasswordPlaceholder": "Confirm password"
+    "confirmPasswordPlaceholder": "Confirm password",
+    "loadingSendResetLink": "Loading send reset link"
   },
   "profile": {
     "editProfile": "Edit profile",
