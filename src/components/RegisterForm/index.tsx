@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { selectAuthLoggingIn } from "@/features/auth";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
   RegisterSchemaBody,
   type RegisterSchemaBodyType,
 } from "@/schema/auth.schema";
 import { useAppSelector } from "@/store";
-import type { RootState } from "@/types/redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ interface RegisterFormProps {
 
 export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
   const { t } = useTranslation();
-  const { loggingIn } = useAppSelector((state: RootState) => state.auth);
+  const loggingIn = useAppSelector(selectAuthLoggingIn);
   const form = useForm<RegisterSchemaBodyType>({
     resolver: zodResolver(RegisterSchemaBody),
     mode: "onSubmit",

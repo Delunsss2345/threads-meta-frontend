@@ -1,4 +1,4 @@
-import { hideModal, showModal } from "@/features/modal/modal-slice";
+import { hideModal, showModal } from "@/features/modal";
 import { useAppDispatch } from "@/store";
 import { useCallback, type ReactNode } from "react";
 

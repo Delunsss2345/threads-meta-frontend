@@ -1,9 +1,9 @@
+import { selectAuthLoadingRequest } from "@/features/auth";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
   ResetPasswordSchemaBody,
   type ResetPasswordSchemaBodyType,
 } from "@/schema/auth.schema";
-import type { RootStateReduce } from "@/types/redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -34,9 +34,7 @@ export const ResetPasswordForm = ({
     },
   });
 
-  const { loadingRequest } = useSelector(
-    (state: RootStateReduce) => state.auth
-  );
+  const loadingRequest = useSelector(selectAuthLoadingRequest);
   const navigate = useNavigate();
 
   useDebounceInput<ResetPasswordSchemaBodyType>({ form });

@@ -3,9 +3,9 @@ import Post from "@/components/Post";
 import PostForm from "@/components/Post/PostForm";
 import SkeletonPost from "@/components/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hook";
-import { getFeeds, loadMoreThreads } from "@/features/post";
+import { getFeeds, loadMoreThreads, selectPostsState } from "@/features/post";
 import type { PostItem } from "@/types/post";
-import type { AppDispatch, RootStateReduce } from "@/types/redux";
+import type { AppDispatch } from "@/types/redux";
 
 import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,10 +28,9 @@ const Home = () => {
   const navigate = useNavigate();
   const {
     items: feeds,
-    loading,
     pagination,
     continuePage,
-  } = useSelector((state: RootStateReduce) => state.posts);
+  } = useSelector(selectPostsState);
 
   useEffect(() => {
     if (feeds.length === 0) {

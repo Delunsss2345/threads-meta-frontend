@@ -1,8 +1,7 @@
 import MenuPopup from "@/components/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { columnsSlice } from "@/features/column";
+import { columnsSlice, selectColumns } from "@/features/column";
 import { cn } from "@/lib/utils";
-import type { RootState } from "@/types/redux";
 import { ChevronRight } from "lucide-react";
 import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,7 @@ const MenuAddContent = ({
   className?: string;
 }) => {
   const dispatch = useDispatch();
-  const columns = useSelector((state: RootState) => state.columns.columns);
+  const columns = useSelector(selectColumns);
   const { t } = useTranslation();
   const menuItems = [
     {
@@ -67,7 +66,7 @@ const MenuAddContent = ({
             ease: "easeOut",
           },
         }}
-        className={`${cn(`p-0 hover:!bg-transparent ${className}`)}`}
+        className={`${cn(`p-0 hover:bg-transparent! ${className}`)}`}
         buttonActive={children}
       >
         {menuItems.map((item, i) => (

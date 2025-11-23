@@ -1,10 +1,14 @@
 import LoadingFetch from "@/components/LoadingFetch";
 import { ResetPasswordForm } from "@/components/ResetPasswordForm";
 import RestPasswordFound from "@/components/RestPasswordFailed";
-import { restPassword, validateRestToken } from "@/features/auth";
+import {
+  restPassword,
+  selectAuthValidateToken,
+  validateRestToken,
+} from "@/features/auth";
 import { useAuth } from "@/features/auth/hook";
 import type { ResetPasswordSchemaBodyType } from "@/schema/auth.schema";
-import type { AppDispatch, RootStateReduce } from "@/types/redux";
+import type { AppDispatch } from "@/types/redux";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -15,7 +19,7 @@ const ResetPassword = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const dispatch = useDispatch<AppDispatch>();
-  const { validateToken } = useSelector((state: RootStateReduce) => state.auth);
+  const validateToken = useSelector(selectAuthValidateToken);
   const [ready, setReady] = useState(false);
   const navigation = useNavigate();
   if (isAuthenticated || !token) {

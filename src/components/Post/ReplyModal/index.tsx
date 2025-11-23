@@ -3,8 +3,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/features/auth/hook";
-import { replyThreads } from "@/features/post";
-import type { AppDispatch, RootStateReduce } from "@/types/redux";
+import { replyThreads, selectPostsLoading } from "@/features/post";
+import type { AppDispatch } from "@/types/redux";
 import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -25,7 +25,7 @@ function ReplyModal({
   onClose: () => void;
 }) {
   const dispatch = useDispatch<AppDispatch>();
-  const { loading } = useSelector((state: RootStateReduce) => state.posts);
+  const loading = useSelector(selectPostsLoading);
   const [content, setContent] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 

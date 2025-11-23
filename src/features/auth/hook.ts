@@ -1,8 +1,9 @@
-import type { AppDispatch, RootStateReduce } from "@/types/redux";
+import type { AppDispatch } from "@/types/redux";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeeds } from "../post";
 import { getCurrentUser, logout } from "./auth-slice";
+import { selectAuthLoadingUser, selectCurrentUser } from "./selector";
 
 export const useFetchCurrentUser = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,16 +15,13 @@ export const useFetchCurrentUser = () => {
 };
 
 export const useCurrentUser = () => {
-  const currentUser = useSelector(
-    (state: RootStateReduce) => state.auth.currentUser
-  );
+  const currentUser = useSelector(selectCurrentUser);
   return currentUser;
 };
 
 export const useAuth = () => {
-  const { currentUser, loadingUser } = useSelector(
-    (state: RootStateReduce) => state.auth
-  );
+  const currentUser = useSelector(selectCurrentUser);
+  const loadingUser = useSelector(selectAuthLoadingUser);
 
   return {
     user: currentUser,

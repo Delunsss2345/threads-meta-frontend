@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { selectPostsItems } from "@/features/post";
 import type { PostItem } from "@/types/post";
-import type { RootState } from "@/types/redux";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -13,9 +13,8 @@ import QuoteCard from "./QuoteCard";
 const PostDetail = () => {
   const { id } = useParams();
   const postId = Number(id);
-  const postDetail = useSelector((state: RootState) =>
-    state.posts.items.find((post: PostItem) => post.id === postId)
-  );
+  const posts = useSelector(selectPostsItems);
+  const postDetail = posts.find((post: PostItem) => post.id === postId);
   if (!postDetail) return null;
   console.log(postDetail);
 
@@ -23,7 +22,7 @@ const PostDetail = () => {
     <div className="px-6 py-2">
       {/* Post */}
       <Card className="border-0 shadow-none bg-primary-foreground rounded-none">
-        <CardContent className="space-y-3 !p-0">
+        <CardContent className="space-y-3 p-0!">
           <Header
             username={postDetail.user.username}
             timeAgo={postDetail.time_ago}

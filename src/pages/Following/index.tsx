@@ -2,16 +2,14 @@ import FeedTabs from "@/components/FeedTabs";
 import PostForm from "@/components/Post/PostForm";
 import SkeletonPost from "@/components/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hook";
-import { getFeeds } from "@/features/post";
-import type { AppDispatch, RootStateReduce } from "@/types/redux";
+import { getFeeds, selectPostsState } from "@/features/post";
+import type { AppDispatch } from "@/types/redux";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Following = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { items: feeds, loading } = useSelector(
-    (state: RootStateReduce) => state.posts
-  );
+  const { items: feeds, loading } = useSelector(selectPostsState);
   useEffect(() => {
     if (feeds.length === 0) {
       dispatch(getFeeds());

@@ -1,9 +1,9 @@
 import AddColumnIcon from "@/components/Icon/AddColIcon";
 import LoginCard from "@/components/LoginPanel";
 import { COMPONENTS_MAP } from "@/constant/componentsMap";
-import { type ColumnType } from "@/features/column";
+import { selectIsAuthenticated } from "@/features/auth";
+import { selectColumns, type ColumnType } from "@/features/column";
 import MenuAddContent from "@/pages/Home/MenuAddContent";
-import type { RootState } from "@/types/redux";
 import { PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,11 +16,9 @@ interface ContentProps {
 
 const Content: React.FC<ContentProps> = ({ children }) => {
   const location = useLocation();
-  const isAuth = Boolean(
-    useSelector((state: RootState) => state.auth.currentUser)
-  );
+  const isAuth = useSelector(selectIsAuthenticated);
 
-  const columns = useSelector((state: RootState) => state.columns.columns);
+  const columns = useSelector(selectColumns);
   const dispatch = useDispatch();
   const sensors = useSensors(useSensor(PointerSensor));
 

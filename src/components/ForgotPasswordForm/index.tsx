@@ -1,9 +1,9 @@
+import { selectAuthLoadingRequest } from "@/features/auth";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
   ForgotPasswordSchemaBody,
   type ForgotPasswordSchemaBodyType,
 } from "@/schema/auth.schema";
-import type { RootStateReduce } from "@/types/redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -29,9 +29,7 @@ export const ForgotPasswordForm = ({
     },
   });
   const navigate = useNavigate();
-  const { loadingRequest } = useSelector(
-    (state: RootStateReduce) => state.auth
-  );
+  const loadingRequest = useSelector(selectAuthLoadingRequest);
   useDebounceInput<ForgotPasswordSchemaBodyType>({ form });
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">

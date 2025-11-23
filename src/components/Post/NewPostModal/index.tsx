@@ -4,9 +4,9 @@ import SwiperImage from "@/components/SwiperImage";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/features/auth/hook";
-import { postThreads } from "@/features/post";
+import { postThreads, selectPostsLoading } from "@/features/post";
 import { createPostSchema } from "@/schema/post.schema";
-import type { AppDispatch, RootStateReduce } from "@/types/redux";
+import type { AppDispatch } from "@/types/redux";
 import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
 import { useRef, useState, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,7 +22,7 @@ function NewPostModal({
   onClose: () => void;
   mode?: "subtract" | "auto";
 }) {
-  const posts = useSelector((state: RootStateReduce) => state.posts);
+  const loadingPosts = useSelector(selectPostsLoading);
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -139,7 +139,7 @@ function NewPostModal({
           </div>
         </CardContent>
 
-        <Footer loading={posts.loading} onSubmit={handlePost} />
+        <Footer loading={loadingPosts} onSubmit={handlePost} />
       </Card>
     </ModalPopup>
   );
