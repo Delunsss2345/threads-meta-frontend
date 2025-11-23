@@ -1,4 +1,4 @@
-import type { BaseResponse, PaginationResponse } from "./api";
+import type { BaseResponse, MessageResponse, PaginationResponse } from "./api";
 import type { User } from "./user";
 
 export interface OriginalPost {
@@ -41,6 +41,9 @@ export interface PostItem {
   reposts_and_quotes_count: number;
   media_urls: string[];
   user: User;
+  is_liked_by_auth: boolean;
+  is_saved_by_auth: boolean;
+  is_reposted_by_auth: boolean;
   original_post: OriginalPost | null;
 }
 
@@ -56,8 +59,25 @@ export type CreatePostBody = {
   media: File[];
 };
 
-
 export type CreatePostReplyBody = {
   content: string;
   media: File[];
 };
+
+export type LikeData = {
+  is_liked: boolean;
+  likes_count: number;
+};
+
+export type RepostData = {
+  is_reposted: boolean;
+  reposts_and_quotes_count: number;
+};
+
+export type SaveData = {
+  is_saved: boolean;
+};
+export type LikePostResponse = BaseResponse<LikeData>;
+export type RepostPostResponse = BaseResponse<RepostData>;
+export type SavePostResponse = BaseResponse<SaveData>;
+export type PostHidden = MessageResponse;

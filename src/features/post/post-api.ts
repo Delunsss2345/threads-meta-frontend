@@ -17,4 +17,12 @@ export const postApi = {
     http.post(`/posts/${id}/reply`, payload),
 
   getThread: (id: number) => http.get<PostResponse>(`/posts/${id}`),
+  like: (id: number) => http.post(`/posts/${id}/like`),
+  repost: (id: number) => http.post(`/posts/${id}/repost`),
+  quote: (id: number, content: string) =>
+    http.post(`/posts/${id}/quote`, { content }),
+  save: (id: number) => http.post(`/posts/${id}/save`),
+  hide: (id: number) => http.post(`/posts/${id}/hide`),
+  report: (id: number, reason: string) =>
+    http.post(`/posts/${id}/report`, { reason }),
 };

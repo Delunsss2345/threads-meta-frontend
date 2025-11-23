@@ -49,7 +49,7 @@ const Home = () => {
   const { user } = useAuth();
 
   const filteredFeeds = feeds.filter(
-    (post) => post.user.username !== user?.username
+    (post: PostItem) => post.user.username !== user?.username
   );
 
   return (

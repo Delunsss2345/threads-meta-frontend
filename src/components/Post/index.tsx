@@ -39,7 +39,6 @@ const Post = ({ post, onClick }: { post: PostItem; onClick?: () => void }) => {
   const repost = post.reposts_and_quotes_count;
   const share = 0;
   const time = formatTime(post.created_at);
-
   const { user } = useAuth();
   const navigator = useNavigate();
   const handleMouseEnter = () => {
@@ -170,6 +169,9 @@ const Post = ({ post, onClick }: { post: PostItem; onClick?: () => void }) => {
             message,
             repost,
             share,
+            is_liked_by_auth: post.is_liked_by_auth,
+            is_saved_by_auth: post.is_saved_by_auth,
+            is_reposted_by_auth: post.is_reposted_by_auth,
 
             original_post: post.original_post
               ? {

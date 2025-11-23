@@ -24,6 +24,9 @@ export interface PostProps {
     content: string;
     avatar: string | null;
   } | null;
+  is_liked_by_auth: boolean;
+  is_saved_by_auth: boolean;
+  is_reposted_by_auth: boolean;
 }
 
 export const PostContext = createContext<{

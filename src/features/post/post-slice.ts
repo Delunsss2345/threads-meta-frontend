@@ -76,6 +76,84 @@ export const loadMoreThreads = createAsyncThunk<PostResponse, number>(
   }
 );
 
+export const likePost = createAsyncThunk(
+  "posts/likePost",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await postApi.like(id);
+      return { id };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Error");
+    }
+  }
+);
+
+export const repostPost = createAsyncThunk(
+  "posts/repostPost",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await postApi.repost(id);
+      return { id };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Error");
+    }
+  }
+);
+
+export const quotePost = createAsyncThunk(
+  "posts/quotePost",
+  async (
+    { id, content }: { id: number; content: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      await postApi.quote(id, content);
+      return { id };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Error");
+    }
+  }
+);
+
+export const savePost = createAsyncThunk(
+  "posts/savePost",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await postApi.save(id);
+      return { id };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Error");
+    }
+  }
+);
+
+export const hidePost = createAsyncThunk(
+  "posts/hidePost",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await postApi.hide(id);
+      return { id };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Error");
+    }
+  }
+);
+
+export const reportPost = createAsyncThunk(
+  "posts/reportPost",
+  async (
+    { id, reason }: { id: number; reason: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      await postApi.report(id, reason);
+      return { id };
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Error");
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -136,6 +214,22 @@ export const postsSlice = createSlice({
     });
     builder.addCase(replyThreads.rejected, (state, action) => {
       state.error = action.payload as string;
+    });
+
+    //like
+    builder.addCase(likePost.pending, (state) => {
+      state.error = null;
+    });
+    builder.addCase(likePost.fulfilled, (state, action) => {
+      const id = action.payload.id;
+      const post = state.items.find((p: PostItem) => p.id === id);
+      if (post) {
+        post.is_liked_by_auth = !post.is_liked_by_auth;
+        post.likes_count += post.is_liked_by_auth ? 1 : -1;
+      }
+    });
+    builder.addCase(likePost.rejected, (state, action) => {
+      state.error = "Lỗi khi like";
     });
   },
 });
