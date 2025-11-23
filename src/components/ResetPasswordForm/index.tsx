@@ -28,8 +28,9 @@ export const ResetPasswordForm = ({
     mode: "onSubmit",
     defaultValues: {
       token,
+      email: "",
       password: "",
-      confirmPassword: "",
+      password_confirmation: "",
     },
   });
 
@@ -43,11 +44,11 @@ export const ResetPasswordForm = ({
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <h1 className="text-2xl font-semibold mb-6 text-foreground">
-        Đặt lại mật khẩu
+        {t("auth.resetPasswordTitle")}
       </h1>
 
       <p className="text-sm text-muted-foreground mb-6 text-center max-w-sm">
-        Nhập mật khẩu mới cho tài khoản của bạn.
+        {t("auth.resetPasswordDescription")}
       </p>
 
       <Form {...form}>
@@ -56,6 +57,16 @@ export const ResetPasswordForm = ({
           className="space-y-4 flex flex-col items-center w-full max-w-sm"
           noValidate
         >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <Input type="email" placeholder={t("auth.email")} {...field} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="password"
@@ -73,7 +84,7 @@ export const ResetPasswordForm = ({
 
           <FormField
             control={form.control}
-            name="confirmPassword"
+            name="password_confirmation"
             render={({ field }) => (
               <FormItem className="w-full">
                 <Input

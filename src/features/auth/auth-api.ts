@@ -5,8 +5,11 @@ import type {
   LoginResponse,
   RegisterPayload,
   RegisterResponse,
+  RestPasswordBody,
   ValidateEmail,
   ValidateEmailResponse,
+  ValidateTokenBody,
+  ValidateTokenResponse,
 } from "@/types/auth";
 import type { UserResponse } from "@/types/user";
 import { http } from "@/utils/http";
@@ -21,12 +24,19 @@ export const authApi = {
   forgotPassword: (payload: ForgotPasswordType) =>
     http.post("/auth/forgot-password", payload, {
       headers: {
-        "x-origin": import.meta.env.VITE_BASE_API,
+        "x-origin": import.meta.env.VITE_BASE_URL,
       },
     }),
 
   validateEmail: (payload: ValidateEmail) =>
     http.post<ValidateEmailResponse>("/auth/validate/email", payload),
+  validateRestToken: (payload: ValidateTokenBody) =>
+    http.get<ValidateTokenResponse>(
+      `/auth/reset-password/validate?token=${payload.token}`
+    ),
+
+  resetPassword: (payload: RestPasswordBody) =>
+    http.post("/auth/reset-password", payload),
   getCurrentUser: () => http.get<UserResponse>("/auth/user"),
 
   logout: () => http.post<MessageResponse>("/auth/logout"),

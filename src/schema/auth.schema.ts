@@ -38,8 +38,9 @@ const ForgotPasswordSchemaBody = z.object({
 
 const ResetPasswordSchemaBody = z.object({
   token: z.string().min(1),
+  email: z.string().email(),
   password: z.string().min(6),
-  confirmPassword: z.string().min(6),
+  password_confirmation: z.string().min(6),
 });
 
 type LoginSchemaBodyType = z.infer<typeof LoginSchemaBody>;

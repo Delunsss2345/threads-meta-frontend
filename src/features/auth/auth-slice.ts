@@ -4,6 +4,9 @@ import type {
   LoginResponse,
   RegisterPayload,
   RegisterResponse,
+  RestPasswordBody,
+  ValidateTokenBody,
+  ValidateTokenResponse,
 } from "@/types/auth";
 import type { User, UserResponse } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -16,6 +19,7 @@ export type AuthState = {
   loggingIn: boolean;
   initialized: boolean;
   loadingRequest: boolean;
+  validateToken: boolean;
 };
 
 const initialState: AuthState = {
@@ -25,6 +29,7 @@ const initialState: AuthState = {
   loggingIn: false,
   initialized: false,
   loadingRequest: false,
+  validateToken: false,
 };
 
 export const login = createAsyncThunk<LoginResponse, LoginPayload>(
@@ -87,6 +92,28 @@ export const forgotPassword = createAsyncThunk<void, ForgotPasswordType>(
       return await authApi.forgotPassword(payload);
     } catch (error: any) {
       return rejectWithValue(error.message ?? "Gửi mail có sự cố");
+    }
+  }
+);
+
+export const validateRestToken = createAsyncThunk<
+  ValidateTokenResponse,
+  ValidateTokenBody
+>("auth/validateRestToken", async (payload, { rejectWithValue }) => {
+  try {
+    return await authApi.validateRestToken(payload);
+  } catch (error: any) {
+    return rejectWithValue(error.message ?? "Liên kết hết hạn");
+  }
+});
+
+export const restPassword = createAsyncThunk<void, RestPasswordBody>(
+  "auth/restPassword",
+  async (payload, { rejectWithValue }) => {
+    try {
+      return await authApi.resetPassword(payload);
+    } catch (error: any) {
+      return rejectWithValue(error.message ?? "Liên kết hết hạn");
     }
   }
 );
@@ -182,6 +209,30 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(forgotPassword.rejected, (state) => {
+      state.loadingRequest = false;
+    });
+
+    // validate password
+    builder.addCase(validateRestToken.pending, (state) => {
+      state.loadingRequest = true;
+    });
+    builder.addCase(validateRestToken.fulfilled, (state, action) => {
+      state.loadingRequest = false;
+      state.validateToken = action.payload.data.valid;
+    });
+
+    builder.addCase(validateRestToken.rejected, (state) => {
+      state.loadingRequest = false;
+      state.validateToken = false;
+    });
+    // reset password
+    builder.addCase(restPassword.pending, (state) => {
+      state.loadingRequest = true;
+    });
+    builder.addCase(restPassword.fulfilled, (state) => {
+      state.loadingRequest = false;
+    });
+    builder.addCase(restPassword.rejected, (state) => {
       state.loadingRequest = false;
     });
   },

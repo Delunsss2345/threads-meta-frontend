@@ -44,7 +44,14 @@
     "emailPlaceholder": "Email",
     "namePlaceholder": "Tên",
     "phonePlaceholder": "Số điện thoại",
-    "loadingSendResetLink": "Đang gửi liên kết đặt lại"
+    "loadingSendResetLink": "Đang gửi liên kết đặt lại",
+    "newPassword": "Mật khẩu mới",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "resetPassword": "Đặt lại mật khẩu",
+    "loading": "Đang xử lý...",
+    "resetPasswordTitle": "Đặt lại mật khẩu",
+    "resetPasswordDescription": "Nhập mật khẩu mới cho tài khoản của bạn.",
+    "email": "Email của bạn"
   },
   "profile": {
     "editProfile": "Chỉnh sửa trang cá nhân",
@@ -194,5 +201,10 @@
     "signUpToRepostDesc": "Đăng lại và chia sẻ ý tưởng khi bạn đã đăng nhập.",
     "signUpToShare": "Đăng ký để chia sẻ",
     "signUpToShareDesc": "Chia sẻ có sẵn khi bạn tạo tài khoản."
+  },
+  "restPasswordFound": {
+    "title": "Liên kết không hợp lệ",
+    "description": "Liên kết đặt lại mật khẩu đã hết hạn hoặc không hợp lệ. Vui lòng yêu cầu một liên kết mới.",
+    "back": "Quay lại đăng nhập"
   }
 }

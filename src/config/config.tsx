@@ -8,6 +8,7 @@ import ActivityPage from "@/pages/ActivityPage";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
+import ResetPassword from "@/pages/Auth/ResetPassword";
 import Following from "@/pages/Following";
 import Help from "@/pages/Help";
 import Home from "@/pages/Home";
@@ -29,6 +30,7 @@ export const config: RouteObject[] = [
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/reset-password", element: <ResetPassword /> },
     ],
   },
 

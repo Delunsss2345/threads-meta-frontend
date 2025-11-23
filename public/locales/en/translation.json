@@ -44,7 +44,14 @@
     "namePlaceholder": "Name",
     "phonePlaceholder": "Phone number",
     "confirmPasswordPlaceholder": "Confirm password",
-    "loadingSendResetLink": "Loading send reset link"
+    "loadingSendResetLink": "Loading send reset link",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "resetPassword": "Reset password",
+    "loading": "Processing...",
+    "resetPasswordTitle": "Reset your password",
+    "resetPasswordDescription": "Enter a new password for your account.",
+    "email": "Your email address"
   },
   "profile": {
     "editProfile": "Edit profile",
@@ -194,5 +201,10 @@
     "signUpToRepostDesc": "Repost and share ideas once you're logged in.",
     "signUpToShare": "Sign up to share",
     "signUpToShareDesc": "Sharing is available once you create an account."
+  },
+  "restPasswordFound": {
+    "title": "Invalid Link",
+    "description": "The password reset link has expired or is invalid. Please request a new link.",
+    "back": "Back to Login"
   }
 }
