@@ -1,11 +1,18 @@
 import { PER_PAGE } from "@/constant/pagination";
-import type { CreatePostResponse, PostItem, PostResponse } from "@/types/post";
+import type {
+  CreatePostResponse,
+  PostItem,
+  PostResponse,
+  ReplyData,
+} from "@/types/post";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postApi } from "./post-api";
 
 export interface PostsState {
   items: PostItem[];
+  replies: ReplyData[];
   loading: boolean;
+  loadingRequest: boolean;
   error: string | null;
   pagination: {
     current_page: number;
@@ -16,7 +23,9 @@ export interface PostsState {
 }
 const initialState: PostsState = {
   items: [],
+  replies: [],
   loading: false,
+  loadingRequest: false,
   error: null,
   pagination: {
     current_page: 1,
@@ -154,6 +163,18 @@ export const reportPost = createAsyncThunk(
   }
 );
 
+export const getReplies = createAsyncThunk(
+  "posts/getReplies",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const res = await postApi.getReplies(id);
+      return res;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Error");
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -167,6 +188,7 @@ export const postsSlice = createSlice({
       };
     },
   },
+
   extraReducers: (builder) => {
     // get feed
     builder.addCase(getFeeds.pending, (state) => {
@@ -230,6 +252,21 @@ export const postsSlice = createSlice({
     });
     builder.addCase(likePost.rejected, (state, action) => {
       state.error = "Lỗi khi like";
+    });
+
+    //get replise
+    builder.addCase(getReplies.pending, (state) => {
+      state.loadingRequest = true;
+    });
+
+    builder.addCase(getReplies.fulfilled, (state, action) => {
+      state.loadingRequest = false;
+      state.replies = action.payload.data;
+    });
+
+    builder.addCase(getReplies.rejected, (state, action) => {
+      state.loadingRequest = false;
+      state.replies = [];
     });
   },
 });

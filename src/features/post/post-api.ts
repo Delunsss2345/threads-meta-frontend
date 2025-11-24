@@ -1,6 +1,10 @@
 import { PER_PAGE } from "@/constant/pagination";
 import type { MessageResponse } from "@/types/api";
-import type { CreatePostResponse, PostResponse } from "@/types/post";
+import type {
+  CreatePostResponse,
+  PostResponse,
+  ReplyResponse,
+} from "@/types/post";
 import { http } from "@/utils/http";
 
 export const postApi = {
@@ -18,8 +22,7 @@ export const postApi = {
   replyThread: (id: number, payload: FormData) =>
     http.post(`/posts/${id}/reply`, payload),
 
-  getReplies : (id : number) => http.get<PostResponse>(`/posts/${id}/replies`),
-
+  getReplies: (id: number) => http.get<ReplyResponse>(`/posts/${id}/replies`),
 
   getThread: (id: number) => http.get<PostResponse>(`/posts/${id}`),
   like: (id: number) => http.post(`/posts/${id}/like`),

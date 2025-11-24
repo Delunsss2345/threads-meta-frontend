@@ -66,7 +66,7 @@ export interface ReplyUser {
   avatar_url: string | null;
 }
 
-export interface ReplyResponse extends BasePost {
+export interface ReplyData extends BasePost {
   status: PostStatus;
   likes_count: number;
   replies_count: number;
@@ -110,5 +110,5 @@ export interface SaveData {
 export type LikePostResponse = BaseResponse<LikeData>;
 export type RepostPostResponse = BaseResponse<RepostData>;
 export type SavePostResponse = BaseResponse<SaveData>;
-
+export type ReplyResponse = BaseResponse<ReplyData[]>;
 export type PostHidden = MessageResponse;

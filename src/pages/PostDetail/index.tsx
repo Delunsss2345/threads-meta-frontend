@@ -1,10 +1,14 @@
+import LoadingFetch from "@/components/LoadingFetch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { selectPostsItems } from "@/features/post";
-import type { PostItem } from "@/types/post";
+import { getReplies, selectPostsState } from "@/features/post";
+import type { PostItem, ReplyData } from "@/types/post";
+import type { AppDispatch } from "@/types/redux";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import NotFound from "../NotFound";
 import CommentItem from "./CommentItem";
 import Header from "./Header";
 import EngagementStats from "./Interacter";
@@ -12,15 +16,26 @@ import QuoteCard from "./QuoteCard";
 
 const PostDetail = () => {
   const { id } = useParams();
+
   const postId = Number(id);
-  const posts = useSelector(selectPostsItems);
+  const {
+    items: posts,
+    loadingRequest,
+    replies,
+  } = useSelector(selectPostsState);
+  const dispatch = useDispatch<AppDispatch>();
+
   const postDetail = posts.find((post: PostItem) => post.id === postId);
+
+  useEffect(() => {
+    if (id) dispatch(getReplies(postId));
+  }, [id, postId, dispatch]);
+
+  if (!id) return <NotFound />;
   if (!postDetail) return null;
-  console.log(postDetail);
 
   return (
     <div className="px-6 py-2">
-      {/* Post */}
       <Card className="border-0 shadow-none bg-primary-foreground rounded-none">
         <CardContent className="space-y-3 p-0!">
           <Header
@@ -39,7 +54,6 @@ const PostDetail = () => {
           />
 
           <Separator />
-          {/* Top section */}
           <div className="flex items-center justify-between text-sm pt-2">
             <button className="flex items-center gap-1 font-semibold">
               Hàng đầu <ChevronDown size={13} />
@@ -51,16 +65,20 @@ const PostDetail = () => {
         </CardContent>
       </Card>
 
-      {/* Comments list container */}
       <div>
-        <CommentItem
-          username="hadihajhasan21"
-          timeAgo="25 phút"
-          content="Hiz"
-          avatarUrl="/your-avatar.png"
-          likes={1}
-          sends={1}
-        />
+        {loadingRequest ? (
+          <LoadingFetch />
+        ) : (
+          replies.map((reply: ReplyData) => (
+            <CommentItem
+              key={reply.id}
+              username={reply.user.username}
+              timeAgo={reply.updated_at}
+              avatarUrl={reply.user?.avatar_url}
+              content={reply.content}
+            />
+          ))
+        )}
       </div>
     </div>
   );

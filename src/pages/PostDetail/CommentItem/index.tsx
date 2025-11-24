@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { formatTime } from "@/utils/format-time";
 import {
   Heart,
   MessageCircle,
@@ -14,7 +15,7 @@ type CommentProps = {
   username: string;
   timeAgo: string;
   content: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
   likes?: number;
   sends?: number;
 };
@@ -37,10 +38,9 @@ const CommentItem: FC<CommentProps> = ({
 
   return (
     <div className="flex items-start gap-3">
-      {/* Avatar + dấu cộng */}
       <div className="relative">
         <Avatar className="h-10 w-10">
-          <AvatarImage src={avatarUrl} alt={username} />
+          <AvatarImage src={avatarUrl || ""} alt={username} />
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
         <div className="absolute -bottom-0.5 -right-0.5 h-5 w-5 rounded-full bg-black border border-background flex items-center justify-center">
@@ -48,14 +48,14 @@ const CommentItem: FC<CommentProps> = ({
         </div>
       </div>
 
-      {/* Nội dung */}
       <div className="flex-1 min-w-0">
-        {/* Header: tên + thời gian + 3 chấm */}
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-2 text-sm">
               <span className="font-semibold">{username}</span>
-              <span className="text-xs text-muted-foreground">{timeAgo}</span>
+              <span className="text-xs text-muted-foreground">
+                {formatTime(timeAgo)}
+              </span>
             </div>
             <p className="text-sm mt-1 break-words">{content}</p>
           </div>
@@ -69,7 +69,6 @@ const CommentItem: FC<CommentProps> = ({
           </Button>
         </div>
 
-        {/* Hàng icon */}
         <div className="mt-3 flex items-center gap-6 text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <Button variant="ghost" size="icon" className="h-7 w-7">

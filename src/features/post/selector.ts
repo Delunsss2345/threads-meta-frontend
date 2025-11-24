@@ -16,3 +16,10 @@ export const selectPostsPagination = (state: RootState) =>
 
 export const selectPostsContinuePage = (state: RootState) =>
   selectPostsState(state).continuePage;
+
+export const selectPostsAndLoadingRequest = (state: RootState) => {
+  return {
+    posts: selectPostsItems(state),
+    loadingRequest: selectPostsState(state).loadingRequest,
+  };
+};
