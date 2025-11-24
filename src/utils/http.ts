@@ -16,9 +16,7 @@ export const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("accessToken");
 
-  const isPublicApi =
-    config.url?.startsWith("/posts/feed") ||
-    config.url?.startsWith("/auth/login");
+  const isPublicApi = config.url?.startsWith("/auth/login");
 
   if (!isPublicApi && accessToken) {
     config.headers.set("Authorization", `Bearer ${accessToken}`);

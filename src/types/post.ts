@@ -41,9 +41,9 @@ export interface PostItem {
   reposts_and_quotes_count: number;
   media_urls: string[];
   user: User;
-  is_liked_by_auth: boolean;
-  is_saved_by_auth: boolean;
-  is_reposted_by_auth: boolean;
+  is_liked_by_auth?: boolean;
+  is_saved_by_auth?: boolean;
+  is_reposted_by_auth?: boolean;
   original_post: OriginalPost | null;
 }
 

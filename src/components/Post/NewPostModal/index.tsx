@@ -1,14 +1,12 @@
 import AvatarGroup from "@/components/AvatarGroup";
 import ModalPopup from "@/components/ModalPopup";
-import SwiperImage from "@/components/SwiperImage";
 import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import UserAction from "@/components/UserAction";
 import { useAuth } from "@/features/auth/hook";
 import { postThreads, selectPostsLoading } from "@/features/post";
 import { createPostSchema } from "@/schema/post.schema";
 import type { AppDispatch } from "@/types/redux";
-import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
-import { useRef, useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
@@ -29,15 +27,6 @@ function NewPostModal({
 
   const [content, setContent] = useState("");
   const [previewImage, setPreviewImage] = useState<File[] | null>(null);
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      setPreviewImage(Array.from(files));
-    }
-  };
 
   const handlePost = async () => {
     const result = createPostSchema.safeParse({
@@ -89,49 +78,13 @@ function NewPostModal({
             </div>
 
             <div className="flex-1 pt-1 space-y-4 overflow-x-auto">
-              <div>
-                <div className="mb-1 text-sm font-semibold leading-none">
-                  {user?.username}
-                </div>
-
-                <div className="space-y-4">
-                  <Textarea
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder={t("post.whatsNew")}
-                    className="min-h-[24px] bg-transparent border-none shadow-none resize-none p-0 focus-visible:ring-0 text-base leading-normal"
-                    rows={1}
-                  />
-
-                  {previewImage && <SwiperImage images={previewImage} />}
-                </div>
-
-                <div className="flex items-center gap-4 mt-3 text-muted-foreground/60">
-                  <div>
-                    <input
-                      onChange={handleInput}
-                      ref={inputRef}
-                      multiple
-                      accept="image/*"
-                      type="file"
-                      className="hidden"
-                    />
-                    <ImageIcon
-                      onClick={() => inputRef.current?.click()}
-                      className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors"
-                    />
-                  </div>
-
-                  <div className="border border-current rounded-[4px] text-[10px] font-bold px-1 cursor-pointer hover:text-foreground transition-colors">
-                    GIF
-                  </div>
-
-                  <AlignLeft className="w-5 h-5 rotate-90 cursor-pointer hover:text-foreground" />
-                  <Hash className="w-5 h-5 cursor-pointer hover:text-foreground" />
-                  <MapPin className="w-5 h-5 cursor-pointer hover:text-foreground" />
-                </div>
-              </div>
-
+              <UserAction
+                username={user?.username}
+                onChangeContent={(data: any) => {
+                  setContent(data.content);
+                  setPreviewImage(data.previewImage);
+                }}
+              />
               <div className="min-h-[20px] flex items-center text-muted-foreground/50 text-sm pt-3">
                 {t("post.addToThread")}
               </div>

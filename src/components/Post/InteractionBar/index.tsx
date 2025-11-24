@@ -75,7 +75,6 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
     if (!ctx?.post) return null;
     show(<ReplyModal post={ctx?.post} onClose={hide} />);
   };
-  console.log(ctx?.post);
   return (
     <>
       <div

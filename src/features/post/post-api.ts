@@ -5,7 +5,9 @@ import { http } from "@/utils/http";
 
 export const postApi = {
   getFeeds: (page: number = 1) =>
-    http.get<PostResponse>(`/posts/feed?page=${page}&per_page=${PER_PAGE}`),
+    http.get<PostResponse>(
+      `/posts/feed?type=for_you&page=${page}&per_page=${PER_PAGE}`
+    ),
   postThread: (payload: FormData) =>
     http.post<CreatePostResponse>("/posts", payload, {
       headers: {

@@ -1,12 +1,11 @@
 import ModalPopup from "@/components/ModalPopup";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import UserAction from "@/components/UserAction";
 import { useAuth } from "@/features/auth/hook";
 import { replyThreads, selectPostsLoading } from "@/features/post";
 import type { AppDispatch } from "@/types/redux";
-import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
@@ -16,7 +15,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
 import { type PostProps } from "../PostContext";
-
 function ReplyModal({
   post,
   onClose,
@@ -27,18 +25,9 @@ function ReplyModal({
   const dispatch = useDispatch<AppDispatch>();
   const loading = useSelector(selectPostsLoading);
   const [content, setContent] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
+  const [previewImage, setPreviewImage] = useState<File[] | []>([]);
   const { user } = useAuth();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + "px";
-    }
-  }, [content]);
 
   const handleReply = async () => {
     if (!content || !post.id) return;
@@ -148,28 +137,13 @@ function ReplyModal({
 
             <div className="flex-1 space-y-4 pt-1">
               <div>
-                <div className="font-semibold text-sm leading-none mb-1">
-                  {user.username}
-                </div>
-
-                <Textarea
-                  ref={textareaRef}
-                  placeholder={t("post.whatsNew")}
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  className="min-h-[24px] border-none shadow-none resize-none p-0 focus-visible:ring-0 text-base leading-normal overflow-hidden"
-                  rows={1}
+                <UserAction
+                  username={user?.username}
+                  onChangeContent={(data: any) => {
+                    setContent(data.content);
+                    setPreviewImage(data.previewImage);
+                  }}
                 />
-
-                <div className="flex items-center gap-4 mt-3 text-muted-foreground/60">
-                  <ImageIcon className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
-                  <div className="border border-current rounded-[4px] text-[10px] font-bold px-1 cursor-pointer hover:text-foreground transition-colors">
-                    GIF
-                  </div>
-                  <AlignLeft className="w-5 h-5 rotate-90 cursor-pointer hover:text-foreground transition-colors" />
-                  <Hash className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
-                  <MapPin className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
-                </div>
               </div>
 
               <div className="min-h-[20px] flex items-center text-muted-foreground/50 text-sm pt-3">
