@@ -10,6 +10,7 @@ import { postApi } from "./post-api";
 
 export interface PostsState {
   items: PostItem[];
+  reposts: PostItem[];
   replies: ReplyData[];
   loading: boolean;
   loadingRequest: boolean;
@@ -24,6 +25,7 @@ export interface PostsState {
 const initialState: PostsState = {
   items: [],
   replies: [],
+  reposts: [],
   loading: false,
   loadingRequest: false,
   error: null,
@@ -39,6 +41,18 @@ export const getFeeds = createAsyncThunk<PostResponse>(
   async (_, { rejectWithValue }) => {
     try {
       const res = await postApi.getFeeds();
+      return res;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getRepost = createAsyncThunk<PostResponse, number>(
+  "posts/reposts",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await postApi.getReposts(id);
       return res;
     } catch (error) {
       return rejectWithValue(error);
@@ -267,6 +281,22 @@ export const postsSlice = createSlice({
     builder.addCase(getReplies.rejected, (state, action) => {
       state.loadingRequest = false;
       state.replies = [];
+    });
+
+    builder.addCase(getRepost.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builder.addCase(getRepost.fulfilled, (state, action) => {
+      state.loading = false;
+      console.log(action.payload.data[0].original_post);
+      state.reposts = action.payload.data;
+    });
+
+    builder.addCase(getRepost.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
     });
   },
 });

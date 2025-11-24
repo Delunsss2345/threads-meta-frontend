@@ -15,9 +15,15 @@ import Menu from "./Menu";
 import MenuMe from "./MenuMe";
 import PostProvider from "./PostContext";
 
-const Post = ({ post, onClick }: { post: PostItem; onClick?: () => void }) => {
+const Post = ({
+  post,
+  onClick,
+}: {
+  post: PostItem | any;
+  onClick?: () => void;
+}) => {
   const [open, setOpen] = useState(false);
-  const hoverTimer = useRef<any | null>(null);
+  const hoverTimer = useRef<any>(null);
   const { user } = useAuth();
   const username = post.user.username;
   const time = formatTime(post.created_at);
@@ -68,20 +74,19 @@ const Post = ({ post, onClick }: { post: PostItem; onClick?: () => void }) => {
     [post, username, time]
   );
 
-  const imageSlides = useMemo(
-    () =>
-      post.media_urls.map((img, i) => (
-        <SwiperSlide key={i} style={{ width: 210 }}>
-          <div
-            className="rounded-lg overflow-hidden"
-            style={{ width: 210, height: 280 }}
-          >
-            <img src={img} className="w-full h-full object-cover" />
-          </div>
-        </SwiperSlide>
-      )),
-    [post.media_urls]
-  );
+  const imageSlides = useMemo(() => {
+    if (!Array.isArray(post.media_urls)) return null;
+    return post.media_urls.map((img, i) => (
+      <SwiperSlide key={i} style={{ width: 210 }}>
+        <div
+          className="rounded-lg overflow-hidden"
+          style={{ width: 210, height: 280 }}
+        >
+          <img src={img} className="w-full h-full object-cover" />
+        </div>
+      </SwiperSlide>
+    ));
+  }, [post.media_urls]);
 
   return (
     <div className="px-6 py-3 border-t border-b border-border cursor-pointer">
@@ -146,7 +151,7 @@ const Post = ({ post, onClick }: { post: PostItem; onClick?: () => void }) => {
         </div>
       </div>
 
-      {post.media_urls.length > 0 && (
+      {post?.media_urls && post.media_urls.length > 0 && (
         <div className="relative mt-3">
           <div className="ml-[12px] pl-[48px] overflow-visible w-auto">
             <Swiper

@@ -22,7 +22,12 @@ export const postApi = {
   replyThread: (id: number, payload: FormData) =>
     http.post(`/posts/${id}/reply`, payload),
 
-  getReplies: (id: number) => http.get<ReplyResponse>(`/posts/${id}/replies`),
+  getReplies: (id: number) => http.get<ReplyResponse>(`/posts/${id}/replies?`),
+
+  getReposts: (id: number, page: number = 1) =>
+    http.get<PostResponse>(
+      `/users/${id}/reposts?page=${page}&per_page=${PER_PAGE}`
+    ),
 
   getThread: (id: number) => http.get<PostResponse>(`/posts/${id}`),
   like: (id: number) => http.post(`/posts/${id}/like`),

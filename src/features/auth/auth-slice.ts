@@ -10,6 +10,7 @@ import type {
 } from "@/types/auth";
 import type { User, UserResponse } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { userApi } from "../user/user-api";
 import { authApi } from "./auth-api";
 
 export type AuthState = {
@@ -118,6 +119,17 @@ export const restPassword = createAsyncThunk<void, RestPasswordBody>(
   }
 );
 
+export const updateAuthForUser = createAsyncThunk<any, FormData>(
+  "auth/updateUser",
+  async (payload, { rejectWithValue }) => {
+    try {
+      return await userApi.updateUser(payload);
+    } catch (error: any) {
+      return rejectWithValue(error.message ?? "Liên kết hết hạn");
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -166,11 +178,11 @@ export const authSlice = createSlice({
       state.loggingIn = false;
       state.currentUser = null;
       state.accessToken = null;
-    }),
-      // Get me
-      builder.addCase(getCurrentUser.pending, (state) => {
-        state.loadingUser = true;
-      });
+    });
+    // Get me
+    builder.addCase(getCurrentUser.pending, (state) => {
+      state.loadingUser = true;
+    });
 
     // fulfilled trả về User
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
@@ -233,6 +245,19 @@ export const authSlice = createSlice({
       state.loadingRequest = false;
     });
     builder.addCase(restPassword.rejected, (state) => {
+      state.loadingRequest = false;
+    });
+
+    builder.addCase(updateAuthForUser.pending, (state) => {
+      state.loadingRequest = true;
+      console.log(state.loadingRequest) ; 
+    });
+
+    builder.addCase(updateAuthForUser.fulfilled, (state) => {
+      state.loadingRequest = false;
+    });
+
+    builder.addCase(updateAuthForUser.rejected, (state) => {
       state.loadingRequest = false;
     });
   },

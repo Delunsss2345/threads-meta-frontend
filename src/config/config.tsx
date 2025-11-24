@@ -48,6 +48,30 @@ export const config: RouteObject[] = [
           </PrivateRouter>
         ),
       },
+      {
+        path: "/profile/replies",
+        element: (
+          <PrivateRouter>
+            <ProfilePage />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/profile/media",
+        element: (
+          <PrivateRouter>
+            <ProfilePage />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/profile/reposts",
+        element: (
+          <PrivateRouter>
+            <ProfilePage />
+          </PrivateRouter>
+        ),
+      },
 
       { path: "/search", element: <SearchPage /> },
 

@@ -14,4 +14,13 @@ export interface User {
   updated_at: string;
 }
 
+export interface UpdateUserBody {
+  _method?: "PUT";
+  name?: string;
+  username?: string;
+  bio?: string;
+  avatar?: File | null;
+  is_private?: boolean | number;
+}
+
 export type UserResponse = Omit<BaseResponse<User>, "message">;
