@@ -113,6 +113,8 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
         </button>
 
         <RepostMenu
+          repostedByAuth={ctx?.post.is_reposted_by_auth || false}
+          postId={ctx?.post.id!}
           isAuth={!!currentUser}
           onUnauthorizedClick={hide}
           className={`hover:text-green-500 !px-0 ${styles.interactionButton} ${

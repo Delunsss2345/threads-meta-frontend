@@ -164,7 +164,8 @@
     "search": "Search",
     "activity": "Activity",
     "profile": "Profile",
-    "removeColumn": "Remove column"
+    "removeColumn": "Remove column",
+    "unrepost": "Unrepost"
   },
   "notFound": {
     "title": "Not everything that disappears is missing, but this page truly is.",

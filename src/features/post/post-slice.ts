@@ -22,6 +22,7 @@ export interface PostsState {
   };
   continuePage: boolean;
 }
+
 const initialState: PostsState = {
   items: [],
   replies: [],
@@ -36,14 +37,24 @@ const initialState: PostsState = {
   },
   continuePage: true,
 };
+
+// Helper chuẩn hoá lỗi
+const parseError = (error: any): string => {
+  return (
+    error?.response?.data?.message ||
+    error?.message ||
+    error?.toString?.() ||
+    "Error"
+  );
+};
+
 export const getFeeds = createAsyncThunk<PostResponse>(
   "posts/feed",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await postApi.getFeeds();
-      return res;
+      return await postApi.getFeeds();
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -52,10 +63,9 @@ export const getRepost = createAsyncThunk<PostResponse, number>(
   "posts/reposts",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await postApi.getReposts(id);
-      return res;
+      return await postApi.getReposts(id);
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -64,37 +74,31 @@ export const postThreads = createAsyncThunk<CreatePostResponse, FormData>(
   "posts/threads",
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await postApi.postThread(payload);
-      return res;
-    } catch (error: any) {
-      console.log(error.message);
-      return rejectWithValue(error);
+      return await postApi.postThread(payload);
+    } catch (error) {
+      return rejectWithValue(parseError(error));
     }
   }
 );
 
 export const replyThreads = createAsyncThunk<
   CreatePostResponse,
-  {
-    id: number;
-    payload: FormData;
-  }
->("posts/reply", async (data, { rejectWithValue }) => {
+  { id: number; payload: FormData }
+>("posts/reply", async ({ id, payload }, { rejectWithValue }) => {
   try {
-    const res = await postApi.replyThread(data.id, data.payload);
-    return res;
-  } catch (error: any) {
-    return rejectWithValue(error);
+    return await postApi.replyThread(id, payload);
+  } catch (error) {
+    return rejectWithValue(parseError(error));
   }
 });
+
 export const loadMoreThreads = createAsyncThunk<PostResponse, number>(
   "posts/load-more",
   async (page = 2, { rejectWithValue }) => {
     try {
-      const res = await postApi.getFeeds(page);
-      return res;
+      return await postApi.getFeeds(page);
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -105,8 +109,8 @@ export const likePost = createAsyncThunk(
     try {
       await postApi.like(id);
       return { id };
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || "Error");
+    } catch (error) {
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -117,8 +121,8 @@ export const repostPost = createAsyncThunk(
     try {
       await postApi.repost(id);
       return { id };
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || "Error");
+    } catch (error) {
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -132,8 +136,8 @@ export const quotePost = createAsyncThunk(
     try {
       await postApi.quote(id, content);
       return { id };
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || "Error");
+    } catch (error) {
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -144,8 +148,8 @@ export const savePost = createAsyncThunk(
     try {
       await postApi.save(id);
       return { id };
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || "Error");
+    } catch (error) {
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -156,8 +160,8 @@ export const hidePost = createAsyncThunk(
     try {
       await postApi.hide(id);
       return { id };
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || "Error");
+    } catch (error) {
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -171,8 +175,8 @@ export const reportPost = createAsyncThunk(
     try {
       await postApi.report(id, reason);
       return { id };
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || "Error");
+    } catch (error) {
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -181,10 +185,9 @@ export const getReplies = createAsyncThunk(
   "posts/getReplies",
   async (id: number, { rejectWithValue }) => {
     try {
-      const res = await postApi.getReplies(id);
-      return res;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data || "Error");
+      return await postApi.getReplies(id);
+    } catch (error) {
+      return rejectWithValue(parseError(error));
     }
   }
 );
@@ -195,80 +198,83 @@ export const postsSlice = createSlice({
   reducers: {
     resetPosts: (state) => {
       state.items = [];
-      state.pagination = {
-        current_page: 1,
-        total: 0,
-        last_page: 1,
-      };
+      state.pagination = { current_page: 1, total: 0, last_page: 1 };
+      state.continuePage = true;
     },
   },
 
   extraReducers: (builder) => {
-    // get feed
+    //get feed
     builder.addCase(getFeeds.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
+
     builder.addCase(getFeeds.fulfilled, (state, action) => {
       state.loading = false;
       state.items = action.payload.data;
       state.pagination = action.payload.pagination;
     });
+
     builder.addCase(getFeeds.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
     });
-
-    //Load more
+    //load more
     builder.addCase(loadMoreThreads.pending, (state) => {
       state.error = null;
     });
 
     builder.addCase(loadMoreThreads.fulfilled, (state, action) => {
+      const { current_page, total } = action.payload.pagination;
+
       state.items.push(...action.payload.data);
       state.pagination = action.payload.pagination;
-      state.continuePage =
-        action.payload.pagination.current_page * PER_PAGE <
-        state.pagination.total;
+
+      state.continuePage = current_page * PER_PAGE < total;
     });
 
     builder.addCase(loadMoreThreads.rejected, (state, action) => {
       state.error = action.payload as string;
       state.continuePage = false;
     });
-
-    // reply thread
-    builder.addCase(replyThreads.pending, (state) => {
+    // reply threads
+    builder.addCase(replyThreads.pending, (state, action) => {
       state.error = null;
-    });
-    builder.addCase(replyThreads.fulfilled, (state, action) => {
       const id = action.meta.arg.id;
       const post = state.items.find((p) => p.id === id);
-      if (post) {
-        post.replies_count += 1;
-      }
-    });
-    builder.addCase(replyThreads.rejected, (state, action) => {
-      state.error = action.payload as string;
+      if (post) post.replies_count++;
     });
 
-    //like
-    builder.addCase(likePost.pending, (state) => {
-      state.error = null;
+    builder.addCase(replyThreads.rejected, (state, action) => {
+      state.error = action.payload as string;
+      const id = action.meta.arg.id;
+      const post = state.items.find((p) => p.id === id);
+      if (post) post.replies_count--;
     });
-    builder.addCase(likePost.fulfilled, (state, action) => {
-      const id = action.payload.id;
-      const post = state.items.find((p: PostItem) => p.id === id);
+
+    // like post
+    builder.addCase(likePost.pending, (state, action) => {
+      state.error = null;
+      const id = action.meta.arg;
+      const post = state.items.find((p) => p.id === id);
       if (post) {
         post.is_liked_by_auth = !post.is_liked_by_auth;
         post.likes_count += post.is_liked_by_auth ? 1 : -1;
       }
     });
+
     builder.addCase(likePost.rejected, (state, action) => {
       state.error = "Lỗi khi like";
+      const id = action.meta.arg;
+      const post = state.items.find((p) => p.id === id);
+      if (post) {
+        post.is_liked_by_auth = !post.is_liked_by_auth;
+        post.likes_count += post.is_liked_by_auth ? 1 : -1;
+      }
     });
 
-    //get replise
+    // get replies
     builder.addCase(getReplies.pending, (state) => {
       state.loadingRequest = true;
     });
@@ -278,11 +284,29 @@ export const postsSlice = createSlice({
       state.replies = action.payload.data;
     });
 
-    builder.addCase(getReplies.rejected, (state, action) => {
+    builder.addCase(getReplies.rejected, (state) => {
       state.loadingRequest = false;
       state.replies = [];
     });
 
+    // repost post
+    builder.addCase(repostPost.pending, (state, action) => {
+      state.error = null;
+      const id = action.meta.arg;
+      const post = state.items.find((p) => p.id === id);
+      if (post && !post.is_reposted_by_auth) post.reposts_and_quotes_count++;
+      else if (post && post.is_reposted_by_auth)
+        post.reposts_and_quotes_count--;
+    });
+
+    builder.addCase(repostPost.rejected, (state, action) => {
+      state.error = "Lỗi khi repost";
+      const id = action.meta.arg;
+      const post = state.items.find((p) => p.id === id);
+      if (post) post.reposts_and_quotes_count--;
+    });
+
+    // get repost
     builder.addCase(getRepost.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -290,7 +314,6 @@ export const postsSlice = createSlice({
 
     builder.addCase(getRepost.fulfilled, (state, action) => {
       state.loading = false;
-      console.log(action.payload.data[0].original_post);
       state.reposts = action.payload.data;
     });
 

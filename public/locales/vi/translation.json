@@ -164,7 +164,8 @@
     "search": "Tìm kiếm",
     "activity": "Hoạt động",
     "profile": "Trang cá nhân",
-    "removeColumn": "Gỡ cột"
+    "removeColumn": "Gỡ cột",
+    "unrepost": "Huỷ đăng lại"
   },
   "notFound": {
     "title": "Không phải cứ biến mất là mất tích, nhưng trang này thì mất tích thật rồi",
