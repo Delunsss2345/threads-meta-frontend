@@ -1,50 +1,78 @@
 import type { BaseResponse, MessageResponse, PaginationResponse } from "./api";
 import type { User } from "./user";
 
-export interface OriginalPost {
+export const ReplyPermission = {
+  EVERYONE: "everyone",
+  FOLLOWERS: "followers",
+  MENTIONS: "mentions",
+} as const;
+
+export type ReplyPermission =
+  (typeof ReplyPermission)[keyof typeof ReplyPermission];
+
+export const PostStatus = {
+  APPROVED: "approved",
+  PENDING: "pending",
+  DELETED: "deleted",
+} as const;
+
+export type PostStatus = (typeof PostStatus)[keyof typeof PostStatus];
+
+export interface BasePost {
   id: number;
   user_id: number;
   content: string;
   parent_id: number | null;
   original_post_id: number | null;
   is_quote: boolean;
-  reply_permission: "everyone" | "followers" | "mentions";
+  reply_permission: ReplyPermission;
   requires_reply_approval: boolean;
-  status: string;
+  status: PostStatus | string;
   is_ghost: boolean;
   ghost_expires_at: string | null;
   topic_id: number | null;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
+}
+
+export interface OriginalPost extends BasePost {
   user: User;
 }
 
-export interface PostItem {
-  id: number;
-  user_id: number;
-  content: string;
-  parent_id: number | null;
-  original_post_id: number | null;
-  is_quote: boolean;
-  reply_permission: "everyone" | "followers" | "mentions";
-  requires_reply_approval: boolean;
-  status: string;
-  is_ghost: boolean;
-  ghost_expires_at: string | null;
-  topic_id: number | null;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
+export interface PostItem extends BasePost {
   likes_count: number;
   replies_count: number;
   reposts_and_quotes_count: number;
   media_urls: string[];
   user: User;
+
   is_liked_by_auth?: boolean;
   is_saved_by_auth?: boolean;
   is_reposted_by_auth?: boolean;
+
   original_post: OriginalPost | null;
+}
+
+export interface ReplyUser {
+  id: number;
+  name: string;
+  username: string;
+  bio: string | null;
+  is_private: boolean;
+  verified: boolean;
+  created_at: string;
+  updated_at: string;
+  avatar_url: string | null;
+}
+
+export interface ReplyResponse extends BasePost {
+  status: PostStatus;
+  likes_count: number;
+  replies_count: number;
+  reposts_and_quotes_count: number;
+  media_urls: string[];
+  user: ReplyUser;
 }
 
 export interface PostResponse {
@@ -54,30 +82,33 @@ export interface PostResponse {
 }
 
 export type CreatePostResponse = BaseResponse<Omit<PostItem, "original_post">>;
-export type CreatePostBody = {
+
+export interface CreatePostBody {
   content: string;
   media: File[];
-};
+}
 
-export type CreatePostReplyBody = {
+export interface CreatePostReplyBody {
   content: string;
   media: File[];
-};
+}
 
-export type LikeData = {
+export interface LikeData {
   is_liked: boolean;
   likes_count: number;
-};
+}
 
-export type RepostData = {
+export interface RepostData {
   is_reposted: boolean;
   reposts_and_quotes_count: number;
-};
+}
 
-export type SaveData = {
+export interface SaveData {
   is_saved: boolean;
-};
+}
+
 export type LikePostResponse = BaseResponse<LikeData>;
 export type RepostPostResponse = BaseResponse<RepostData>;
 export type SavePostResponse = BaseResponse<SaveData>;
+
 export type PostHidden = MessageResponse;

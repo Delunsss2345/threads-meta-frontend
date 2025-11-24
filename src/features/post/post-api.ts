@@ -18,6 +18,9 @@ export const postApi = {
   replyThread: (id: number, payload: FormData) =>
     http.post(`/posts/${id}/reply`, payload),
 
+  getReplies : (id : number) => http.get<PostResponse>(`/posts/${id}/replies`),
+
+
   getThread: (id: number) => http.get<PostResponse>(`/posts/${id}`),
   like: (id: number) => http.post(`/posts/${id}/like`),
   repost: (id: number) => http.post(`/posts/${id}/repost`),
