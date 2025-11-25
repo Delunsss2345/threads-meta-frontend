@@ -14,6 +14,12 @@ export interface User {
   updated_at: string;
 }
 
+export interface UserSuggestion extends User {
+  is_following: boolean;
+  is_followed_by: boolean;
+  followers_count: number;
+}
+
 export interface UpdateUserBody {
   _method?: "PUT";
   name?: string;
@@ -22,5 +28,5 @@ export interface UpdateUserBody {
   avatar?: File | null;
   is_private?: boolean | number;
 }
-
+export type UserSuggestionResponse = BaseResponse<UserSuggestion[]>;
 export type UserResponse = Omit<BaseResponse<User>, "message">;

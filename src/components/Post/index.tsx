@@ -1,12 +1,11 @@
 import { AnimatePresence } from "framer-motion";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Repeat2 } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import "swiper/css";
 import { FreeMode } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { useAuth } from "@/features/auth/hook";
-import type { PostItem } from "@/types/post";
 import { formatTime } from "@/utils/format-time";
 import AvatarGroup from "../AvatarGroup";
 import { UserPreviewCard } from "../UserPreview";
@@ -18,9 +17,11 @@ import PostProvider from "./PostContext";
 const Post = ({
   post,
   onClick,
+  mode = "default",
 }: {
-  post: PostItem | any;
+  post: any;
   onClick?: () => void;
+  mode?: "default" | "repost";
 }) => {
   const [open, setOpen] = useState(false);
   const hoverTimer = useRef<any>(null);
@@ -38,7 +39,7 @@ const Post = ({
   }, []);
 
   const MenuButton = useMemo(() => {
-    const icon = <Ellipsis className="w-2 h-2" />;
+    const icon = <Ellipsis className="w-4 h-4" />;
     return username === user?.username ? (
       <MenuMe threadId={post.id} buttonActive={icon} />
     ) : (
@@ -76,20 +77,31 @@ const Post = ({
 
   const imageSlides = useMemo(() => {
     if (!Array.isArray(post.media_urls)) return null;
-    return post.media_urls.map((img, i) => (
+    return post.media_urls.map((img: string, i: number) => (
       <SwiperSlide key={i} style={{ width: 210 }}>
         <div
           className="rounded-lg overflow-hidden"
           style={{ width: 210, height: 280 }}
         >
-          <img src={img} className="w-full h-full object-cover" />
+          <img src={img} className="w-full h-full object-cover" alt="" />
         </div>
       </SwiperSlide>
     ));
   }, [post.media_urls]);
 
   return (
-    <div className="px-6 py-3 border-t border-b border-border cursor-pointer">
+    <div
+      className={`px-6 py-3 cursor-pointer ${
+        mode === "default" ? "border-t border-b border-border" : ""
+      }`}
+    >
+      {mode === "repost" && (
+        <div className="flex items-center gap-2 mb-2 text-muted-foreground text-xs">
+          <Repeat2 className="w-4 h-4" />
+          <span className="font-medium">{user.username} đã đăng lại</span>
+        </div>
+      )}
+
       <div
         onClick={onClick}
         className="grid [grid-template-columns:48px_minmax(0,1fr)] gap-3 w-full"
@@ -108,7 +120,7 @@ const Post = ({
               <span
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="font-semibold text-sm text-foreground truncate whitespace-nowrap"
+                className="font-semibold text-sm text-foreground truncate whitespace-nowrap relative"
               >
                 {username}
 
@@ -150,7 +162,7 @@ const Post = ({
           </div>
 
           {post.content && (
-            <p className="text-foreground text-sm leading-relaxed">
+            <p className="text-foreground text-sm leading-relaxed mt-1">
               {post.content}
             </p>
           )}

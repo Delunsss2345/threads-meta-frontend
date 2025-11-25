@@ -2,6 +2,7 @@ import { authSlice } from "@/features/auth";
 import { columnsSlice } from "@/features/column";
 import { modalSlice } from "@/features/modal";
 import { postsSlice } from "@/features/post";
+import { searchSlice } from "@/features/search";
 import type { AppDispatch, RootState } from "@/types/redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +40,7 @@ export const rootReducer = combineReducers({
   [columnsSlice.reducerPath]: columnsSlice.reducer,
   [modalSlice.reducerPath]: modalSlice.reducer,
   [postsSlice.reducerPath]: postsSlice.reducer,
+  [searchSlice.reducerPath]: searchSlice.reducer,
 });
 
 const store = configureStore({

@@ -1,9 +1,9 @@
 import AvatarGroup from "@/components/AvatarGroup";
 import { Button } from "@/components/ui/button";
-import type { FollowSuggestion } from "../types";
+import type { UserSuggestion } from "@/types/user";
 
 interface Props {
-  user: FollowSuggestion;
+  user: UserSuggestion;
 }
 
 export default function FollowSuggestionItem({ user }: Props) {
@@ -12,16 +12,17 @@ export default function FollowSuggestionItem({ user }: Props) {
       <div className="flex items-center gap-3">
         <AvatarGroup
           size={10}
-          url={user.avatar}
+          url={user.avatar_url ?? ""}
           fallBack={user.username.slice(0, 1)}
         />
 
         <div className="flex flex-col">
           <div className="flex items-center gap-1">
             <span className="font-semibold text-sm truncate max-w-[180px]">
-              {user.displayName}
+              {user.name}
             </span>
-            {user.isVerified && (
+
+            {user.verified && (
               <span>
                 <svg
                   aria-label="Đã xác minh"
@@ -39,16 +40,22 @@ export default function FollowSuggestionItem({ user }: Props) {
               </span>
             )}
           </div>
+
+          {/* Username */}
           <span className="text-xs text-muted-foreground">
             @{user.username}
           </span>
+
+          {/* Bio */}
           {user.bio && (
             <p className="text-xs text-muted-foreground mt-1 line-clamp-1 max-w-[200px]">
               {user.bio}
             </p>
           )}
+
+          {/* Followers */}
           <span className="mt-1 text-xs text-muted-foreground">
-            {user.followerCount} người theo dõi
+            {user.followers_count} người theo dõi
           </span>
         </div>
       </div>
