@@ -94,7 +94,7 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
             data-label="like"
             title="Like"
           >
-            {ctx?.post.like || 0}
+            {ctx?.post.likes_count || 0}
           </span>
         </button>
 
@@ -108,13 +108,12 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
             data-label="reply"
             title="Reply"
           >
-            {ctx?.post.message || 0}
+            {ctx?.post.replies_count || 0}
           </span>
         </button>
 
         <RepostMenu
-          repostedByAuth={ctx?.post.is_reposted_by_auth || false}
-          postId={ctx?.post.id!}
+          post={ctx?.post || undefined}
           isAuth={!!currentUser}
           onUnauthorizedClick={hide}
           className={`hover:text-green-500 !px-0 ${styles.interactionButton} ${
@@ -127,7 +126,7 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
             data-label="repost"
             title="Repost"
           >
-            {ctx?.post.repost || 0}
+            {ctx?.post.reposts_and_quotes_count || 0}
           </span>
         </RepostMenu>
 
@@ -144,7 +143,7 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
             data-label="share"
             title="Share"
           >
-            {ctx?.post.share || 0}
+            {ctx?.post.reposts_and_quotes_count || 0}
           </span>
         </ShareMenu>
       </div>

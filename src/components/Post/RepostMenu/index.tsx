@@ -1,6 +1,7 @@
 import MenuPopup from "@/components/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { repostPost } from "@/features/post";
+import { useModal } from "@/hooks/use-modal";
 import { cn } from "@/lib/utils";
 import type { AppDispatch } from "@/types/redux";
 import { MessageSquareQuote, Repeat2 } from "lucide-react";
@@ -9,17 +10,17 @@ import { isValidElement } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
+import QuoteModal from "../QuoteModal";
+import type { MappedPost } from "../type";
 
 const RepostMenu = ({
-  repostedByAuth,
-  postId,
+  post,
   children,
   className,
   isAuth,
   onUnauthorizedClick,
 }: {
-  repostedByAuth: boolean;
-  postId: number;
+  post: MappedPost | undefined;
   children: ReactNode;
   className?: string;
   isAuth: boolean;
@@ -27,12 +28,19 @@ const RepostMenu = ({
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
+  const { show, hide } = useModal();
 
-  const handleRepost = async (id: number) => {
+  const handleRepost = async () => {
+    if (!post) return;
+
     try {
-      await toast.promise(dispatch(repostPost(id)), {
-        loading: repostedByAuth ? "Đang hủy đăng lại..." : "Đang đăng lại...",
-        success: repostedByAuth ? "Đã hủy đăng lại" : "Đăng lại thành công",
+      await toast.promise(dispatch(repostPost(post.id)), {
+        loading: post.is_reposted_by_auth
+          ? "Đang hủy đăng lại..."
+          : "Đang đăng lại...",
+        success: post.is_reposted_by_auth
+          ? "Đã hủy đăng lại"
+          : "Đăng lại thành công",
         error: "Thao tác thất bại",
       });
     } catch (error) {
@@ -41,31 +49,43 @@ const RepostMenu = ({
   };
 
   const repostIcon = (
-    <Repeat2 className={cn(repostedByAuth ? "text-red-500" : "")} />
+    <Repeat2 className={cn(post?.is_reposted_by_auth && "text-red-500")} />
   );
 
-  const repostLabel = repostedByAuth
+  const repostLabel = post?.is_reposted_by_auth
     ? t("menu.unrepost") || "Hủy đăng lại"
     : t("menu.repost");
 
   const repostMenu = [
-    { icon: repostIcon, label: repostLabel, onclick: handleRepost },
+    {
+      icon: repostIcon,
+      label: repostLabel,
+      onClick: handleRepost,
+    },
     {
       icon: <MessageSquareQuote />,
       label: t("menu.quote"),
+      onClick: () => {
+        if (!post) return;
+        show(<QuoteModal post={post} onClose={hide} />);
+      },
     },
   ];
 
-  const styledChildren = isValidElement(children)
-    ? repostedByAuth && "text-red-500"
-    : children;
+  const styledChildren = isValidElement(children) ? (
+    <span className={cn(post?.is_reposted_by_auth && "text-red-500")}>
+      {children}
+    </span>
+  ) : (
+    children
+  );
 
   if (!isAuth) {
     return (
       <button
         className={cn(
           "flex items-center gap-1",
-          repostedByAuth && "text-red-500"
+          post?.is_reposted_by_auth && "text-red-500"
         )}
         onClick={onUnauthorizedClick}
       >
@@ -86,7 +106,7 @@ const RepostMenu = ({
       {repostMenu.map((item, i) => (
         <DropdownMenuItem
           key={i}
-          onClick={() => item.onclick?.(postId)}
+          onClick={item.onClick}
           className="flex items-center justify-between gap-2"
         >
           <span>{item.label}</span>

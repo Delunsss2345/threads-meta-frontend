@@ -184,7 +184,14 @@
     "profilePrivacyDesc": "If you switch to private, only followers can see your threads. Your replies will be visible to followers and individual profiles you reply to.",
     "public": "Công khai",
     "private": "Riêng tư",
-    "done": "Xong"
+    "done": "Xong",
+    "linkModalTitle": "Mối liên kết",
+    "linkTitlePlaceholder": "Tiêu đề (VD: Website)",
+    "linkUrlPlaceholder": "URL (VD: https://example.com)",
+    "addLink": "Thêm liên kết",
+    "yourLinks": "Liên kết của bạn",
+    "linkTitle": "Tiêu đề",
+    "linkUrl": "URL"
   },
   "loginCard": {
     "title": "Đăng nhập hoặc đăng ký Threads",

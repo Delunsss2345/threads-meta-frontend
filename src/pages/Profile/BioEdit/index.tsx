@@ -43,11 +43,10 @@ const BioEditModal = ({
       <div className="p-4">
         <Textarea
           ref={textAreaRef}
-          value={previewBio || bioText}
+          value={previewBio}
           onChange={(e) => setBioText(e.target.value)}
           className="w-full h-32 p-3  rounded-lg resize-none shadow-none focus:outline-none focus:ring-2 focus:ring-none border-0 "
           placeholder="Viết vài dòng về bản thân..."
-          // maxLength={150}
         />
         <p className="text-sm text-gray-500 mt-2 text-right">/150</p>
       </div>

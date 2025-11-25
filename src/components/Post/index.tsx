@@ -6,28 +6,31 @@ import { FreeMode } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { useAuth } from "@/features/auth/hook";
-import { formatTime } from "@/utils/format-time";
+import type { PostItem } from "@/types/post";
 import AvatarGroup from "../AvatarGroup";
 import { UserPreviewCard } from "../UserPreview";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
 import MenuMe from "./MenuMe";
 import PostProvider from "./PostContext";
+import Quote from "./QuotePost";
+import type { MappedPost } from "./type";
 
 const Post = ({
   post,
   onClick,
   mode = "default",
 }: {
-  post: any;
+  post: MappedPost;
   onClick?: () => void;
   mode?: "default" | "repost";
 }) => {
   const [open, setOpen] = useState(false);
   const hoverTimer = useRef<any>(null);
   const { user } = useAuth();
-  const username = post.user.username;
-  const time = formatTime(post.created_at);
+
+  const username = post.user?.username ?? "";
+  const time = post.created_at;
 
   const handleMouseEnter = useCallback(() => {
     hoverTimer.current = setTimeout(() => setOpen(true), 500);
@@ -47,47 +50,20 @@ const Post = ({
     );
   }, [username, user?.username, post.id]);
 
-  const postContextValue = useMemo(
-    () => ({
-      id: post.id,
-      avatar: post.user.avatar_url,
-      username,
-      name: post.user.name,
-      verified: post.user.verified,
-      time,
-      content: post.content,
-      images: post.media_urls,
-      like: post.likes_count,
-      message: post.replies_count,
-      repost: post.reposts_and_quotes_count,
-      share: 0,
-      is_liked_by_auth: post.is_liked_by_auth ?? false,
-      is_quoted_by_auth: post.is_quoted_by_auth ?? false,
-      is_reposted_by_auth: post.is_reposted_by_auth ?? false,
-      original_post: post.original_post
-        ? {
-            username: post.original_post.user.username,
-            content: post.original_post.content,
-            avatar: post.original_post.user.avatar_url,
-          }
-        : null,
-    }),
-    [post, username, time]
+  const imageSlides = useMemo(
+    () =>
+      post.media_urls.map((img: string, i: number) => (
+        <SwiperSlide key={i} style={{ width: 210 }}>
+          <div
+            className="rounded-lg overflow-hidden"
+            style={{ width: 210, height: 280 }}
+          >
+            <img src={img} className="w-full h-full object-cover" alt="" />
+          </div>
+        </SwiperSlide>
+      )),
+    [post.media_urls]
   );
-
-  const imageSlides = useMemo(() => {
-    if (!Array.isArray(post.media_urls)) return null;
-    return post.media_urls.map((img: string, i: number) => (
-      <SwiperSlide key={i} style={{ width: 210 }}>
-        <div
-          className="rounded-lg overflow-hidden"
-          style={{ width: 210, height: 280 }}
-        >
-          <img src={img} className="w-full h-full object-cover" alt="" />
-        </div>
-      </SwiperSlide>
-    ));
-  }, [post.media_urls]);
 
   return (
     <div
@@ -106,13 +82,11 @@ const Post = ({
         onClick={onClick}
         className="grid [grid-template-columns:48px_minmax(0,1fr)] gap-3 w-full"
       >
-        <div>
-          <AvatarGroup
-            size={10}
-            url={post.user.avatar_url ?? ""}
-            fallBack={username.slice(0, 2).toUpperCase()}
-          />
-        </div>
+        <AvatarGroup
+          size={10}
+          url={post.user?.avatar_url ?? ""}
+          fallBack={username.slice(0, 2).toUpperCase()}
+        />
 
         <div className="min-w-0">
           <div className="grid [grid-template-columns:1fr_max-content] gap-[6px] items-center">
@@ -125,7 +99,7 @@ const Post = ({
                 {username}
 
                 <AnimatePresence>
-                  {open && (
+                  {open && post.user && (
                     <UserPreviewCard
                       name={post.user.name}
                       username={post.user.username}
@@ -137,7 +111,7 @@ const Post = ({
                 </AnimatePresence>
               </span>
 
-              {post.user.verified && (
+              {post.user?.verified && (
                 <svg
                   aria-label="Đã xác minh"
                   role="img"
@@ -169,7 +143,7 @@ const Post = ({
         </div>
       </div>
 
-      {post?.media_urls && post.media_urls.length > 0 && (
+      {post.media_urls.length > 0 && (
         <div className="relative mt-3">
           <div className="ml-[12px] pl-[48px] overflow-visible w-auto">
             <Swiper
@@ -185,9 +159,10 @@ const Post = ({
           </div>
         </div>
       )}
+      {post.original_post && <Quote post={post.original_post as PostItem} />}
 
       <div className="mt-3">
-        <PostProvider post={postContextValue}>
+        <PostProvider post={post}>
           <div className="pl-[58px]">
             <InteractionBar mode="auto" />
           </div>

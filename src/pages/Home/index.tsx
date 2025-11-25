@@ -4,6 +4,7 @@ import PostForm from "@/components/Post/PostForm";
 import SkeletonPost from "@/components/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hook";
 import { getFeeds, loadMoreThreads, selectPostsState } from "@/features/post";
+import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";
 
@@ -74,7 +75,7 @@ const Home = () => {
           <Post
             onClick={() => handleNavigateToDetail(post.id)}
             key={post.id}
-            post={post}
+            post={mapPost(post)}
           />
         )}
         // computeItemKey={(index, post) => post.id}

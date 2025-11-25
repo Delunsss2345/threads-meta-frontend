@@ -275,11 +275,11 @@ export const authSlice = createSlice({
 
     builder.addCase(updateAuthForUser.pending, (state) => {
       state.loadingRequest = true;
-      console.log(state.loadingRequest);
     });
 
-    builder.addCase(updateAuthForUser.fulfilled, (state) => {
+    builder.addCase(updateAuthForUser.fulfilled, (state, action) => {
       state.loadingRequest = false;
+      state.currentUser = action.payload.data;
     });
 
     builder.addCase(updateAuthForUser.rejected, (state) => {

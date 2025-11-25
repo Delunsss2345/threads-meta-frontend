@@ -1,36 +1,8 @@
 import { createContext } from "react";
-
-export interface PostProps {
-  id: number;
-
-  avatar: string | null;
-  username: string;
-  name: string;
-
-  verified: boolean;
-
-  time: string;
-
-  content: string;
-  images: string[];
-
-  like: number;
-  message: number;
-  repost: number;
-  share: number;
-
-  original_post?: {
-    username: string;
-    content: string;
-    avatar: string | null;
-  } | null;
-  is_liked_by_auth?: boolean;
-  is_saved_by_auth?: boolean;
-  is_reposted_by_auth?: boolean;
-}
+import type { MappedPost } from "../type";
 
 export const PostContext = createContext<{
-  post: PostProps;
+  post: MappedPost;
 } | null>(null);
 
 const PostProvider = ({
@@ -38,7 +10,7 @@ const PostProvider = ({
   post,
 }: {
   children: React.ReactNode;
-  post: PostProps;
+  post: MappedPost;
 }) => {
   return (
     <PostContext.Provider value={{ post }}>{children}</PostContext.Provider>

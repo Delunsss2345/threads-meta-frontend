@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { Switch } from "@/components/ui/switch";
-import { selectAuthLoadingRequest, updateAuthForUser } from "@/features/auth";
+import { selectAuthState, updateAuthForUser } from "@/features/auth";
 import { useAuth } from "@/features/auth/hook";
 import { uploadApi } from "@/features/upload/upload-api";
 import type { AppDispatch } from "@/types/redux";
@@ -17,61 +17,102 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import BioEditModal from "../BioEdit";
+import LinksEditModal from "../LinksEditModal";
+import NameEdit from "../NameEdit";
 
 const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
-  const { loadingRequest } = useSelector(selectAuthLoadingRequest);
-  const [activeModal, setActiveModal] = useState<"main" | "bio" | "links">(
-    "main"
-  );
+  const { loadingRequest } = useSelector(selectAuthState);
+
+  const [activeModal, setActiveModal] = useState<
+    "main" | "name" | "bio" | "links"
+  >("main");
+
   const [previewAvatar, setPreviewAvatar] = useState<File | null>(null);
   const [previewBio, setPreviewBio] = useState<string | null | undefined>(
-    user.bio
+    user?.bio
   );
+  const [previewName, setPreviewName] = useState<string | null | undefined>(
+    user?.name
+  );
+
+  const [links, setLinks] = useState<{ title: string; url: string }[]>([]);
+  const [newLink, setNewLink] = useState<{ title: string; url: string }>({
+    title: "",
+    url: "",
+  });
+
   if (!user) return null;
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+
   const handleUploadFile = () => {
     inputRef.current?.click();
   };
+
   const handleSaveBio = () => {
     setActiveModal("main");
   };
 
-  // const handleAddLink = () => {
-  //   if (newLink.title && newLink.url) {
-  //     setLinks([...links, newLink]);
-  //     setNewLink({ title: "", url: "" });
-  //   }
-  // };
+  const handleSaveName = () => {
+    setActiveModal("main");
+  };
 
-  // const handleRemoveLink = (index) => {
-  //   setLinks(links.filter((_, i) => i !== index));
-  // };
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     const image = e.target.files?.[0];
     if (!image) return;
     setPreviewAvatar(image);
   };
 
+  const handleAddLink = () => {
+    if (!newLink.title.trim() || !newLink.url.trim()) return;
+    setLinks((prev) => [...prev, newLink]);
+    setNewLink({ title: "", url: "" });
+  };
+
+  const handleRemoveLink = (index: number) => {
+    setLinks((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleUpdateLink = (
+    index: number,
+    field: "title" | "url",
+    value: string
+  ) => {
+    setLinks((prev) => {
+      const updated = [...prev];
+      updated[index][field] = value;
+      return updated;
+    });
+  };
+
   const updateUser = async () => {
-    if (!previewBio) return;
     try {
       if (previewAvatar) {
         const avatar = new FormData();
-        avatar.append("avatar", previewAvatar || "");
-        await uploadApi.uploadAvatar(avatar || "");
+        avatar.append("avatar", previewAvatar);
+        await uploadApi.uploadAvatar(avatar);
       }
+
       const updateUserFormData = new FormData();
       updateUserFormData.append("_method", "PUT");
-      updateUserFormData.append("bio", previewBio);
-      const res = await dispatch(updateAuthForUser(updateUserFormData));
-      console.log(res);
+      if (previewBio !== undefined && previewBio !== null) {
+        updateUserFormData.append("bio", previewBio);
+      }
+      if (previewName !== undefined && previewName !== null) {
+        updateUserFormData.append("name", previewName);
+      }
+
+      await toast.promise(dispatch(updateAuthForUser(updateUserFormData)), {
+        success: "Cập nhập thành công",
+        error: "Có lỗi xảy ra",
+      });
+      onClose();
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message || "Có lỗi xảy ra");
     }
   };
 
@@ -85,17 +126,21 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                 <h3 className="font-semibold mb-1">
                   {t("profileSettings.name")}
                 </h3>
-                <div className="flex items-center gap-2 text-sm">
+                <div
+                  onClick={() => setActiveModal("name")}
+                  className="flex items-center gap-2 text-sm cursor-pointer"
+                >
                   {user.is_private ? (
                     <Lock className="w-4 h-4" />
                   ) : (
                     <Globe className="w-4 h-4" />
                   )}
                   <span>
-                    {user.name} (@{user.username})
+                    {previewName || user.name} (@{user.username})
                   </span>
                 </div>
               </div>
+
               <input
                 onChange={handleChangeImage}
                 ref={inputRef}
@@ -103,6 +148,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                 type="file"
                 className="hidden"
               />
+
               <MenuPopup
                 className={
                   "hover:!bg-transparent !p-0 size-14 cursor-pointer border rounded-full"
@@ -150,7 +196,10 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
 
             <Separator />
 
-            <div onClick={() => setActiveModal("bio")} className="p-4">
+            <div
+              onClick={() => setActiveModal("bio")}
+              className="p-4 cursor-pointer"
+            >
               <h3 className="font-semibold mb-1">{t("profileSettings.bio")}</h3>
               <p className="text-sm text-muted-foreground">
                 {previewBio ||
@@ -180,6 +229,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
             <Button
               variant="ghost"
               className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
+              onClick={() => setActiveModal("links")}
             >
               <span className="font-semibold">
                 {t("profileSettings.links")}
@@ -239,12 +289,34 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
             </div>
           </CardContent>
         )}
+
         {activeModal === "bio" && (
           <BioEditModal
             previewBio={previewBio || null}
             bioText={user.bio}
             setBioText={setPreviewBio}
             handleSaveBio={handleSaveBio}
+            setActiveModal={setActiveModal}
+          />
+        )}
+
+        {activeModal === "name" && (
+          <NameEdit
+            nameText={previewName ?? user.username}
+            setNameText={setPreviewName}
+            handleSaveName={handleSaveName}
+            setActiveModal={setActiveModal}
+          />
+        )}
+
+        {activeModal === "links" && (
+          <LinksEditModal
+            links={links}
+            newLink={newLink}
+            setNewLink={setNewLink}
+            handleAddLink={handleAddLink}
+            handleRemoveLink={handleRemoveLink}
+            handleUpdateLink={handleUpdateLink}
             setActiveModal={setActiveModal}
           />
         )}

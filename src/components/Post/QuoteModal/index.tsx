@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import UserAction from "@/components/UserAction";
 import { useAuth } from "@/features/auth/hook";
-import { replyThreads, selectPostsLoading } from "@/features/post";
+import { quotePost, selectPostsLoading } from "@/features/post";
 import type { AppDispatch } from "@/types/redux";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ import Footer from "../../ModalPopup/Footer";
 import Header from "../../ModalPopup/Header";
 import type { MappedPost } from "../type";
 
-function ReplyModal({
+function QuoteModal({
   post,
   onClose,
 }: {
@@ -29,20 +29,18 @@ function ReplyModal({
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const handleReply = async () => {
+  const handleQuote = async () => {
     if (!content || !post.id) return;
 
-    const data = new FormData();
-    data.append("content", content);
-
     await toast.promise(
-      dispatch(replyThreads({ id: post.id, payload: data })).unwrap(),
+      dispatch(quotePost({ id: post.id, content })).unwrap(),
       {
-        loading: "Đang bình luận...",
-        success: "Bình luận thành công",
+        loading: "Đang trích dẫn bài viết",
+        success: "Trích dẫn thành công",
         error: "Có lỗi xảy ra!",
       }
     );
+    post.reposts_and_quotes_count += 1;
 
     onClose();
     setContent("");
@@ -58,7 +56,7 @@ function ReplyModal({
         <CardContent className="p-4 pt-5">
           <div className="flex gap-3 mb-6">
             <div className="flex flex-col items-center">
-              <Avatar className="w-10 h-10 cursor-pointer">
+              <Avatar className="w-10 h-10">
                 <AvatarImage src={post.user?.avatar_url || undefined} />
                 <AvatarFallback>
                   {post.user?.username.slice(0, 2).toUpperCase()}
@@ -69,6 +67,7 @@ function ReplyModal({
             </div>
 
             <div className="flex-1 pt-1 space-y-2">
+              {/* Username + Time */}
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-sm">
                   {post.user?.username}
@@ -147,9 +146,9 @@ function ReplyModal({
 
         <Footer
           loading={loading}
-          loadingLabel="Đang bình luận"
-          onSubmit={handleReply}
-          label="Bình luận"
+          loadingLabel="Đang trích dẫn"
+          onSubmit={handleQuote}
+          label="Trích dẫn"
           content={content}
         />
       </Card>
@@ -157,4 +156,4 @@ function ReplyModal({
   );
 }
 
-export default ReplyModal;
+export default QuoteModal;

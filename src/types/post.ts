@@ -38,19 +38,20 @@ export interface BasePost {
 
 export interface OriginalPost extends BasePost {
   user: User;
+  media_urls: string[];
+  likes_count: number;
+  replies_count: number;
 }
 
 export interface PostItem extends BasePost {
+  media_urls: string[];
+  user: User;
   likes_count: number;
   replies_count: number;
   reposts_and_quotes_count: number;
-  media_urls: string[];
-  user: User;
-
   is_liked_by_auth?: boolean;
   is_saved_by_auth?: boolean;
   is_reposted_by_auth?: boolean;
-
   original_post: OriginalPost | null;
 }
 

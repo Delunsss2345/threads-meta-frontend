@@ -184,7 +184,14 @@
     "profilePrivacyDesc": "If you switch to private, only followers can see your threads. Your replies will be visible to followers and individual profiles you reply to.",
     "public": "Public",
     "private": "Private",
-    "done": "Done"
+    "done": "Done",
+    "linkModalTitle": "Links",
+    "linkTitlePlaceholder": "Title (e.g. Website)",
+    "linkUrlPlaceholder": "URL (e.g. https://example.com)",
+    "addLink": "Add link",
+    "yourLinks": "Your links",
+    "linkTitle": "Title",
+    "linkUrl": "URL"
   },
   "loginCard": {
     "title": "Log in or sign up for Threads",

@@ -1,6 +1,7 @@
 import Post from "@/components/Post";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { selectPostsState } from "@/features/post";
+import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import { useSelector } from "react-redux";
 
@@ -14,9 +15,16 @@ const ProfileReposts = () => {
           <Spinner />
         </div>
       ) : (
-        reposts.map((repost: PostItem) => (
-          <Post mode="repost" key={repost.id} post={repost.original_post} />
-        ))
+        reposts.map(
+          (repost: PostItem) =>
+            repost?.original_post && (
+              <Post
+                mode="repost"
+                key={repost.id}
+                post={mapPost(repost.original_post as PostItem)}
+              />
+            )
+        )
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import AvatarGroup from "@/components/AvatarGroup";
+import { VerifiedIcon } from "@/components/Icon/VerifiedIcon";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/features/auth/hook"; // <-- thêm
@@ -36,8 +37,19 @@ const Profile = () => {
       <div className="h-full px-6 pt-6 mb-10">
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="mb-1 text-2xl font-bold">{user.name}</h1>
-            <p className="text-gray-400">{user.username}</p>
+            <div className="flex items-center gap-1">
+              <h1 className="mb-1 text-2xl font-bold">{user.name}</h1>
+
+              {user.verified && (
+                <VerifiedIcon className="size-4 text-[#0095F6]" />
+              )}
+            </div>
+
+            <p className="text-gray-400">@{user.username}</p>
+
+            {user.bio && (
+              <p className="mt-2 text-sm text-muted-foreground">{user.bio}</p>
+            )}
           </div>
 
           <AvatarGroup
@@ -76,7 +88,7 @@ const Profile = () => {
           {t("profile.editProfile")}
         </Button>
 
-        <Tabs defaultValue={activeTab} className="!mb-0">
+        <Tabs defaultValue={activeTab} className="mb-0!">
           <TabsList className="w-full h-auto mb-0 p-0 bg-transparent border-b rounded-none border-border/60">
             {[
               { value: "", label: t("profile.thread") },
@@ -96,9 +108,9 @@ const Profile = () => {
                   }
                 }}
                 className="flex-1 py-2 text-sm font-medium border-0 rounded-none 
-        text-muted-foreground transition-all duration-150 !shadow-none
-        data-[state=active]:text-foreground data-[state=active]:border-b-[1px] 
-        data-[state=active]:!border-b-accent-foreground hover:text-foreground/90"
+              text-muted-foreground transition-all duration-150 shadow-none!
+              data-[state=active]:text-foreground data-[state=active]:border-b 
+              data-[state=active]:border-b-accent-foreground! hover:text-foreground/90"
               >
                 {tab.label}
               </TabsTrigger>
