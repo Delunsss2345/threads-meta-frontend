@@ -28,6 +28,17 @@ export const authApi = {
       },
     }),
 
+  resendVerifyEmail: (payload: ValidateTokenBody) =>
+    http.post("/auth/resend-verify-email", undefined, {
+      headers: {
+        "x-origin": import.meta.env.VITE_BASE_URL,
+        Authorization: `Bearer ${payload.token}`,
+      },
+    }),
+
+  verifyEmail: (payload: ValidateTokenBody) =>
+    http.post("/auth/verify-email", payload),
+
   validateEmail: (payload: ValidateEmail) =>
     http.post<ValidateEmailResponse>("/auth/validate/email", payload),
   validateRestToken: (payload: ValidateTokenBody) =>

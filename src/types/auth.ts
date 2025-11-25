@@ -44,6 +44,7 @@ export type RestPasswordBody = {
   password: string;
   password_confirmation: string;
 };
+
 export type RegisterResponse = BaseResponse<RegisterData>;
 export type LoginResponse = BaseResponse<LoginData>;
 export type ValidateEmailResponse = BaseResponse<{

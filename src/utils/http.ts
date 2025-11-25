@@ -16,8 +16,11 @@ export const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("accessToken");
 
-  const isPublicApi = config.url?.startsWith("/auth/login");
-
+  const isPublicApi =
+    config.url?.startsWith("/auth/login") ||
+    config.url?.startsWith("/auth/resend-verify-email") ||
+    config.url?.startsWith("/auth/register"); 
+    
   if (!isPublicApi && accessToken) {
     config.headers.set("Authorization", `Bearer ${accessToken}`);
   }

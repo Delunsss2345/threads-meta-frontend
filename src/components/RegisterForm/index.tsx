@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "../ui/shadcn-io/spinner";
 
 interface RegisterFormProps {
   onRegister: (values: RegisterSchemaBodyType) => void;
@@ -32,11 +33,15 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
   });
   const navigate = useNavigate();
 
+  const handleSubmit = async (values: RegisterSchemaBodyType) => {
+    await onRegister(values);
+    form.reset();
+  };
   useDebounceInput<RegisterSchemaBodyType>({ form });
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onRegister)}
+        onSubmit={form.handleSubmit(handleSubmit)}
         className="flex flex-col items-center space-y-3"
         noValidate
       >
@@ -106,7 +111,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           type="submit"
           className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >
-          {t("auth.register")}
+          {loggingIn ? <Spinner /> : t("auth.register")}
         </Button>
 
         {/* Link */}

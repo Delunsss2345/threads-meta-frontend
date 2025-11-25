@@ -78,6 +78,8 @@ export const logout = createAsyncThunk<void>(
     try {
       await authApi.logout();
     } catch (error: any) {
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
       return rejectWithValue(error.message ?? "Đăng xuất có sự cố");
     } finally {
       localStorage.removeItem("refreshToken");
@@ -130,6 +132,30 @@ export const updateAuthForUser = createAsyncThunk<any, FormData>(
   }
 );
 
+export const verifyEmail = createAsyncThunk<void, ValidateTokenBody>(
+  "auth/verifyEmail",
+  async (payload, { rejectWithValue }) => {
+    try {
+      return await authApi.verifyEmail(payload);
+    } catch (error: any) {
+      return rejectWithValue(error.message ?? "Liên kết hết hạn");
+    }
+  }
+);
+
+export const resendVerifyEmail = createAsyncThunk<any, ValidateTokenBody>(
+  "auth/resendVerifyEmail",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await authApi.resendVerifyEmail(payload);
+      console.log(res);
+      return res;
+    } catch (error: any) {
+      return rejectWithValue(error.message ?? "Liên kết hết hạn");
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -169,9 +195,6 @@ export const authSlice = createSlice({
       state.loggingIn = false;
       state.currentUser = action.payload.data.user;
       state.accessToken = action.payload.data.access_token;
-
-      localStorage.setItem("accessToken", action.payload.data.access_token);
-      localStorage.setItem("refreshToken", action.payload.data.refresh_token);
     });
 
     builder.addCase(register.rejected, (state) => {
@@ -210,6 +233,8 @@ export const authSlice = createSlice({
       state.loggingIn = false;
       state.currentUser = null;
       state.accessToken = null;
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     });
 
     //forgot password
@@ -250,7 +275,7 @@ export const authSlice = createSlice({
 
     builder.addCase(updateAuthForUser.pending, (state) => {
       state.loadingRequest = true;
-      console.log(state.loadingRequest) ; 
+      console.log(state.loadingRequest);
     });
 
     builder.addCase(updateAuthForUser.fulfilled, (state) => {
@@ -258,6 +283,28 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(updateAuthForUser.rejected, (state) => {
+      state.loadingRequest = false;
+    });
+
+    builder.addCase(verifyEmail.pending, (state) => {
+      state.loadingRequest = true;
+    });
+    builder.addCase(verifyEmail.fulfilled, (state) => {
+      state.loadingRequest = false;
+    });
+    builder.addCase(verifyEmail.rejected, (state) => {
+      state.loadingRequest = false;
+    });
+
+    builder.addCase(resendVerifyEmail.pending, (state) => {
+      state.loadingRequest = true;
+    });
+
+    builder.addCase(resendVerifyEmail.fulfilled, (state) => {
+      state.loadingRequest = false;
+    });
+
+    builder.addCase(resendVerifyEmail.rejected, (state) => {
       state.loadingRequest = false;
     });
   },
