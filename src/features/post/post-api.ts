@@ -4,6 +4,7 @@ import type {
   CreatePostResponse,
   PostResponse,
   ReplyResponse,
+  SinglePostResponse,
 } from "@/types/post";
 import { http } from "@/utils/http";
 
@@ -29,7 +30,7 @@ export const postApi = {
       `/users/${id}/reposts?page=${page}&per_page=${PER_PAGE}`
     ),
 
-  getThread: (id: number) => http.get<PostResponse>(`/posts/${id}`),
+  getThread: (id: number) => http.get<SinglePostResponse>(`/posts/${id}`),
   like: (id: number) => http.post(`/posts/${id}/like`),
   repost: (id: number) => http.post(`/posts/${id}/repost`),
   quote: (id: number, content: string) =>

@@ -1,7 +1,7 @@
 import LoadingFetch from "@/components/LoadingFetch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { getReplies, selectPostsState } from "@/features/post";
+import { getReplies, getSinglePost, selectPostsState } from "@/features/post";
 import type { PostItem, ReplyData } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -22,35 +22,46 @@ const PostDetail = () => {
     items: posts,
     loadingRequest,
     replies,
+    singlePost,
+    error,
   } = useSelector(selectPostsState);
   const dispatch = useDispatch<AppDispatch>();
 
   const postDetail = posts.find((post: PostItem) => post.id === postId);
 
   useEffect(() => {
-    if (id) dispatch(getReplies(postId));
-  }, [id, postId, dispatch]);
+    if (!id) return;
 
-  if (!id) return <NotFound />;
-  if (!postDetail) return null;
+    if (!postDetail) {
+      dispatch(getSinglePost(postId));
+    }
+
+    dispatch(getReplies(postId));
+  }, [id, postId, dispatch, postDetail]);
+
+  if (!id || isNaN(postId) || error) return <NotFound />;
+  if (!postDetail && !singlePost && postId !== singlePost?.id)
+    return <LoadingFetch />;
 
   return (
     <div className="px-6 py-2">
       <Card className="border-0 shadow-none bg-primary-foreground rounded-none">
         <CardContent className="space-y-3 p-0!">
           <Header
-            username={postDetail.user.username}
-            timeAgo={postDetail.time_ago}
-            avatarUrl={postDetail.user.avatar_url}
+            username={postDetail?.user.username ?? singlePost?.user.username}
+            timeAgo={postDetail?.time_ago ?? singlePost?.time_ago}
+            avatarUrl={
+              postDetail?.user.avatar_url ?? singlePost?.user.avatar_url
+            }
             hasTranslate={true}
           />
 
-          <QuoteCard content={postDetail.content} />
+          <QuoteCard content={postDetail?.content ?? singlePost?.content} />
           <EngagementStats
-            likes={postDetail.likes_count}
-            comments={postDetail.replies_count}
-            reposts={postDetail.quotes_count}
-            shares={postDetail.shares_count}
+            likes={postDetail?.likes_count ?? singlePost?.likes_count}
+            comments={postDetail?.replies_count ?? singlePost?.replies_count}
+            reposts={postDetail?.quotes_count ?? singlePost?.quotes_count}
+            shares={postDetail?.shares_count ?? singlePost?.shares_count}
           />
 
           <Separator />

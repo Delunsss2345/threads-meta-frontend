@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 type FavoriteIconProps = {
   size?: number | string;
   color?: string;
@@ -7,10 +9,12 @@ type FavoriteIconProps = {
 
 const FavoriteIcon = ({
   size = 30,
-  color = "currentColor",
+  color = "#ccc",
   className,
   active = false,
 }: FavoriteIconProps) => {
+  const location = useLocation();
+
   return (
     <svg
       aria-label="Thông báo"
@@ -19,8 +23,8 @@ const FavoriteIcon = ({
       width={size}
       height={size}
       className={className}
-      fill={active ? color : "none"}
-      stroke={active ? color : "#ccc"}
+      fill={`${location.pathname === "/activity" ? "#333" : "transparent"}`}
+      stroke={`${location.pathname === "/activity" ? "#333" : color}`}
     >
       <title>Thông báo</title>
       <path

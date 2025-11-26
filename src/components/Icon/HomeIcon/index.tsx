@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 type HomeIconProps = {
   size?: number | string;
   color?: string;
@@ -11,6 +13,7 @@ const HomeIcon = ({
   className,
   active,
 }: HomeIconProps) => {
+  const location = useLocation();
   return (
     <svg
       aria-label="Trang chủ"
@@ -18,8 +21,8 @@ const HomeIcon = ({
       viewBox="0 0 26 26"
       width={size}
       height={size}
-      fill="none"
-      stroke={color}
+      fill={`${location.pathname === "/" ? "#333" : "transparent"}`}
+      stroke={`${location.pathname === "/" ? "#333" : color}`}
       className={className}
     >
       <title>Trang chủ</title>

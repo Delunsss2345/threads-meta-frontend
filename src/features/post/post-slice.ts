@@ -15,6 +15,7 @@ export interface PostsState {
   loading: boolean;
   loadingRequest: boolean;
   error: string | null;
+  singlePost: PostItem | null;
   pagination: {
     current_page: number;
     total: number;
@@ -30,6 +31,7 @@ const initialState: PostsState = {
   loading: false,
   loadingRequest: false,
   error: null,
+  singlePost: null,
   pagination: {
     current_page: 1,
     total: 0,
@@ -38,7 +40,6 @@ const initialState: PostsState = {
   continuePage: true,
 };
 
-// Helper chuẩn hoá lỗi
 const parseError = (error: any): string => {
   return (
     error?.response?.data?.message ||
@@ -192,6 +193,17 @@ export const getReplies = createAsyncThunk(
   }
 );
 
+export const getSinglePost = createAsyncThunk(
+  "posts/getSinglePost",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      return await postApi.getThread(id);
+    } catch (error) {
+      return rejectWithValue(parseError(error));
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -318,6 +330,21 @@ export const postsSlice = createSlice({
     });
 
     builder.addCase(getRepost.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+
+    // get single post
+    builder.addCase(getSinglePost.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getSinglePost.fulfilled, (state, action) => {
+      state.loading = false;
+      state.singlePost = action.payload.data;
+    });
+
+    builder.addCase(getSinglePost.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
     });

@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 type UserIconProps = {
   size?: number | string;
   color?: string;
@@ -7,10 +9,12 @@ type UserIconProps = {
 
 const UserIcon = ({
   size = 24,
-  color = "currentColor",
+  color = "#ccc",
   className,
   active = false,
 }: UserIconProps) => {
+  const location = useLocation();
+
   return (
     <svg
       aria-label="Trang cá nhân"
@@ -19,8 +23,8 @@ const UserIcon = ({
       width={size}
       height={size}
       className={className}
-      fill={active ? color : "none"}
-      stroke={active ? color : "#ccc"}
+      fill={`${location.pathname === "/profile" ? "#333" : "transparent"}`}
+      stroke={`${location.pathname === "/profile" ? "#333" : color}`}
     >
       <title>Trang cá nhân</title>
       <circle cx="13" cy="7.25" r="4" strokeWidth="2.5" />

@@ -44,9 +44,12 @@ export const config: RouteObject[] = [
     element: <DefaultLayout />,
     children: [
       { index: true, element: <Home /> },
-
       {
-        path: "/profile",
+        path: "@:username",
+        element: <ProfileDetail />,
+      },
+      {
+        path: "profile",
         element: (
           <PrivateRouter>
             <ProfilePage />
@@ -54,7 +57,7 @@ export const config: RouteObject[] = [
         ),
       },
       {
-        path: "/profile/replies",
+        path: "profile/replies",
         element: (
           <PrivateRouter>
             <ProfilePage />
@@ -62,7 +65,7 @@ export const config: RouteObject[] = [
         ),
       },
       {
-        path: "/profile/media",
+        path: "profile/media",
         element: (
           <PrivateRouter>
             <ProfilePage />
@@ -70,7 +73,7 @@ export const config: RouteObject[] = [
         ),
       },
       {
-        path: "/profile/reposts",
+        path: "profile/reposts",
         element: (
           <PrivateRouter>
             <ProfilePage />
@@ -78,13 +81,13 @@ export const config: RouteObject[] = [
         ),
       },
 
-      { path: "/search", element: <SearchPage /> },
+      { path: "search", element: <SearchPage /> },
 
-      { path: "/@:username/post/:id", element: <PostDetail /> },
-      { path: "/post/:id", element: <PostDetail /> },
+      { path: "@:username/post/:id", element: <PostDetail /> },
+      { path: "post/:id", element: <PostDetail /> },
 
       {
-        path: "/activity",
+        path: "activity",
         element: (
           <PrivateRouter>
             <ActivityPage />
@@ -92,13 +95,13 @@ export const config: RouteObject[] = [
         ),
       },
 
-      { path: "/liked", element: <Liked /> },
-      { path: "/saved", element: <Saved /> },
-      { path: "/following", element: <Following /> },
-      { path: "/settings", element: <SettingsPage /> },
+      { path: "liked", element: <Liked /> },
+      { path: "saved", element: <Saved /> },
+      { path: "following", element: <Following /> },
+      { path: "settings", element: <SettingsPage /> },
 
       {
-        path: "/settings",
+        path: "settings",
         element: <SettingsLayout />,
         children: [
           { path: "privacy", element: <PrivacyPage /> },
@@ -106,11 +109,6 @@ export const config: RouteObject[] = [
           { path: "account", element: <Account /> },
           { path: "account_status", element: <AccountStatus /> },
         ],
-      },
-
-      {
-        path: "/:username",
-        element: <ProfileDetail />,
       },
     ],
   },

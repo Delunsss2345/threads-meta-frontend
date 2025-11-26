@@ -107,7 +107,7 @@ export interface RepostData {
 export interface SaveData {
   is_saved: boolean;
 }
-
+export type SinglePostResponse = BaseResponse<PostItem>;
 export type LikePostResponse = BaseResponse<LikeData>;
 export type RepostPostResponse = BaseResponse<RepostData>;
 export type SavePostResponse = BaseResponse<SaveData>;
