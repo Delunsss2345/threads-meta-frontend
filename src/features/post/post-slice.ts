@@ -6,7 +6,8 @@ import type {
   ReplyData,
 } from "@/types/post";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postApi } from "./post-api";
+import { postApi } from "../../services/post-api";
+import { createInteraction } from "./helper";
 
 export interface PostsState {
   items: PostItem[];
@@ -216,7 +217,6 @@ export const postsSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    //get feed
     builder.addCase(getFeeds.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -232,7 +232,7 @@ export const postsSlice = createSlice({
       state.loading = false;
       state.error = action.payload as string;
     });
-    //load more
+    // Load more
     builder.addCase(loadMoreThreads.pending, (state) => {
       state.error = null;
     });
@@ -250,43 +250,55 @@ export const postsSlice = createSlice({
       state.error = action.payload as string;
       state.continuePage = false;
     });
-    // reply threads
-    builder.addCase(replyThreads.pending, (state, action) => {
-      state.error = null;
-      const id = action.meta.arg.id;
-      const post = state.items.find((p) => p.id === id);
-      if (post) post.replies_count++;
-    });
 
-    builder.addCase(replyThreads.rejected, (state, action) => {
-      state.error = action.payload as string;
-      const id = action.meta.arg.id;
-      const post = state.items.find((p) => p.id === id);
-      if (post) post.replies_count--;
-    });
-
-    // like post
-    builder.addCase(likePost.pending, (state, action) => {
-      state.error = null;
-      const id = action.meta.arg;
-      const post = state.items.find((p) => p.id === id);
-      if (post) {
+    // like
+    createInteraction(
+      builder,
+      likePost,
+      (action: { meta: { arg: number | string } }) => action.meta.arg,
+      (post: PostItem) => {
         post.is_liked_by_auth = !post.is_liked_by_auth;
         post.likes_count += post.is_liked_by_auth ? 1 : -1;
       }
-    });
+    );
 
-    builder.addCase(likePost.rejected, (state, action) => {
-      state.error = "Lỗi khi like";
-      const id = action.meta.arg;
-      const post = state.items.find((p) => p.id === id);
-      if (post) {
-        post.is_liked_by_auth = !post.is_liked_by_auth;
-        post.likes_count += post.is_liked_by_auth ? 1 : -1;
+    // save post
+    createInteraction(
+      builder,
+      savePost,
+      (action: { meta: { arg: number | string } }) => action.meta.arg,
+      (post: PostItem) => {
+        post.is_saved_by_auth = !post.is_saved_by_auth;
       }
-    });
+    );
 
-    // get replies
+    // reply post
+    createInteraction(
+      builder,
+      replyThreads,
+      (action: { meta: { arg: { id: number } } }) => action.meta.arg.id,
+      (post: PostItem) => {
+        post.replies_count++;
+      },
+      (post: PostItem) => {
+        post.replies_count--;
+      }
+    );
+
+    // respost post
+    createInteraction(
+      builder,
+      repostPost,
+      (action: { meta: { arg: number | string } }) => action.meta.arg,
+      (post: PostItem) => {
+        !post.is_reposted_by_auth
+          ? post.reposts_and_quotes_count++
+          : post.reposts_and_quotes_count--;
+        post.is_reposted_by_auth = !post.is_reposted_by_auth;
+      }
+    );
+
+    //Get replies
     builder.addCase(getReplies.pending, (state) => {
       state.loadingRequest = true;
     });
@@ -301,24 +313,7 @@ export const postsSlice = createSlice({
       state.replies = [];
     });
 
-    // repost post
-    builder.addCase(repostPost.pending, (state, action) => {
-      state.error = null;
-      const id = action.meta.arg;
-      const post = state.items.find((p) => p.id === id);
-      if (post && !post.is_reposted_by_auth) post.reposts_and_quotes_count++;
-      else if (post && post.is_reposted_by_auth)
-        post.reposts_and_quotes_count--;
-    });
-
-    builder.addCase(repostPost.rejected, (state, action) => {
-      state.error = "Lỗi khi repost";
-      const id = action.meta.arg;
-      const post = state.items.find((p) => p.id === id);
-      if (post) post.reposts_and_quotes_count--;
-    });
-
-    // get repost
+    //Get repost list
     builder.addCase(getRepost.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -334,11 +329,12 @@ export const postsSlice = createSlice({
       state.error = action.payload as string;
     });
 
-    // get single post
+    //Get single post
     builder.addCase(getSinglePost.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
+
     builder.addCase(getSinglePost.fulfilled, (state, action) => {
       state.loading = false;
       state.singlePost = action.payload.data;

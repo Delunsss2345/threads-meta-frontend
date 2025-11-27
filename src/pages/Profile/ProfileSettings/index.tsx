@@ -8,7 +8,7 @@ import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { Switch } from "@/components/ui/switch";
 import { selectAuthState, updateAuthForUser } from "@/features/auth";
 import { useAuth } from "@/features/auth/hook";
-import { uploadApi } from "@/features/upload/upload-api";
+import { uploadApi } from "@/services/upload-api";
 import type { AppDispatch } from "@/types/redux";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { ChevronRight, Globe, Lock } from "lucide-react";

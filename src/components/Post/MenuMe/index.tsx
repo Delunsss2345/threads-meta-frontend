@@ -1,7 +1,7 @@
 import MenuPopup from "@/components/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/features/auth/hook";
-import { postApi } from "@/features/post/post-api";
+import { postApi } from "@/services/post-api";
 import {
   Bookmark,
   EyeOff,

@@ -1,6 +1,6 @@
 import type { UserSuggestion, UserSuggestionResponse } from "@/types/user";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { searchApi } from "./search-api";
+import { searchApi } from "../../services/search-api";
 
 import { createSlice } from "@reduxjs/toolkit";
 

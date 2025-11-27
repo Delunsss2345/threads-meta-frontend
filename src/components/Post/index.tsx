@@ -46,7 +46,12 @@ const Post = ({
     return username === user?.username ? (
       <MenuMe threadId={post.id} buttonActive={icon} />
     ) : (
-      <Menu buttonActive={icon} />
+      <Menu
+        username={username}
+        userId={post.user?.id ?? 0}
+        postId={post.id}
+        buttonActive={icon}
+      />
     );
   }, [username, user?.username, post.id]);
 

@@ -115,7 +115,15 @@
     "signUpDesc": "Join Threads to share ideas, ask questions, post spontaneous thoughts and more.",
     "loginTitle": "Log in to Threads",
     "loginToContinue": "Login to continue",
-    "joinThreads": "Join Threads to share thoughts, find out what's going on, follow your people and more."
+    "joinThreads": "Join Threads to share thoughts, find out what's going on, follow your people and more.",
+    "anonymous": "anonymous",
+    "cancel": "Cancel",
+    "blockBtn": "Block",
+    "deleteBtn": "Delete",
+    "blockTitle": "Block {{name}}?",
+    "deleteTitle": "Are you sure you want to delete this post?",
+    "blockDesc": "{{name}} will no longer be able to find your profile or content.They will not see your replies on your posts.They also won’t be notified that you blocked them.",
+    "deleteDesc": "Once you delete this post, it cannot be restored."
   },
   "footer": {
     "copyright": "© 2025",

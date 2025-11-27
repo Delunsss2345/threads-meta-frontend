@@ -115,7 +115,18 @@
     "signUpDesc": "Tham gia Threads để chia sẻ ý tưởng, đặt câu hỏi, đăng những suy nghĩ bất chợt và hơn thế nữa.",
     "loginTitle": "Đăng nhập vào Threads",
     "loginToContinue": "Đăng nhập để tiếp tục",
-    "joinThreads": "Tham gia Threads để chia sẻ suy nghĩ, tìm hiểu những gì đang diễn ra, theo dõi mọi người và hơn thế nữa."
+    "joinThreads": "Tham gia Threads để chia sẻ suy nghĩ, tìm hiểu những gì đang diễn ra, theo dõi mọi người và hơn thế nữa.",
+    "anonymous": "anonymous",
+
+    "cancel": "Hủy",
+    "blockBtn": "Chặn",
+    "deleteBtn": "Xóa",
+
+    "blockTitle": "Chặn {{name}}?",
+    "deleteTitle": "Bạn có chắc muốn xóa bài này?",
+
+    "blockDesc": "{{name}} sẽ không thể tìm thấy trang cá nhân hay nội dung của bạn.Sẽ không có ai nhìn thấy câu trả lời của họ cho bài viết của bạn.Họ cũng không được thông báo là bạn đã chặn họ.",
+    "deleteDesc": "Nếu xóa bài viết này, bạn sẽ không khôi phục được nữa."
   },
   "footer": {
     "copyright": "© 2025",

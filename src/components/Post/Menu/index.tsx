@@ -1,6 +1,8 @@
 import MenuPopup from "@/components/MenuPopup";
+import ModalSmall from "@/components/ModalSmall";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/features/auth/hook";
+import { useModal } from "@/hooks/use-modal";
 import {
   BellOff,
   Bookmark,
@@ -13,9 +15,20 @@ import {
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
-const Menu = ({ buttonActive }: { buttonActive: ReactNode }) => {
+const Menu = ({
+  username,
+  userId,
+  postId,
+  buttonActive,
+}: {
+  username: string;
+  userId: number;
+  postId: number;
+  buttonActive: ReactNode;
+}) => {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
+  const { show, hide } = useModal();
   const items = [
     { label: t("menu.addToFeed"), isHeader: true, isAuth: true },
     { icon: Bookmark, label: t("menu.save"), isAuth: true },
@@ -27,6 +40,18 @@ const Menu = ({ buttonActive }: { buttonActive: ReactNode }) => {
       label: t("menu.block"),
       className: "text-destructive hover:bg-destructive/10",
       isAuth: true,
+      onclick: (e: any) => {
+        e.stopPropagation();
+        show(
+          <ModalSmall
+            username={username}
+            userId={userId}
+            mode="block"
+            onCancel={hide}
+            onConfirm={hide}
+          />
+        );
+      },
     },
     {
       icon: Shield,
@@ -52,6 +77,7 @@ const Menu = ({ buttonActive }: { buttonActive: ReactNode }) => {
           className={`flex items-center gap-2 ${item.className || ""} ${
             isAuthenticated !== item.isAuth ? "hidden" : ""
           }`}
+          onClick={item?.onclick}
         >
           {item.icon && <item.icon className="w-4 h-4" />}
           <span>{item.label}</span>

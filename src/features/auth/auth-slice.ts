@@ -10,8 +10,8 @@ import type {
 } from "@/types/auth";
 import type { User, UserResponse } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { userApi } from "../user/user-api";
-import { authApi } from "./auth-api";
+import { authApi } from "../../services/auth-api";
+import { userApi } from "../../services/user-api";
 
 export type AuthState = {
   currentUser: User | null;
