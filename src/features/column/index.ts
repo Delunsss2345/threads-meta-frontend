@@ -1,2 +1,2 @@
-export * from "./column-slice";
-export * from "./selector";
+export * from "./selectors";
+export * from "./slice";

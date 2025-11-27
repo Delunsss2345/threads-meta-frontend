@@ -1,5 +1,5 @@
-import { RegisterForm } from "@/components/RegisterForm";
 import { register, resendVerifyEmail } from "@/features/auth";
+import { RegisterForm } from "@/features/auth/components/RegisterForm";
 import type { RegisterSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
 import { useDispatch } from "react-redux";

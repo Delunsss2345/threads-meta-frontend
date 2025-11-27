@@ -1,5 +1,5 @@
-import ActivityList from "@/components/Activity/ActivityList";
-import type { Activity } from "@/components/Activity/types";
+import ActivityList from "@/features/activity/components/ActivityList";
+import type { Activity } from "@/features/activity/components/types";
 
 export const mockActivities: Activity[] = [
   {

@@ -1,8 +1,8 @@
-import AvatarGroup from "@/components/AvatarGroup";
-import { VerifiedIcon } from "@/components/Icon/VerifiedIcon";
+import AvatarGroup from "@/components/common/AvatarGroup";
+import { VerifiedIcon } from "@/components/common/Icon/VerifiedIcon";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth } from "@/features/auth/hook"; // <-- thêm
+import { useAuth } from "@/features/auth/hooks"; // <-- thêm
 import { getRepost } from "@/features/post";
 import { useModal } from "@/hooks/use-modal";
 import type { AppDispatch } from "@/types/redux";

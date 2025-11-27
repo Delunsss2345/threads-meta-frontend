@@ -1,7 +1,7 @@
-import AvatarGroup from "@/components/AvatarGroup";
-import PostForm from "@/components/Post/PostForm";
+import AvatarGroup from "@/components/common/AvatarGroup";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/features/auth/hook";
+import { useAuth } from "@/features/auth/hooks";
+import PostForm from "@/features/post/components/PostForm";
 import {
   Heart,
   MessageCircle,

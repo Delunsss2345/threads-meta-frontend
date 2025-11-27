@@ -1,4 +1,4 @@
-import AvatarGroup from "@/components/AvatarGroup";
+import AvatarGroup from "@/components/common/AvatarGroup";
 import { Card } from "@/components/ui/card";
 import CheckboxMenuItem from "@/layouts/SettingLayout/ItemSetting/CheckMenuItem";
 

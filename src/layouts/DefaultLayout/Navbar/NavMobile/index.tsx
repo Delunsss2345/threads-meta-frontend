@@ -1,11 +1,11 @@
-import FavoriteIcon from "@/components/Icon/FavoriteIcon";
-import HomeIcon from "@/components/Icon/HomeIcon";
-import SubtractIcon from "@/components/Icon/SubtractIcon";
-import UserIcon from "@/components/Icon/UserIcon";
-import AuthSocialModal from "@/components/LoginModal";
-import NewPostModal from "@/components/Post/NewPostModal";
+import FavoriteIcon from "@/components/common/Icon/FavoriteIcon";
+import HomeIcon from "@/components/common/Icon/HomeIcon";
+import SubtractIcon from "@/components/common/Icon/SubtractIcon";
+import UserIcon from "@/components/common/Icon/UserIcon";
 import { Button } from "@/components/ui/button";
-import { useCurrentUser } from "@/features/auth/hook";
+import AuthSocialModal from "@/features/auth/components/LoginModal";
+import { useCurrentUser } from "@/features/auth/hooks";
+import NewPostModal from "@/features/post/components/NewPostModal";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { AnimatePresence } from "framer-motion";
 import { SearchIcon } from "lucide-react";

@@ -1,4 +1,4 @@
-import PrivateRouter from "@/components/AppRoutes/PrivateRouter";
+import PrivateRouter from "@/components/layout/AppRoutes/PrivateRouter";
 import AuthLayout from "@/layouts/AuthLayout";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import SettingsLayout from "@/layouts/SettingLayout";

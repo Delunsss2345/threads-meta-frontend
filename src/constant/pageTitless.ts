@@ -1,6 +1,6 @@
-import { CommentIconThreads } from "@/components/Icon/CommentIconThreads";
-import { RepostIconThreads } from "@/components/Icon/RepostIconThreads";
-import { TymIconThreads } from "@/components/Icon/TymIconThreads";
+import { CommentIconThreads } from "@/components/common/Icon/CommentIconThreads";
+import { RepostIconThreads } from "@/components/common/Icon/RepostIconThreads";
+import { TymIconThreads } from "@/components/common/Icon/TymIconThreads";
 import i18n from "@/i18n";
 import { Send } from "lucide-react";
 

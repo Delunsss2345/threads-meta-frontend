@@ -1,4 +1,4 @@
-import AvatarGroup from "@/components/AvatarGroup";
+import AvatarGroup from "@/components/common/AvatarGroup";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 

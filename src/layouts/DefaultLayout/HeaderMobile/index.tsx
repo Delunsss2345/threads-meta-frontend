@@ -1,5 +1,5 @@
-import MenuIcon from "@/components/Icon/MenuIcon";
-import Logo from "@/components/Logo";
+import MenuIcon from "@/components/common/Icon/MenuIcon";
+import Logo from "@/components/common/Logo";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SlideUpMenu from "../Navbar/SideUpMenu";
 

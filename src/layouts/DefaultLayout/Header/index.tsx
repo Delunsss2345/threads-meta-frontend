@@ -1,12 +1,12 @@
-import BackButton from "@/components/BackButton";
-import MoreIcon from "@/components/Icon/MoreIcon";
-import MenuPopup from "@/components/MenuPopup";
+import BackButton from "@/components/common/BackButton";
+import MoreIcon from "@/components/common/Icon/MoreIcon";
+import MenuPopup from "@/components/common/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   PAGE_CHILDREN_BY_PATH,
   PAGE_TITLES_BY_PATH,
 } from "@/constant/pageTitless";
-import { useAuth } from "@/features/auth/hook";
+import { useAuth } from "@/features/auth/hooks";
 import { columnsSlice } from "@/features/column";
 import { MinusCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -37,9 +37,7 @@ const Header = ({
     >
       {(PAGE_CHILDREN_BY_PATH[pathname] || isPostDetail) && (
         <div className="absolute top-1/2 -translate-y-1/2 left-10 z-10 ">
-          <BackButton
-            onClick={() => window.history.back()}
-          />
+          <BackButton onClick={() => window.history.back()} />
         </div>
       )}
       <h1

@@ -1,5 +1,5 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/features/auth/hook";
+import { useAuth } from "@/features/auth/hooks";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
-import FixedNewPostButton from "@/components/FixedNewPostButton";
-import { Loading } from "@/components/Loading";
+import { Loading } from "@/components/common/Loading";
+import FixedNewPostButton from "@/features/post/components/FixedNewPostButton";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Content from "./Content";

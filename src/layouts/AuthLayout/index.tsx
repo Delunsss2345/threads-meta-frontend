@@ -1,4 +1,4 @@
-import Logo from "@/components/Logo";
+import Logo from "@/components/common/Logo";
 import { AnimatedBackground } from "@/layouts/AuthLayout/AnimatedBackground";
 import { FooterLinks } from "@/layouts/AuthLayout/FooterLinks";
 import { Outlet } from "react-router-dom";

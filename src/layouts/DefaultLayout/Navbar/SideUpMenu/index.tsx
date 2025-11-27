@@ -1,7 +1,8 @@
-import { DarkIcon } from "@/components/Icon/DarkIcon";
-import LightModeIcon from "@/components/Icon/LightModeIcon";
-import MenuPopup from "@/components/MenuPopup";
-import { useTheme } from "@/components/ThemeProvider";
+import { DarkIcon } from "@/components/common/Icon/DarkIcon";
+import LightModeIcon from "@/components/common/Icon/LightModeIcon";
+import MenuPopup from "@/components/common/MenuPopup";
+import { useTheme } from "@/components/layout/ThemeProvider";
+import { logout } from "@/features/auth";
 import type { AppDispatch } from "@/types/redux";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,6 @@ import { useDispatch } from "react-redux";
 import { LanguageMenu } from "./LanguageMenu";
 import { MainMenu } from "./MainMenu";
 import { ThemeMenu } from "./ThemeMenu";
-import { logout } from "@/features/auth";
 
 const SlideUpMenu = ({
   children,

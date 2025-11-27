@@ -1,6 +1,6 @@
-import Post from "@/components/Post";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { selectPostsState } from "@/features/post";
+import Post from "@/features/post/components";
 import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import { useSelector } from "react-redux";

@@ -1,4 +1,4 @@
-import LoadingFetch from "@/components/LoadingFetch";
+import LoadingFetch from "@/components/common/LoadingFetch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getReplies, getSinglePost, selectPostsState } from "@/features/post";

@@ -1,7 +1,6 @@
-import AddColumnIcon from "@/components/Icon/AddColIcon";
-import LoginCard from "@/components/LoginPanel";
 import { COMPONENTS_MAP } from "@/constant/componentsMap";
 import { selectIsAuthenticated } from "@/features/auth";
+import LoginCard from "@/features/auth/components/LoginPanel";
 import { selectColumns, type ColumnType } from "@/features/column";
 import MenuAddContent from "@/pages/Home/MenuAddContent";
 import { PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
@@ -10,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Column from "../Column";
 import HeaderMobile from "../HeaderMobile";
+import AddColumnIcon from "@/components/common/Icon/AddColIcon";
 interface ContentProps {
   children: React.ReactNode;
 }

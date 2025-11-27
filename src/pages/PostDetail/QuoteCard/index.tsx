@@ -1,4 +1,4 @@
-import SwiperImage from "@/components/SwiperImage";
+import SwiperImage from "@/components/common/SwiperImage";
 
 interface QuoteCardProps {
   content: string;

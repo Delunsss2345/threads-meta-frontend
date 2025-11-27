@@ -1,9 +1,9 @@
-import FeedTabs from "@/components/FeedTabs";
-import Post from "@/components/Post";
-import PostForm from "@/components/Post/PostForm";
-import SkeletonPost from "@/components/Skeleton/SkeletonPost";
-import { useAuth } from "@/features/auth/hook";
+import SkeletonPost from "@/components/common/Skeleton/SkeletonPost";
+import { useAuth } from "@/features/auth/hooks";
 import { getFeeds, loadMoreThreads, selectPostsState } from "@/features/post";
+import Post from "@/features/post/components";
+import FeedTabs from "@/features/post/components/FeedTabs";
+import PostForm from "@/features/post/components/PostForm";
 import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";

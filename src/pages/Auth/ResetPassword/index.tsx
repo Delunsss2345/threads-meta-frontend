@@ -1,12 +1,12 @@
-import LoadingFetch from "@/components/LoadingFetch";
-import { ResetPasswordForm } from "@/components/ResetPasswordForm";
-import RestPasswordFound from "@/components/RestPasswordFailed";
+import LoadingFetch from "@/components/common/LoadingFetch";
 import {
   restPassword,
   selectAuthValidateToken,
   validateRestToken,
 } from "@/features/auth";
-import { useAuth } from "@/features/auth/hook";
+import { ResetPasswordForm } from "@/features/auth/components/ResetPasswordForm";
+import RestPasswordFound from "@/features/auth/components/RestPasswordFailed";
+import { useAuth } from "@/features/auth/hooks";
 import type { ResetPasswordSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
 import { useEffect, useState } from "react";

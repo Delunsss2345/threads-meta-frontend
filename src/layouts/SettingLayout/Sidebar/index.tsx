@@ -1,7 +1,7 @@
-import AccountPrivacyIcon from "@/components/Icon/AccountPrivacyIcon";
-import HelpPrivacyIcon from "@/components/Icon/HelpPrivacyIcon";
-import PrivacyIcon from "@/components/Icon/PrivacyIcon";
-import UserPrivacyIcon from "@/components/Icon/UserPrivacyIcon";
+import AccountPrivacyIcon from "@/components/common/Icon/AccountPrivacyIcon";
+import HelpPrivacyIcon from "@/components/common/Icon/HelpPrivacyIcon";
+import PrivacyIcon from "@/components/common/Icon/PrivacyIcon";
+import UserPrivacyIcon from "@/components/common/Icon/UserPrivacyIcon";
 import {
   SidebarMenu,
   SidebarMenuButton,

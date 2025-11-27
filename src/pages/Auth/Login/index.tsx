@@ -1,6 +1,6 @@
-import LoginForm from "@/components/LoginForm";
 import { login } from "@/features/auth";
-import { useAuth } from "@/features/auth/hook";
+import LoginForm from "@/features/auth/components/LoginForm";
+import { useAuth } from "@/features/auth/hooks";
 import type { LoginSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
 import { useDispatch } from "react-redux";

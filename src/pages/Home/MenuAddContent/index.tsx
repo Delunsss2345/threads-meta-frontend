@@ -1,4 +1,4 @@
-import MenuPopup from "@/components/MenuPopup";
+import MenuPopup from "@/components/common/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { columnsSlice, selectColumns } from "@/features/column";
 import { cn } from "@/lib/utils";
