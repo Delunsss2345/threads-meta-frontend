@@ -28,7 +28,6 @@ function ReplyModal({
   const [content, setContent] = useState("");
   const { user } = useAuth();
   const { t } = useTranslation();
-
   const handleReply = async () => {
     if (!content || !post.id) return;
 
@@ -138,7 +137,10 @@ function ReplyModal({
                 onChangeContent={(data: any) => setContent(data.content)}
               />
 
-              <div className="text-muted-foreground/50 text-sm pt-3">
+              <div
+                onClick={() => {}}
+                className="text-muted-foreground/50 text-sm pt-3"
+              >
                 {t("post.addToThread")}
               </div>
             </div>
@@ -147,10 +149,10 @@ function ReplyModal({
 
         <Footer
           loading={loading}
-          loadingLabel="Đang bình luận"
-          onSubmit={handleReply}
+          loadingLabel="Đang bình luận..."
           label="Bình luận"
           content={content}
+          onSubmit={handleReply}
         />
       </Card>
     </ModalPopup>

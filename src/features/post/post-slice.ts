@@ -297,6 +297,18 @@ export const postsSlice = createSlice({
         post.is_reposted_by_auth = !post.is_reposted_by_auth;
       }
     );
+    //Hide post
+    builder.addCase(hidePost.pending, (state) => {
+      state.loadingRequest = true;
+    });
+
+    builder.addCase(hidePost.fulfilled, (state) => {
+      state.loadingRequest = false;
+    });
+
+    builder.addCase(hidePost.rejected, (state) => {
+      state.loadingRequest = false;
+    });
 
     //Get replies
     builder.addCase(getReplies.pending, (state) => {

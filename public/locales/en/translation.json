@@ -106,6 +106,19 @@
     "replyTo": "Reply",
     "addToThread": "Add to thread"
   },
+  "reply": {
+    "addTopic": "Add topic",
+    "addToThread": "Add to thread",
+    "replyOptions": "Reply options",
+
+    "whoCanReply": "Who can reply and quote",
+    "everyone": "Everyone",
+    "followers": "Your followers",
+    "following": "Profiles you follow",
+    "mentioned": "Profiles you mention",
+
+    "reviewBefore": "Review and approve replies"
+  },
   "search": {
     "placeholder": "Search",
     "noResults": "No results found"

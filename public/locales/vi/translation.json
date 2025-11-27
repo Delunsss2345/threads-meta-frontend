@@ -106,6 +106,19 @@
     "replyTo": "Phản hồi",
     "addToThread": "Thêm vào thread"
   },
+  "reply": {
+    "addTopic": "Thêm chủ đề",
+    "addToThread": "Thêm vào chuỗi",
+    "replyOptions": "Tùy chọn trả lời",
+
+    "whoCanReply": "Ai có thể trả lời và trích dẫn",
+    "everyone": "Bất kỳ ai",
+    "followers": "Người theo dõi của bạn",
+    "following": "Trang cá nhân bạn theo dõi",
+    "mentioned": "Trang cá nhân bạn nhắc đến",
+
+    "reviewBefore": "Xem xét và phê duyệt câu trả lời"
+  },
   "search": {
     "placeholder": "Tìm kiếm",
     "noResults": "Không tìm thấy kết quả"

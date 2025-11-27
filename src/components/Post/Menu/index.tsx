@@ -2,7 +2,9 @@ import MenuPopup from "@/components/MenuPopup";
 import ModalSmall from "@/components/ModalSmall";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/features/auth/hook";
+import { hidePost, savePost } from "@/features/post";
 import { useModal } from "@/hooks/use-modal";
+import type { AppDispatch } from "@/types/redux";
 import {
   BellOff,
   Bookmark,
@@ -12,8 +14,10 @@ import {
   UserMinus,
   UserX,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const Menu = ({
   username,
@@ -29,38 +33,72 @@ const Menu = ({
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const { show, hide } = useModal();
-  const items = [
-    { label: t("menu.addToFeed"), isHeader: true, isAuth: true },
-    { icon: Bookmark, label: t("menu.save"), isAuth: true },
-    { icon: EyeOff, label: t("menu.notInterested"), isAuth: true },
-    { icon: BellOff, label: t("menu.muteNotifications"), isAuth: true },
-    { icon: UserMinus, label: t("menu.restrict"), isAuth: true },
-    {
-      icon: UserX,
-      label: t("menu.block"),
-      className: "text-destructive hover:bg-destructive/10",
-      isAuth: true,
-      onclick: (e: any) => {
-        e.stopPropagation();
-        show(
-          <ModalSmall
-            username={username}
-            userId={userId}
-            mode="block"
-            onCancel={hide}
-            onConfirm={hide}
-          />
-        );
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleSave = async (postId: number) => {
+    await toast.promise(
+      dispatch(savePost(postId)).unwrap(),
+
+      {
+        loading: t("toast.saving"),
+        success: (res) => t("toast.saveSuccess"),
+        error: (err) => err || t("toast.saveError"),
+      }
+    );
+  };
+  const handleHide = async (postId: number) => {
+    hide();
+
+    await toast.promise(dispatch(hidePost(postId)).unwrap(), {
+      loading: t("toast.hiding"),
+      success: t("toast.hideSuccess"),
+      error: (err) => err || t("toast.hideError"),
+    });
+  };
+
+  const items = useMemo(
+    () => [
+      { label: t("menu.addToFeed"), isHeader: true, isAuth: true },
+      {
+        icon: Bookmark,
+        label: t("menu.save"),
+        isAuth: true,
+        action: () => handleSave(postId),
       },
-    },
-    {
-      icon: Shield,
-      label: t("menu.report"),
-      className: "text-destructive hover:bg-destructive/10",
-      isAuth: true,
-    },
-    { icon: Link2, label: t("menu.copyLink"), isAuth: false },
-  ];
+      {
+        icon: EyeOff,
+        label: t("menu.notInterested"),
+        isAuth: true,
+        action: () => handleHide(postId),
+      },
+      { icon: BellOff, label: t("menu.muteNotifications"), isAuth: true },
+      { icon: UserMinus, label: t("menu.restrict"), isAuth: true },
+      {
+        icon: UserX,
+        label: t("menu.block"),
+        className: "text-destructive hover:bg-destructive/10",
+        isAuth: true,
+        action: () =>
+          show(
+            <ModalSmall
+              username={username}
+              userId={userId}
+              mode="block"
+              onCancel={hide}
+              onConfirm={hide}
+            />
+          ),
+      },
+      {
+        icon: Shield,
+        label: t("menu.report"),
+        className: "text-destructive hover:bg-destructive/10",
+        isAuth: true,
+      },
+      { icon: Link2, label: t("menu.copyLink"), isAuth: false },
+    ],
+    [t, postId, username, userId, show, hide, handleSave]
+  );
 
   return (
     <MenuPopup
@@ -77,7 +115,10 @@ const Menu = ({
           className={`flex items-center gap-2 ${item.className || ""} ${
             isAuthenticated !== item.isAuth ? "hidden" : ""
           }`}
-          onClick={item?.onclick}
+          onClick={(e) => {
+            e.stopPropagation();
+            item.action?.();
+          }}
         >
           {item.icon && <item.icon className="w-4 h-4" />}
           <span>{item.label}</span>

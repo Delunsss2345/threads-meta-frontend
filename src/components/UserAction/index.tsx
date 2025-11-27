@@ -1,6 +1,6 @@
 import { useAction } from "@/hooks/use-action";
 import EmojiPicker from "emoji-picker-react";
-import { Hash, ImageIcon, MapPin, Smile } from "lucide-react";
+import { ChevronRight, Hash, ImageIcon, MapPin, Smile } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import EmojiPortal from "../EmojiPortal";
@@ -29,9 +29,22 @@ const UserAction = ({ username, onChangeContent }: UserActionProps) => {
 
   return (
     <>
-      <div className="font-semibold text-sm leading-none mb-1">
-        {username || "None"}
+      <div className="flex items-center gap-1 font-semibold text-sm leading-none mb-1">
+        <span>{username || "None"}</span>
+
+        <ChevronRight className="w-3 h-3 text-muted-foreground" />
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            // show(<ModalAddTopic post={post} onClose={hide} />);
+          }}
+          className="text-xs text-blue-500 hover:underline whitespace-nowrap"
+        >
+          {t("reply.addTopic")}
+        </button>
       </div>
+
       <div className="space-y-4">
         <Textarea
           value={content}
