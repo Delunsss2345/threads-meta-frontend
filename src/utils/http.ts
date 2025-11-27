@@ -19,8 +19,8 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const isPublicApi =
     config.url?.startsWith("/auth/login") ||
     config.url?.startsWith("/auth/resend-verify-email") ||
-    config.url?.startsWith("/auth/register"); 
-    
+    config.url?.startsWith("/auth/register");
+
   if (!isPublicApi && accessToken) {
     config.headers.set("Authorization", `Bearer ${accessToken}`);
   }
@@ -59,6 +59,8 @@ const refreshToken = async () => {
     processQueue(null);
   } catch (error) {
     processQueue(error);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     throw error;
   }
 };

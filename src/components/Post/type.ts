@@ -9,5 +9,6 @@ interface User {
   username: string;
 }
 export type MappedPost = ReturnType<typeof mapPost>;
+export type MappedUser = MappedPost["user"];
 
 export type { InteractionBarProps, User };

@@ -1,4 +1,3 @@
-import { AnimatePresence } from "framer-motion";
 import { Ellipsis, Repeat2 } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import "swiper/css";
@@ -8,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useAuth } from "@/features/auth/hook";
 import type { PostItem } from "@/types/post";
 import AvatarGroup from "../AvatarGroup";
-import { UserPreviewCard } from "../UserPreview";
+import UserPreviewCard from "../UserPreviewCard";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
 import MenuMe from "./MenuMe";
@@ -33,7 +32,8 @@ const Post = ({
   const time = post.created_at;
 
   const handleMouseEnter = useCallback(() => {
-    hoverTimer.current = setTimeout(() => setOpen(true), 500);
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    hoverTimer.current = setTimeout(() => setOpen(true), 300);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
@@ -80,7 +80,7 @@ const Post = ({
 
       <div
         onClick={onClick}
-        className="grid [grid-template-columns:48px_minmax(0,1fr)] gap-3 w-full"
+        className="grid grid-cols-[48px_minmax(0,1fr)] gap-3 w-full"
       >
         <AvatarGroup
           size={10}
@@ -89,27 +89,27 @@ const Post = ({
         />
 
         <div className="min-w-0">
-          <div className="grid [grid-template-columns:1fr_max-content] gap-[6px] items-center">
-            <div className="flex items-center gap-2 min-w-0 overflow-hidden">
-              <span
+          <div className="grid grid-cols-[1fr_max-content] gap-1.5 items-center">
+            <div className="flex items-center gap-2 min-w-0 ">
+              <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="font-semibold text-sm text-foreground truncate whitespace-nowrap relative"
+                onClick={(e) => e.stopPropagation()}
+                className="relative inline-flex min-w-0"
               >
-                {username}
+                <span className="font-semibold text-sm text-foreground truncate whitespace-nowrap hover:underline">
+                  {username}
+                </span>
 
-                <AnimatePresence>
-                  {open && post.user && (
-                    <UserPreviewCard
-                      name={post.user.name}
-                      username={post.user.username}
-                      bio={post.user.bio || ""}
-                      followers={0}
-                      avatar={post.user.avatar_url || ""}
-                    />
-                  )}
-                </AnimatePresence>
-              </span>
+                {open && post.user && (
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <UserPreviewCard user={post.user} />
+                  </div>
+                )}
+              </div>
 
               {post.user?.verified && (
                 <svg
@@ -145,7 +145,7 @@ const Post = ({
 
       {post.media_urls.length > 0 && (
         <div className="relative mt-3">
-          <div className="ml-[12px] pl-[48px] overflow-visible w-auto">
+          <div className="ml-3 pl-12 overflow-visible w-auto">
             <Swiper
               modules={[FreeMode]}
               spaceBetween={8}
