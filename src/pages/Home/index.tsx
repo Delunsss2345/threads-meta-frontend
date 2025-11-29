@@ -12,46 +12,50 @@ import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Virtuoso,
-  type StateSnapshot,
-  type VirtuosoHandle,
-} from "react-virtuoso";
+import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
 
-  const initialState = useMemo(() => {
-    const saved = sessionStorage.getItem("feed_state");
-    return saved ? (JSON.parse(saved) as StateSnapshot) : undefined;
-  }, []);
+  // const initialState = useMemo(() => {
+  //   const saved = sessionStorage.getItem("feed_state");
+  //   return saved ? (JSON.parse(saved) as StateSnapshot) : undefined;
+  // }, []);
   const navigate = useNavigate();
   const {
     items: feeds,
     pagination,
     continuePage,
+    loaded,
   } = useSelector(selectPostsState);
-
   useEffect(() => {
-    if (feeds.length === 0) {
+    if (loaded) return;
+    if (!loaded) {
       dispatch(getFeeds());
     }
-  }, []);
+    console.log(loaded);
+  }, [loaded]);
 
-  const handleNavigateToDetail = (id: number) => {
+  const handleNavigateToDetail = (id: number, username: string) => {
     // const state = virtuosoRef.current?.getState();
     // console.log(state);
     // if (state) {
     //   sessionStorage.setItem("feed_state", JSON.stringify(state));
     // }
-    navigate(`/post/${id}`);
+    if (username) {
+      navigate(`${username}/post/${id}`);
+    } else {
+      navigate(`/post/${id}`);
+    }
   };
   const { user } = useAuth();
 
-  const filteredFeeds = feeds.filter(
-    (post: PostItem) => post.user.username !== user?.username
-  );
+  const filteredFeeds = useMemo(() => {
+    return feeds.filter(
+      (post: PostItem) => post.user.username !== user?.username
+    );
+  }, [feeds, user?.username]);
 
   return (
     <>
@@ -73,8 +77,8 @@ const Home = () => {
         }
         itemContent={(index, post: PostItem) => (
           <Post
-            onClick={() => handleNavigateToDetail(post.id)}
-            key={post.id}
+            onClick={() => handleNavigateToDetail(post.id, post.user.username)}
+            key={index}
             post={mapPost(post)}
           />
         )}

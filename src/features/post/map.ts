@@ -3,7 +3,7 @@ import { formatTime } from "@/utils/format-time";
 
 export const mapPost = (post: PostItem) => {
   return {
-    id: post.id,
+    id: post?.id,
     user_id: post.user_id,
     content: post.content,
     parent_id: post.parent_id,

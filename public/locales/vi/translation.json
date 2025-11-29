@@ -238,5 +238,14 @@
     "title": "Liên kết không hợp lệ",
     "description": "Liên kết đặt lại mật khẩu đã hết hạn hoặc không hợp lệ. Vui lòng yêu cầu một liên kết mới.",
     "back": "Quay lại đăng nhập"
+  },
+  "toast": {
+    "saving": "Đang lưu...",
+    "saveSuccess": "Đã lưu thành công",
+    "saveError": "Lỗi khi lưu",
+
+    "hiding": "Đang ẩn...",
+    "hideSuccess": "Đã ẩn bài viết",
+    "hideError": "Lỗi khi ẩn bài viết"
   }
 }

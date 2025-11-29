@@ -3,6 +3,7 @@ import { columnsSlice } from "@/features/column";
 import { modalSlice } from "@/features/modal";
 import { postsSlice } from "@/features/post";
 import { searchSlice } from "@/features/search";
+import userSlice from "@/features/user/slice";
 import type { AppDispatch, RootState } from "@/types/redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +27,7 @@ const persistConfig = {
     columnsSlice.reducerPath,
     modalSlice.reducerPath,
     postsSlice.reducerPath,
+    userSlice.reducerPath,
   ],
 };
 
@@ -41,6 +43,7 @@ export const rootReducer = combineReducers({
   [modalSlice.reducerPath]: modalSlice.reducer,
   [postsSlice.reducerPath]: postsSlice.reducer,
   [searchSlice.reducerPath]: searchSlice.reducer,
+  [userSlice.reducerPath]: userSlice.reducer,
 });
 
 const store = configureStore({

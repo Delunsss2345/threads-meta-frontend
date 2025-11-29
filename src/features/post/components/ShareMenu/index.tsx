@@ -1,38 +1,47 @@
 import MenuPopup from "@/components/common/MenuPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useModal } from "@/hooks/use-modal";
 import { cn } from "@/lib/utils";
 import { Code, Image, Link2 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import ModalEmbedCode from "../ModalEmbedCode";
 import ModalShare from "../ModalShare";
+import type { MappedPost } from "../type";
 
 const ShareMenu = ({
   children,
   className,
   isAuth,
   onUnauthorizedClick,
+  post,
 }: {
+  post: MappedPost | undefined;
   children: ReactNode;
   className: string;
   isAuth: boolean;
   onUnauthorizedClick?: () => void;
 }) => {
-  const [openModalShareImage, setOpenModalShareImage] = useState(false);
   const { t } = useTranslation();
-
+  const { show, hide } = useModal();
   const shareMenu = [
     {
       icon: <Link2 />,
       label: t("menu.copyLink"),
+      onclick: () =>
+        navigator.clipboard.writeText(
+          `${window.location.origin}/post/${post?.id}`
+        ),
     },
     {
       icon: <Image />,
       label: t("menu.copyAsImage"),
-      onclick: () => setOpenModalShareImage(true),
+      onclick: () => show(<ModalShare post={post ?? null} onClose={hide} />),
     },
     {
       icon: <Code />,
       label: t("menu.embedCode"),
+      onclick: () => show(<ModalEmbedCode post={post!} onClose={hide} />),
     },
   ];
 
@@ -68,10 +77,6 @@ const ShareMenu = ({
           </DropdownMenuItem>
         ))}
       </MenuPopup>
-
-      {openModalShareImage && (
-        <ModalShare onClose={() => setOpenModalShareImage(false)} />
-      )}
     </>
   );
 };

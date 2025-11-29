@@ -4,15 +4,40 @@ import type { OriginalPost } from "@/types/post";
 import { formatTime } from "@/utils/format-time";
 import { useNavigate } from "react-router-dom";
 
-const Quote = ({ post }: { post: OriginalPost }) => {
+const Quote = ({
+  post,
+  mode = "default",
+}: {
+  post: OriginalPost;
+  mode: "default" | "static";
+}) => {
   if (!post.user) return null;
   const navigate = useNavigate();
+
+  const wrapperClass =
+    mode === "static"
+      ? "mt-3 border rounded-xl bg-muted/30 py-3 px-0 ml-0"
+      : "mt-3 ml-[58px] border rounded-xl bg-muted/30 p-3";
+
   return (
     <div
-      onClick={() => navigate(`/post/${post.id}`)}
-      className="mt-3 ml-[58px] border rounded-xl p-3 bg-muted/30"
+      data-set-quote="true"
+      onClick={
+        mode === "static"
+          ? undefined
+          : () =>
+              navigate(`/post/${post.id}`, {
+                state: {
+                  quote: true,
+                },
+              })
+      }
+      className={wrapperClass}
+      style={{
+        cursor: mode === "static" ? "default" : "pointer",
+      }}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 px-3">
         <AvatarGroup
           size={8}
           url={post.user?.avatar_url ?? ""}
@@ -27,13 +52,15 @@ const Quote = ({ post }: { post: OriginalPost }) => {
       </div>
 
       {post.content && (
-        <p className="text-sm mt-2 text-foreground leading-relaxed">
+        <p className="text-sm mt-2 text-foreground leading-relaxed px-3">
           {post.content}
         </p>
       )}
 
-      {post?.media_urls && post?.media_urls?.length > 0 && (
-        <SwiperImage images={post.media_urls || []} className="relative mt-3" />
+      {post?.media_urls?.length > 0 && (
+        <div className="mt-3 px-3">
+          <SwiperImage images={post.media_urls} />
+        </div>
       )}
     </div>
   );

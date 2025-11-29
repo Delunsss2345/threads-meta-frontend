@@ -93,7 +93,11 @@ function NewPostModal({
           </div>
         </CardContent>
 
-        <Footer loading={loadingPosts} onSubmit={handlePost} />
+        <Footer
+          content={content}
+          loading={loadingPosts}
+          onSubmit={handlePost}
+        />
       </Card>
     </ModalPopup>
   );

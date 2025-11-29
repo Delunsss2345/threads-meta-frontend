@@ -19,7 +19,7 @@ const SearchPage = () => {
   const { items, loading } = useSelector(selectSuggestions);
 
   useEffect(() => {
-    if (!query) {
+    if (!query && !items) {
       dispatch(fetchSuggestions());
     }
   }, [query]);

@@ -235,5 +235,14 @@
     "title": "Invalid Link",
     "description": "The password reset link has expired or is invalid. Please request a new link.",
     "back": "Back to Login"
+  },
+  "toast": {
+    "saving": "Saving...",
+    "saveSuccess": "Saved successfully",
+    "saveError": "Error while saving",
+
+    "hiding": "Hiding...",
+    "hideSuccess": "Post hidden",
+    "hideError": "Error while hiding the post"
   }
 }

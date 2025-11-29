@@ -23,6 +23,7 @@ export interface PostsState {
     last_page: number;
   };
   continuePage: boolean;
+  loaded: boolean;
 }
 
 const initialState: PostsState = {
@@ -39,6 +40,7 @@ const initialState: PostsState = {
     last_page: 1,
   },
   continuePage: true,
+  loaded: true,
 };
 
 const parseError = (error: any): string => {
@@ -226,6 +228,7 @@ export const postsSlice = createSlice({
       state.loading = false;
       state.items = action.payload.data;
       state.pagination = action.payload.pagination;
+      state.loaded = true;
     });
 
     builder.addCase(getFeeds.rejected, (state, action) => {

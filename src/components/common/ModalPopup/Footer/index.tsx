@@ -24,17 +24,18 @@ const Footer = ({
       <div className="flex flex-wrap items-center gap-4 pt-2">
         <MenuPopup
           motionProps={{
-            initial: { x: 0, opacity: 0 },
-            animate: { x: 0, opacity: 1 },
+            initial: { x: 0, y: 0, opacity: 0, bottom: 0 },
+            animate: { x: 0, y: 0, opacity: 1, bottom: 0 },
           }}
-          className="p-0 hover:bg-transparent cursor-pointer pl-1"
+          customPopup="absolute -translate-x-1/5 -translate-y-1/7 h-auto"
+          className="p-0 hover:bg-transparent cursor-pointer pl-1 "
           buttonActive={
             <div className="flex items-center gap-1">
               <ReplyOptionsIcon className="w-8 h-8 translate-y-1/10" />{" "}
               <span className="text-sm">{t("reply.replyOptions")}</span>
             </div>
           }
-          mode="short"
+          mode="medium"
         >
           <div className="font-semibold text-[15px] mb-2 text-gray-600 px-1">
             {t("reply.whoCanReply")}

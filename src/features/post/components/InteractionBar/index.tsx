@@ -136,6 +136,7 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
           className={`hover:text-gray-700 !px-0 ${styles.interactionButton}
           
           ${ctx?.post.is_saved_by_auth ? "text-gray-700" : ""}`}
+          post={ctx?.post || undefined}
         >
           <Send size={18} />
           <span

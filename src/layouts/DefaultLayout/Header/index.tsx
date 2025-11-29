@@ -30,7 +30,8 @@ const Header = ({
     dispatch(columnsSlice.actions.removeColumn(id));
   };
   const { isAuthenticated } = useAuth();
-  const isPostDetail = /^\/post\/[^/]+$/.test(pathname);
+  const isPostDetail = /^(\/[^/]+)?\/post\/[^/]+$/.test(pathname);
+
   return (
     <div
       className={`bg-background header-container sticky top-0 hidden -mx-3 md:block z-4`}

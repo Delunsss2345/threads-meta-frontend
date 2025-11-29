@@ -6,6 +6,7 @@ import EmojiPicker from "emoji-picker-react";
 import { ChevronRight, Hash, ImageIcon, MapPin, Smile } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import InputSearchTopic from "./InputSearchTopic";
 interface UserActionProps {
   username: string;
   onChangeContent?: (data: any) => void;
@@ -33,16 +34,7 @@ const UserAction = ({ username, onChangeContent }: UserActionProps) => {
         <span>{username || "None"}</span>
 
         <ChevronRight className="w-3 h-3 text-muted-foreground" />
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            // show(<ModalAddTopic post={post} onClose={hide} />);
-          }}
-          className="text-xs text-blue-500 hover:underline whitespace-nowrap"
-        >
-          {t("reply.addTopic")}
-        </button>
+        <InputSearchTopic />
       </div>
 
       <div className="space-y-4">

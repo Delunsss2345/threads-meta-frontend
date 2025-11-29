@@ -10,6 +10,7 @@ import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import ResetPassword from "@/pages/Auth/ResetPassword";
 import VerifyEmail from "@/pages/Auth/VerifyEmail";
+import Embed from "@/pages/Embed";
 import Following from "@/pages/Following";
 import Help from "@/pages/Help";
 import Home from "@/pages/Home";
@@ -45,7 +46,7 @@ export const config: RouteObject[] = [
     children: [
       { index: true, element: <Home /> },
       {
-        path: "@:username",
+        path: ":username",
         element: <ProfileDetail />,
       },
       {
@@ -83,7 +84,7 @@ export const config: RouteObject[] = [
 
       { path: "search", element: <SearchPage /> },
 
-      { path: "@:username/post/:id", element: <PostDetail /> },
+      { path: ":username/post/:id", element: <PostDetail /> },
       { path: "post/:id", element: <PostDetail /> },
 
       {
@@ -112,6 +113,7 @@ export const config: RouteObject[] = [
       },
     ],
   },
+  { path: "/post/:id/embed", element: <Embed /> },
 
   {
     path: "*",
