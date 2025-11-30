@@ -29,7 +29,18 @@ export const fetchSuggestions = createAsyncThunk<UserSuggestionResponse, void>(
 export const searchSlice = createSlice({
   name: "suggestions",
   initialState,
-  reducers: {},
+  reducers: {
+    setFollowingUser(
+      state,
+      action: { payload: { id: number; isFollowing: boolean } }
+    ) {
+      const { id, isFollowing } = action.payload;
+      const userFollowing = state.items.find((user) => user.id === id);
+      if (userFollowing) {
+        userFollowing.is_following = isFollowing;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSuggestions.pending, (state) => {
@@ -48,3 +59,4 @@ export const searchSlice = createSlice({
 });
 
 export default searchSlice.reducer;
+export const {setFollowingUser} = searchSlice.actions

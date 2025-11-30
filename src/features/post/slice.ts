@@ -4,6 +4,7 @@ import type {
   PostItem,
   PostResponse,
   ReplyData,
+  ReplyItem,
 } from "@/types/post";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postApi } from "./api";
@@ -260,7 +261,7 @@ export const postsSlice = createSlice({
       builder,
       likePost,
       (action: { meta: { arg: number | string } }) => action.meta.arg,
-      (post: PostItem) => {
+      (post: PostItem | ReplyItem) => {
         post.is_liked_by_auth = !post.is_liked_by_auth;
         post.likes_count += post.is_liked_by_auth ? 1 : -1;
       }
@@ -271,7 +272,7 @@ export const postsSlice = createSlice({
       builder,
       savePost,
       (action: { meta: { arg: number | string } }) => action.meta.arg,
-      (post: PostItem) => {
+      (post: PostItem | ReplyItem) => {
         post.is_saved_by_auth = !post.is_saved_by_auth;
       }
     );
@@ -281,7 +282,7 @@ export const postsSlice = createSlice({
       builder,
       replyThreads,
       (action: { meta: { arg: { id: number } } }) => action.meta.arg.id,
-      (post: PostItem) => {
+      (post: PostItem | ReplyItem) => {
         post.replies_count++;
       },
       (post: PostItem) => {
@@ -294,7 +295,7 @@ export const postsSlice = createSlice({
       builder,
       repostPost,
       (action: { meta: { arg: number | string } }) => action.meta.arg,
-      (post: PostItem) => {
+      (post: PostItem | ReplyItem) => {
         !post.is_reposted_by_auth
           ? post.reposts_and_quotes_count++
           : post.reposts_and_quotes_count--;

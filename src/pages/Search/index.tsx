@@ -4,6 +4,7 @@ import { Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useAuth } from "@/features/auth/hooks";
 import { fetchSuggestions } from "@/features/search";
 import { selectSuggestions } from "@/features/search/selector";
 import FollowSuggestionItem from "@/features/user/components/FollowSuggestion/FollowSuggestionItem";
@@ -17,12 +18,12 @@ const SearchPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { items, loading } = useSelector(selectSuggestions);
-
+  const { user: auth } = useAuth();
   useEffect(() => {
     if (!query && !items) {
       dispatch(fetchSuggestions());
     }
-  }, [query]);
+  }, [query, dispatch]);
 
   return (
     <>
@@ -77,9 +78,13 @@ const SearchPage = () => {
                   {t("activity.suggestions")}
                 </h3>
                 <div className="space-y-1">
-                  {items?.map((user: UserSuggestion) => (
-                    <FollowSuggestionItem key={user.id} user={user} />
-                  ))}
+                  {items?.map((user: UserSuggestion) =>
+                    user.username !== auth.username ? (
+                      <FollowSuggestionItem key={user.id} user={user} />
+                    ) : (
+                      ""
+                    )
+                  )}
                 </div>
               </div>
             )}

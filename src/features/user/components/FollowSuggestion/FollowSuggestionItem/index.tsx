@@ -1,12 +1,30 @@
 import AvatarGroup from "@/components/common/AvatarGroup";
 import { Button } from "@/components/ui/button";
+import { setFollowingUser } from "@/features/search";
+import { followUser, unFollowUser } from "@/features/user/slice";
+import type { AppDispatch } from "@/types/redux";
 import type { UserSuggestion } from "@/types/user";
+import { useDispatch } from "react-redux";
 
 interface Props {
   user: UserSuggestion;
 }
 
 export default function FollowSuggestionItem({ user }: Props) {
+  const dispatch = useDispatch<AppDispatch>();
+  const handleFollowing = (id: number) => {
+    try {
+      setFollowingUser({ id, isFollowing: true });
+      dispatch(followUser(id));
+    } catch (err) {}
+  };
+
+  const handleUnFollowing = (id: number) => {
+    try {
+      setFollowingUser({ id, isFollowing: false });
+      dispatch(unFollowUser(id));
+    } catch (err) {}
+  };
   return (
     <div className="flex items-center justify-between py-3 border-b border-border last:border-0">
       <div className="flex items-center gap-3">
@@ -41,27 +59,34 @@ export default function FollowSuggestionItem({ user }: Props) {
             )}
           </div>
 
-          {/* Username */}
           <span className="text-xs text-muted-foreground">
             @{user.username}
           </span>
 
-          {/* Bio */}
           {user.bio && (
             <p className="text-xs text-muted-foreground mt-1 line-clamp-1 max-w-[200px]">
               {user.bio}
             </p>
           )}
 
-          {/* Followers */}
           <span className="mt-1 text-xs text-muted-foreground">
             {user.followers_count} người theo dõi
           </span>
         </div>
       </div>
 
-      <Button size="sm" className="!rounded-lg px-4 py-2">
-        Theo dõi
+      <Button
+        onClick={() => {
+          if (user.is_following) {
+            handleUnFollowing(user.id);
+          } else {
+            handleFollowing(user.id);
+          }
+        }}
+        size="sm"
+        className="!rounded-lg px-4 py-2"
+      >
+        {user.is_following ? "Đang theo dõi" : "Theo dõi"}
       </Button>
     </div>
   );

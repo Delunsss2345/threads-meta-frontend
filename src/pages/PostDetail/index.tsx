@@ -8,6 +8,7 @@ import type { PostItem, ReplyItem } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
+import ScrollTop from "@/components/common/ScrollTop";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -16,7 +17,6 @@ import NotFound from "../NotFound";
 const PostDetail = () => {
   const { id } = useParams();
   const postId = Number(id);
-
   const location = useLocation();
   const isQuoteClick = location.state?.quoteClick === true;
   const navigator = useNavigate();
@@ -51,6 +51,7 @@ const PostDetail = () => {
 
   return (
     <>
+      <ScrollTop />
       <Card className="border-0 shadow-none bg-primary-foreground rounded-none">
         <CardContent className="space-y-3 p-0!">
           <Post mode="detail" post={mapPost(postDetail ?? singlePost)} />
@@ -68,7 +69,6 @@ const PostDetail = () => {
           </div>
         </CardContent>
       </Card>
-
       <div>
         {loadingRequest ? (
           <LoadingFetch />

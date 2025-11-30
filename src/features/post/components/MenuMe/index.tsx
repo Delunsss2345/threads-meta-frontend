@@ -1,7 +1,9 @@
 import MenuPopup from "@/components/common/MenuPopup";
+import ModalSmall from "@/components/common/ModalSmall";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/features/auth/hooks";
 import { postApi } from "@/features/post/api";
+import { useModal } from "@/hooks/use-modal";
 import {
   Bookmark,
   EyeOff,
@@ -22,7 +24,7 @@ const MenuMe = ({
   threadId: number;
 }) => {
   const { isAuthenticated } = useAuth();
-
+  const { show, hide } = useModal();
   const handleDelete = async (id: number) => {
     try {
       const result = await postApi.deleteThread(id);
@@ -31,24 +33,30 @@ const MenuMe = ({
       }
     } catch (error: any) {
       toast.error("Xoá thất bại");
+    } finally {
+      hide();
     }
   };
 
   const items = [
     { label: "Thông tin chi tiết", icon: Info, isAuth: true, isHeader: true },
-
     { label: "Lưu", icon: Bookmark, isAuth: true },
     { label: "Ghim lên trang cá nhân", icon: Pin, isAuth: true },
     { label: "Ẩn số lượt thích và lượt xem", icon: EyeOff, isAuth: true },
-
     { label: "Các lựa chọn để kiểm soát", icon: Shield, isAuth: true },
-
     {
       label: "Xóa",
       icon: Trash2,
       isAuth: true,
       className: "text-destructive hover:bg-destructive/10",
-      onClick: () => handleDelete(threadId),
+      onClick: () =>
+        show(
+          <ModalSmall
+            onCancel={hide}
+            onConfirm={() => handleDelete(threadId)}
+            mode="delete"
+          />
+        ),
     },
 
     { label: "Sao chép liên kết", icon: Link2, isAuth: false },
@@ -65,7 +73,12 @@ const MenuMe = ({
     >
       {items.map((item, i) => (
         <DropdownMenuItem
-          onClick={item.onClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (item.onClick) {
+              item.onClick();
+            }
+          }}
           key={i}
           className={`flex items-center gap-2 ${item.className || ""} ${
             isAuthenticated !== item.isAuth ? "hidden" : ""

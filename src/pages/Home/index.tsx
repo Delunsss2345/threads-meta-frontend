@@ -16,12 +16,7 @@ import { KeepAlive } from "react-activation";
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const virtuosoRef = useRef<VirtuosoHandle | null>(null);
 
-  // const initialState = useMemo(() => {
-  //   const saved = sessionStorage.getItem("feed_state");
-  //   return saved ? (JSON.parse(saved) as StateSnapshot) : undefined;
-  // }, []);
   const navigate = useNavigate();
   const {
     items: feeds,
@@ -37,11 +32,6 @@ const Home = () => {
   }, [loaded, dispatch]);
 
   const handleNavigateToDetail = (id: number, username: string) => {
-    // const state = virtuosoRef.current?.getState();
-    // console.log(state);
-    // if (state) {
-    //   sessionStorage.setItem("feed_state", JSON.stringify(state));
-    // }
     if (username) {
       navigate(`${username}/post/${id}`);
     } else {
@@ -67,7 +57,6 @@ const Home = () => {
       </div>
 
       <Virtuoso
-        ref={virtuosoRef}
         useWindowScroll
         data={filteredFeeds}
         endReached={() =>
@@ -80,7 +69,6 @@ const Home = () => {
             post={mapPost(post)}
           />
         )}
-        // computeItemKey={(index, post) => post.id}
         followOutput={false}
         components={{
           Footer: () =>

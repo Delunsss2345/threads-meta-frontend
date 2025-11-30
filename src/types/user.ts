@@ -12,12 +12,12 @@ export interface User {
   email_verified_at?: string | null;
   created_at: string;
   updated_at: string;
+  followers_count?: number;
 }
 
 export interface UserSuggestion extends User {
   is_following: boolean;
   is_followed_by: boolean;
-  followers_count: number;
 }
 
 export interface UpdateUserBody {

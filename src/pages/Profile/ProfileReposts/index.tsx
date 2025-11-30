@@ -4,10 +4,11 @@ import Post from "@/features/post/components";
 import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ProfileReposts = () => {
   const { reposts, loading } = useSelector(selectPostsState);
-
+  const navigator = useNavigate();
   return (
     <div className="">
       {loading ? (
@@ -19,6 +20,11 @@ const ProfileReposts = () => {
           (repost: PostItem) =>
             repost?.original_post && (
               <Post
+                onClick={() =>
+                  navigator(
+                    `/${repost.user.username}/post/${repost.original_post_id}`
+                  )
+                }
                 mode="repost"
                 key={repost.id}
                 post={mapPost(repost.original_post as PostItem)}

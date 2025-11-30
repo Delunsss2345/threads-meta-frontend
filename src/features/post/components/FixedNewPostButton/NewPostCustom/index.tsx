@@ -2,10 +2,9 @@ import Footer from "@/components/common/ModalPopup/Footer";
 import Header from "@/components/common/ModalPopup/Header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/features/auth/hooks";
+import UserAction from "@/features/user/components/UserAction";
 import { motion } from "framer-motion";
-import { AlignLeft, Hash, Image as ImageIcon, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 function NewPostCustom({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
@@ -54,28 +53,7 @@ function NewPostCustom({ onClose }: { onClose: () => void }) {
             </div>
 
             <div className="flex-1 pt-1 space-y-4">
-              <div>
-                {/* Username */}
-                <div className="mb-1 text-sm font-semibold leading-none">
-                  {user?.username}
-                </div>
-
-                <Textarea
-                  placeholder={t("post.whatsNew")}
-                  className="min-h-[24px] !bg-transparent border-none shadow-none resize-none p-0 focus-visible:ring-0 text-base leading-normal overflow-hidden"
-                  rows={1}
-                />
-
-                <div className="flex items-center gap-4 mt-3 text-muted-foreground/60">
-                  <ImageIcon className="w-5 h-5 transition-colors cursor-pointer hover:text-foreground" />
-                  <div className="border border-current rounded-[4px] text-[10px] font-bold px-1 cursor-pointer hover:text-foreground transition-colors">
-                    GIF
-                  </div>
-                  <AlignLeft className="w-5 h-5 transition-colors rotate-90 cursor-pointer hover:text-foreground" />{" "}
-                  <Hash className="w-5 h-5 transition-colors cursor-pointer hover:text-foreground" />
-                  <MapPin className="w-5 h-5 transition-colors cursor-pointer hover:text-foreground" />
-                </div>
-              </div>
+              <UserAction username={user.username} />
 
               <div className="min-h-[20px] flex items-center text-muted-foreground/50 text-sm pt-3">
                 {t("post.addToThread")}

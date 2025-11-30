@@ -1,24 +1,52 @@
-import AvatarGroup from "@/components/common/AvatarGroup";
-import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/hooks";
+import { getFeeds, loadMoreThreads, selectPostsState } from "@/features/post";
 import PostForm from "@/features/post/components/PostForm";
-import {
-  Heart,
-  MessageCircle,
-  MoreHorizontal,
-  Repeat2,
-  Send,
-  Star,
-} from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Virtuoso } from "react-virtuoso";
 import CardStepupProfile from "../CardStepupProfile";
+import { useEffect, useMemo } from "react";
+import type { PostItem } from "@/types/post";
+import { useNavigate } from "react-router-dom";
+import type { AppDispatch } from "@/types/redux";
+import SkeletonPost from "@/components/common/Skeleton/SkeletonPost";
+import Post from "@/features/post/components";
+import { mapPost } from "@/features/post/map";
 
 const ProfileThreads = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
   if (!user) return null;
+  const dispatch = useDispatch<AppDispatch>();
 
+  const navigate = useNavigate();
+  const {
+    items: feeds,
+    pagination,
+    continuePage,
+    loaded,
+  } = useSelector(selectPostsState);
+
+  useEffect(() => {
+    if (!loaded) {
+      dispatch(getFeeds());
+    }
+  }, [loaded, dispatch]);
+
+  const handleNavigateToDetail = (id: number, username: string) => {
+    if (username) {
+      navigate(`${username}/post/${id}`);
+    } else {
+      navigate(`/post/${id}`);
+    }
+  };
+
+  const filteredFeeds = useMemo(() => {
+    return feeds.filter(
+      (post: PostItem) => post.user.username === user?.username
+    );
+  }, [feeds, user?.username]);
   return (
     <>
       <PostForm />
@@ -34,47 +62,31 @@ const ProfileThreads = () => {
         <CardStepupProfile />
       </div>
 
-      <div className="flex items-center gap-3 mb-4">
-        <Star className="w-5 h-5 text-gray-500" />
-        <span className="text-gray-400">{t("profile.firstThread")}</span>
-      </div>
-
-      <div className="flex gap-3">
-        <AvatarGroup
-          size={8}
-          url={user?.avatar_url || ""}
-          fallBack={user?.username?.slice(0, 2).toUpperCase()}
-          classNameFallback="bg-primary-foreground"
-        />
-
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="font-semibold">{user.username}</span>
-            <span className="text-sm text-muted-foreground">1 phút</span>
-
-            <Button variant="ghost" size="icon" className="ml-auto w-8 h-8">
-              <MoreHorizontal className="w-5 h-5" />
-            </Button>
-          </div>
-
-          <p className="mb-4 text-foreground">a</p>
-
-          <div className="flex gap-4">
-            <Button variant="ghost" size="icon">
-              <Heart className="w-5 h-5" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <MessageCircle className="w-5 h-5" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Repeat2 className="w-5 h-5" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Send className="w-5 h-5" />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Virtuoso
+        useWindowScroll
+        data={filteredFeeds}
+        endReached={() =>
+          dispatch(loadMoreThreads(pagination.current_page + 1))
+        }
+        itemContent={(index, post: PostItem) => (
+          <Post
+            onClick={() => handleNavigateToDetail(post.id, post.user.username)}
+            key={index}
+            post={mapPost(post)}
+          />
+        )}
+        followOutput={false}
+        components={{
+          Footer: () =>
+            !continuePage ? (
+              <div className="text-center py-4 text-muted-foreground">
+                Không còn bài viết
+              </div>
+            ) : (
+              <SkeletonPost />
+            ),
+        }}
+      />
     </>
   );
 };

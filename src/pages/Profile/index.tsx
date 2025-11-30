@@ -61,7 +61,9 @@ const Profile = () => {
         </div>
 
         <div className="flex items-center justify-between mb-6">
-          <p className="text-gray-400">0 {t("common.followers")}</p>
+          <p className="text-gray-400">
+            {user.followers} {t("common.followers")}
+          </p>
           <div className="flex">
             <Button
               variant="ghost"

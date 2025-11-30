@@ -2,6 +2,7 @@ import { http } from "@/utils/http";
 
 export const userApi = {
   updateUser: (payload: FormData) => http.post("/auth/profile", payload),
+  getFollower: (id: number) => http.get(`/users/${id}/followers`),
   followUser: (id: number) => http.post(`/users/${id}/follow`),
   unFollowUser: (id: number) =>
     http.post(`/user/${id}/follow`, {
