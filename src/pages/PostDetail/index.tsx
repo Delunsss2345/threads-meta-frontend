@@ -4,15 +4,14 @@ import { Separator } from "@/components/ui/separator";
 import { getReplies, getSinglePost, selectPostsState } from "@/features/post";
 import Post from "@/features/post/components";
 import { mapPost } from "@/features/post/map";
-import type { PostItem, ReplyData } from "@/types/post";
+import type { PostItem, ReplyItem } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NotFound from "../NotFound";
-import CommentItem from "./CommentItem";
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -20,7 +19,7 @@ const PostDetail = () => {
 
   const location = useLocation();
   const isQuoteClick = location.state?.quoteClick === true;
-
+  const navigator = useNavigate();
   const {
     items: posts,
     loadingRequest,
@@ -51,19 +50,21 @@ const PostDetail = () => {
   if (!postDetail && !singlePost) return <LoadingFetch />;
 
   return (
-    <div className="px-6 py-2">
+    <>
       <Card className="border-0 shadow-none bg-primary-foreground rounded-none">
         <CardContent className="space-y-3 p-0!">
           <Post mode="detail" post={mapPost(postDetail ?? singlePost)} />
 
-          <Separator />
-          <div className="flex items-center justify-between text-sm pt-2">
-            <button className="flex items-center gap-1 font-semibold">
-              Hàng đầu <ChevronDown size={13} />
-            </button>
-            <button className="flex items-center gap-1 text-muted-foreground text-sm">
-              <p>Xem hoạt động</p> <ChevronRight size={13} />
-            </button>
+          <div className="flex flex-col items-center justify-between text-sm pt-2 px-4 gap-4">
+            <Separator />
+            <div className="flex w-full justify-between">
+              <button className="flex items-center gap-1 font-semibold">
+                Hàng đầu <ChevronDown size={13} />
+              </button>
+              <button className="flex items-center gap-1 text-muted-foreground text-sm">
+                <p>Xem hoạt động</p> <ChevronRight size={13} />
+              </button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -72,18 +73,19 @@ const PostDetail = () => {
         {loadingRequest ? (
           <LoadingFetch />
         ) : (
-          replies.map((reply: ReplyData) => (
-            <CommentItem
+          replies.map((reply: ReplyItem) => (
+            <Post
               key={reply.id}
-              username={reply.user.username}
-              timeAgo={reply.updated_at}
-              avatarUrl={reply.user?.avatar_url}
-              content={reply.content}
+              onClick={() => {
+                navigator(`/${reply.user.username}/post/${reply.id}`);
+              }}
+              mode="comment"
+              post={mapPost(reply)}
             />
           ))
         )}
       </div>
-    </div>
+    </>
   );
 };
 

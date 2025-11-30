@@ -8,6 +8,7 @@ import AvatarGroup from "@/components/common/AvatarGroup";
 import { useAuth } from "@/features/auth/hooks";
 import UserPreviewCard from "@/features/user/components/UserPreviewCard";
 import type { PostItem } from "@/types/post";
+import { POST_MODE_STYLES, type PostModeKey } from "../constant";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
 import MenuMe from "./MenuMe";
@@ -22,9 +23,11 @@ const Post = ({
 }: {
   post: MappedPost;
   onClick?: () => void;
-  mode?: "default" | "repost" | "static" | "detail";
+  mode?: PostModeKey;
 }) => {
-  const isStaticOrDetail = mode === "static" || mode == "detail";
+  const isStatic = mode === "static";
+
+  const modeConfig = POST_MODE_STYLES[mode];
 
   const [open, setOpen] = useState(false);
   const hoverTimer = useRef<any>(null);
@@ -34,19 +37,20 @@ const Post = ({
   const time = post.created_at;
 
   const handleMouseEnter = useCallback(() => {
-    if (isStaticOrDetail) return;
+    if (isStatic) return;
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
     hoverTimer.current = setTimeout(() => setOpen(true), 300);
-  }, [isStaticOrDetail]);
+  }, [isStatic]);
 
   const handleMouseLeave = useCallback(() => {
-    if (isStaticOrDetail) return;
+    if (isStatic) return;
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
     setOpen(false);
-  }, [isStaticOrDetail]);
+  }, [isStatic]);
 
   const MenuButton = useMemo(() => {
-    if (isStaticOrDetail) return null;
+    if (isStatic) return null;
+
     const icon = <Ellipsis className="w-4 h-4" />;
     return username === user?.username ? (
       <MenuMe threadId={post.id} buttonActive={icon} />
@@ -58,37 +62,36 @@ const Post = ({
         buttonActive={icon}
       />
     );
-  }, [isStaticOrDetail, username, user?.username, post.id]);
+  }, [isStatic, username, user?.username, post.id, post.user?.id]);
 
   const imageSlides = useMemo(
     () =>
       post.media_urls.map((img: string, i: number) => (
-        <SwiperSlide key={i} style={{ width: 210 }}>
+        <SwiperSlide key={i} style={{ width: modeConfig.mediaWidth }}>
           <div
             className="rounded-lg overflow-hidden"
-            style={{ width: 210, height: 280 }}
+            style={{
+              width: modeConfig.mediaWidth,
+              height: modeConfig.mediaHeight,
+            }}
           >
             <img
               src={img}
               className="w-full h-full object-cover"
               alt=""
-              onClick={
-                isStaticOrDetail ? (e) => e.stopPropagation() : undefined
-              }
+              onClick={isStatic ? (e) => e.stopPropagation() : undefined}
             />
           </div>
         </SwiperSlide>
       )),
-    [post.media_urls, isStaticOrDetail]
+    [post.media_urls, isStatic, modeConfig.mediaWidth, modeConfig.mediaHeight]
   );
 
   return (
     <div
-      className={`${
-        mode === "default" ? "border-t border-b border-border px-6 py-3 " : ""
-      }`}
+      className={modeConfig.wrapper}
       style={{
-        cursor: isStaticOrDetail ? "default" : "pointer",
+        cursor: modeConfig.cursor as React.CSSProperties["cursor"],
       }}
     >
       {mode === "repost" && (
@@ -99,11 +102,12 @@ const Post = ({
       )}
 
       <div
-        onClick={isStaticOrDetail ? undefined : onClick}
-        className="grid grid-cols-[48px_minmax(0,1fr)] gap-3 w-full"
+        onClick={isStatic ? undefined : onClick}
+        className={`grid ${modeConfig.grid} w-full`}
       >
         <AvatarGroup
-          size={10}
+          className="my-auto"
+          size={modeConfig.avatarSize}
           url={post.user?.avatar_url ?? ""}
           fallBack={username.slice(0, 2).toUpperCase()}
         />
@@ -114,16 +118,16 @@ const Post = ({
               <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                onClick={
-                  isStaticOrDetail ? (e) => e.stopPropagation() : undefined
-                }
+                onClick={isStatic ? (e) => e.stopPropagation() : undefined}
                 className="relative inline-flex min-w-0"
               >
-                <span className="font-semibold text-sm text-foreground truncate whitespace-nowrap hover:underline">
+                <span
+                  className={`font-semibold text-foreground truncate whitespace-nowrap hover:underline ${modeConfig.usernameText}`}
+                >
                   {username}
                 </span>
 
-                {!isStaticOrDetail && open && post.user && (
+                {!isStatic && open && post.user && (
                   <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
@@ -140,8 +144,10 @@ const Post = ({
                   viewBox="0 0 40 40"
                   style={{
                     fill: "rgb(0, 149, 246)",
-                    height: "12px",
-                    width: "12px",
+                    height:
+                      modeConfig.usernameText === "text-xs" ? "10px" : "12px",
+                    width:
+                      modeConfig.usernameText === "text-xs" ? "10px" : "12px",
                   }}
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -150,7 +156,9 @@ const Post = ({
                 </svg>
               )}
 
-              <span className="text-muted-foreground text-xs whitespace-nowrap">
+              <span
+                className={`text-muted-foreground whitespace-nowrap ${modeConfig.timeText}`}
+              >
                 {time}
               </span>
             </div>
@@ -159,7 +167,9 @@ const Post = ({
           </div>
 
           {post.content && (
-            <p className="text-foreground text-sm leading-relaxed mt-1">
+            <p
+              className={`text-foreground leading-relaxed mt-1 ${modeConfig.contentText}`}
+            >
               {post.content}
             </p>
           )}
@@ -167,19 +177,15 @@ const Post = ({
       </div>
 
       {post.media_urls.length > 0 && (
-        <div className="relative mt-3">
-          <div
-            className={` overflow-visible w-auto ${
-              isStaticOrDetail ? "" : "ml-3 pl-12"
-            }   `}
-          >
+        <div className="relative mt-2">
+          <div className={`overflow-visible w-auto ${modeConfig.imageOffset}`}>
             <Swiper
               modules={[FreeMode]}
               spaceBetween={8}
               slidesPerView="auto"
               freeMode
-              grabCursor={!isStaticOrDetail}
-              allowTouchMove={!isStaticOrDetail}
+              grabCursor={!isStatic}
+              allowTouchMove={!isStatic}
               className="overflow-visible"
             >
               {imageSlides}
@@ -190,14 +196,18 @@ const Post = ({
 
       {post.original_post && (
         <Quote
-          mode={isStaticOrDetail ? "static" : "default"}
+          mode={isStatic ? "static" : mode === "detail" ? "detail" : "default"}
           post={post.original_post as PostItem}
         />
       )}
 
-      <div className={`${isStaticOrDetail ? "" : "mt-3 pl-[58px]"}`}>
+      <div className={modeConfig.contentOffset}>
         <PostProvider post={post}>
-          <InteractionBar mode={mode === "static" ? "share" : "auto"} />
+          <InteractionBar
+            className={mode === "detail" ? "ml-0" : ""}
+            mode={modeConfig.interactionMode}
+            size={modeConfig.interactionSize}
+          />
         </PostProvider>
       </div>
     </div>

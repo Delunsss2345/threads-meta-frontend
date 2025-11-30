@@ -40,7 +40,7 @@ const initialState: PostsState = {
     last_page: 1,
   },
   continuePage: true,
-  loaded: true,
+  loaded: false,
 };
 
 const parseError = (error: any): string => {
@@ -215,6 +215,7 @@ export const postsSlice = createSlice({
       state.items = [];
       state.pagination = { current_page: 1, total: 0, last_page: 1 };
       state.continuePage = true;
+      state.loaded = false;
     },
   },
 

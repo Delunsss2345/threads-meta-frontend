@@ -12,8 +12,8 @@ import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { KeepAlive } from "react-activation";
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
-
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
@@ -29,13 +29,12 @@ const Home = () => {
     continuePage,
     loaded,
   } = useSelector(selectPostsState);
+
   useEffect(() => {
-    if (loaded) return;
     if (!loaded) {
       dispatch(getFeeds());
     }
-    console.log(loaded);
-  }, [loaded]);
+  }, [loaded, dispatch]);
 
   const handleNavigateToDetail = (id: number, username: string) => {
     // const state = virtuosoRef.current?.getState();
@@ -58,7 +57,7 @@ const Home = () => {
   }, [feeds, user?.username]);
 
   return (
-    <>
+    <KeepAlive>
       <div className="hidden md:block">
         <PostForm />
       </div>
@@ -70,7 +69,6 @@ const Home = () => {
       <Virtuoso
         ref={virtuosoRef}
         useWindowScroll
-        // restoreStateFrom={initialState || undefined}
         data={filteredFeeds}
         endReached={() =>
           dispatch(loadMoreThreads(pagination.current_page + 1))
@@ -95,7 +93,7 @@ const Home = () => {
             ),
         }}
       />
-    </>
+    </KeepAlive>
   );
 };
 

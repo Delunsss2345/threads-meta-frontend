@@ -1,7 +1,7 @@
 import type { mapPost } from "@/features/post/map";
 
 interface InteractionBarProps {
-  mode: "auto" | "share";
+  mode: "auto" | "share" | "comment" | "detail";
 }
 
 interface User {

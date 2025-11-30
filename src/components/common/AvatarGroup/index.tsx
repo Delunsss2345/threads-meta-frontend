@@ -5,16 +5,18 @@ type AvatarGroupProps = {
   classNameFallback?: string;
   url: string;
   fallBack?: string;
+  className?: string;
 };
 const AvatarGroup = ({
   size,
   url,
   fallBack = "AN",
   classNameFallback,
+  className,
 }: AvatarGroupProps) => {
   return (
     <>
-      <Avatar className={`size-${size} shrink-1`}>
+      <Avatar className={`size-${size} shrink-1 ${className}`}>
         <AvatarImage className="object-cover" src={url} />
         <AvatarFallback className={classNameFallback}>
           {fallBack}

@@ -75,6 +75,7 @@ export interface ReplyData extends BasePost {
   media_urls: string[];
   user: ReplyUser;
 }
+export type ReplyItem = Omit<PostItem, "original_post">;
 
 export interface PostResponse {
   success: boolean;

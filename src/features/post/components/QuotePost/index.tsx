@@ -9,13 +9,13 @@ const Quote = ({
   mode = "default",
 }: {
   post: OriginalPost;
-  mode: "default" | "static";
+  mode: "default" | "static" | "detail";
 }) => {
   if (!post.user) return null;
   const navigate = useNavigate();
 
   const wrapperClass =
-    mode === "static"
+    mode === "static" || mode === "detail"
       ? "mt-3 border rounded-xl bg-muted/30 py-3 px-0 ml-0"
       : "mt-3 ml-[58px] border rounded-xl bg-muted/30 p-3";
 

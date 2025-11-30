@@ -6,8 +6,8 @@ import AuthSocialModal from "@/features/auth/components/LoginModal";
 import { useCurrentUser } from "@/features/auth/hooks";
 import { likePost } from "@/features/post";
 import { useModal } from "@/hooks/use-modal";
+import { cn } from "@/lib/utils";
 import type { AppDispatch } from "@/types/redux";
-import { Heart, MessageCircle, Repeat2, Send } from "lucide-react";
 import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -16,14 +16,32 @@ import ReplyModal from "../ReplyModal";
 import RepostMenu from "../RepostMenu";
 import ShareMenu from "../ShareMenu";
 import type { InteractionBarProps } from "../type";
+import ReplyIcon from "./Icons/ReplyIcon";
+import RepostIcon from "./Icons/RepostIcon";
+import ShareIcon from "./Icons/ShareIcon";
+import TymIcon from "./Icons/TymIcon";
 import styles from "./interactionbar.module.css";
 
-const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
+const InteractionBar = ({
+  mode = "auto",
+  size = 18,
+  iconClass = "",
+}: InteractionBarProps & {
+  size?: number;
+  iconClass?: string;
+  className?: string;
+}) => {
   const ctx = useContext(PostContext);
   const currentUser = useCurrentUser();
   const { show, hide } = useModal();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+
+  const isComment = mode === "comment";
+  const iconSize = isComment ? size - 4 : size;
+  const textSize = isComment ? "text-[10px]" : "text-xs";
+  const gap = isComment ? "gap-2" : "gap-4";
+
   const handleListen = async (e: React.MouseEvent<HTMLDivElement>) => {
     const button = (e.target as HTMLElement).closest("button");
     if (!button) return;
@@ -75,22 +93,25 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
     if (!ctx?.post) return null;
     show(<ReplyModal post={ctx?.post} onClose={hide} />);
   };
+
   return (
     <>
       <div
         onClick={handleListen}
-        className={`flex text-foreground items-center gap-4 ${
-          mode === "share" ? "pointer-events-none opacity-50" : ""
-        }`}
+        className={cn(
+          `flex text-foreground items-center ${gap} ${
+            mode === "share" ? "pointer-events-none opacity-50" : ""
+          }`
+        )}
       >
         <button
           className={`hover:text-red-500 ${styles.interactionButton} ${
-            ctx?.post.is_liked_by_auth ? "text-red-500" : ""
-          }`}
+            isComment ? "!px-1 scale-90" : ""
+          } ${ctx?.post.is_liked_by_auth ? "text-red-500" : ""}`}
         >
-          <Heart size={18} />
+          <TymIcon size={iconSize} className={iconClass} />
           <span
-            className="text-xs interaction-bar"
+            className={`${textSize} interaction-bar`}
             data-label="like"
             title="Like"
           >
@@ -100,11 +121,13 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
 
         <button
           onClick={handleReply}
-          className={`hover:text-blue-500 ${styles.interactionButton}`}
+          className={`hover:text-blue-500 ${styles.interactionButton} ${
+            isComment ? "!px-1 scale-90" : ""
+          }`}
         >
-          <MessageCircle size={18} />
+          <ReplyIcon size={iconSize} className={iconClass} />
           <span
-            className="text-xs interaction-bar"
+            className={`${textSize} interaction-bar`}
             data-label="reply"
             title="Reply"
           >
@@ -117,12 +140,12 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
           isAuth={!!currentUser}
           onUnauthorizedClick={hide}
           className={`hover:text-green-500 !px-0 ${styles.interactionButton} ${
-            ctx?.post.is_reposted_by_auth ? "text-green-500" : ""
-          }`}
+            isComment ? "!px-1 scale-90" : ""
+          } ${ctx?.post.is_reposted_by_auth ? "text-green-500" : ""}`}
         >
-          <Repeat2 size={18} />
+          <RepostIcon size={iconSize} className={iconClass} />
           <span
-            className="text-xs interaction-bar"
+            className={`${textSize} interaction-bar`}
             data-label="repost"
             title="Repost"
           >
@@ -133,14 +156,14 @@ const InteractionBar = ({ mode = "auto" }: InteractionBarProps) => {
         <ShareMenu
           isAuth={!!currentUser}
           onUnauthorizedClick={hide}
-          className={`hover:text-gray-700 !px-0 ${styles.interactionButton}
-          
-          ${ctx?.post.is_saved_by_auth ? "text-gray-700" : ""}`}
+          className={`hover:text-gray-700 !px-0 ${styles.interactionButton} ${
+            isComment ? "!px-1 scale-90" : ""
+          } ${ctx?.post.is_saved_by_auth ? "text-gray-700" : ""}`}
           post={ctx?.post || undefined}
         >
-          <Send size={18} />
+          <ShareIcon size={iconSize} className={iconClass} />
           <span
-            className="text-xs interaction-bar"
+            className={`${textSize} interaction-bar`}
             data-label="share"
             title="Share"
           >
