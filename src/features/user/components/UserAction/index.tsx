@@ -1,9 +1,15 @@
 import EmojiPortal from "@/components/common/EmojiPortal";
 import SwiperImage from "@/components/common/SwiperImage";
 import { Textarea } from "@/components/ui/textarea";
+import ImageAttach from "@/features/post/components/Icons/ImageAttach";
+import ImageConvey from "@/features/post/components/Icons/ImageConvey";
+import ImageGif from "@/features/post/components/Icons/ImageGif";
+import ImageMap from "@/features/post/components/Icons/ImageMap";
+import ImagePost from "@/features/post/components/Icons/ImagePost";
+import ImageSticker from "@/features/post/components/Icons/ImageSticker";
 import { useAction } from "@/hooks/use-action";
 import EmojiPicker from "emoji-picker-react";
-import { ChevronRight, Hash, ImageIcon, MapPin, Smile } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import InputSearchTopic from "./InputSearchTopic";
@@ -48,7 +54,7 @@ const UserAction = ({ username, onChangeContent }: UserActionProps) => {
 
         {previewImage && <SwiperImage images={previewImage} />}
       </div>
-      <div className="flex items-center gap-4 mt-3 text-muted-foreground/60">
+      <div className="flex items-center gap-2 mt-3 text-muted-foreground/60">
         <div>
           <input
             onChange={handleInput}
@@ -58,18 +64,18 @@ const UserAction = ({ username, onChangeContent }: UserActionProps) => {
             type="file"
             className="hidden"
           />
-          <ImageIcon
+          <ImagePost
             onClick={() => inputRef.current?.click()}
             className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors"
           />
         </div>
 
-        <div className="border border-current rounded-[4px] text-[10px] font-bold px-1 cursor-pointer hover:text-foreground transition-colors">
-          GIF
+        <div className="rounded-[4px] text-[10px] font-bold px-1 cursor-pointer hover:text-foreground transition-colors">
+          <ImageGif />
         </div>
 
         <div className="relative">
-          <Smile
+          <ImageSticker
             ref={emojiRef}
             className="w-5 h-5 cursor-pointer hover:text-foreground"
             onClick={() => {
@@ -105,8 +111,9 @@ const UserAction = ({ username, onChangeContent }: UserActionProps) => {
           )}
         </div>
 
-        <Hash className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
-        <MapPin className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
+        <ImageConvey className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
+        <ImageAttach className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
+        <ImageMap className="w-5 h-5 cursor-pointer hover:text-foreground transition-colors" />
       </div>
     </>
   );
