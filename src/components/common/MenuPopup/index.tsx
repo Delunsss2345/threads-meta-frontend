@@ -73,6 +73,7 @@ const MenuPopup = ({
               ...(motionProps?.transition || {}),
             }}
             className={`
+              h-fit
                 rounded-xl border border-gray-200 p-2 bg-primary-foreground 
                 *:text-[15px] *:py-3 *:font-semibold *:rounded-xl shadow-lg
                 ${sizeClasses[mode] || sizeClasses.long}

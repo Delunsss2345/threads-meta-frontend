@@ -38,7 +38,7 @@ const LinksEditModal = ({
 
         <button
           onClick={() => setActiveModal("main")}
-          className="text-blue-500 font-semibold"
+          className="text-primary font-semibold"
         >
           {t("profileSettings.done")}
         </button>
@@ -50,7 +50,7 @@ const LinksEditModal = ({
             type="text"
             value={newLink.title}
             onChange={(e) => setNewLink({ ...newLink, title: e.target.value })}
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 "
             placeholder={t("profileSettings.linkTitlePlaceholder")}
           />
 
@@ -58,13 +58,13 @@ const LinksEditModal = ({
             type="url"
             value={newLink.url}
             onChange={(e) => setNewLink({ ...newLink, url: e.target.value })}
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 "
             placeholder={t("profileSettings.linkUrlPlaceholder")}
           />
 
           <button
             onClick={handleAddLink}
-            className="w-full py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+            className="w-full py-3 bg-primary text-white rounded-lg font-semibold transition-colors"
           >
             {t("profileSettings.addLink")}
           </button>
@@ -86,7 +86,7 @@ const LinksEditModal = ({
                   onChange={(e) =>
                     handleUpdateLink(index, "title", e.target.value)
                   }
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2"
                   placeholder={t("profileSettings.linkTitle")}
                 />
 
@@ -96,7 +96,7 @@ const LinksEditModal = ({
                   onChange={(e) =>
                     handleUpdateLink(index, "url", e.target.value)
                   }
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2"
                   placeholder={t("profileSettings.linkUrl")}
                 />
 

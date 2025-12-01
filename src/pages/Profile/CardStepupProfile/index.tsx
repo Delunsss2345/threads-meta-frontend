@@ -1,68 +1,75 @@
-import { Button } from "@/components/ui/button"; // nhớ import đúng
+import { Button } from "@/components/ui/button";
 import { Check, Edit, Image, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
+
 const CardStepupProfile = () => {
   const { t } = useTranslation();
 
   const cards = [
     {
       id: "follow",
-      icon: <Users className="w-6 h-6 text-white" />,
+      icon: <Users className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
       title: t("profileSetup.follow10Profiles"),
       desc: t("profileSetup.follow10ProfilesDesc"),
       buttonClick: t("profileSetup.button.follow"),
     },
     {
       id: "story",
-      icon: <Edit className="w-6 h-6 text-white" />,
+      icon: <Edit className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
       title: t("profileSetup.addBio"),
       desc: t("profileSetup.addBioDesc"),
       buttonClick: t("profileSetup.button.addBio"),
     },
     {
       id: "createThread",
-      icon: <Check className="w-6 h-6 text-white" />,
+      icon: <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
       title: t("profileSetup.createThread"),
       desc: t("profileSetup.createThreadDesc"),
       buttonClick: t("profileSetup.button.postThread"),
     },
     {
       id: "addAvatar",
-      icon: <Image className="w-6 h-6 text-white" />,
+      icon: <Image className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
       title: t("profileSetup.addAvatar"),
       desc: t("profileSetup.addAvatarDesc"),
       buttonClick: t("profileSetup.button.uploadAvatar"),
     },
   ];
+
   return (
     <div className="mt-6">
       <Swiper
-        spaceBetween={8}
-        slidesPerView={1.1}
-        grabCursor={true}
+        spaceBetween={10}
+        slidesPerView={1.15}
+        grabCursor
         breakpoints={{
-          640: { slidesPerView: 2, spaceBetween: 20 },
+          480: { slidesPerView: 1.4 },
+          640: { slidesPerView: 2.1, spaceBetween: 16 },
+          768: { slidesPerView: 2.5, spaceBetween: 20 },
           1024: { slidesPerView: 3, spaceBetween: 24 },
         }}
       >
         {cards.map((card) => (
           <SwiperSlide key={card.id}>
-            <div className="relative p-5 pb-10 text-center border select-none bg-card border-border rounded-2xl cursor-grab">
-              <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 rounded-full bg-accent">
+            <div className="relative p-4 sm:p-5 pb-12 text-center border bg-card border-border rounded-2xl cursor-grab select-none">
+              <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 rounded-full bg-accent">
                 {card.icon}
               </div>
-              <h3 className="mb-1 text-base font-semibold text-foreground">
+
+              <h3 className="mb-1 text-sm sm:text-base font-semibold text-foreground">
                 {card.title}
               </h3>
-              <p className="mb-4 text-[12px] text-muted-foreground">
+
+              <p className="mb-4 text-xs sm:text-[13px] text-muted-foreground leading-tight">
                 {card.desc}
               </p>
+
+              <Button className="absolute text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 text-white bottom-3 left-1/2 -translate-x-1/2 bg-accent-foreground">
+                {card.buttonClick}
+              </Button>
             </div>
-            <Button className="absolute text-white -translate-x-1/2 bottom-3 left-1/2 bg-accent-foreground">
-              {card.buttonClick}
-            </Button>
           </SwiperSlide>
         ))}
       </Swiper>

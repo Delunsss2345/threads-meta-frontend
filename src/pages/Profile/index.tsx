@@ -34,7 +34,7 @@ const Profile = () => {
   }, [activeTab]);
   return (
     <>
-      <div className="h-full px-6 pt-6 mb-10">
+      <div className="h-full px-2 md:px-6 pt-6 mb-10">
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-1">

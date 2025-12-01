@@ -3,9 +3,10 @@ export type PostModeKey =
   | "repost"
   | "static"
   | "detail"
-  | "comment";
+  | "comment"
+  | "reply";
 
-type InteractionMode = "auto" | "share" | "comment";
+type InteractionMode = "auto" | "share" | "comment" | "hidden";
 
 type PostModeStyle = {
   wrapper: string;
@@ -56,7 +57,7 @@ export const POST_MODE_STYLES: Record<PostModeKey, PostModeStyle> = {
   },
   detail: {
     wrapper: "px-4",
-    cursor: "pointer",
+    cursor: "",
     grid: "grid-cols-[48px_minmax(0,1fr)] gap-3",
     avatarSize: 10,
     usernameText: "text-sm",
@@ -98,5 +99,20 @@ export const POST_MODE_STYLES: Record<PostModeKey, PostModeStyle> = {
     mediaHeight: 280,
     interactionMode: "share",
     interactionSize: 18,
+  },
+  reply: {
+    wrapper: "px-0 py-0",
+    cursor: "default",
+    grid: "grid-cols-[32px_minmax(0,1fr)] gap-5",
+    avatarSize: 10,
+    usernameText: "text-sm",
+    contentText: "text-sm",
+    timeText: "text-[10px]",
+    imageOffset: "ml-0 pl-0",
+    contentOffset: "mt-2",
+    mediaWidth: 180,
+    mediaHeight: 220,
+    interactionMode: "hidden",
+    interactionSize: 0,
   },
 };

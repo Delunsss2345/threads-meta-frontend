@@ -12,7 +12,9 @@ const ExternalLinkItem = ({
 }) => {
   return (
     <Button variant="ghost" className={styles.menuItemBase} onClick={onClick}>
-      <span className={styles.menuItemText}>{text}</span>
+      <span className={`${styles.menuItemText} text-sm md:text-lg`}>
+        {text}
+      </span>
       <ExternalLink className={styles.menuItemIconRight} />
     </Button>
   );

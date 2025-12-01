@@ -13,8 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import "swiper/css";
-import { FreeMode } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+import Post from "..";
 import type { MappedPost } from "../type";
 
 function ReplyModal({
@@ -55,65 +54,9 @@ function ReplyModal({
       <Card className="p-0 gap-0" onClick={(e) => e.stopPropagation()}>
         <Header headerText={t("post.replyTo")} onClose={onClose} />
 
-        <CardContent className="p-4 pt-5">
-          <div className="flex gap-3 mb-6">
-            <div className="flex flex-col items-center">
-              <Avatar className="w-10 h-10 cursor-pointer">
-                <AvatarImage src={post.user?.avatar_url || undefined} />
-                <AvatarFallback>
-                  {post.user?.username.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-
-              <div className="w-[2px] flex-1 bg-border my-2 rounded-full" />
-            </div>
-
-            <div className="flex-1 pt-1 space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-sm">
-                  {post.user?.username}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {post.created_at}
-                </span>
-              </div>
-
-              {post.content && (
-                <div className="text-foreground text-sm leading-relaxed">
-                  {post.content}
-                </div>
-              )}
-
-              {post.media_urls.length > 0 && (
-                <div className="relative mt-3">
-                  <Swiper
-                    modules={[FreeMode]}
-                    spaceBetween={8}
-                    slidesPerView="auto"
-                    freeMode
-                    grabCursor
-                    className="overflow-visible"
-                  >
-                    {post.media_urls.map((img, i) => (
-                      <SwiperSlide key={i} style={{ width: "210px" }}>
-                        <div
-                          className="rounded-lg overflow-hidden"
-                          style={{ width: "210px", height: "280px" }}
-                        >
-                          <img
-                            src={img}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="flex gap-3">
+        <CardContent className="p-4 pt-5 ">
+          <Post post={post} mode="reply" />
+          <div className="flex gap-3 mt-5">
             <div className="flex flex-col items-center">
               <Avatar className="w-10 h-10 cursor-pointer">
                 <AvatarImage src={user.avatar_url || undefined} />

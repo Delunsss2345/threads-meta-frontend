@@ -100,7 +100,7 @@ const RepostMenu = ({
         initial: { opacity: 0, x: 0 },
         animate: { opacity: 1, x: 0 },
       }}
-      className={cn("p-0 hover:!bg-transparent", className)}
+      className={cn(className)}
       buttonActive={styledChildren}
     >
       {repostMenu.map((item, i) => (

@@ -40,7 +40,7 @@ const InteractionBar = ({
   const isComment = mode === "comment";
   const iconSize = isComment ? size - 4 : size;
   const textSize = isComment ? "text-[10px]" : "text-xs";
-  const gap = isComment ? "gap-2" : "gap-4";
+  const gap = isComment ? "gap-0" : "gap-0";
 
   const handleListen = async (e: React.MouseEvent<HTMLDivElement>) => {
     const button = (e.target as HTMLElement).closest("button");
@@ -105,7 +105,7 @@ const InteractionBar = ({
         )}
       >
         <button
-          className={`hover:text-red-500 ${styles.interactionButton} ${
+          className={`hover:bg-[#ccc] ${styles.interactionButton} ${
             isComment ? "!px-1 scale-90" : ""
           } ${ctx?.post.is_liked_by_auth ? "text-red-500" : ""}`}
         >
@@ -121,7 +121,7 @@ const InteractionBar = ({
 
         <button
           onClick={handleReply}
-          className={`hover:text-blue-500 ${styles.interactionButton} ${
+          className={` ${styles.interactionButton} ${
             isComment ? "!px-1 scale-90" : ""
           }`}
         >
@@ -139,7 +139,7 @@ const InteractionBar = ({
           post={ctx?.post || undefined}
           isAuth={!!currentUser}
           onUnauthorizedClick={hide}
-          className={`hover:text-green-500 !px-0 ${styles.interactionButton} ${
+          className={` ${styles.interactionButton} ${
             isComment ? "!px-1 scale-90" : ""
           } ${ctx?.post.is_reposted_by_auth ? "text-green-500" : ""}`}
         >
@@ -156,7 +156,7 @@ const InteractionBar = ({
         <ShareMenu
           isAuth={!!currentUser}
           onUnauthorizedClick={hide}
-          className={`hover:text-gray-700 !px-0 ${styles.interactionButton} ${
+          className={`${styles.interactionButton} ${
             isComment ? "!px-1 scale-90" : ""
           } ${ctx?.post.is_saved_by_auth ? "text-gray-700" : ""}`}
           post={ctx?.post || undefined}

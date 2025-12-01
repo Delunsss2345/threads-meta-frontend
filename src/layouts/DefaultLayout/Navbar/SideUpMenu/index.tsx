@@ -3,6 +3,7 @@ import LightModeIcon from "@/components/common/Icon/LightModeIcon";
 import MenuPopup from "@/components/common/MenuPopup";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { logout } from "@/features/auth";
+import { useIsMobile } from "@/hooks/use-mobile";
 import type { AppDispatch } from "@/types/redux";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
@@ -27,7 +28,7 @@ const SlideUpMenu = ({
   customPopup?: string;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const isMobile = useIsMobile();
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
     "main"
   );
@@ -41,7 +42,11 @@ const SlideUpMenu = ({
       isAuth: false,
     },
     { label: t("menu.profileInfo"), isAuth: true },
-    { label: t("menu.settings"), pathName: "settings/privacy", isAuth: true },
+    {
+      label: t("menu.settings"),
+      pathName: `${isMobile ? "settings" : "settings/privacy"}`,
+      isAuth: true,
+    },
     { label: t("menu.feed"), isAuth: true },
     { label: t("menu.saved"), pathName: "saved", isAuth: true },
     { label: t("menu.liked"), pathName: "liked", isAuth: true },

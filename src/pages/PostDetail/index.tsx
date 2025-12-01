@@ -58,14 +58,18 @@ const PostDetail = () => {
 
           <div className="flex flex-col items-center justify-between text-sm pt-2 px-4 gap-4">
             <Separator />
-            <div className="flex w-full justify-between">
-              <button className="flex items-center gap-1 font-semibold">
-                Hàng đầu <ChevronDown size={13} />
-              </button>
-              <button className="flex items-center gap-1 text-muted-foreground text-sm">
-                <p>Xem hoạt động</p> <ChevronRight size={13} />
-              </button>
-            </div>
+            {replies.length < 1 ? (
+              ""
+            ) : (
+              <div className="flex w-full justify-between">
+                <button className="flex items-center gap-1 font-semibold">
+                  Hàng đầu <ChevronDown size={13} />
+                </button>
+                <button className="flex items-center gap-1 text-muted-foreground text-sm">
+                  <p>Xem hoạt động</p> <ChevronRight size={13} />
+                </button>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

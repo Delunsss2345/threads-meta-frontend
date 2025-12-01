@@ -37,7 +37,7 @@ const NameEdit = ({
             handleSaveName();
             nameText = inputRef.current?.value || nameText;
           }}
-          className="text-blue-500 font-semibold"
+          className="text-primary font-semibold"
         >
           Lưu
         </button>

@@ -25,7 +25,7 @@ const Post = ({
   onClick?: () => void;
   mode?: PostModeKey;
 }) => {
-  const isStatic = mode === "static";
+  const isStaticOrReply = mode === "static" || mode === "reply";
 
   const modeConfig = POST_MODE_STYLES[mode];
 
@@ -37,19 +37,19 @@ const Post = ({
   const time = post.created_at;
 
   const handleMouseEnter = useCallback(() => {
-    if (isStatic) return;
+    if (isStaticOrReply) return;
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
     hoverTimer.current = setTimeout(() => setOpen(true), 300);
-  }, [isStatic]);
+  }, [isStaticOrReply]);
 
   const handleMouseLeave = useCallback(() => {
-    if (isStatic) return;
+    if (isStaticOrReply) return;
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
     setOpen(false);
-  }, [isStatic]);
+  }, [isStaticOrReply]);
 
   const MenuButton = useMemo(() => {
-    if (isStatic) return null;
+    if (isStaticOrReply) return null;
 
     const icon = <Ellipsis className="w-4 h-4" />;
     return username === user?.username ? (
@@ -62,7 +62,7 @@ const Post = ({
         buttonActive={icon}
       />
     );
-  }, [isStatic, username, user?.username, post.id, post.user?.id]);
+  }, [isStaticOrReply, username, user?.username, post.id, post.user?.id]);
 
   const imageSlides = useMemo(
     () =>
@@ -79,12 +79,17 @@ const Post = ({
               src={img}
               className="w-full h-full object-cover"
               alt=""
-              onClick={isStatic ? (e) => e.stopPropagation() : undefined}
+              onClick={isStaticOrReply ? (e) => e.stopPropagation() : undefined}
             />
           </div>
         </SwiperSlide>
       )),
-    [post.media_urls, isStatic, modeConfig.mediaWidth, modeConfig.mediaHeight]
+    [
+      post.media_urls,
+      isStaticOrReply,
+      modeConfig.mediaWidth,
+      modeConfig.mediaHeight,
+    ]
   );
 
   return (
@@ -102,7 +107,7 @@ const Post = ({
       )}
 
       <div
-        onClick={isStatic ? undefined : onClick}
+        onClick={mode === "static" || mode === "reply" ? undefined : onClick}
         className={`grid ${modeConfig.grid} w-full`}
       >
         <AvatarGroup
@@ -118,16 +123,20 @@ const Post = ({
               <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                onClick={isStatic ? (e) => e.stopPropagation() : undefined}
+                onClick={
+                  isStaticOrReply ? (e) => e.stopPropagation() : undefined
+                }
                 className="relative inline-flex min-w-0"
               >
                 <span
-                  className={`font-semibold text-foreground truncate whitespace-nowrap hover:underline ${modeConfig.usernameText}`}
+                  className={`font-semibold text-foreground truncate whitespace-nowrap ${
+                    isStaticOrReply ? "" : "hover:underline"
+                  } ${modeConfig.usernameText}`}
                 >
                   {username}
                 </span>
 
-                {!isStatic && open && post.user && (
+                {!isStaticOrReply && open && post.user && (
                   <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
@@ -184,8 +193,8 @@ const Post = ({
               spaceBetween={8}
               slidesPerView="auto"
               freeMode
-              grabCursor={!isStatic}
-              allowTouchMove={!isStatic}
+              grabCursor={!isStaticOrReply}
+              allowTouchMove={!isStaticOrReply}
               className="overflow-visible"
             >
               {imageSlides}
@@ -196,18 +205,26 @@ const Post = ({
 
       {post.original_post && (
         <Quote
-          mode={isStatic ? "static" : mode === "detail" ? "detail" : "default"}
+          mode={
+            mode === "static"
+              ? "static"
+              : mode === "detail"
+              ? "detail"
+              : "default"
+          }
           post={post.original_post as PostItem}
         />
       )}
 
       <div className={modeConfig.contentOffset}>
         <PostProvider post={post}>
-          <InteractionBar
-            className={mode === "detail" ? "ml-0" : ""}
-            mode={modeConfig.interactionMode}
-            size={modeConfig.interactionSize}
-          />
+          {modeConfig.interactionMode !== "hidden" && (
+            <InteractionBar
+              className={mode === "detail" ? "ml-0" : ""}
+              mode={modeConfig.interactionMode}
+              size={modeConfig.interactionSize}
+            />
+          )}
         </PostProvider>
       </div>
     </div>

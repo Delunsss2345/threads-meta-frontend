@@ -11,13 +11,15 @@ import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AvatarGroup from "@/components/common/AvatarGroup";
 import Footer from "@/components/common/ModalPopup/Footer";
 import Header from "@/components/common/ModalPopup/Header";
-import { CardContent } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
-import UserAction from "@/features/user/components/UserAction";
+import { selectPostsLoading } from "@/features/post";
+import UserPostForm from "@/features/post/components/UserPostForm";
+import { useCreatePost } from "@/hooks/use-create-post";
+import type { AppDispatch } from "@/types/redux";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 
 const navItems = [
   { key: "home", icon: <HomeIcon size={26} />, link: "/" },
@@ -45,9 +47,10 @@ const NavMobile: React.FC = () => {
   const isMobile = useIsMobile();
   const { isAuthenticated, user } = useAuth();
   const { show, hide } = useModal();
-  const [content, setContent] = useState("");
-  const [previewImage, setPreviewImage] = useState<File[] | null>(null);
+  const { content, setContent, previewImage, loadingPosts, setPreviewImage, handlePost } =
+    useCreatePost(() => setOpenSheet(false));
   const { t } = useTranslation();
+
   if (!isMobile) return null;
 
   const handleNavClick = (item: (typeof navItems)[0]) => {
@@ -57,7 +60,7 @@ const NavMobile: React.FC = () => {
           onClose={hide}
           onContinue={hide}
           title="Login to continue"
-          description="Join Threads to share thoughts, find out what's going on, follow your people and more."
+          description="Join Threads to share thoughts..."
         />
       );
       return;
@@ -74,7 +77,7 @@ const NavMobile: React.FC = () => {
           onClose={hide}
           onContinue={hide}
           title="Login to continue"
-          description="Join Threads to share thoughts, find out what's going on, follow your people and more."
+          description="Join Threads to share thoughts..."
         />
       );
       return;
@@ -112,48 +115,22 @@ const NavMobile: React.FC = () => {
           <SheetHeader className="p-0">
             <Header
               className="p-10"
-              headerText="Threads mới"
-              onClose={() => setOpenSheet(!openSheet)}
+              headerText={t("post.newThread")}
+              onClose={() => setOpenSheet(false)}
             />
           </SheetHeader>
 
-          <CardContent className="p-4 pt-5">
-            <div className="flex gap-3">
-              <div className="flex flex-col items-center">
-                <AvatarGroup
-                  size={10}
-                  url={user?.avatar_url || ""}
-                  fallBack={user?.username?.slice(0, 2).toUpperCase()}
-                />
-
-                <div className="w-[2px] flex-1 bg-border my-2 min-h-[40px] rounded-full"></div>
-
-                <AvatarGroup
-                  size={5}
-                  url={user?.avatar_url || ""}
-                  fallBack={user?.username?.slice(0, 2).toUpperCase()}
-                />
-              </div>
-
-              <div className="flex-1 pt-1 space-y-4 overflow-x-auto">
-                <UserAction
-                  username={user?.username}
-                  onChangeContent={(data: any) => {
-                    setContent(data.content);
-                    setPreviewImage(data.previewImage);
-                  }}
-                />
-                <div className="min-h-[20px] flex items-center text-muted-foreground/50 text-sm pt-3">
-                  {t("post.addToThread")}
-                </div>
-              </div>
-            </div>
-          </CardContent>
+          <UserPostForm
+            user={user}
+            setContent={setContent}
+            setPreviewImage={setPreviewImage}
+            t={t}
+          />
 
           <Footer
             content={content}
-            // loading={loadingPosts}
-            // onSubmit={handlePost}
+            loading={loadingPosts}
+            onSubmit={handlePost}
           />
         </SheetContent>
       </Sheet>

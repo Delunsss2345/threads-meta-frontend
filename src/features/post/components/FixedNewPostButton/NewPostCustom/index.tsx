@@ -2,8 +2,8 @@ import Footer from "@/components/common/ModalPopup/Footer";
 import Header from "@/components/common/ModalPopup/Header";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/features/auth/hooks";
+import { useCreatePost } from "@/hooks/use-create-post";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import UserPostForm from "../../UserPostForm";
 
@@ -11,8 +11,14 @@ function NewPostCustom({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
   const { user } = useAuth();
 
-  const [content, setContent] = useState("");
-  const [previewImage, setPreviewImage] = useState<File[] | null>(null);
+  const {
+    content,
+    setContent,
+    previewImage,
+    setPreviewImage,
+    loadingPosts,
+    handlePost,
+  } = useCreatePost(onClose);
 
   return (
     <motion.div
@@ -37,8 +43,9 @@ function NewPostCustom({ onClose }: { onClose: () => void }) {
         />
 
         <Footer
-          loading={false}
-          onSubmit={() => console.log("submit:", content, previewImage)}
+          content={content}
+          loading={loadingPosts}
+          onSubmit={handlePost}
         />
       </Card>
     </motion.div>

@@ -36,7 +36,7 @@ const SearchPage = () => {
               placeholder={t("search.placeholder")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="pl-10 pr-10 rounded-lg h-11 bg-muted/50 focus:bg-private focus:ring-0"
+              className="pl-10 pr-10 rounded-lg h-11 bg-muted/50 focus:bg-private focus:outline-none focus:ring-0"
             />
             {query && (
               <button

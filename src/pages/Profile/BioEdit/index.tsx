@@ -34,7 +34,7 @@ const BioEditModal = ({
             handleSaveBio();
             bioText = textAreaRef.current?.textContent || bioText;
           }}
-          className="text-blue-500 font-semibold"
+          className="text-primary font-semibold"
         >
           Lưu
         </button>
@@ -43,7 +43,7 @@ const BioEditModal = ({
       <div className="p-4">
         <Textarea
           ref={textAreaRef}
-          value={previewBio}
+          value={previewBio ?? ""}
           onChange={(e) => setBioText(e.target.value)}
           className="w-full h-32 p-3  rounded-lg resize-none shadow-none focus:outline-none focus:ring-2 focus:ring-none border-0 "
           placeholder="Viết vài dòng về bản thân..."
