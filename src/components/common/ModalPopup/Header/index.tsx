@@ -1,19 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { CardHeader } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { Layers, MoreHorizontal, X } from "lucide-react";
 
 const Header = ({
   onClose,
   headerText,
   mode,
+  className,
 }: {
   onClose: () => void;
   headerText: string;
   mode?: "x";
+  className?: string;
 }) => {
   return (
     <>
-      <CardHeader className={`flex flex-row items-center border-b space-y-0 !py-2 ${mode ? "!px-2" : ""}`}>
+      <CardHeader
+        className={cn(
+          `flex flex-row items-center border-b space-y-0 !py-2 ${
+            mode ? "!px-2" : ""
+          }`,
+          className
+        )}
+      >
         <div className="flex-1 text-left">
           <Button
             variant="ghost"
