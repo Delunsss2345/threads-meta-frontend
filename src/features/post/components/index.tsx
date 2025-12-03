@@ -30,7 +30,7 @@ const Post = ({
   const modeConfig = POST_MODE_STYLES[mode];
 
   const [open, setOpen] = useState(false);
-  const hoverTimer = useRef<any>(null);
+  const hoverTimer = useRef<number | null>(null);
   const { user } = useAuth();
 
   const username = post.user?.username ?? "";

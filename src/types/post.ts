@@ -83,6 +83,13 @@ export interface PostResponse {
   pagination: PaginationResponse;
 }
 
+export interface ReplyResponse {
+  success: boolean;
+  data: ReplyData[];
+  pagination: PaginationResponse;
+}
+
+
 export type CreatePostResponse = BaseResponse<Omit<PostItem, "original_post">>;
 
 export interface CreatePostBody {
@@ -112,5 +119,4 @@ export type SinglePostResponse = BaseResponse<PostItem>;
 export type LikePostResponse = BaseResponse<LikeData>;
 export type RepostPostResponse = BaseResponse<RepostData>;
 export type SavePostResponse = BaseResponse<SaveData>;
-export type ReplyResponse = BaseResponse<ReplyData[]>;
 export type PostHidden = MessageResponse;

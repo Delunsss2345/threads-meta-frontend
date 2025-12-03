@@ -8,15 +8,14 @@ import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import InfiniteList from "@/features/post/components/InfiniteList";
 import { KeepAlive } from "react-activation";
-import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
-
   const navigate = useNavigate();
   const {
     items: feeds,
@@ -56,30 +55,20 @@ const Home = () => {
         <FeedTabs />
       </div>
 
-      <Virtuoso
-        useWindowScroll
+      <InfiniteList
         data={filteredFeeds}
         endReached={() =>
           dispatch(loadMoreThreads(pagination.current_page + 1))
         }
+        contentNotFoundItem="Hết bài viết"
+        continuePage={continuePage}
+        skeleton={<SkeletonPost />}
         itemContent={(index, post: PostItem) => (
           <Post
             onClick={() => handleNavigateToDetail(post.id, post.user.username)}
-            key={index}
             post={mapPost(post)}
           />
         )}
-        followOutput={false}
-        components={{
-          Footer: () =>
-            !continuePage ? (
-              <div className="text-center py-4 text-muted-foreground">
-                Không còn bài viết
-              </div>
-            ) : (
-              <SkeletonPost />
-            ),
-        }}
       />
     </KeepAlive>
   );

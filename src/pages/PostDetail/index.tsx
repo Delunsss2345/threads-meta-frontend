@@ -1,7 +1,13 @@
 import LoadingFetch from "@/components/common/LoadingFetch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { getReplies, getSinglePost, selectPostsState } from "@/features/post";
+import {
+  getReplies,
+  getSinglePost,
+  loadMoreReply,
+  resetReplies,
+  selectPostsState,
+} from "@/features/post";
 import Post from "@/features/post/components";
 import { mapPost } from "@/features/post/map";
 import type { PostItem, ReplyItem } from "@/types/post";
@@ -9,6 +15,8 @@ import type { AppDispatch } from "@/types/redux";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
 import ScrollTop from "@/components/common/ScrollTop";
+import { Skeleton } from "@/components/ui/skeleton";
+import InfiniteList from "@/features/post/components/InfiniteList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -22,9 +30,10 @@ const PostDetail = () => {
   const navigator = useNavigate();
   const {
     items: posts,
-    loadingRequest,
     replies,
     singlePost,
+    continueReplies,
+    paginationReplies,
     error,
   } = useSelector(selectPostsState);
 
@@ -42,7 +51,7 @@ const PostDetail = () => {
     } else if (!postDetail) {
       dispatch(getSinglePost(postId));
     }
-
+    dispatch(resetReplies());
     dispatch(getReplies(postId));
   }, [id, postId, dispatch, postDetail, isQuoteClick]);
 
@@ -74,20 +83,30 @@ const PostDetail = () => {
         </CardContent>
       </Card>
       <div>
-        {loadingRequest ? (
-          <LoadingFetch />
-        ) : (
-          replies.map((reply: ReplyItem) => (
+        <InfiniteList
+          data={replies}
+          continuePage={continueReplies}
+          skeleton={<Skeleton />}
+          contentNotFoundCheck={false}
+          endReached={() =>
+            dispatch(
+              loadMoreReply({
+                id: postId,
+                page: paginationReplies.current_page + 1,
+              })
+            )
+          }
+          itemContent={(index, reply: ReplyItem) => (
             <Post
               key={reply.id}
-              onClick={() => {
-                navigator(`/${reply.user.username}/post/${reply.id}`);
-              }}
+              onClick={() =>
+                navigator(`/${reply.user.username}/post/${reply.id}`)
+              }
               mode="comment"
               post={mapPost(reply)}
             />
-          ))
-        )}
+          )}
+        />
       </div>
     </>
   );

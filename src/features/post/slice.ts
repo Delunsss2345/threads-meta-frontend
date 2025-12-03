@@ -5,6 +5,7 @@ import type {
   PostResponse,
   ReplyData,
   ReplyItem,
+  ReplyResponse,
 } from "@/types/post";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postApi } from "./api";
@@ -23,6 +24,12 @@ export interface PostsState {
     total: number;
     last_page: number;
   };
+  paginationReplies: {
+    current_page: number;
+    total: number;
+    last_page: number;
+  };
+  continueReplies: boolean;
   continuePage: boolean;
   loaded: boolean;
 }
@@ -40,6 +47,12 @@ const initialState: PostsState = {
     total: 0,
     last_page: 1,
   },
+  paginationReplies: {
+    current_page: 1,
+    total: 0,
+    last_page: 1,
+  },
+  continueReplies: true,
   continuePage: true,
   loaded: false,
 };
@@ -107,6 +120,17 @@ export const loadMoreThreads = createAsyncThunk<PostResponse, number>(
     }
   }
 );
+export const loadMoreReply = createAsyncThunk<
+  ReplyResponse,
+  { id: number; page: number }
+>("posts/load-more-reply", async (payload, { rejectWithValue }) => {
+  try {
+    console.log(payload);
+    return await postApi.getReplies(payload.id, payload.page);
+  } catch (error) {
+    return rejectWithValue(parseError(error));
+  }
+});
 
 export const likePost = createAsyncThunk(
   "posts/likePost",
@@ -218,6 +242,10 @@ export const postsSlice = createSlice({
       state.continuePage = true;
       state.loaded = false;
     },
+    resetReplies: (state) => {
+      state.continueReplies = false;
+      state.paginationReplies.current_page = 1;
+    },
   },
 
   extraReducers: (builder) => {
@@ -256,6 +284,26 @@ export const postsSlice = createSlice({
       state.continuePage = false;
     });
 
+    // Load more replies
+    builder.addCase(loadMoreReply.pending, (state) => {
+      state.error = null;
+      state.continueReplies = true;
+      state.paginationReplies.current_page = 1;
+    });
+
+    builder.addCase(loadMoreReply.fulfilled, (state, action) => {
+      const { current_page, total } = action.payload.pagination;
+
+      state.replies.push(...action.payload.data);
+      state.paginationReplies = action.payload.pagination;
+      state.continueReplies = current_page * PER_PAGE < total;
+    });
+
+    builder.addCase(loadMoreReply.rejected, (state, action) => {
+      state.error = action.payload as string;
+      state.continueReplies = false;
+    });
+
     // like
     createInteraction(
       builder,
@@ -291,6 +339,7 @@ export const postsSlice = createSlice({
     );
 
     // respost post
+    // @ts-nocheck
     createInteraction(
       builder,
       repostPost,
@@ -364,4 +413,4 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { resetPosts } = postsSlice.actions;
+export const { resetPosts, resetReplies } = postsSlice.actions;
