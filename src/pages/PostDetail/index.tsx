@@ -35,6 +35,7 @@ const PostDetail = () => {
     continueReplies,
     paginationReplies,
     error,
+    loadingRequest,
   } = useSelector(selectPostsState);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -57,7 +58,9 @@ const PostDetail = () => {
 
   if (!id || isNaN(postId) || error) return <NotFound />;
   if (!postDetail && !singlePost) return <LoadingFetch />;
-
+  if (loadingRequest && location?.state?.loading) {
+    return <LoadingFetch />;
+  }
   return (
     <>
       <ScrollTop />
@@ -67,46 +70,57 @@ const PostDetail = () => {
 
           <div className="flex flex-col items-center justify-between text-sm pt-2 px-4 gap-4">
             <Separator />
+
             {replies.length < 1 ? (
               ""
             ) : (
-              <div className="flex w-full justify-between">
-                <button className="flex items-center gap-1 font-semibold">
-                  Hàng đầu <ChevronDown size={13} />
-                </button>
-                <button className="flex items-center gap-1 text-muted-foreground text-sm">
-                  <p>Xem hoạt động</p> <ChevronRight size={13} />
-                </button>
-              </div>
+              <>
+                <div className="flex w-full justify-between">
+                  <button className="flex items-center gap-1 font-semibold">
+                    Hàng đầu <ChevronDown size={13} />
+                  </button>
+                  <button className="flex items-center gap-1 text-muted-foreground text-sm">
+                    <p>Xem hoạt động</p> <ChevronRight size={13} />
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </CardContent>
       </Card>
       <div>
-        <InfiniteList
-          data={replies}
-          continuePage={continueReplies}
-          skeleton={<Skeleton />}
-          contentNotFoundCheck={false}
-          endReached={() =>
-            dispatch(
-              loadMoreReply({
-                id: postId,
-                page: paginationReplies.current_page + 1,
-              })
-            )
-          }
-          itemContent={(index, reply: ReplyItem) => (
-            <Post
-              key={reply.id}
-              onClick={() =>
-                navigator(`/${reply.user.username}/post/${reply.id}`)
-              }
-              mode="comment"
-              post={mapPost(reply)}
-            />
-          )}
-        />
+        {loadingRequest ? (
+          <LoadingFetch />
+        ) : (
+          <InfiniteList
+            data={replies}
+            continuePage={continueReplies}
+            skeleton={<Skeleton />}
+            contentNotFoundCheck={false}
+            endReached={() =>
+              dispatch(
+                loadMoreReply({
+                  id: postId,
+                  page: paginationReplies.current_page + 1,
+                })
+              )
+            }
+            itemContent={(index, reply: ReplyItem) => (
+              <Post
+                key={reply.id}
+                onClick={() =>
+                  navigator(`/${reply.user.username}/post/${reply.id}`, {
+                    state: {
+                      loading: true,
+                    },
+                  })
+                }
+                mode="comment"
+                post={mapPost(reply)}
+              />
+            )}
+          />
+        )}
       </div>
     </>
   );

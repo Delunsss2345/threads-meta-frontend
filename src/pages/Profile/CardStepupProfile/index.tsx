@@ -39,8 +39,9 @@ const CardStepupProfile = () => {
   ];
 
   return (
-    <div className="mt-6">
+    <div>
       <Swiper
+        style={{ padding: 10 }}
         spaceBetween={10}
         slidesPerView={1.15}
         grabCursor
@@ -53,7 +54,7 @@ const CardStepupProfile = () => {
       >
         {cards.map((card) => (
           <SwiperSlide key={card.id}>
-            <div className="relative p-4 sm:p-5 pb-12 text-center border bg-card border-border rounded-2xl cursor-grab select-none">
+            <div className="h-fit relative sm:p-5 pb-12 text-center border bg-card border-border rounded-2xl cursor-grab select-none">
               <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 rounded-full bg-accent">
                 {card.icon}
               </div>
@@ -66,7 +67,7 @@ const CardStepupProfile = () => {
                 {card.desc}
               </p>
 
-              <Button className="absolute text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 text-white bottom-3 left-1/2 -translate-x-1/2 bg-accent-foreground">
+              <Button className="absolute text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 text-white -bottom-2 left-1/2  -translate-x-1/2 bg-primary z-10">
                 {card.buttonClick}
               </Button>
             </div>

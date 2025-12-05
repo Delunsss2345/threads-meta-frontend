@@ -49,7 +49,6 @@ export const searchSlice = createSlice({
       .addCase(fetchSuggestions.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.data;
-        console.log(state.items);
       })
       .addCase(fetchSuggestions.rejected, (state, action) => {
         state.loading = false;
@@ -59,4 +58,4 @@ export const searchSlice = createSlice({
 });
 
 export default searchSlice.reducer;
-export const {setFollowingUser} = searchSlice.actions
+export const { setFollowingUser } = searchSlice.actions;

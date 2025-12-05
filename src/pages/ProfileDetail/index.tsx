@@ -24,7 +24,6 @@ const ProfileDetail = () => {
         </div>
 
         <div className="space-y-1">
-          <p>🎶🌹</p>
           <p className="text-sm">
             Nơi trái tim có thể sẽ được chữa lành hoặc vỡ tan….
             <br />

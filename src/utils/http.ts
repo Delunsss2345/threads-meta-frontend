@@ -31,6 +31,7 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
   return config;
 });
+
 // Có đang refreshToken không
 let isRefreshing = false;
 // Ngăn xếp queue
@@ -55,9 +56,9 @@ const refreshToken = async () => {
     const result = await refreshAxiosInstance.post(`${baseURL}/auth/refresh`, {
       refresh_token: localStorage.getItem("refreshToken"),
     });
-    // Attach all token
-    localStorage.setItem("accessToken", result.data.access_token);
-    localStorage.setItem("refreshToken", result.data.refresh_token);
+
+    localStorage.setItem("accessToken", result.data.data.access_token);
+    localStorage.setItem("refreshToken", result.data.data.refresh_token);
 
     // Gắn queue  null nếu thành công
     processQueue(null);

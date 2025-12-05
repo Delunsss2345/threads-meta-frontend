@@ -1,16 +1,6 @@
-import SkeletonPost from "@/components/common/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hooks";
-import { getFeeds, loadMoreThreads, selectPostsState } from "@/features/post";
-import Post from "@/features/post/components";
 import PostForm from "@/features/post/components/PostForm";
-import { mapPost } from "@/features/post/map";
-import type { PostItem } from "@/types/post";
-import type { AppDispatch } from "@/types/redux";
-import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Virtuoso } from "react-virtuoso";
 import CardStepupProfile from "../CardStepupProfile";
 
 const ProfileThreads = () => {
@@ -18,35 +8,7 @@ const ProfileThreads = () => {
   const { t } = useTranslation();
 
   if (!user) return null;
-  const dispatch = useDispatch<AppDispatch>();
 
-  const navigate = useNavigate();
-  const {
-    items: feeds,
-    pagination,
-    continuePage,
-    loaded,
-  } = useSelector(selectPostsState);
-
-  useEffect(() => {
-    if (!loaded) {
-      dispatch(getFeeds());
-    }
-  }, [loaded, dispatch]);
-
-  const handleNavigateToDetail = (id: number, username: string) => {
-    if (username) {
-      navigate(`${username}/post/${id}`);
-    } else {
-      navigate(`/post/${id}`);
-    }
-  };
-
-  const filteredFeeds = useMemo(() => {
-    return feeds.filter(
-      (post: PostItem) => post.user.username === user?.username
-    );
-  }, [feeds, user?.username]);
   return (
     <>
       <PostForm />
@@ -62,7 +24,7 @@ const ProfileThreads = () => {
         <CardStepupProfile />
       </div>
 
-      <Virtuoso
+      {/* <Virtuoso
         useWindowScroll
         data={filteredFeeds}
         endReached={() =>
@@ -86,7 +48,7 @@ const ProfileThreads = () => {
               <SkeletonPost />
             ),
         }}
-      />
+      /> */}
     </>
   );
 };

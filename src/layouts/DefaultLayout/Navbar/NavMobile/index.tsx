@@ -14,12 +14,9 @@ import { useNavigate } from "react-router-dom";
 import Footer from "@/components/common/ModalPopup/Footer";
 import Header from "@/components/common/ModalPopup/Header";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
-import { selectPostsLoading } from "@/features/post";
 import UserPostForm from "@/features/post/components/UserPostForm";
 import { useCreatePost } from "@/hooks/use-create-post";
-import type { AppDispatch } from "@/types/redux";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
 
 const navItems = [
   { key: "home", icon: <HomeIcon size={26} />, link: "/" },
@@ -47,8 +44,14 @@ const NavMobile: React.FC = () => {
   const isMobile = useIsMobile();
   const { isAuthenticated, user } = useAuth();
   const { show, hide } = useModal();
-  const { content, setContent, previewImage, loadingPosts, setPreviewImage, handlePost } =
-    useCreatePost(() => setOpenSheet(false));
+  const {
+    content,
+    setContent,
+    previewImage,
+    loadingPosts,
+    setPreviewImage,
+    handlePost,
+  } = useCreatePost(() => setOpenSheet(false));
   const { t } = useTranslation();
 
   if (!isMobile) return null;

@@ -1,17 +1,13 @@
-const RepostIcon = ({ size = 18, ...props }) => {
+const RepostIcon = ({ size = 18, color = "currentColor", ...props }) => {
   return (
     <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill={color}
       aria-label="Đăng lại"
       role="img"
       viewBox="0 0 18 18"
-      width={size}
-      height={size}
-      className="x1lliihq x2lah0s x1n2onr6 x19zyb68 x16ye13r x5lhr3w x1i0azm7"
-      style={{
-        "--x-fill": "currentColor",
-        "--x-height": `${size}px`,
-        "--x-width": `${size}px`,
-      }}
       {...props}
     >
       <title>Đăng lại</title>

@@ -96,14 +96,46 @@ export const config: RouteObject[] = [
         ),
       },
 
-      { path: "liked", element: <Liked /> },
-      { path: "saved", element: <Saved /> },
-      { path: "following", element: <Following /> },
-      { path: "settings", element: <SettingsPage /> },
+      {
+        path: "liked",
+        element: (
+          <PrivateRouter>
+            <Liked />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "saved",
+        element: (
+          <PrivateRouter>
+            <Saved />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "following",
+        element: (
+          <PrivateRouter>
+            <Following />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "settings",
+        element: (
+          <PrivateRouter>
+            <SettingsPage />
+          </PrivateRouter>
+        ),
+      },
 
       {
         path: "settings",
-        element: <SettingsLayout />,
+        element: (
+          <PrivateRouter>
+            <SettingsLayout />,
+          </PrivateRouter>
+        ),
         children: [
           { path: "privacy", element: <PrivacyPage /> },
           { path: "help", element: <Help /> },
@@ -113,7 +145,7 @@ export const config: RouteObject[] = [
       },
     ],
   },
-  { path: "/post/:id/embed", element: <Embed /> },
+  { path: "/:username/post/:id/embed", element: <Embed /> },
 
   {
     path: "*",

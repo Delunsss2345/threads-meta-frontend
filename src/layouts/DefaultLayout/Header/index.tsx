@@ -21,7 +21,7 @@ const Header = ({
 }: {
   id?: number;
   textHeader?: string;
-  dragHandleProps?: unknown;
+  dragHandleProps?: any;
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();

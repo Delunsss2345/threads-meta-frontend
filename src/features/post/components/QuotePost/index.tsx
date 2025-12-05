@@ -29,6 +29,7 @@ const Quote = ({
               navigate(`/post/${post.id}`, {
                 state: {
                   quote: true,
+                  loading: true,
                 },
               })
       }

@@ -143,7 +143,7 @@ const InteractionBar = ({
             isComment ? "!px-1 scale-90" : ""
           } ${ctx?.post.is_reposted_by_auth ? "text-green-500" : ""}`}
         >
-          <RepostIcon size={iconSize} className={iconClass} />
+          <RepostIcon size={iconSize} className={`${iconClass} `} />
           <span
             className={`${textSize} interaction-bar`}
             data-label="repost"

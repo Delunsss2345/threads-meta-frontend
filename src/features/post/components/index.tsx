@@ -26,7 +26,6 @@ const Post = ({
   mode?: PostModeKey;
 }) => {
   const isStaticOrReply = mode === "static" || mode === "reply";
-
   const modeConfig = POST_MODE_STYLES[mode];
 
   const [open, setOpen] = useState(false);
