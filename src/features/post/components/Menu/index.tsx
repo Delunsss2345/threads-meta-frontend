@@ -41,7 +41,7 @@ const Menu = ({
 
       {
         loading: t("toast.saving"),
-        success: (res) => t("toast.saveSuccess"),
+        success: () => t("toast.saveSuccess"),
         error: (err) => err || t("toast.saveError"),
       }
     );
@@ -54,6 +54,11 @@ const Menu = ({
       success: t("toast.hideSuccess"),
       error: (err) => err || t("toast.hideError"),
     });
+  };
+  const handleCopyLink = async () => {
+    const url = `${import.meta.env.VITE_BASE_URL}/${username}/post/${postId}`;
+    await navigator.clipboard.writeText(url);
+    toast.success(t("menu.copyLinkSuccess"));
   };
 
   const items = useMemo(
@@ -95,7 +100,12 @@ const Menu = ({
         className: "text-destructive hover:bg-destructive/10",
         isAuth: true,
       },
-      { icon: Link2, label: t("menu.copyLink"), isAuth: false },
+      {
+        icon: Link2,
+        label: t("menu.copyLink"),
+        isAuth: false,
+        action: handleCopyLink,
+      },
     ],
     [t, postId, username, userId, show, hide, handleSave]
   );

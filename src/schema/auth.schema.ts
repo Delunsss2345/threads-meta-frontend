@@ -1,30 +1,47 @@
 import z from "zod";
 
+const AuthErrorMessage = {
+  USERNAME_INVALID: "auth.error.usernameInvalid",
+  USERNAME_RULE: "auth.error.usernameRule",
+  EMAIL_INVALID: "auth.error.emailInvalid",
+  PASSWORD_INVALID: "auth.error.passwordInvalid",
+  PASSWORD_MIN: "auth.error.passwordMin",
+  PASSWORD_CONFIRM_NOT_MATCH: "auth.error.passwordConfirmNotMatch",
+};
+
+const usernameRegex = /^[a-zA-Z0-9_-]+$/;
+
 const LoginSchemaBody = z.object({
   login: z
-    .string({ message: "Tên đăng nhập không hợp lệ" })
-    .min(6, { message: "Tên đăng nhập không hợp lệ" }),
+    .string({ message: AuthErrorMessage.USERNAME_INVALID })
+    .min(6, { message: AuthErrorMessage.USERNAME_INVALID }),
   password: z
-    .string({ message: "Mật khẩu không hợp lệ" })
-    .min(8, { message: "Mật khẩu tối thiểu 8 ký tự" }),
+    .string({ message: AuthErrorMessage.PASSWORD_INVALID })
+    .min(8, { message: AuthErrorMessage.PASSWORD_MIN }),
 });
 
 const RegisterSchemaBody = z
   .object({
     username: z
-      .string({ message: "Tên đăng nhập không hợp lệ" })
-      .min(6, { message: "Tên đăng nhập không hợp lệ" }),
-    email: z.string({ message: "Email không hợp lệ" }).email(),
+      .string({ message: AuthErrorMessage.USERNAME_INVALID })
+      .min(6, { message: AuthErrorMessage.USERNAME_INVALID })
+      .regex(usernameRegex, { message: AuthErrorMessage.USERNAME_RULE }),
+
+    email: z
+      .string({ message: AuthErrorMessage.EMAIL_INVALID })
+      .email({ message: AuthErrorMessage.EMAIL_INVALID }),
+
     password: z
-      .string({ message: "Mật khẩu không hợp lệ" })
-      .min(8, { message: "Mật khẩu tối thiểu 8 ký tự" }),
-    password_confirmation: z.string().min(8),
+      .string({ message: AuthErrorMessage.PASSWORD_INVALID })
+      .min(8, { message: AuthErrorMessage.PASSWORD_MIN }),
+
+    password_confirmation: z.string(),
   })
   .superRefine(({ password_confirmation, password }, ctx) => {
     if (password_confirmation !== password) {
       ctx.addIssue({
         code: "custom",
-        message: "Mật khẩu không khớp",
+        message: AuthErrorMessage.PASSWORD_CONFIRM_NOT_MATCH,
         path: ["password_confirmation"],
       });
     }
@@ -32,21 +49,28 @@ const RegisterSchemaBody = z
 
 const ForgotPasswordSchemaBody = z.object({
   email: z
-    .string({ message: "Email không hợp lệ" })
-    .email({ message: "Email không hợp lệ" }),
+    .string({ message: AuthErrorMessage.EMAIL_INVALID })
+    .email({ message: AuthErrorMessage.EMAIL_INVALID }),
 });
 
-const ResetPasswordSchemaBody = z.object({
-  token: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(6),
-  password_confirmation: z.string().min(6),
-});
-
-type LoginSchemaBodyType = z.infer<typeof LoginSchemaBody>;
-type RegisterSchemaBodyType = z.infer<typeof RegisterSchemaBody>;
-type ForgotPasswordSchemaBodyType = z.infer<typeof ForgotPasswordSchemaBody>;
-type ResetPasswordSchemaBodyType = z.infer<typeof ResetPasswordSchemaBody>;
+const ResetPasswordSchemaBody = z
+  .object({
+    token: z.string().min(1),
+    email: z.string().email({ message: AuthErrorMessage.EMAIL_INVALID }),
+    password: z
+      .string({ message: AuthErrorMessage.PASSWORD_INVALID })
+      .min(8, { message: AuthErrorMessage.PASSWORD_MIN }),
+    password_confirmation: z.string(),
+  })
+  .superRefine(({ password, password_confirmation }, ctx) => {
+    if (password_confirmation !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: AuthErrorMessage.PASSWORD_CONFIRM_NOT_MATCH,
+        path: ["password_confirmation"],
+      });
+    }
+  });
 
 export {
   ForgotPasswordSchemaBody,
@@ -54,9 +78,12 @@ export {
   RegisterSchemaBody,
   ResetPasswordSchemaBody,
 };
-export type {
-  ForgotPasswordSchemaBodyType,
-  LoginSchemaBodyType,
-  RegisterSchemaBodyType,
-  ResetPasswordSchemaBodyType,
-};
+
+export type LoginSchemaBodyType = z.infer<typeof LoginSchemaBody>;
+export type RegisterSchemaBodyType = z.infer<typeof RegisterSchemaBody>;
+export type ForgotPasswordSchemaBodyType = z.infer<
+  typeof ForgotPasswordSchemaBody
+>;
+export type ResetPasswordSchemaBodyType = z.infer<
+  typeof ResetPasswordSchemaBody
+>;

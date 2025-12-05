@@ -1,23 +1,26 @@
+import { FormMessageI18n } from "@/components/common/FormMessageI18n";
 import { Button } from "@/components/ui/button";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
   LoginSchemaBody,
   type LoginSchemaBodyType,
 } from "@/schema/auth.schema";
-import {   zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { selectAuthLoggingIn } from "../../selectors";
+
 interface LoginFormProps {
   onLogin: (values: LoginSchemaBodyType) => void;
 }
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
   const { t } = useTranslation();
-
-
+  const { loggingIn } = useSelector(selectAuthLoggingIn);
   const form = useForm<LoginSchemaBodyType>({
     resolver: zodResolver(LoginSchemaBody),
     defaultValues: {
@@ -25,9 +28,10 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       password: "",
     },
   });
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   useDebounceInput<LoginSchemaBodyType>({ form });
+
   return (
     <Form {...form}>
       <form
@@ -41,7 +45,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           render={({ field }) => (
             <FormItem className="w-90">
               <Input placeholder={t("auth.usernamePlaceholder")} {...field} />
-              <FormMessage />
+              <FormMessageI18n />
             </FormItem>
           )}
         />
@@ -56,19 +60,20 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
                 placeholder={t("auth.passwordPlaceholder")}
                 {...field}
               />
-              <FormMessage />
+              <FormMessageI18n />
             </FormItem>
           )}
         />
 
         <Button
+          disabled={loggingIn}
           type="submit"
           className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >
-          {t("auth.login")}
+          {loggingIn ? t("auth.loggingIn") : t("auth.login")}
         </Button>
 
-        {/* Links */}
+        {/* Forgot password */}
         <p
           onClick={() => navigate("/forgot-password", { replace: true })}
           className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground cursor-pointer"
@@ -76,6 +81,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           {t("auth.forgotPassword")}
         </p>
 
+        {/* Register */}
         <p
           onClick={() => navigate("/register", { replace: true })}
           className="block mt-4 text-sm text-center transition-colors w-90 text-muted-foreground hover:text-foreground cursor-pointer"

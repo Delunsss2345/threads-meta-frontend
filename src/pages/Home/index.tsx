@@ -1,6 +1,11 @@
 import SkeletonPost from "@/components/common/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hooks";
-import { getFeeds, loadMoreThreads, selectPostsState } from "@/features/post";
+import {
+  getFeeds,
+  loadMoreThreads,
+  resetPosts,
+  selectPostsState,
+} from "@/features/post";
 import Post from "@/features/post/components";
 import FeedTabs from "@/features/post/components/FeedTabs";
 import PostForm from "@/features/post/components/PostForm";
@@ -26,6 +31,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!loaded) {
+      dispatch(resetPosts());
       dispatch(getFeeds());
     }
   }, [loaded, dispatch]);

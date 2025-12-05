@@ -20,7 +20,7 @@ const SearchPage = () => {
   const { items, loading } = useSelector(selectSuggestions);
   const { user: auth } = useAuth();
   useEffect(() => {
-    if (!query && !items) {
+    if (!query) {
       dispatch(fetchSuggestions());
     }
   }, [query, dispatch]);
@@ -79,7 +79,7 @@ const SearchPage = () => {
                 </h3>
                 <div className="space-y-1">
                   {items?.map((user: UserSuggestion) =>
-                    user.username !== auth.username ? (
+                    user.username !== auth?.username ? (
                       <FollowSuggestionItem key={user.id} user={user} />
                     ) : (
                       ""

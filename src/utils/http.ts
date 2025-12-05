@@ -12,6 +12,10 @@ export const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
 });
 
+const refreshAxiosInstance: AxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_BASE_API,
+});
+
 // Mỗi request đều gắn accessToken
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem("accessToken");
@@ -48,7 +52,7 @@ const processQueue = (error: any) => {
 // Gọi refreshToken
 const refreshToken = async () => {
   try {
-    const result = await http.post(`${baseURL}/auth/refresh`, {
+    const result = await refreshAxiosInstance.post(`${baseURL}/auth/refresh`, {
       refresh_token: localStorage.getItem("refreshToken"),
     });
     // Attach all token
@@ -59,8 +63,8 @@ const refreshToken = async () => {
     processQueue(null);
   } catch (error) {
     processQueue(error);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    localStorage.clear();
+
     throw error;
   }
 };

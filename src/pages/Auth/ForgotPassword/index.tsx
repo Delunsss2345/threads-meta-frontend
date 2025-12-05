@@ -5,32 +5,31 @@ import type { ForgotPasswordSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
+
   const handleForgotPassword = async (values: ForgotPasswordSchemaBodyType) => {
     try {
       const res = await authApi.validateEmail(values);
-      console.log(res);
+
       if (!res.data.available) {
         await toast.promise(dispatch(forgotPassword(values)), {
-          loading: "Đang gửi email...",
-          success: "Gửi thành công! Vui lòng kiểm tra email.",
-          error: "Có lỗi xảy ra, vui lòng thử lại.",
+          loading: t("auth.forgotSending"),
+          success: t("auth.forgotSuccess"),
+          error: t("auth.forgotError"),
         });
       } else {
-        toast.error("Email không tồn tại");
+        toast.error(t("auth.emailNotFound"));
       }
     } catch (error) {
-      console.log(error);
+      toast.error(t("auth.unknownError"));
     }
   };
 
-  return (
-    <>
-      <ForgotPasswordForm onForgotPassword={handleForgotPassword} />
-    </>
-  );
+  return <ForgotPasswordForm onForgotPassword={handleForgotPassword} />;
 };
 
 export default ForgotPassword;

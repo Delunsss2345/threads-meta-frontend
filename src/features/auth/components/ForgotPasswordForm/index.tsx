@@ -1,5 +1,6 @@
+import { FormMessageI18n } from "@/components/common/FormMessageI18n";
 import { Button } from "@/components/ui/button";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { selectAuthLoadingRequest } from "@/features/auth";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
@@ -21,6 +22,7 @@ export const ForgotPasswordForm = ({
   onForgotPassword,
 }: ForgotPasswordFormProps) => {
   const { t } = useTranslation();
+
   const form = useForm<ForgotPasswordSchemaBodyType>({
     resolver: zodResolver(ForgotPasswordSchemaBody),
     mode: "onSubmit",
@@ -28,17 +30,20 @@ export const ForgotPasswordForm = ({
       email: "",
     },
   });
+
   const navigate = useNavigate();
   const loadingRequest = useSelector(selectAuthLoadingRequest);
+
   useDebounceInput<ForgotPasswordSchemaBodyType>({ form });
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <h1 className="text-2xl font-semibold mb-6 text-foreground">
-        Quên mật khẩu
+        {t("auth.forgotPasswordTitle")}
       </h1>
 
       <p className="text-sm text-muted-foreground mb-6 text-center max-w-sm">
-        Nhập email của bạn để nhận liên kết đặt lại mật khẩu.
+        {t("auth.forgotPasswordDescription")}
       </p>
 
       <Form {...form}>
@@ -57,7 +62,7 @@ export const ForgotPasswordForm = ({
                   placeholder={t("auth.emailPlaceholder")}
                   {...field}
                 />
-                <FormMessage />
+                <FormMessageI18n />
               </FormItem>
             )}
           />

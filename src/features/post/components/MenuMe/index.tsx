@@ -14,6 +14,7 @@ import {
   Trash2,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 const MenuMe = ({
@@ -23,29 +24,59 @@ const MenuMe = ({
   buttonActive: ReactNode;
   threadId: number;
 }) => {
+  const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const { show, hide } = useModal();
+
   const handleDelete = async (id: number) => {
     try {
       const result = await postApi.deleteThread(id);
       if (result?.success) {
-        return toast.success("Xoá thành công");
+        return toast.success(t("menu.deleteSuccess"));
       }
     } catch (error: any) {
-      toast.error("Xoá thất bại");
+      toast.error(t("menu.deleteError"));
     } finally {
       hide();
     }
   };
 
+  const handleCopyLink = async () => {
+    console.log("sopy");
+    const url = `${window.location.origin}/thread/${threadId}`;
+    await navigator.clipboard.writeText(url);
+    toast.success(t("menu.copyLinkSuccess"));
+  };
+
   const items = [
-    { label: "Thông tin chi tiết", icon: Info, isAuth: true, isHeader: true },
-    { label: "Lưu", icon: Bookmark, isAuth: true },
-    { label: "Ghim lên trang cá nhân", icon: Pin, isAuth: true },
-    { label: "Ẩn số lượt thích và lượt xem", icon: EyeOff, isAuth: true },
-    { label: "Các lựa chọn để kiểm soát", icon: Shield, isAuth: true },
     {
-      label: "Xóa",
+      label: t("menu.postDetails"),
+      icon: Info,
+      isAuth: true,
+      isHeader: true,
+    },
+    {
+      label: t("menu.save"),
+      icon: Bookmark,
+      isAuth: true,
+    },
+    {
+      label: t("menu.pinToProfile"),
+      icon: Pin,
+      isAuth: true,
+    },
+    {
+      label: t("menu.hideStats"),
+      icon: EyeOff,
+      isAuth: true,
+    },
+    {
+      label: t("menu.controlOptions"),
+      icon: Shield,
+      isAuth: true,
+    },
+    {
+      label: t("menu.delete"),
       icon: Trash2,
       isAuth: true,
       className: "text-destructive hover:bg-destructive/10",
@@ -58,8 +89,12 @@ const MenuMe = ({
           />
         ),
     },
-
-    { label: "Sao chép liên kết", icon: Link2, isAuth: false },
+    {
+      label: t("menu.copyLink"),
+      icon: Link2,
+      isAuth: false,
+      onClick: handleCopyLink,
+    },
   ];
 
   return (
@@ -75,9 +110,7 @@ const MenuMe = ({
         <DropdownMenuItem
           onClick={(e) => {
             e.stopPropagation();
-            if (item.onClick) {
-              item.onClick();
-            }
+            item.onClick?.();
           }}
           key={i}
           className={`flex items-center gap-2 ${item.className || ""} ${

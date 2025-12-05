@@ -20,10 +20,10 @@ const SlideUpMenu = ({
 }: {
   children: React.ReactNode;
   motionProps?: {
-    initial?: Record<string, any>;
-    animate?: Record<string, any>;
-    exit?: Record<string, any>;
-    transition?: Record<string, any>;
+    initial?: Record<string, unknown>;
+    animate?: Record<string, unknown>;
+    exit?: Record<string, unknown>;
+    transition?: Record<string, unknown>;
   };
   customPopup?: string;
 }) => {
@@ -94,6 +94,7 @@ const SlideUpMenu = ({
     {
       label: t("menu.back"),
       icon: <ArrowLeft size={16} />,
+      onClick: () => setActiveMenu("main"),
     },
   ];
   return (

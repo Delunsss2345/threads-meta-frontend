@@ -2,32 +2,33 @@ import { register, resendVerifyEmail } from "@/features/auth";
 import { RegisterForm } from "@/features/auth/components/RegisterForm";
 import type { RegisterSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
+
   const handleRegister = async (values: RegisterSchemaBodyType) => {
     try {
-      const res = await dispatch<any>(register(values));
-      await toast.promise(
-        dispatch(resendVerifyEmail({ token: res.payload.data.access_token })),
-        {
-          success: "Chúng tôi đã gửi liên kết xác minh email",
-          loading: "Đang xử lý...",
-          error: "Có lỗi xảy ra, vui lòng thử lại",
-        }
-      );
-    } catch (error: any) {
-      console.log(error);
+      const res = await dispatch(register(values));
+
+      if (register.fulfilled.match(res)) {
+        const token = res.payload.data.access_token;
+
+        await toast.promise(dispatch(resendVerifyEmail({ token })), {
+          success: t("auth.verifyEmailSent"),
+          loading: t("auth.loading"),
+          error: t("auth.verifyEmailError"),
+        });
+      }
+    } catch {
+      toast.error(t("auth.registerFailed"));
     }
   };
 
-  return (
-    <>
-      <RegisterForm onRegister={handleRegister} />
-    </>
-  );
+  return <RegisterForm onRegister={handleRegister} />;
 };
 
 export default Register;

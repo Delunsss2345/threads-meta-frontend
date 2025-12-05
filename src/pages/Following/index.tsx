@@ -1,5 +1,4 @@
 import SkeletonPost from "@/components/common/Skeleton/SkeletonPost";
-import { useAuth } from "@/features/auth/hooks";
 import { getFeeds, selectPostsState } from "@/features/post";
 import FeedTabs from "@/features/post/components/FeedTabs";
 import PostForm from "@/features/post/components/PostForm";
@@ -15,8 +14,6 @@ const Following = () => {
       dispatch(getFeeds());
     }
   }, [dispatch]);
-
-  const { user } = useAuth();
 
   return (
     <>

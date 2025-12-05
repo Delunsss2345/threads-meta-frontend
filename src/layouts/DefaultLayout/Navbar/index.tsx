@@ -50,6 +50,7 @@ const Navbar: React.FC = () => {
       );
       return;
     }
+
     if (item?.link) navigate(item?.link);
   };
 

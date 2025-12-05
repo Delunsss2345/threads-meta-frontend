@@ -36,7 +36,7 @@ export function MainMenu({ items }: MainMenuProps) {
           }}
           className={cn(
             "cursor-pointer px-3 py-2 text-sm transition-colors",
-            isAuthenticated !== item.isAuth ? "hidden" : "",
+            item.isAuth && isAuthenticated !== item.isAuth ? "hidden" : "",
             item.danger
               ? "text-red-500 hover:bg-red-500/10 hover:text-red-600"
               : "text-muted-foreground hover:text-foreground"

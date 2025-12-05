@@ -1,4 +1,3 @@
-// src/components/login/InstagramLoginButton.tsx
 import { useTranslation } from "react-i18next";
 
 interface InstagramLoginButtonProps {

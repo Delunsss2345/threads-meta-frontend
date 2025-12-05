@@ -51,7 +51,34 @@
     "loading": "Processing...",
     "resetPasswordTitle": "Reset your password",
     "resetPasswordDescription": "Enter a new password for your account.",
-    "email": "Your email address"
+    "email": "Your email address",
+    "loginSuccess": "Logged in successfully",
+    "accountVerified": "Your account has been successfully verified. Please log in.",
+    "loggingIn": "Logging in...",
+    "loginFailed": "Incorrect username or password",
+    "registerFailed": "Registration failed",
+    "getUserFailed": "Unable to fetch user information",
+    "logoutFailed": "Logout encountered an issue",
+    "forgotPasswordError": "Unable to send reset email",
+    "tokenExpired": "The link has expired or is invalid",
+    "updateFailed": "Failed to update user information",
+    "resendEmailError": "Unable to resend verification email",
+    "unknownError": "An unexpected error occurred",
+    "verifyEmailSent": "We have sent you a verification email",
+    "verifyEmailError": "Failed to send verification email",
+    "forgotSending": "Sending email...",
+    "forgotSuccess": "Sent successfully! Please check your email.",
+    "forgotError": "An error occurred, please try again.",
+    "emailNotFound": "Email does not exist",
+    "forgotPasswordDescription": "Enter your email to receive the password reset link.",
+    "error": {
+      "usernameInvalid": "Invalid username",
+      "usernameRule": "Username can only contain letters, numbers, dashes (-), and underscores (_)",
+      "emailInvalid": "Invalid email",
+      "passwordInvalid": "Invalid password",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordConfirmNotMatch": "Passwords do not match"
+    }
   },
   "profile": {
     "editProfile": "Edit profile",
@@ -155,6 +182,14 @@
     "dayAgo": "{{count}}d",
     "weekAgo": "{{count}}w"
   },
+  "saved": {
+    "emptyTitle": "No saved posts yet",
+    "emptyDescription": "Posts you save will appear here."
+  },
+  "liked": {
+    "emptyTitle": "No liked posts yet",
+    "emptyDescription": "Posts you like will appear here."
+  },
   "menu": {
     "appearance": "Appearance",
     "profileInfo": "Profile Info",
@@ -186,7 +221,15 @@
     "activity": "Activity",
     "profile": "Profile",
     "removeColumn": "Remove column",
-    "unrepost": "Unrepost"
+    "unrepost": "Unrepost",
+    "postDetails": "Post details",
+    "pinToProfile": "Pin to profile",
+    "hideStats": "Hide like and view counts",
+    "controlOptions": "Control options",
+    "delete": "Delete",
+    "deleteSuccess": "Deleted successfully",
+    "deleteError": "Failed to delete",
+    "copyLinkSuccess": "Link copied"
   },
   "notFound": {
     "title": "Not everything that disappears is missing, but this page truly is.",

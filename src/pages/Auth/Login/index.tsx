@@ -3,27 +3,31 @@ import LoginForm from "@/features/auth/components/LoginForm";
 import { useAuth } from "@/features/auth/hooks";
 import type { LoginSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 const Login = () => {
+  const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const location = useLocation();
   const verified = location.state?.verified;
+
   if (isAuthenticated) {
     window.location.replace("/");
     return null;
   }
+
   const dispatch = useDispatch<AppDispatch>();
 
   const handleLogin = async (values: LoginSchemaBodyType) => {
-    try {
-      const response = await dispatch(login(values));
-      console.log(response);
-      toast.success("Đăng nhập thành công");
-    } catch (error) {
-      console.log(error);
+    const res = await dispatch(login(values));
+
+    if (login.fulfilled.match(res)) {
+      toast.success(t("auth.loginSuccess"));
+    } else {
+      toast.error(t("auth.loginFailed"));
     }
   };
 
@@ -31,7 +35,7 @@ const Login = () => {
     <>
       {verified && (
         <p className="text-green-600 text-sm text-center mb-4">
-          Đã xác minh tài khoản thành công. Vui lòng đăng nhập.
+          {t("auth.accountVerified")}
         </p>
       )}
       <LoginForm onLogin={handleLogin} />

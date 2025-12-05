@@ -1,5 +1,6 @@
+import { FormMessageI18n } from "@/components/common/FormMessageI18n";
 import { Button } from "@/components/ui/button";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { selectAuthLoggingIn } from "@/features/auth";
@@ -52,7 +53,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           render={({ field }) => (
             <FormItem className="w-90">
               <Input placeholder={t("auth.usernamePlaceholder")} {...field} />
-              <FormMessage />
+              <FormMessageI18n />
             </FormItem>
           )}
         />
@@ -68,7 +69,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
                 type="email"
                 {...field}
               />
-              <FormMessage />
+              <FormMessageI18n />
             </FormItem>
           )}
         />
@@ -84,7 +85,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
                 placeholder={t("auth.passwordPlaceholder")}
                 {...field}
               />
-              <FormMessage />
+              <FormMessageI18n />
             </FormItem>
           )}
         />
@@ -100,18 +101,18 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
                 placeholder={t("auth.confirmPasswordPlaceholder")}
                 {...field}
               />
-              <FormMessage />
+              <FormMessageI18n />
             </FormItem>
           )}
         />
 
         {/* Submit button */}
         <Button
-          disabled={loggingIn}
+          disabled={!loggingIn}
           type="submit"
           className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >
-          {loggingIn ? <Spinner /> : t("auth.register")}
+          {!loggingIn ? <Spinner /> : t("auth.register")}
         </Button>
 
         {/* Link */}

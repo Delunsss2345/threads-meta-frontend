@@ -51,7 +51,34 @@
     "loading": "Đang xử lý...",
     "resetPasswordTitle": "Đặt lại mật khẩu",
     "resetPasswordDescription": "Nhập mật khẩu mới cho tài khoản của bạn.",
-    "email": "Email của bạn"
+    "email": "Email của bạn",
+    "loginSuccess": "Đăng nhập thành công",
+    "accountVerified": "Đã xác minh tài khoản thành công. Vui lòng đăng nhập.",
+    "loggingIn": "Đang đăng nhập...",
+    "loginFailed": "Tài khoản hoặc mật khẩu không đúng",
+    "registerFailed": "Đăng ký thất bại",
+    "getUserFailed": "Không thể lấy thông tin người dùng",
+    "logoutFailed": "Đăng xuất có sự cố",
+    "forgotPasswordError": "Không thể gửi email đặt lại mật khẩu",
+    "tokenExpired": "Liên kết đã hết hạn hoặc không hợp lệ",
+    "updateFailed": "Cập nhật thông tin thất bại",
+    "resendEmailError": "Không thể gửi lại email xác minh",
+    "unknownError": "Đã xảy ra lỗi, vui lòng thử lại sau",
+    "verifyEmailSent": "Chúng tôi đã gửi liên kết xác minh email",
+    "verifyEmailError": "Gửi email xác minh thất bại",
+    "forgotSending": "Đang gửi email...",
+    "forgotSuccess": "Gửi thành công! Vui lòng kiểm tra email.",
+    "forgotError": "Có lỗi xảy ra, vui lòng thử lại.",
+    "emailNotFound": "Email không tồn tại",
+    "forgotPasswordDescription": "Nhập email của bạn để nhận liên kết đặt lại mật khẩu.",
+    "error": {
+      "usernameInvalid": "Tên đăng nhập không hợp lệ",
+      "usernameRule": "Tên đăng nhập chỉ được chứa chữ cái, số, dấu gạch ngang (-) và gạch dưới (_)",
+      "emailInvalid": "Email không hợp lệ",
+      "passwordInvalid": "Mật khẩu không hợp lệ",
+      "passwordMin": "Mật khẩu tối thiểu 8 ký tự",
+      "passwordConfirmNotMatch": "Mật khẩu không khớp"
+    }
   },
   "profile": {
     "editProfile": "Chỉnh sửa trang cá nhân",
@@ -158,6 +185,14 @@
     "dayAgo": "{{count}} ngày",
     "weekAgo": "{{count}} tuần"
   },
+  "saved": {
+    "emptyTitle": "Chưa có bài viết nào được lưu",
+    "emptyDescription": "Bài viết bạn lưu sẽ hiển thị ở đây."
+  },
+  "liked": {
+    "emptyTitle": "Chưa có bài viết nào",
+    "emptyDescription": "Những bài bạn thích sẽ hiển thị ở đây."
+  },
   "menu": {
     "appearance": "Giao diện",
     "profileInfo": "Thông tin chi tiết",
@@ -189,7 +224,15 @@
     "activity": "Hoạt động",
     "profile": "Trang cá nhân",
     "removeColumn": "Gỡ cột",
-    "unrepost": "Huỷ đăng lại"
+    "unrepost": "Huỷ đăng lại",
+    "postDetails": "Thông tin chi tiết",
+    "pinToProfile": "Ghim lên trang cá nhân",
+    "hideStats": "Ẩn số lượt thích và lượt xem",
+    "controlOptions": "Các lựa chọn để kiểm soát",
+    "delete": "Xóa",
+    "deleteSuccess": "Xóa thành công",
+    "deleteError": "Xóa thất bại",
+    "copyLinkSuccess": "Đã sao chép liên kết"
   },
   "notFound": {
     "title": "Không phải cứ biến mất là mất tích, nhưng trang này thì mất tích thật rồi",

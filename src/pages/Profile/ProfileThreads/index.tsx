@@ -1,17 +1,17 @@
+import SkeletonPost from "@/components/common/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hooks";
 import { getFeeds, loadMoreThreads, selectPostsState } from "@/features/post";
+import Post from "@/features/post/components";
 import PostForm from "@/features/post/components/PostForm";
+import { mapPost } from "@/features/post/map";
+import type { PostItem } from "@/types/post";
+import type { AppDispatch } from "@/types/redux";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Virtuoso } from "react-virtuoso";
 import CardStepupProfile from "../CardStepupProfile";
-import { useEffect, useMemo } from "react";
-import type { PostItem } from "@/types/post";
-import { useNavigate } from "react-router-dom";
-import type { AppDispatch } from "@/types/redux";
-import SkeletonPost from "@/components/common/Skeleton/SkeletonPost";
-import Post from "@/features/post/components";
-import { mapPost } from "@/features/post/map";
 
 const ProfileThreads = () => {
   const { user } = useAuth();
