@@ -1,5 +1,6 @@
 import AvatarGroup from "@/components/common/AvatarGroup";
 import { VerifiedIcon } from "@/components/common/Icon/VerifiedIcon";
+import ScrollTop from "@/components/common/ScrollTop";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/features/auth/hooks"; // <-- thêm
@@ -34,6 +35,7 @@ const Profile = () => {
   }, [activeTab]);
   return (
     <>
+      <ScrollTop />
       <div className="h-full px-2 md:px-6 pt-6 mb-10">
         <div className="flex items-start justify-between">
           <div>

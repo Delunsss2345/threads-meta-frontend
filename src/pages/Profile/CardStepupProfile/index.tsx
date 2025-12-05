@@ -43,18 +43,17 @@ const CardStepupProfile = () => {
       <Swiper
         style={{ padding: 10 }}
         spaceBetween={10}
-        slidesPerView={1.15}
         grabCursor
         breakpoints={{
-          480: { slidesPerView: 1.4 },
-          640: { slidesPerView: 2.1, spaceBetween: 16 },
-          768: { slidesPerView: 2.5, spaceBetween: 20 },
-          1024: { slidesPerView: 3, spaceBetween: 24 },
+          0: { slidesPerView: 1 },
+          480: { slidesPerView: 1.2 },
+          640: { slidesPerView: 1.4 },
+          1024: { slidesPerView: 2.2 },
         }}
       >
         {cards.map((card) => (
           <SwiperSlide key={card.id}>
-            <div className="h-fit relative sm:p-5 pb-12 text-center border bg-card border-border rounded-2xl cursor-grab select-none">
+            <div className="h-fit relative pt-4 px-4 sm:p-5 pb-4 lg:pb-10 text-center border bg-card border-border rounded-2xl cursor-grab select-none">
               <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 rounded-full bg-accent">
                 {card.icon}
               </div>
@@ -63,7 +62,7 @@ const CardStepupProfile = () => {
                 {card.title}
               </h3>
 
-              <p className="mb-4 text-xs sm:text-[13px] text-muted-foreground leading-tight">
+              <p className="mb-4 sm:text-[13px] text-muted-foreground leading-tight">
                 {card.desc}
               </p>
 
