@@ -26,7 +26,7 @@ const MenuItem = ({
     >
       <div className="flex items-center gap-3 text-foreground">
         {icon}
-        <span className={styles.menuItemText}>{text}</span>
+        <span className="text-foreground">{text}</span>
       </div>
 
       <div className="flex items-center gap-2">

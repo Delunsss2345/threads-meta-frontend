@@ -20,7 +20,7 @@ const CheckboxMenuItem = ({
       onClick={() => onChange?.(!checked)}
     >
       <div className="flex flex-col items-start gap-1">
-        <span className={styles.menuItemText}>{text}</span>
+        <span className="text-foreground">{text}</span>
         {description && (
           <span className={styles.menuItemDescription}>{description}</span>
         )}

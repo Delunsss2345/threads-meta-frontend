@@ -4,10 +4,6 @@
          px-0 h-auto rounded-none bg-transparent hover:bg-transparent;
 }
 
-.menuItemText {
-  @apply text-foreground;
-}
-
 .menuItemDescription {
   @apply text-sm text-gray-500;
 }
