@@ -2,7 +2,6 @@ import { FormMessageI18n } from "@/components/common/FormMessageI18n";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { selectAuthLoadingRequest } from "@/features/auth";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
   ForgotPasswordSchemaBody,
@@ -11,8 +10,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
 interface ForgotPasswordFormProps {
   onForgotPassword: (values: ForgotPasswordSchemaBodyType) => void;
@@ -22,6 +21,7 @@ export const ForgotPasswordForm = ({
   onForgotPassword,
 }: ForgotPasswordFormProps) => {
   const { t } = useTranslation();
+  const { authLoading } = useAuth();
 
   const form = useForm<ForgotPasswordSchemaBodyType>({
     resolver: zodResolver(ForgotPasswordSchemaBody),
@@ -32,7 +32,6 @@ export const ForgotPasswordForm = ({
   });
 
   const navigate = useNavigate();
-  const loadingRequest = useSelector(selectAuthLoadingRequest);
 
   useDebounceInput<ForgotPasswordSchemaBodyType>({ form });
 
@@ -68,13 +67,13 @@ export const ForgotPasswordForm = ({
           />
 
           <Button
-            disabled={loadingRequest}
+            disabled={authLoading}
             type="submit"
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
           >
-            {!loadingRequest
-              ? t("auth.sendResetLink")
-              : t("auth.loadingSendResetLink")}
+            {authLoading
+              ? t("auth.loadingSendResetLink")
+              : t("auth.sendResetLink")}
           </Button>
 
           <p

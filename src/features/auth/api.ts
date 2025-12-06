@@ -7,9 +7,10 @@ import type {
   RegisterResponse,
   RestPasswordBody,
   ValidateEmail,
-  ValidateEmailResponse,
+  ValidateResponse,
   ValidateTokenBody,
   ValidateTokenResponse,
+  ValidateUsername,
 } from "@/types/auth";
 import type { UserResponse } from "@/types/user";
 import { http } from "@/utils/http";
@@ -40,7 +41,9 @@ export const authApi = {
     http.post("/auth/verify-email", payload),
 
   validateEmail: (payload: ValidateEmail) =>
-    http.post<ValidateEmailResponse>("/auth/validate/email", payload),
+    http.post<ValidateResponse>("/auth/validate/email", payload),
+  validateUsername: (payload: ValidateUsername) =>
+    http.post<ValidateResponse>("/auth/validate/username", payload),
   validateRestToken: (payload: ValidateTokenBody) =>
     http.get<ValidateTokenResponse>(
       `/auth/reset-password/validate?token=${payload.token}`

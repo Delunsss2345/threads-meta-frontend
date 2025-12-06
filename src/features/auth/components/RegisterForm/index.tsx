@@ -3,17 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
-import { selectAuthLoggingIn } from "@/features/auth";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
   RegisterSchemaBody,
   type RegisterSchemaBodyType,
 } from "@/schema/auth.schema";
-import { useAppSelector } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
 interface RegisterFormProps {
   onRegister: (values: RegisterSchemaBodyType) => void;
@@ -21,10 +20,11 @@ interface RegisterFormProps {
 
 export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
   const { t } = useTranslation();
-  const loggingIn = useAppSelector(selectAuthLoggingIn);
+  const { authLoading } = useAuth();
+
   const form = useForm<RegisterSchemaBodyType>({
     resolver: zodResolver(RegisterSchemaBody),
-    mode: "onSubmit",
+    mode: "onChange",
     defaultValues: {
       username: "",
       email: "",
@@ -32,13 +32,16 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
       password_confirmation: "",
     },
   });
+
   const navigate = useNavigate();
 
   const handleSubmit = async (values: RegisterSchemaBodyType) => {
     await onRegister(values);
     form.reset();
   };
+
   useDebounceInput<RegisterSchemaBodyType>({ form });
+
   return (
     <Form {...form}>
       <form
@@ -108,11 +111,11 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
 
         {/* Submit button */}
         <Button
-          disabled={loggingIn}
+          disabled={authLoading}
           type="submit"
           className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >
-          {loggingIn ? <Spinner /> : t("auth.register")}
+          {authLoading ? <Spinner /> : t("auth.register")}
         </Button>
 
         {/* Link */}

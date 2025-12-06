@@ -17,6 +17,8 @@ export function useDebounceInput<T extends FieldValues>({
       return () => clearTimeout(timeoutId);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [form, delay]);
 }

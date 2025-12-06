@@ -5,20 +5,21 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toPng } from "html-to-image";
 import { ChevronDown } from "lucide-react";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import Post from "..";
 import type { MappedPost } from "../type";
 
 const ModalShare = ({
   onClose,
-  className,
   post,
 }: {
   post: MappedPost | null;
   onClose: () => void;
-  className?: string;
 }) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const { t } = useTranslation();
   if (!post) return null;
-  const ref = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
     if (!ref.current) return;
@@ -34,6 +35,35 @@ const ModalShare = ({
       link.click();
     } catch (err) {
       console.error("Lỗi khi export:", err);
+    }
+  };
+
+  const handleCopy = async () => {
+    if (!ref.current) return;
+
+    try {
+      const dataUrl = await toPng(ref.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+      });
+
+      const res = await fetch(dataUrl);
+      const blob = await res.blob();
+
+      await toast.promise(
+        navigator.clipboard.write([
+          new ClipboardItem({
+            "image/png": blob,
+          }),
+        ]),
+        {
+          loading: t("share.copying"),
+          success: t("share.copySuccess"),
+          error: t("share.copyError"),
+        }
+      );
+    } catch (err) {
+      console.error("Lỗi khi sao chép ảnh:", err);
     }
   };
 
@@ -65,12 +95,12 @@ const ModalShare = ({
             defaultChecked
           />
           <label className="text-sm font-medium cursor-pointer">
-            Hiển thị số liệu
+            {t("share.showStats")}
           </label>
         </div>
 
         <Button variant="outline" size="sm" className="p-5 rounded-xl gap-2">
-          Tự động <ChevronDown />
+          {t("share.auto")} <ChevronDown />
         </Button>
 
         <div className="flex items-center gap-3">
@@ -85,8 +115,12 @@ const ModalShare = ({
             </svg>
           </Button>
 
-          <Button size="sm" className="bg-black hover:bg-black/90">
-            Sao chép
+          <Button
+            onClick={handleCopy}
+            size="sm"
+            className="bg-black hover:bg-black/90"
+          >
+            {t("share.copy")}
           </Button>
         </div>
       </div>

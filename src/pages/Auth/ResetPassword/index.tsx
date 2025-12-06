@@ -10,11 +10,13 @@ import { useAuth } from "@/features/auth/hooks";
 import type { ResetPasswordSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const ResetPassword = () => {
+  const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
@@ -22,16 +24,16 @@ const ResetPassword = () => {
   const validateToken = useSelector(selectAuthValidateToken);
   const [ready, setReady] = useState(false);
   const navigation = useNavigate();
-  if (isAuthenticated || !token) {
-    window.location.replace("/");
-    return null;
-  }
 
   useEffect(() => {
+    if (!token) {
+      window.location.replace("/");
+    }
     const checkToken = async () => {
       try {
-        await dispatch(validateRestToken({ token }));
-      } catch (error: any) {
+        await dispatch(validateRestToken({ token: token! }));
+      } catch (error: unknown) {
+        console.log(error);
       } finally {
         setReady(true);
       }
@@ -40,15 +42,21 @@ const ResetPassword = () => {
     checkToken();
   }, [dispatch, token]);
 
+  if (isAuthenticated || !token) {
+    window.location.replace("/");
+    return null;
+  }
+
   if (!ready) return <LoadingFetch />;
 
   const handleRestPassword = async (values: ResetPasswordSchemaBodyType) => {
     try {
       await toast.promise(dispatch(restPassword({ ...values })), {
-        loading: "Đặt mật khẩu...",
-        success: "Tạo mật khẩu mới thành công, vui lòng đăng nhập",
-        error: "Có lỗi xảy ra, vui lòng thử lại.",
+        loading: t("reset.loading"),
+        success: t("reset.success"),
+        error: t("reset.error"),
       });
+
       navigation("/login", { replace: true });
     } catch (error: any) {
       console.log(error);

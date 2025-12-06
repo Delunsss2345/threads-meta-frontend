@@ -20,9 +20,9 @@ const Login = () => {
     return null;
   }
 
-
   const handleLogin = async (values: LoginSchemaBodyType) => {
-    await toast.promise(dispatch(login(values)), {
+    await toast.promise(dispatch(login(values)).unwrap(), {
+      loading: t("auth.loggingIn"),
       success: t("auth.loginSuccess"),
       error: t("auth.loginFailed"),
     });

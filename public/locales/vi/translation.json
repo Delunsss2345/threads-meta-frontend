@@ -80,7 +80,9 @@
       "emailInvalid": "Email không hợp lệ",
       "passwordInvalid": "Mật khẩu không hợp lệ",
       "passwordMin": "Mật khẩu tối thiểu 8 ký tự",
-      "passwordConfirmNotMatch": "Mật khẩu không khớp"
+      "passwordConfirmNotMatch": "Mật khẩu không khớp",
+      "emailExists": "Email đã tồn tại",
+      "usernameExists": "Tên đăng nhập đã tồn tại"
     }
   },
   "account": {
@@ -97,6 +99,15 @@
     "security": "Bảo mật",
     "downloadYourInfo": "Tải thông tin của bạn xuống",
     "transferYourInfo": "Chuyển thông tin của bạn"
+  },
+  "share": {
+    "showStats": "Hiển thị số liệu",
+    "auto": "Tự động",
+    "download": "Tải xuống",
+    "copy": "Sao chép",
+    "copying": "Đang sao chép...",
+    "copySuccess": "Sao chép ảnh thành công",
+    "copyError": "Sao chép ảnh thất bại"
   },
   "help": {
     "securityAndPrivacyHelp": "Trợ giúp về bảo mật và quyền riêng tư",
@@ -170,6 +181,11 @@
     "newThread": "Thread mới",
     "replyTo": "Phản hồi",
     "addToThread": "Thêm vào thread"
+  },
+  "reset": {
+    "loading": "Đang đặt lại mật khẩu...",
+    "success": "Đặt mật khẩu mới thành công, vui lòng đăng nhập.",
+    "error": "Có lỗi xảy ra, vui lòng thử lại."
   },
   "privacy": {
     "privateProfile": "Trang cá nhân riêng tư",

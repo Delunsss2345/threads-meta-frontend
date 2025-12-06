@@ -7,20 +7,19 @@ import {
   LoginSchemaBody,
   type LoginSchemaBodyType,
 } from "@/schema/auth.schema";
-import { useAppSelector } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { selectAuthLoggingIn } from "../../selectors";
+import { useAuth } from "../../hooks";
 
 interface LoginFormProps {
-  onLogin: (values: LoginSchemaBodyType) => void;
+  onLogin: (values: LoginSchemaBodyType) => Promise<void>;
 }
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
   const { t } = useTranslation();
-  const loggingIn = useAppSelector(selectAuthLoggingIn);
+  const { authLoading } = useAuth();
   const form = useForm<LoginSchemaBodyType>({
     resolver: zodResolver(LoginSchemaBody),
     defaultValues: {
@@ -28,7 +27,6 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       password: "",
     },
   });
-
   const navigate = useNavigate();
   useDebounceInput<LoginSchemaBodyType>({ form });
 
@@ -66,11 +64,11 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         />
 
         <Button
-          disabled={loggingIn}
+          disabled={authLoading}
           type="submit"
           className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >
-          {loggingIn ? t("auth.loggingIn") : t("auth.login")}
+          {authLoading ? t("auth.loggingIn") : t("auth.login")}
         </Button>
 
         {/* Forgot password */}

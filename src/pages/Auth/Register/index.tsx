@@ -12,11 +12,9 @@ const Register = () => {
 
   const handleRegister = async (values: RegisterSchemaBodyType) => {
     try {
-      const res = await dispatch(register(values));
-
-      if (register.fulfilled.match(res)) {
-        const token = res.payload.data.access_token;
-
+      const res = await dispatch(register(values)).unwrap();
+      if (res.success) {
+        const token = res.data.access_token;
         await toast.promise(dispatch(resendVerifyEmail({ token })), {
           success: t("auth.verifyEmailSent"),
           loading: t("auth.loading"),

@@ -7,11 +7,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import AvatarGroup from "@/components/common/AvatarGroup";
 import { useAuth } from "@/features/auth/hooks";
 import UserPreviewCard from "@/features/user/components/UserPreviewCard";
+import { useModal } from "@/hooks/use-modal";
+import { cn } from "@/lib/utils";
 import type { PostItem } from "@/types/post";
 import { POST_MODE_STYLES, type PostModeKey } from "../constant";
 import InteractionBar from "./InteractionBar";
 import Menu from "./Menu";
 import MenuMe from "./MenuMe";
+import ModalFollow from "./ModalFollow";
 import PostProvider from "./PostContext";
 import Quote from "./QuotePost";
 import type { MappedPost } from "./type";
@@ -25,6 +28,7 @@ const Post = ({
   onClick?: () => void;
   mode?: PostModeKey;
 }) => {
+  const { show, hide } = useModal();
   const isStaticOrReply = mode === "static" || mode === "reply";
   const modeConfig = POST_MODE_STYLES[mode];
 
@@ -109,12 +113,40 @@ const Post = ({
         onClick={mode === "static" || mode === "reply" ? undefined : onClick}
         className={`grid ${modeConfig.grid} w-full`}
       >
-        <AvatarGroup
-          className="my-auto"
-          size={modeConfig.avatarSize}
-          url={post.user?.avatar_url ?? ""}
-          fallBack={username.slice(0, 2).toUpperCase()}
-        />
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            show(<ModalFollow onClose={hide} user={post.user} />);
+          }}
+          className={`relative size-${modeConfig.avatarSize} my-auto`}
+        >
+          <AvatarGroup
+            className="w-full h-full"
+            size={modeConfig.avatarSize}
+            url={post.user?.avatar_url ?? ""}
+            fallBack={username.slice(0, 2).toUpperCase()}
+          />
+          {(mode === "default" || mode === "comment") && (
+            <div
+              className={cn(
+                "absolute rounded-full flex items-center justify-center border-2 border-white",
+                mode === "default" && "w-5 h-5 -right-[2px] -bottom-[2px]",
+                mode === "comment" &&
+                  "w-4 h-4 -right-[1px] -bottom-[1px] bg-primary",
+                "bg-primary"
+              )}
+            >
+              <span
+                className={cn(
+                  "text-primary-foreground font-semibold text-center",
+                  mode === "default" ? "text-[15px]" : "text-[9px]"
+                )}
+              >
+                +
+              </span>
+            </div>
+          )}
+        </div>
 
         <div className="min-w-0 flex flex-col">
           <div className="grid grid-cols-[1fr_max-content] gap-1.5 items-center">

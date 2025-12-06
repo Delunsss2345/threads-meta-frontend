@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Code, Image, Link2 } from "lucide-react";
 import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import ModalEmbedCode from "../ModalEmbedCode";
 import ModalShare from "../ModalShare";
 import type { MappedPost } from "../type";
@@ -28,10 +29,18 @@ const ShareMenu = ({
     {
       icon: <Link2 />,
       label: t("menu.copyLink"),
-      onclick: () =>
-        navigator.clipboard.writeText(
-          `${window.location.origin}/post/${post?.id}`
-        ),
+      onclick: async () => {
+        await toast.promise(
+          navigator.clipboard.writeText(
+            `${window.location.origin}/post/${post?.id}`
+          ),
+          {
+            loading: "Đang sao chép",
+            success: "Sao chép thành công",
+            error: "Sao chép thất bại",
+          }
+        );
+      },
     },
     {
       icon: <Image />,

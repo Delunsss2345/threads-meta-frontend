@@ -31,8 +31,12 @@ const ChoiceHome = ({
           key={tab.key}
           onClick={() => handleChange(tab.key)}
           className={`
-            text-md
-            ${active === tab.key ? "font-semibold text-primary" : "text-gray-500"}
+            text-md cursor-pointer
+            ${
+              active === tab.key
+                ? "font-semibold text-primary "
+                : "text-gray-500"
+            }
           `}
         >
           {tab.label}

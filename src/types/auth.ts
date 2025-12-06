@@ -34,6 +34,10 @@ export type ValidateEmail = {
   email: string;
 };
 
+export type ValidateUsername = {
+  username: string;
+};
+
 export type ValidateTokenBody = {
   token: string;
 };
@@ -47,9 +51,10 @@ export type RestPasswordBody = {
 
 export type RegisterResponse = BaseResponse<RegisterData>;
 export type LoginResponse = BaseResponse<LoginData>;
-export type ValidateEmailResponse = BaseResponse<{
+export type ValidateResponse = BaseResponse<{
   available: boolean;
 }>;
+
 export type ValidateTokenResponse = BaseResponse<{
   valid: boolean; //false -> sai token
 }>;

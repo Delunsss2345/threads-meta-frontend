@@ -10,13 +10,11 @@ export default function LoginCard() {
   const { t } = useTranslation();
   if (isMobile) return null;
   return (
-    <div className=" sticky top-[60px] flex justify-center items-center">
+    <div className="hidden sticky top-[60px] lg:flex justify-center items-center">
       <Card className="w-[320px] text-center border border-gray-200 shadow-sm overflow-hidden rounded-2xl">
         <CardContent className="flex flex-col items-center p-6 space-y-4">
           <div className="space-y-1">
-            <h2 className="text-lg font-semibold">
-              {t("loginCard.title")}
-            </h2>
+            <h2 className="text-lg font-semibold">{t("loginCard.title")}</h2>
             <p className="text-sm text-gray-500">
               {t("loginCard.description")}
             </p>

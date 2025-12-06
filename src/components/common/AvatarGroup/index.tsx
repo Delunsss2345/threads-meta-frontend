@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type AvatarGroupProps = {
-  size: number;
+  size?: number;
   classNameFallback?: string;
   url: string;
   fallBack?: string;

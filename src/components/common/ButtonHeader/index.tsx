@@ -15,7 +15,7 @@ const ButtonHeader = ({
         bg-primary-foreground
         shadow-sm
         border
-        hover:bg-neutral-100
+        hover:bg-primary/40
         active:scale-95
         transition
         cursor-pointer

@@ -12,22 +12,28 @@ import type { User, UserResponse } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userApi } from "../user/api";
 import { authApi } from "./api";
+
 export type AuthState = {
   currentUser: User | null;
   accessToken: string | null;
+
   loadingUser: boolean;
+  authLoading: boolean;
   loggingIn: boolean;
-  initialized: boolean;
   loadingRequest: boolean;
+  initialized: boolean;
+
   validateToken: boolean;
 };
 
 const initialState: AuthState = {
   currentUser: null,
   accessToken: null,
-  loadingUser: true,
+
+  loadingUser: false,
   loggingIn: false,
   initialized: false,
+  authLoading: false,
   loadingRequest: false,
   validateToken: false,
 };
@@ -38,21 +44,20 @@ export const login = createAsyncThunk<LoginResponse, LoginPayload>(
     try {
       const res = await authApi.login(payload);
       return res;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data || "Đăng ký thất bại");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
 
 export const register = createAsyncThunk<RegisterResponse, RegisterPayload>(
   "auth/register",
-
   async (payload, { rejectWithValue }) => {
     try {
       const res = await authApi.register(payload);
       return res;
-    } catch (error: any) {
-      return rejectWithValue(error.message ?? "Đăng ký thất bại");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -63,10 +68,8 @@ export const getCurrentUser = createAsyncThunk<UserResponse>(
     try {
       const res = await authApi.getCurrentUser();
       return res;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.message ?? "Lấy thông tin người dùng thất bại"
-      );
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -76,13 +79,11 @@ export const logout = createAsyncThunk<void>(
   async (_, { rejectWithValue }) => {
     try {
       await authApi.logout();
-    } catch (error: any) {
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("accessToken");
-      return rejectWithValue(error.message ?? "Đăng xuất có sự cố");
+    } catch (error) {
+      return rejectWithValue(error);
     } finally {
-      localStorage.removeItem("refreshToken");
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     }
   }
 );
@@ -92,20 +93,19 @@ export const forgotPassword = createAsyncThunk<void, ForgotPasswordType>(
   async (payload, { rejectWithValue }) => {
     try {
       return await authApi.forgotPassword(payload);
-    } catch (error: any) {
-      return rejectWithValue(error.message ?? "Gửi mail có sự cố");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
-
 export const validateRestToken = createAsyncThunk<
   ValidateTokenResponse,
   ValidateTokenBody
 >("auth/validateRestToken", async (payload, { rejectWithValue }) => {
   try {
     return await authApi.validateRestToken(payload);
-  } catch (error: any) {
-    return rejectWithValue(error.message ?? "Liên kết hết hạn");
+  } catch (error) {
+    return rejectWithValue(error);
   }
 });
 
@@ -114,8 +114,8 @@ export const restPassword = createAsyncThunk<void, RestPasswordBody>(
   async (payload, { rejectWithValue }) => {
     try {
       return await authApi.resetPassword(payload);
-    } catch (error: any) {
-      return rejectWithValue(error.message ?? "Liên kết hết hạn");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -125,8 +125,8 @@ export const updateAuthForUser = createAsyncThunk<any, FormData>(
   async (payload, { rejectWithValue }) => {
     try {
       return await userApi.updateUser(payload);
-    } catch (error: any) {
-      return rejectWithValue(error.message ?? "Liên kết hết hạn");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -136,8 +136,8 @@ export const verifyEmail = createAsyncThunk<void, ValidateTokenBody>(
   async (payload, { rejectWithValue }) => {
     try {
       return await authApi.verifyEmail(payload);
-    } catch (error: any) {
-      return rejectWithValue(error.message ?? "Liên kết hết hạn");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -146,11 +146,9 @@ export const resendVerifyEmail = createAsyncThunk<any, ValidateTokenBody>(
   "auth/resendVerifyEmail",
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await authApi.resendVerifyEmail(payload);
-      console.log(res);
-      return res;
-    } catch (error: any) {
-      return rejectWithValue(error.message ?? "Liên kết hết hạn");
+      return await authApi.resendVerifyEmail(payload);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -162,18 +160,20 @@ export const authSlice = createSlice({
     setCurrentUser(state, action) {
       state.currentUser = action.payload;
     },
+    resetAuthLoading(state) {
+      state.authLoading = false;
+    },
   },
   extraReducers: (builder) => {
-    // Login auth
+    // login
     builder.addCase(login.pending, (state) => {
-      state.loggingIn = true;
+      state.authLoading = true;
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
-      state.loggingIn = false;
+      state.authLoading = false;
 
       state.currentUser = action.payload.data.user;
-
       state.accessToken = action.payload.data.access_token;
 
       localStorage.setItem("accessToken", action.payload.data.access_token);
@@ -181,34 +181,33 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(login.rejected, (state) => {
-      state.loggingIn = false;
-
+      state.authLoading = false;
       state.currentUser = null;
       state.accessToken = null;
     });
 
-    // Register auth
+    // register
     builder.addCase(register.pending, (state) => {
-      state.loggingIn = true;
+      state.authLoading = true;
     });
 
     builder.addCase(register.fulfilled, (state, action) => {
-      state.loggingIn = false;
+      state.authLoading = false;
       state.currentUser = action.payload.data.user;
       state.accessToken = action.payload.data.access_token;
     });
 
     builder.addCase(register.rejected, (state) => {
-      state.loggingIn = false;
+      state.authLoading = false;
       state.currentUser = null;
       state.accessToken = null;
     });
-    // Get me
+
+    // getCurrent
     builder.addCase(getCurrentUser.pending, (state) => {
       state.loadingUser = true;
     });
 
-    // fulfilled trả về User
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
       state.loadingUser = false;
       state.currentUser = action.payload.data;
@@ -219,38 +218,36 @@ export const authSlice = createSlice({
       state.currentUser = null;
     });
 
-    // Logout
+    // logout
     builder.addCase(logout.pending, (state) => {
-      state.loggingIn = true;
+      state.loadingUser = true;
     });
 
     builder.addCase(logout.fulfilled, (state) => {
-      state.loggingIn = false;
+      state.loadingUser = false;
       state.currentUser = null;
       state.accessToken = null;
     });
 
     builder.addCase(logout.rejected, (state) => {
-      state.loggingIn = false;
+      state.loadingUser = false;
       state.currentUser = null;
       state.accessToken = null;
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
     });
 
-    //forgot password
+    // forgot
     builder.addCase(forgotPassword.pending, (state) => {
-      state.loadingRequest = true;
+      state.authLoading = true;
     });
     builder.addCase(forgotPassword.fulfilled, (state) => {
-      state.loadingRequest = false;
+      state.authLoading = false;
     });
-
     builder.addCase(forgotPassword.rejected, (state) => {
-      state.loadingRequest = false;
+      state.authLoading = false;
     });
+    // #endregion
 
-    // validate password
+    // validate reset token
     builder.addCase(validateRestToken.pending, (state) => {
       state.loadingRequest = true;
     });
@@ -258,55 +255,56 @@ export const authSlice = createSlice({
       state.loadingRequest = false;
       state.validateToken = action.payload.data.valid;
     });
-
     builder.addCase(validateRestToken.rejected, (state) => {
       state.loadingRequest = false;
       state.validateToken = false;
     });
-    // reset password
+
+    // reset password handler
     builder.addCase(restPassword.pending, (state) => {
-      state.loadingRequest = true;
+      state.authLoading = true;
     });
     builder.addCase(restPassword.fulfilled, (state) => {
-      state.loadingRequest = false;
+      state.authLoading = false;
     });
     builder.addCase(restPassword.rejected, (state) => {
-      state.loadingRequest = false;
+      state.authLoading = false;
     });
 
+    // update user handler
     builder.addCase(updateAuthForUser.pending, (state) => {
       state.loadingRequest = true;
     });
-
     builder.addCase(updateAuthForUser.fulfilled, (state, action) => {
       state.loadingRequest = false;
       state.currentUser = action.payload.data;
     });
-
     builder.addCase(updateAuthForUser.rejected, (state) => {
       state.loadingRequest = false;
     });
 
+    // verify email
     builder.addCase(verifyEmail.pending, (state) => {
-      state.loadingRequest = true;
+      state.authLoading = true;
     });
     builder.addCase(verifyEmail.fulfilled, (state) => {
-      state.loadingRequest = false;
+      state.authLoading = false;
     });
     builder.addCase(verifyEmail.rejected, (state) => {
-      state.loadingRequest = false;
+      state.authLoading = false;
     });
 
+    // resend
     builder.addCase(resendVerifyEmail.pending, (state) => {
-      state.loadingRequest = true;
+      state.authLoading = true;
     });
-
     builder.addCase(resendVerifyEmail.fulfilled, (state) => {
-      state.loadingRequest = false;
+      state.authLoading = false;
     });
-
     builder.addCase(resendVerifyEmail.rejected, (state) => {
-      state.loadingRequest = false;
+      state.authLoading = false;
     });
   },
 });
+
+export const { resetAuthLoading } = authSlice.actions;

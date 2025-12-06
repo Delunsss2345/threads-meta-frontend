@@ -3,8 +3,8 @@ import axios, {
   type AxiosInstance,
   type AxiosRequestConfig,
   type AxiosResponse,
-  type InternalAxiosRequestConfig,
 } from "axios";
+import { isPublicApi } from "./isPublicApi";
 
 const baseURL = import.meta.env.VITE_BASE_API;
 
@@ -17,15 +17,10 @@ const refreshAxiosInstance: AxiosInstance = axios.create({
 });
 
 // Mỗi request đều gắn accessToken
-axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+axiosInstance.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
 
-  const isPublicApi =
-    config.url?.startsWith("/auth/login") ||
-    config.url?.startsWith("/auth/resend-verify-email") ||
-    config.url?.startsWith("/auth/register");
-
-  if (!isPublicApi && accessToken) {
+  if (!isPublicApi(config.url) && accessToken) {
     config.headers.set("Authorization", `Bearer ${accessToken}`);
   }
 
@@ -93,10 +88,14 @@ axiosInstance.interceptors.response.use(
 
   async (error: any) => {
     const originalRequest = error.config;
+    const isAuthApi = isPublicApi(originalRequest?.url);
 
     // Đánh dấu lỗi
     const shouldRenewToken =
-      error.response.status === 401 && !originalRequest._retry;
+      error.response?.status === 401 &&
+      !isAuthApi &&
+      localStorage.getItem("refreshToken") &&
+      !originalRequest?._retry;
 
     // Nếu chưa từng đánh dấu thì vào
     if (shouldRenewToken) {

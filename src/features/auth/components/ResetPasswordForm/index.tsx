@@ -1,7 +1,7 @@
+import { FormMessageI18n } from "@/components/common/FormMessageI18n";
 import { Button } from "@/components/ui/button";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { selectAuthLoadingRequest } from "@/features/auth";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
   ResetPasswordSchemaBody,
@@ -10,8 +10,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
 interface ResetPasswordFormProps {
   onResetPassword: (values: ResetPasswordSchemaBodyType) => void;
@@ -23,6 +23,8 @@ export const ResetPasswordForm = ({
   token,
 }: ResetPasswordFormProps) => {
   const { t } = useTranslation();
+  const { authLoading } = useAuth();
+
   const form = useForm<ResetPasswordSchemaBodyType>({
     resolver: zodResolver(ResetPasswordSchemaBody),
     mode: "onSubmit",
@@ -34,7 +36,6 @@ export const ResetPasswordForm = ({
     },
   });
 
-  const loadingRequest = useSelector(selectAuthLoadingRequest);
   const navigate = useNavigate();
 
   useDebounceInput<ResetPasswordSchemaBodyType>({ form });
@@ -61,7 +62,7 @@ export const ResetPasswordForm = ({
             render={({ field }) => (
               <FormItem className="w-full">
                 <Input type="email" placeholder={t("auth.email")} {...field} />
-                <FormMessage />
+                <FormMessageI18n />
               </FormItem>
             )}
           />
@@ -75,7 +76,7 @@ export const ResetPasswordForm = ({
                   placeholder={t("auth.newPassword")}
                   {...field}
                 />
-                <FormMessage />
+                <FormMessageI18n />
               </FormItem>
             )}
           />
@@ -90,17 +91,17 @@ export const ResetPasswordForm = ({
                   placeholder={t("auth.confirmPassword")}
                   {...field}
                 />
-                <FormMessage />
+                <FormMessageI18n />
               </FormItem>
             )}
           />
 
           <Button
-            disabled={loadingRequest}
+            disabled={authLoading}
             type="submit"
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl font-semibold"
           >
-            {!loadingRequest ? t("auth.resetPassword") : t("auth.loading")}
+            {authLoading ? t("auth.loading") : t("auth.resetPassword")}
           </Button>
 
           <p

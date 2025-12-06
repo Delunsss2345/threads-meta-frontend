@@ -12,7 +12,7 @@ const VerifyEmail = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
 
-  const { loadingRequest, error } = useSelector(selectAuthState);
+  const { authLoading, error } = useSelector(selectAuthState);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -37,16 +37,13 @@ const VerifyEmail = () => {
 
   return (
     <div className="w-full max-w-sm mx-auto text-center mt-12">
-      {loadingRequest && (
-        <div className="flex items-center justify-center">
-          <Spinner />
-          <p className="mt-4 text-sm text-muted-foreground">
-            {t("auth.verifying")}
-          </p>
+      {authLoading && (
+        <div className="flex items-center gap-2 justify-center">
+          <Spinner /> {t("auth.verifying")}
         </div>
       )}
 
-      {!loadingRequest && error && (
+      {!authLoading && error && (
         <>
           <p className="text-red-500 mb-6">{error}</p>
           <Button

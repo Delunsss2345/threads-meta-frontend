@@ -75,13 +75,16 @@
     "forgotPasswordDescription": "Enter your email to receive the password reset link.",
     "verifying": "Verifying...",
     "goToLogin": "Go to login page",
+
     "error": {
       "usernameInvalid": "Invalid username",
       "usernameRule": "Username can only contain letters, numbers, dashes (-), and underscores (_)",
       "emailInvalid": "Invalid email",
       "passwordInvalid": "Invalid password",
       "passwordMin": "Password must be at least 8 characters",
-      "passwordConfirmNotMatch": "Passwords do not match"
+      "passwordConfirmNotMatch": "Passwords do not match",
+      "emailExists": "Email already exists",
+      "usernameExists": "Username already exists"
     }
   },
   "account": {
@@ -98,6 +101,20 @@
     "security": "Security",
     "downloadYourInfo": "Download your information",
     "transferYourInfo": "Transfer your information"
+  },
+  "reset": {
+    "loading": "Setting new password...",
+    "success": "Your password has been updated. Please log in.",
+    "error": "An error occurred. Please try again."
+  },
+  "share": {
+    "showStats": "Show stats",
+    "auto": "Auto",
+    "download": "Download",
+    "copy": "Copy",
+    "copying": "Copying...",
+    "copySuccess": "Image copied successfully",
+    "copyError": "Failed to copy image"
   },
   "help": {
     "securityAndPrivacyHelp": "Security and privacy help",

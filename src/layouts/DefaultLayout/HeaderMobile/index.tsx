@@ -1,14 +1,19 @@
 import BackButton from "@/components/common/BackButton";
 import MenuIcon from "@/components/common/Icon/MenuIcon";
 import Logo from "@/components/common/Logo";
+import { Button } from "@/components/ui/button";
 import { PAGE_CHILDREN_BY_PATH } from "@/constant/pageTitless";
+import { useAuth } from "@/features/auth/hooks";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import SlideUpMenu from "../Navbar/SideUpMenu";
 
 const HeaderMobile: React.FC = () => {
   const isMobile = useIsMobile();
   const { pathname } = useLocation();
+  const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
 
   if (!isMobile) return null;
 
@@ -16,7 +21,7 @@ const HeaderMobile: React.FC = () => {
   const showBack = PAGE_CHILDREN_BY_PATH[pathname] || isPostDetail;
 
   return (
-    <header className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between bg-primary-foreground h-12 px-4">
+    <header className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between bg-primary-foreground h-12 px-4 py-4">
       <div className="w-6 flex items-center justify-center">
         {showBack && <BackButton onClick={() => window.history.back()} />}
       </div>
@@ -25,20 +30,29 @@ const HeaderMobile: React.FC = () => {
         <Logo className="h-6 w-6 text-foreground" />
       </div>
 
-      <div className="w-6 flex items-center justify-center">
-        {!showBack && (
-          <SlideUpMenu
-            motionProps={{
-              initial: { opacity: 0, x: -10, scale: 0.96 },
-              animate: { opacity: 1, x: -10, scale: 1 },
-              exit: { opacity: 0, x: 25, scale: 0.96 },
-              transition: { duration: 0.18, ease: "easeOut" },
-            }}
-          >
-            <MenuIcon className="w-5 h-5 rotate-180" />
-          </SlideUpMenu>
-        )}
-      </div>
+      {!isAuthenticated ? (
+        <Button
+          onClick={() => window.location.replace("/login")}
+          className="bg-primary text-primary-foreground rounded-xl cursor-pointer"
+        >
+          {t("auth.login")}
+        </Button>
+      ) : (
+        <div className="w-6 flex items-center justify-center">
+          {!showBack && (
+            <SlideUpMenu
+              motionProps={{
+                initial: { opacity: 0, x: -10, scale: 0.96 },
+                animate: { opacity: 1, x: -10, scale: 1 },
+                exit: { opacity: 0, x: 25, scale: 0.96 },
+                transition: { duration: 0.18, ease: "easeOut" },
+              }}
+            >
+              <MenuIcon className="w-5 h-5 rotate-180" />
+            </SlideUpMenu>
+          )}
+        </div>
+      )}
     </header>
   );
 };
