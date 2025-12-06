@@ -7,10 +7,10 @@ import {
   LoginSchemaBody,
   type LoginSchemaBodyType,
 } from "@/schema/auth.schema";
+import { useAppSelector } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectAuthLoggingIn } from "../../selectors";
 
@@ -20,7 +20,7 @@ interface LoginFormProps {
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
   const { t } = useTranslation();
-  const { loggingIn } = useSelector(selectAuthLoggingIn);
+  const loggingIn = useAppSelector(selectAuthLoggingIn);
   const form = useForm<LoginSchemaBodyType>({
     resolver: zodResolver(LoginSchemaBody),
     defaultValues: {

@@ -12,7 +12,8 @@
     "threads": "Threads",
     "replies": "Replies",
     "media": "Media",
-    "reposts": "Reposts"
+    "reposts": "Reposts",
+    "beta": "BETA"
   },
   "nav": {
     "home": "Home",
@@ -26,6 +27,7 @@
     "account": "Account",
     "account_status": "Account status"
   },
+
   "auth": {
     "login": "Log in",
     "register": "Sign up",
@@ -71,6 +73,8 @@
     "forgotError": "An error occurred, please try again.",
     "emailNotFound": "Email does not exist",
     "forgotPasswordDescription": "Enter your email to receive the password reset link.",
+    "verifying": "Verifying...",
+    "goToLogin": "Go to login page",
     "error": {
       "usernameInvalid": "Invalid username",
       "usernameRule": "Username can only contain letters, numbers, dashes (-), and underscores (_)",
@@ -79,6 +83,41 @@
       "passwordMin": "Password must be at least 8 characters",
       "passwordConfirmNotMatch": "Passwords do not match"
     }
+  },
+  "account": {
+    "sensitiveContent": "Sensitive content",
+    "politicalContent": "Political content",
+    "sitePermissions": "Site permissions",
+    "disableOrDeleteProfile": "Disable or delete profile",
+    "shareToFediverse": "Share to decentralized social networks",
+
+    "otherAccountSettings": "Other account settings",
+    "sharedSettingsDescription": "Some settings (such as username and password) apply to both Threads and Instagram and can be managed on Instagram.",
+
+    "personalInfo": "Personal information",
+    "security": "Security",
+    "downloadYourInfo": "Download your information",
+    "transferYourInfo": "Transfer your information"
+  },
+  "help": {
+    "securityAndPrivacyHelp": "Security and privacy help",
+    "requestSupport": "Request support",
+
+    "helpCenter": "Help Center",
+    "metaPrivacyPolicy": "Meta Privacy Policy",
+    "metaTerms": "Meta Terms of Use",
+    "threadsAdditionalPrivacy": "Threads Supplemental Privacy Policy",
+    "threadsTerms": "Threads Terms of Use",
+    "cookiePolicy": "Cookie Policy",
+    "fediverseGuidelines": "Guidelines for decentralized social networks"
+  },
+  "accountStatus": {
+    "actionsTaken": "Actions we've taken",
+    "description": "See all measures Threads has taken when your profile or content does not comply with our guidelines.",
+    "learnMore": "Learn more",
+
+    "removedContent": "Content removed",
+    "disabledFeatures": "Features you cannot use"
   },
   "profile": {
     "editProfile": "Edit profile",
@@ -256,6 +295,15 @@
     "yourLinks": "Your links",
     "linkTitle": "Title",
     "linkUrl": "URL"
+  },
+  "privacy": {
+    "privateProfile": "Private profile",
+    "tagAndMention": "Tagging & mentions",
+    "onlineStatus": "Online status",
+    "restrictedProfiles": "Restricted profiles",
+    "blockedProfiles": "Blocked profiles",
+    "mutedWords": "Muted words",
+    "hideLikesAndShares": "Hide likes & shares"
   },
   "loginCard": {
     "title": "Log in or sign up for Threads",

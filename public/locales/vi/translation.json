@@ -12,7 +12,8 @@
     "threads": "Thread",
     "replies": "Trả lời",
     "media": "File phương tiện",
-    "reposts": "Bài đăng lại"
+    "reposts": "Bài đăng lại",
+    "beta": "BETA"
   },
   "nav": {
     "home": "Trang chủ",
@@ -71,6 +72,8 @@
     "forgotError": "Có lỗi xảy ra, vui lòng thử lại.",
     "emailNotFound": "Email không tồn tại",
     "forgotPasswordDescription": "Nhập email của bạn để nhận liên kết đặt lại mật khẩu.",
+    "verifying": "Đang xác minh...",
+    "goToLogin": "Đi tới trang đăng nhập",
     "error": {
       "usernameInvalid": "Tên đăng nhập không hợp lệ",
       "usernameRule": "Tên đăng nhập chỉ được chứa chữ cái, số, dấu gạch ngang (-) và gạch dưới (_)",
@@ -79,6 +82,41 @@
       "passwordMin": "Mật khẩu tối thiểu 8 ký tự",
       "passwordConfirmNotMatch": "Mật khẩu không khớp"
     }
+  },
+  "account": {
+    "sensitiveContent": "Nội dung nhạy cảm",
+    "politicalContent": "Nội dung mang tính chính trị",
+    "sitePermissions": "Quyền trên trang web",
+    "disableOrDeleteProfile": "Vô hiệu hóa hoặc xóa trang cá nhân",
+    "shareToFediverse": "Chia sẻ lên mạng xã hội phi tập trung",
+
+    "otherAccountSettings": "Cài đặt khác cho tài khoản",
+    "sharedSettingsDescription": "Một số cài đặt (chẳng hạn như tên người dùng và mật khẩu) sẽ áp dụng cho cả Threads lẫn Instagram và có thể quản lý trên Instagram.",
+
+    "personalInfo": "Thông tin cá nhân",
+    "security": "Bảo mật",
+    "downloadYourInfo": "Tải thông tin của bạn xuống",
+    "transferYourInfo": "Chuyển thông tin của bạn"
+  },
+  "help": {
+    "securityAndPrivacyHelp": "Trợ giúp về bảo mật và quyền riêng tư",
+    "requestSupport": "Yêu cầu hỗ trợ",
+
+    "helpCenter": "Trung tâm trợ giúp",
+    "metaPrivacyPolicy": "Chính sách quyền riêng tư của Meta",
+    "metaTerms": "Điều khoản sử dụng của Meta",
+    "threadsAdditionalPrivacy": "Chính sách quyền riêng tư bổ sung của Threads",
+    "threadsTerms": "Điều khoản sử dụng của Threads",
+    "cookiePolicy": "Chính sách cookie",
+    "fediverseGuidelines": "Hướng dẫn về mạng xã hội phi tập trung"
+  },
+  "accountStatus": {
+    "actionsTaken": "Hành động chúng tôi đã thực hiện",
+    "description": "Xem mọi biện pháp mà Threads đã thực hiện khi trang cá nhân hoặc nội dung của bạn không tuân thủ nguyên tắc của chúng tôi.",
+    "learnMore": "Tìm hiểu thêm",
+
+    "removedContent": "Nội dung đã gỡ",
+    "disabledFeatures": "Tính năng bạn không sử dụng được"
   },
   "profile": {
     "editProfile": "Chỉnh sửa trang cá nhân",
@@ -132,6 +170,15 @@
     "newThread": "Thread mới",
     "replyTo": "Phản hồi",
     "addToThread": "Thêm vào thread"
+  },
+  "privacy": {
+    "privateProfile": "Trang cá nhân riêng tư",
+    "tagAndMention": "Gắn thẻ và nhắc đến",
+    "onlineStatus": "Trạng thái online",
+    "restrictedProfiles": "Trang cá nhân đã hạn chế",
+    "blockedProfiles": "Trang cá nhân đã chặn",
+    "mutedWords": "Từ bị ẩn",
+    "hideLikesAndShares": "Ẩn lượt thích & lượt chia sẻ"
   },
   "reply": {
     "addTopic": "Thêm chủ đề",

@@ -12,7 +12,6 @@ import type { User, UserResponse } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userApi } from "../user/api";
 import { authApi } from "./api";
-
 export type AuthState = {
   currentUser: User | null;
   accessToken: string | null;
@@ -172,6 +171,7 @@ export const authSlice = createSlice({
 
     builder.addCase(login.fulfilled, (state, action) => {
       state.loggingIn = false;
+
       state.currentUser = action.payload.data.user;
 
       state.accessToken = action.payload.data.access_token;
@@ -182,6 +182,7 @@ export const authSlice = createSlice({
 
     builder.addCase(login.rejected, (state) => {
       state.loggingIn = false;
+
       state.currentUser = null;
       state.accessToken = null;
     });

@@ -13,22 +13,19 @@ const Login = () => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
   const verified = location.state?.verified;
+  const dispatch = useDispatch<AppDispatch>();
 
   if (isAuthenticated) {
     window.location.replace("/");
     return null;
   }
 
-  const dispatch = useDispatch<AppDispatch>();
 
   const handleLogin = async (values: LoginSchemaBodyType) => {
-    const res = await dispatch(login(values));
-
-    if (login.fulfilled.match(res)) {
-      toast.success(t("auth.loginSuccess"));
-    } else {
-      toast.error(t("auth.loginFailed"));
-    }
+    await toast.promise(dispatch(login(values)), {
+      success: t("auth.loginSuccess"),
+      error: t("auth.loginFailed"),
+    });
   };
 
   return (

@@ -24,7 +24,7 @@ const MenuItem = ({
       className={`${styles.menuItemBase} ${className ?? ""}`}
       onClick={onClick}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 text-foreground">
         {icon}
         <span className={styles.menuItemText}>{text}</span>
       </div>

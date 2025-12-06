@@ -12,9 +12,10 @@ interface LanguageMenuItem {
 
 interface LanguageMenuProps {
   items: LanguageMenuItem[];
+  onClick: () => void;
 }
 
-export function LanguageMenu({ items }: LanguageMenuProps) {
+export function LanguageMenu({ items, onClick }: LanguageMenuProps) {
   const { i18n } = useTranslation();
   const [language, setLanguage] = useState(i18n.language);
 
@@ -33,10 +34,11 @@ export function LanguageMenu({ items }: LanguageMenuProps) {
         return (
           <>
             <DropdownMenuItem
-              key={index}
+              key={item.value}
               onSelect={(e) => {
                 e.preventDefault();
                 item.onClick?.();
+                if (onClick) onClick();
               }}
               className={cn(
                 "flex items-center gap-2 cursor-pointer px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",

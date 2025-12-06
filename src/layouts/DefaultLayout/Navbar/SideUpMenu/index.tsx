@@ -9,6 +9,7 @@ import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { LanguageMenu } from "./LanguageMenu";
 import { MainMenu } from "./MainMenu";
 import { ThemeMenu } from "./ThemeMenu";
@@ -28,6 +29,7 @@ const SlideUpMenu = ({
   customPopup?: string;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigator = useNavigate();
   const isMobile = useIsMobile();
   const [activeMenu, setActiveMenu] = useState<"main" | "theme" | "language">(
     "main"
@@ -57,7 +59,10 @@ const SlideUpMenu = ({
     },
     {
       label: t("menu.logout"),
-      onClick: () => dispatch(logout()),
+      onClick: async () => {
+        await dispatch(logout());
+        navigator("/", { replace: true });
+      },
       danger: true,
       isAuth: true,
     },
@@ -67,7 +72,7 @@ const SlideUpMenu = ({
     {
       label: "Light",
       icon: <LightModeIcon className="w-4 h-4" />,
-      onClick: () => setTheme("light"),
+      onClick:() => setTheme("light"),
     },
     {
       label: "Dark",
@@ -92,6 +97,7 @@ const SlideUpMenu = ({
       onClick: () => i18n.changeLanguage("en"),
     },
     {
+      value : "back",
       label: t("menu.back"),
       icon: <ArrowLeft size={16} />,
       onClick: () => setActiveMenu("main"),
@@ -107,7 +113,7 @@ const SlideUpMenu = ({
       {activeMenu === "theme" && (
         <ThemeMenu onClick={() => setActiveMenu("main")} items={themeMenu} />
       )}
-      {activeMenu === "language" && <LanguageMenu items={languageMenu} />}
+      {activeMenu === "language" && <LanguageMenu onClick={() => setActiveMenu("main")} items={languageMenu} />}
     </MenuPopup>
   );
 };

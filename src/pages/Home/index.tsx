@@ -12,6 +12,7 @@ import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import LoadingFetch from "@/components/common/LoadingFetch";
 import InfiniteList from "@/features/post/components/InfiniteList";
 import { KeepAlive } from "react-activation";
 const Home = () => {
@@ -42,7 +43,9 @@ const Home = () => {
       (post: PostItem) => post.user.username !== user?.username
     );
   }, [feeds, user?.username]);
-
+  if (!loaded) {
+    return <LoadingFetch />;
+  }
   return (
     <KeepAlive>
       <div className="hidden md:block">

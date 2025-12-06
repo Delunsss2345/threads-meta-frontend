@@ -42,7 +42,10 @@ export function ThemeMenu({
           return (
             <button
               key={index}
-              onClick={() => item.onClick?.()}
+              onClick={() => {
+                item.onClick?.();
+                if (onClick) onClick();
+              }}
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium transition-all",
                 isActive

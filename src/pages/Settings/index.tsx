@@ -55,7 +55,7 @@ const SettingsPage = () => {
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton className="hover:!bg-transparent" asChild>
                   <NavLink
-                    className="w-full flex items-center justify-between"
+                    className="w-full flex items-center justify-between "
                     to={item.url}
                   >
                     <div className="flex items-center gap-5">

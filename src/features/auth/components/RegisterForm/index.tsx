@@ -108,11 +108,11 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
 
         {/* Submit button */}
         <Button
-          disabled={!loggingIn}
+          disabled={loggingIn}
           type="submit"
           className="font-semibold w-90 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-xl"
         >
-          {!loggingIn ? <Spinner /> : t("auth.register")}
+          {loggingIn ? <Spinner /> : t("auth.register")}
         </Button>
 
         {/* Link */}

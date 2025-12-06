@@ -64,7 +64,8 @@ const refreshToken = async () => {
     processQueue(null);
   } catch (error) {
     processQueue(error);
-    localStorage.clear();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
 
     throw error;
   }
