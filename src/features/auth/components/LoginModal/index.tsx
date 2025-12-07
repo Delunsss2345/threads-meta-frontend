@@ -1,6 +1,8 @@
 import ModalPopup from "@/components/common/ModalPopup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
 import type { LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -25,36 +27,71 @@ const AuthSocialModal: React.FC<AuthSocialModalProps> = ({
   iconGradient = "from-pink-500 via-red-500 to-yellow-400",
 }) => {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
+  const content = (
+    <div className="p-6 space-y-5">
+      <div className="flex justify-center mb-4 md:hidden">
+        <div className="w-12 h-1.5 bg-muted-foreground/50 rounded-full"></div>
+      </div>
+
+      {Icon && (
+        <div className="flex justify-center">
+          <div
+            className={`w-20 h-20 rounded-lg ${iconGradient} flex items-center justify-center`}
+          >
+            <Icon size={30} className="text-foreground w-12 h-12" />
+          </div>
+        </div>
+      )}
+
+      <h2 className="text-foreground font-bold text-3xl">
+        {title || t("authModal.signUpToPost")}
+      </h2>
+
+      <p className="text-foreground text-sm leading-relaxed">
+        {description || t("modal.joinThreads")}
+      </p>
+
+      <Button
+        onClick={(e) => {
+          onContinue();
+          onClose();
+        }}
+        className="w-full bg-primary-foreground border cursor-pointer hover:!bg-transparent text-foreground justify-between py-6 rounded-xl"
+      >
+        <span>{buttonText || t("authModal.continueWithLogin")}</span>
+        <span className="text-foreground">{">"}</span>
+      </Button>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <>
+        <div
+          onClick={onClose}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 animate-in fade-in cursor-pointer"
+        />
+        <Sheet
+          modal={false}
+          open={true}
+          onOpenChange={(open) => !open && onClose()}
+        >
+          <SheetContent
+            side="bottom"
+            className="rounded-t-2xl p-0 pb-6 bg-primary-foreground z-50"
+          >
+            <div className="text-center">{content}</div>
+          </SheetContent>
+        </Sheet>
+      </>
+    );
+  }
 
   return (
     <ModalPopup customModalClassName="w-120" onClose={onClose}>
       <Card className="bg-primary-foreground border-none text-center rounded-2xl shadow-xl">
-        <CardContent className="p-6 space-y-5">
-          <div className={`flex justify-center ${Icon ? "" : "hidden"}`}>
-            <div
-              className={`w-20 h-20 rounded-lg bg-gradient-to-from ${iconGradient} flex items-center justify-center`}
-            >
-              {Icon && <Icon size={30} className="text-foreground w-12 h-12" />}
-            </div>
-          </div>
-
-          <h2 className="text-foreground font-bold text-3xl">
-            {title || t("authModal.signUpToPost")}
-          </h2>
-          <p className="text-foreground text-sm leading-relaxed ">
-            {description || t("modal.joinThreads")}
-          </p>
-
-          <Button
-            onClick={onContinue}
-            className="w-full bg-primary-foreground border cursor-pointer hover:!bg-transparent text-foreground justify-between py-6 rounded-xl"
-          >
-            <div onClick={onContinue} className="flex items-center space-x-3">
-              <span>{buttonText || t("authModal.continueWithLogin")}</span>
-            </div>
-            <span className="text-foreground">{">"}</span>
-          </Button>
-        </CardContent>
+        <CardContent>{content}</CardContent>
       </Card>
     </ModalPopup>
   );

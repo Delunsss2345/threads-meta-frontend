@@ -53,7 +53,7 @@ const NavMobile: React.FC = () => {
     handlePost,
   } = useCreatePost(() => setOpenSheet(false));
   const { t } = useTranslation();
-
+  const navigator = useNavigate();
   if (!isMobile) return null;
 
   const handleNavClick = (item: (typeof navItems)[0]) => {
@@ -78,7 +78,10 @@ const NavMobile: React.FC = () => {
       show(
         <AuthSocialModal
           onClose={hide}
-          onContinue={hide}
+          onContinue={() => {
+            navigator("/login");
+            hide();
+          }}
           title="Login to continue"
           description="Join Threads to share thoughts..."
         />

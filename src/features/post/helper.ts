@@ -13,7 +13,6 @@ export const createInteraction = <Returned, ThunkArg>(
     state.error = null;
     const id = findId(action);
     const post = state.items.find((p) => p.id === id);
-    console.log(post);
     if (post) updateCallback(post);
     else {
       const reply = state.replies.find((p) => p.id === id);
@@ -22,8 +21,6 @@ export const createInteraction = <Returned, ThunkArg>(
       }
     }
   });
-
-  builder.addCase(asyncThunk.fulfilled, (state) => {});
 
   builder.addCase(asyncThunk.rejected, (state, action) => {
     state.error = (action.payload as string) || "Lỗi bất ngờ";

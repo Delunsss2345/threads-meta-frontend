@@ -1,4 +1,5 @@
 import { PER_PAGE } from "@/constant/pagination";
+
 import type {
   CreatePostResponse,
   PostItem,
@@ -17,6 +18,7 @@ export interface PostsState {
   replies: ReplyData[];
   loading: boolean;
   loadingRequest: boolean;
+  loadingReplies: boolean;
   error: string | null;
   singlePost: PostItem | null;
   pagination: {
@@ -40,6 +42,7 @@ const initialState: PostsState = {
   reposts: [],
   loading: false,
   loadingRequest: false,
+  loadingReplies: false,
   error: null,
   singlePost: null,
   pagination: {
@@ -294,7 +297,7 @@ export const postsSlice = createSlice({
     builder.addCase(loadMoreReply.fulfilled, (state, action) => {
       const { current_page, total } = action.payload.pagination;
 
-      state.replies.push(...action.payload.data);
+      state.replies.push(...action.payload.data.sort((a, b) => b.id - a.id));
       state.paginationReplies = action.payload.pagination;
       state.continueReplies = current_page * PER_PAGE < total;
     });
@@ -337,6 +340,10 @@ export const postsSlice = createSlice({
         post.replies_count--;
       }
     );
+    builder.addCase(replyThreads.fulfilled, (state, action) => {
+      state.replies.unshift(action.payload.data);
+      console.log(state.replies);
+    });
 
     // respost post
     // @ts-nocheck
@@ -371,9 +378,8 @@ export const postsSlice = createSlice({
 
     builder.addCase(getReplies.fulfilled, (state, action) => {
       state.loadingRequest = false;
-      state.replies = action.payload.data;
+      state.replies = [...action.payload.data].sort((a, b) => b.id - a.id);
     });
-
     builder.addCase(getReplies.rejected, (state) => {
       state.loadingRequest = false;
       state.replies = [];

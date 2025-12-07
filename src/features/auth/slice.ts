@@ -245,7 +245,6 @@ export const authSlice = createSlice({
     builder.addCase(forgotPassword.rejected, (state) => {
       state.authLoading = false;
     });
-    // #endregion
 
     // validate reset token
     builder.addCase(validateRestToken.pending, (state) => {
