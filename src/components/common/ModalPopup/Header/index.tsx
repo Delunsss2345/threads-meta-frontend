@@ -34,7 +34,7 @@ const Header = ({
           </Button>
         </div>
 
-        <div className="flex-1 text-base font-bold text-center">
+        <div className="flex-1 text-sm lg:text-base font-bold text-center">
           {headerText}
         </div>
 

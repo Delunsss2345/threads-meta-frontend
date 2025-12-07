@@ -49,16 +49,9 @@ const NavMobile: React.FC = () => {
   const isMobile = useIsMobile();
   const { isAuthenticated, user } = useAuth();
   const { show, hide } = useModal();
-  const {
-    content,
-    setContent,
-    previewImage,
-    loadingPosts,
-    setPreviewImage,
-    handlePost,
-  } = useCreatePost(() => setOpenSheet(false));
+  const { content, setContent, loadingPosts, setPreviewImage, handlePost } =
+    useCreatePost(() => setOpenSheet(false));
   const { t } = useTranslation();
-  const navigator = useNavigate();
   if (!isMobile) return null;
 
   const handleNavClick = (item: (typeof navItems)[0]) => {

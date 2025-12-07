@@ -128,8 +128,8 @@ export const loadMoreReply = createAsyncThunk<
   { id: number; page: number }
 >("posts/load-more-reply", async (payload, { rejectWithValue }) => {
   try {
-    console.log(payload);
-    return await postApi.getReplies(payload.id, payload.page);
+    const res = await postApi.getReplies(payload.id, payload.page);
+    return res;
   } catch (error) {
     return rejectWithValue(parseError(error));
   }
@@ -217,7 +217,8 @@ export const getReplies = createAsyncThunk(
   "posts/getReplies",
   async (id: number, { rejectWithValue }) => {
     try {
-      return await postApi.getReplies(id);
+      const res = await postApi.getReplies(id);
+      return res;
     } catch (error) {
       return rejectWithValue(parseError(error));
     }
@@ -297,7 +298,7 @@ export const postsSlice = createSlice({
     builder.addCase(loadMoreReply.fulfilled, (state, action) => {
       const { current_page, total } = action.payload.pagination;
 
-      state.replies.push(...action.payload.data.sort((a, b) => b.id - a.id));
+      state.replies.push(...action.payload.data);
       state.paginationReplies = action.payload.pagination;
       state.continueReplies = current_page * PER_PAGE < total;
     });
@@ -342,7 +343,6 @@ export const postsSlice = createSlice({
     );
     builder.addCase(replyThreads.fulfilled, (state, action) => {
       state.replies.unshift(action.payload.data);
-      console.log(state.replies);
     });
 
     // respost post
@@ -373,15 +373,15 @@ export const postsSlice = createSlice({
 
     //Get replies
     builder.addCase(getReplies.pending, (state) => {
-      state.loadingRequest = true;
+      state.loadingReplies = true;
     });
 
     builder.addCase(getReplies.fulfilled, (state, action) => {
-      state.loadingRequest = false;
-      state.replies = [...action.payload.data].sort((a, b) => b.id - a.id);
+      state.loadingReplies = false;
+      state.replies = action.payload.data;
     });
     builder.addCase(getReplies.rejected, (state) => {
-      state.loadingRequest = false;
+      state.loadingReplies = false;
       state.replies = [];
     });
 

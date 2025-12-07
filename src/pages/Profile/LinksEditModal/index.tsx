@@ -25,7 +25,7 @@ const LinksEditModal = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <CardContent className="p-0 bg-white rounded-full">
+    <CardContent className="p-0 bg-primary-foreground ">
       <div className="flex items-center justify-between p-4 border-b">
         <button
           onClick={() => setActiveModal("main")}
@@ -64,7 +64,7 @@ const LinksEditModal = ({
 
           <button
             onClick={handleAddLink}
-            className="w-full py-3 bg-primary text-white rounded-lg font-semibold transition-colors"
+            className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-colors"
           >
             {t("profileSettings.addLink")}
           </button>
@@ -77,7 +77,7 @@ const LinksEditModal = ({
             {links.map((link, index) => (
               <div
                 key={index}
-                className="relative p-4 border rounded-lg space-y-3 bg-gray-50"
+                className="relative p-4 border rounded-lg space-y-3 bg-primary"
               >
                 {/* Title */}
                 <input

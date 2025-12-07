@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NotFound from "../NotFound";
+let postDetail = null;
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -35,15 +36,14 @@ const PostDetail = () => {
     continueReplies,
     paginationReplies,
     error,
-    loadingRequest,
+    loading,
+    loadingReplies,
   } = useSelector(selectPostsState);
 
   const dispatch = useDispatch<AppDispatch>();
-  let postDetail = null;
   if (!isQuoteClick) {
     postDetail = posts.find((post: PostItem) => post.id === postId);
   }
-
   useEffect(() => {
     if (!id) return;
 
@@ -54,11 +54,11 @@ const PostDetail = () => {
     }
     dispatch(resetReplies());
     dispatch(getReplies(postId));
-  }, [id, postId, dispatch, postDetail, isQuoteClick]);
+  }, [id, postId, dispatch, isQuoteClick]);
 
   if (!id || isNaN(postId) || error) return <NotFound />;
   if (!postDetail && !singlePost) return <LoadingFetch />;
-  if (loadingRequest && location?.state?.loading) {
+  if (loading && location?.state?.loading) {
     return <LoadingFetch />;
   }
   return (
@@ -89,7 +89,7 @@ const PostDetail = () => {
         </CardContent>
       </Card>
       <div>
-        {loadingRequest ? (
+        {loadingReplies ? (
           <LoadingFetch />
         ) : (
           <InfiniteList

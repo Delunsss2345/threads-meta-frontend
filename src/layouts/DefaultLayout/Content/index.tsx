@@ -44,7 +44,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
   return (
     <main className="w-full h-full mx-auto text-foreground">
       <HeaderMobile />
-      <div className="md:pl-[100px] dynamic-columns mt-[50px] h-full sm:mt-0 flex items-start gap-5">
+      <div className="md:pl-[100px] dynamic-columns  mt-[24px] md:mt-0 h-full flex items-start gap-5">
         <Column pathName={location.pathname}>{children}</Column>
         {!isAuth ? (
           <LoginCard />

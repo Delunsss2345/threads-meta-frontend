@@ -11,6 +11,8 @@ const Column = ({
   children: ReactNode;
   textHeader?: string;
 }) => {
+  const [isAnimating, setIsAnimating] = useState(pathName !== "/");
+
   if (!id) {
     return (
       <div className="column">
@@ -34,7 +36,6 @@ const Column = ({
   //   transition,
   //   isDragging,
   // } = useSortable({ id });
-  const [isAnimating, setIsAnimating] = useState(pathName !== "/");
 
   const handleAnimationEnd = () => {
     setIsAnimating(false);
@@ -74,8 +75,3 @@ const Column = ({
 };
 
 export default Column;
-
-//  initial={{ scale: 0, opacity: 0 }}
-//  animate={{ scale: 1, opacity: 1 }}
-//  exit={{ scale: 0, opacity: 0 }}
-//  transition={{ duration: 0.2, ease: "easeOut" }}

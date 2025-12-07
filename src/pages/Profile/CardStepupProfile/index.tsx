@@ -10,28 +10,28 @@ const CardStepupProfile = () => {
   const cards = [
     {
       id: "follow",
-      icon: <Users className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
+      icon: <Users className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />,
       title: t("profileSetup.follow10Profiles"),
       desc: t("profileSetup.follow10ProfilesDesc"),
       buttonClick: t("profileSetup.button.follow"),
     },
     {
       id: "story",
-      icon: <Edit className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
+      icon: <Edit className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />,
       title: t("profileSetup.addBio"),
       desc: t("profileSetup.addBioDesc"),
       buttonClick: t("profileSetup.button.addBio"),
     },
     {
       id: "createThread",
-      icon: <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
+      icon: <Check className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />,
       title: t("profileSetup.createThread"),
       desc: t("profileSetup.createThreadDesc"),
       buttonClick: t("profileSetup.button.postThread"),
     },
     {
       id: "addAvatar",
-      icon: <Image className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
+      icon: <Image className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />,
       title: t("profileSetup.addAvatar"),
       desc: t("profileSetup.addAvatarDesc"),
       buttonClick: t("profileSetup.button.uploadAvatar"),
@@ -66,7 +66,7 @@ const CardStepupProfile = () => {
                 {card.desc}
               </p>
 
-              <Button className="absolute text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 text-white -bottom-2 left-1/2  -translate-x-1/2 bg-primary z-10">
+              <Button className="absolute text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 text-primary-foreground -bottom-2 left-1/2  -translate-x-1/2 bg-primary z-10">
                 {card.buttonClick}
               </Button>
             </div>

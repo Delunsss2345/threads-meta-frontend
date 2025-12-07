@@ -1,7 +1,5 @@
 import MenuPopup from "@/components/common/MenuPopup";
 import ModalSmall from "@/components/common/ModalSmall";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/features/auth/hooks";
 import { postApi } from "@/features/post/api";
 import { useModal } from "@/hooks/use-modal";
 import {
@@ -25,7 +23,6 @@ const MenuMe = ({
   threadId: number;
 }) => {
   const { t } = useTranslation();
-  const { isAuthenticated } = useAuth();
   const { show, hide } = useModal();
 
   const handleDelete = async (id: number) => {
@@ -34,7 +31,7 @@ const MenuMe = ({
       if (result?.success) {
         return toast.success(t("menu.deleteSuccess"));
       }
-    } catch (error: any) {
+    } catch {
       toast.error(t("menu.deleteError"));
     } finally {
       hide();
@@ -42,7 +39,6 @@ const MenuMe = ({
   };
 
   const handleCopyLink = async () => {
-    console.log("sopy");
     const url = `${window.location.origin}/thread/${threadId}`;
     await navigator.clipboard.writeText(url);
     toast.success(t("menu.copyLinkSuccess"));
@@ -51,33 +47,33 @@ const MenuMe = ({
   const items = [
     {
       label: t("menu.postDetails"),
-      icon: Info,
+      icon: <Info />,
       isAuth: true,
       isHeader: true,
     },
     {
       label: t("menu.save"),
-      icon: Bookmark,
+      icon: <Bookmark />,
       isAuth: true,
     },
     {
       label: t("menu.pinToProfile"),
-      icon: Pin,
+      icon: <Pin />,
       isAuth: true,
     },
     {
       label: t("menu.hideStats"),
-      icon: EyeOff,
+      icon: <EyeOff />,
       isAuth: true,
     },
     {
       label: t("menu.controlOptions"),
-      icon: Shield,
+      icon: <Shield />,
       isAuth: true,
     },
     {
       label: t("menu.delete"),
-      icon: Trash2,
+      icon: <Trash2 />,
       isAuth: true,
       className: "text-destructive hover:bg-destructive/10",
       onClick: () =>
@@ -91,7 +87,7 @@ const MenuMe = ({
     },
     {
       label: t("menu.copyLink"),
-      icon: Link2,
+      icon: <Link2 />,
       isAuth: false,
       onClick: handleCopyLink,
     },
@@ -99,29 +95,14 @@ const MenuMe = ({
 
   return (
     <MenuPopup
+      items={items}
       buttonActive={buttonActive}
       customPopup="-translate-x-20"
       motionProps={{
         initial: { opacity: 0, x: 0, scale: 0.96 },
         animate: { opacity: 1, x: 0, scale: 1 },
       }}
-    >
-      {items.map((item, i) => (
-        <DropdownMenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            item.onClick?.();
-          }}
-          key={i}
-          className={`flex items-center gap-2 ${item.className || ""} ${
-            isAuthenticated !== item.isAuth ? "hidden" : ""
-          }`}
-        >
-          {item.icon && <item.icon className="w-4 h-4" />}
-          <span>{item.label}</span>
-        </DropdownMenuItem>
-      ))}
-    </MenuPopup>
+    ></MenuPopup>
   );
 };
 

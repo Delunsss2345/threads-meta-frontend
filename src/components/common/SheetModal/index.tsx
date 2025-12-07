@@ -6,27 +6,44 @@ interface SheetModalProps {
   title?: string;
   children?: React.ReactNode;
   className?: string;
+  mode?: "auto" | "fit";
 }
-
 const SheetModal = ({
   open,
   onClose,
   children,
   className,
+  mode = "auto",
 }: SheetModalProps) => {
+  const heightClass = mode === "fit" ? "h-auto max-h-[90vh]" : "h-[100vh]";
+
   return (
-    <Sheet modal={false} open={open} onOpenChange={(o) => !o && onClose()}>
-      <SheetTitle>Threads</SheetTitle>
-      <SheetContent
-        aria-describedby={undefined}
-        side="bottom"
-        className={`h-[100vh] p-0 overflow-hidden ${className}`}
-      >
-        <div className="h-full overflow-y-auto border-none !border-0 !shadow-none rounded-none [&_*]:border-none [&_*]:shadow-none">
-          {children}
-        </div>
-      </SheetContent>
-    </Sheet>
+    <>
+      {mode === "fit" ? (
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 "
+        />
+      ) : (
+        ""
+      )}
+      <Sheet modal={false} open={open} onOpenChange={(o) => !o && onClose()}>
+        <SheetTitle className="hidden">Threads</SheetTitle>
+
+        <SheetContent
+          aria-describedby={undefined}
+          side="bottom"
+          className={`${heightClass} p-0 overflow-hidden ${className}`}
+        >
+          <div className="h-full overflow-y-auto border-none !border-0 !shadow-none rounded-none [&_*]:border-none [&_*]:shadow-none">
+            {children}
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 };
 

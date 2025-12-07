@@ -16,6 +16,7 @@ interface ModalPopupProps {
   lockScroll?: boolean;
   title?: string;
   isMobileSheet?: boolean;
+  modeSheet?: "auto" | "fit";
 }
 
 const ModalPopup = ({
@@ -27,12 +28,13 @@ const ModalPopup = ({
   mode = "auto",
   closeOnBackdropClick = true,
   isMobileSheet = true,
+  modeSheet = "auto",
 }: ModalPopupProps) => {
   const isMobile = useIsMobile();
 
   if (isMobile && isMobileSheet) {
     return (
-      <SheetModal open={true} onClose={onClose} title={title}>
+      <SheetModal mode={modeSheet} open={true} onClose={onClose} title={title}>
         {children}
       </SheetModal>
     );

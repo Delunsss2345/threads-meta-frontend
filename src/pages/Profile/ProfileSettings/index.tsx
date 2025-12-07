@@ -1,6 +1,7 @@
 import AvatarGroup from "@/components/common/AvatarGroup";
 import MenuPopup from "@/components/common/MenuPopup";
 import ModalPopup from "@/components/common/ModalPopup";
+import Header from "@/components/common/ModalPopup/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -9,6 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { selectAuthState, updateAuthForUser } from "@/features/auth";
 import { useAuth } from "@/features/auth/hooks";
 import { uploadApi } from "@/features/upload/api";
+import { useIsMobile } from "@/hooks/use-mobile";
 import type { AppDispatch } from "@/types/redux";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { ChevronRight, Globe, Lock } from "lucide-react";
@@ -25,7 +27,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
   const { user } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
   const { loadingRequest } = useSelector(selectAuthState);
-
+  const isMobile = useIsMobile();
   const [activeModal, setActiveModal] = useState<
     "main" | "name" | "bio" | "links"
   >("main");
@@ -120,174 +122,181 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
     <ModalPopup onClose={onClose}>
       <Card className="!p-0">
         {activeModal === "main" && (
-          <CardContent className="p-0">
-            <div className="flex items-center justify-between p-4">
-              <div className="flex-1">
-                <h3 className="font-semibold mb-1">
-                  {t("profileSettings.name")}
-                </h3>
-                <div
-                  onClick={() => setActiveModal("name")}
-                  className="flex items-center gap-2 text-sm cursor-pointer"
-                >
-                  {user.is_private ? (
-                    <Lock className="w-4 h-4" />
-                  ) : (
-                    <Globe className="w-4 h-4" />
-                  )}
-                  <span>
-                    {previewName || user.name} (@{user.username})
-                  </span>
+          <>
+            <div className="md:hidden block -mb-6">
+              <Header headerText={"Trang cá nhân"} onClose={onClose} />
+            </div>
+            <CardContent className="p-0">
+              <div className="flex items-center justify-between p-4">
+                <div className="flex-1">
+                  <h3 className="font-semibold mb-1">
+                    {t("profileSettings.name")}
+                  </h3>
+                  <div
+                    onClick={() => setActiveModal("name")}
+                    className="flex items-center gap-2 text-sm cursor-pointer"
+                  >
+                    {user.is_private ? (
+                      <Lock className="w-4 h-4" />
+                    ) : (
+                      <Globe className="w-4 h-4" />
+                    )}
+                    <span>
+                      {previewName || user.name} (@{user.username})
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <input
-                onChange={handleChangeImage}
-                ref={inputRef}
-                accept="image/*"
-                type="file"
-                className="hidden"
-              />
+                <input
+                  onChange={handleChangeImage}
+                  ref={inputRef}
+                  accept="image/*"
+                  type="file"
+                  className="hidden"
+                />
 
-              <MenuPopup
-                className={
-                  "hover:!bg-transparent !p-0 size-14 cursor-pointer border rounded-full"
-                }
-                mode="long"
-                buttonActive={
-                  <AvatarGroup
-                    size={12}
-                    url={
-                      (previewAvatar && URL.createObjectURL(previewAvatar)) ||
-                      user?.avatar_url ||
-                      ""
-                    }
-                    fallBack={user?.username?.slice(0, 2).toUpperCase()}
-                    classNameFallback="bg-primary-foreground"
-                  />
-                }
-                motionProps={{
-                  initial: {
-                    opacity: 0,
-                    x: 0,
-                  },
-                  animate: {
-                    opacity: 1,
-                    x: 0,
-                  },
-                  exit: {
-                    opacity: 0,
-                    x: 0,
-                  },
-                }}
-                customPopup="-translate-x-1/2"
-              >
-                <DropdownMenuItem
-                  onClick={handleUploadFile}
-                  className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                <MenuPopup
+                  className={
+                    "hover:!bg-transparent !p-0 size-14 cursor-pointer border rounded-full"
+                  }
+                  mode="long"
+                  buttonActive={
+                    <AvatarGroup
+                      size={12}
+                      url={
+                        (previewAvatar && URL.createObjectURL(previewAvatar)) ||
+                        user?.avatar_url ||
+                        ""
+                      }
+                      fallBack={user?.username?.slice(0, 2).toUpperCase()}
+                      classNameFallback="bg-primary-foreground"
+                    />
+                  }
+                  motionProps={{
+                    initial: {
+                      opacity: 0,
+                      x: 0,
+                    },
+                    animate: {
+                      opacity: 1,
+                      x: 0,
+                    },
+                    exit: {
+                      opacity: 0,
+                      x: 0,
+                    },
+                  }}
+                  customPopup="-translate-x-1/2"
                 >
-                  <span>Tải ảnh lên</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
-                  <span className="text-red-500">Gỡ ảnh hiện tại</span>
-                </DropdownMenuItem>
-              </MenuPopup>
-            </div>
+                  <DropdownMenuItem
+                    onClick={handleUploadFile}
+                    className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                  >
+                    <span>Tải ảnh lên</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+                    <span className="text-red-500">Gỡ ảnh hiện tại</span>
+                  </DropdownMenuItem>
+                </MenuPopup>
+              </div>
 
-            <Separator />
+              <Separator />
 
-            <div
-              onClick={() => setActiveModal("bio")}
-              className="p-4 cursor-pointer"
-            >
-              <h3 className="font-semibold mb-1">{t("profileSettings.bio")}</h3>
-              <p className="text-sm text-muted-foreground">
-                {previewBio ||
-                  user?.bio ||
-                  "Tài khoản mới tạo làm gì có tiểu sử"}
-              </p>
-            </div>
-
-            <Separator />
-
-            <Button
-              variant="ghost"
-              className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
-            >
-              <div>
-                <h3 className="font-semibold text-left">
-                  {t("profileSettings.interests")}
+              <div
+                onClick={() => setActiveModal("bio")}
+                className="p-4 cursor-pointer"
+              >
+                <h3 className="font-semibold mb-1">
+                  {t("profileSettings.bio")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {t("profileSettings.addInterests")}
-                </p>
-              </div>
-            </Button>
-
-            <Separator />
-
-            <Button
-              variant="ghost"
-              className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
-              onClick={() => setActiveModal("links")}
-            >
-              <span className="font-semibold">
-                {t("profileSettings.links")}
-              </span>
-              <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            </Button>
-
-            <Separator />
-
-            <div className="flex items-start justify-between p-4">
-              <div className="flex-1">
-                <h3 className="font-semibold mb-1">
-                  {t("profileSettings.showInstagramBadge")}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {t("profileSettings.showInstagramBadgeDesc")}
-                </p>
-              </div>
-              <Switch defaultChecked className="ml-4" />
-            </div>
-
-            <Separator />
-
-            <Button
-              variant="ghost"
-              className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
-            >
-              <div className="flex-1 text-left">
-                <h3 className="font-semibold mb-1">
-                  {t("profileSettings.profilePrivacy")}
-                </h3>
-                <p className="text-sm text-muted-foreground whitespace-break-spaces">
-                  {t("profileSettings.profilePrivacyDesc")}
+                  {previewBio ||
+                    user?.bio ||
+                    "Tài khoản mới tạo làm gì có tiểu sử"}
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 ml-4">
-                <span className="text-sm text-muted-foreground">
-                  {user.is_private
-                    ? t("profileSettings.private")
-                    : t("profileSettings.public")}
+              <Separator />
+
+              <Button
+                variant="ghost"
+                className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
+              >
+                <div>
+                  <h3 className="font-semibold text-left">
+                    {t("profileSettings.interests")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {t("profileSettings.addInterests")}
+                  </p>
+                </div>
+              </Button>
+
+              <Separator />
+
+              <Button
+                variant="ghost"
+                className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
+                onClick={() => setActiveModal("links")}
+              >
+                <span className="font-semibold">
+                  {t("profileSettings.links")}
                 </span>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
-              </div>
-            </Button>
-
-            <Separator />
-
-            <div className="p-4">
-              <Button
-                disabled={loadingRequest}
-                onClick={updateUser}
-                className="w-full bg-black hover:bg-black/90 text-white h-12 rounded-xl font-semibold place-items-center cursor-pointer"
-              >
-                {loadingRequest ? <Spinner /> : t("profileSettings.done")}
               </Button>
-            </div>
-          </CardContent>
+
+              <Separator />
+
+              <div className="flex items-start justify-between p-4">
+                <div className="flex-1">
+                  <h3 className="font-semibold mb-1">
+                    {t("profileSettings.showInstagramBadge")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {t("profileSettings.showInstagramBadgeDesc")}
+                  </p>
+                </div>
+                <Switch defaultChecked className="ml-4" />
+              </div>
+
+              <Separator />
+
+              <Button
+                variant="ghost"
+                className="w-full justify-between h-auto py-4 px-4 rounded-none font-normal"
+              >
+                <div className="flex-1 text-left">
+                  <h3 className="font-semibold mb-1">
+                    {t("profileSettings.profilePrivacy")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground whitespace-break-spaces">
+                    {t("profileSettings.profilePrivacyDesc")}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 ml-4">
+                  <span className="text-sm text-muted-foreground">
+                    {user.is_private
+                      ? t("profileSettings.private")
+                      : t("profileSettings.public")}
+                  </span>
+                  <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                </div>
+              </Button>
+
+              <Separator />
+
+              <div className="p-4">
+                <Button
+                  disabled={loadingRequest}
+                  onClick={updateUser}
+                  className="w-full bg-black hover:bg-black/90 text-white h-12 rounded-xl font-semibold place-items-center cursor-pointer"
+                >
+                  {loadingRequest ? <Spinner /> : t("profileSettings.done")}
+                </Button>
+              </div>
+            </CardContent>
+          </>
         )}
 
         {activeModal === "bio" && (

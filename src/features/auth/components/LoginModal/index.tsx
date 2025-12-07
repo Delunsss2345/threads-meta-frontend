@@ -77,7 +77,7 @@ const AuthSocialModal: React.FC<AuthSocialModalProps> = ({
           open={true}
           onOpenChange={(open) => !open && onClose()}
         >
-          <SheetTitle>Auth Modal</SheetTitle>
+          <SheetTitle className="hidden">Auth Modal</SheetTitle>
           <SheetContent
             side="bottom"
             className="rounded-t-2xl p-0 bg-primary-foreground z-50"

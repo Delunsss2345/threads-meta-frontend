@@ -23,13 +23,16 @@ const SheetPopup = ({
     <PortalSheet>
       {open && (
         <div
-          onClick={() => onOpenChange(false)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenChange(false);
+          }}
           className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 "
         />
       )}
 
       <Sheet modal={false} open={open} onOpenChange={onOpenChange}>
-        <SheetTitle>{title ?? "SheetPopup"}</SheetTitle>
+        <SheetTitle className="hidden">{title ?? "SheetPopup"}</SheetTitle>
         <SheetContent
           aria-describedby={undefined}
           side="bottom"
