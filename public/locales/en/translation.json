@@ -13,7 +13,9 @@
     "replies": "Replies",
     "media": "Media",
     "reposts": "Reposts",
-    "beta": "BETA"
+    "beta": "BETA",
+    "error": "An error has occurred!",
+    "close": "Close"
   },
   "nav": {
     "home": "Home",
@@ -187,7 +189,17 @@
     "share": "Share",
     "newThread": "New thread",
     "replyTo": "Reply",
-    "addToThread": "Add to thread"
+    "replyLoading": "Replying...",
+    "quoteTo": "Quote post",
+    "quote": "Quote",
+    "quoteLoading": "Quoting...",
+    "addToThread": "Add to thread",
+    "quoteSuccess": "Quoted successfully",
+    "replySuccess": "Reply posted",
+    "embedTitle": "Embed Post",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "viewPost": "View Post"
   },
   "reply": {
     "addTopic": "Add topic",

@@ -1,7 +1,7 @@
 import ModalPopup from "@/components/common/ModalPopup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -70,16 +70,17 @@ const AuthSocialModal: React.FC<AuthSocialModalProps> = ({
       <>
         <div
           onClick={onClose}
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 animate-in fade-in cursor-pointer"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 cursor-pointer"
         />
         <Sheet
           modal={false}
           open={true}
           onOpenChange={(open) => !open && onClose()}
         >
+          <SheetTitle>Auth Modal</SheetTitle>
           <SheetContent
             side="bottom"
-            className="rounded-t-2xl p-0 pb-6 bg-primary-foreground z-50"
+            className="rounded-t-2xl p-0 bg-primary-foreground z-50"
           >
             <div className="text-center">{content}</div>
           </SheetContent>

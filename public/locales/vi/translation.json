@@ -13,7 +13,9 @@
     "replies": "Trả lời",
     "media": "File phương tiện",
     "reposts": "Bài đăng lại",
-    "beta": "BETA"
+    "beta": "BETA",
+    "error": "Có lỗi xảy ra!",
+    "close": "Đóng"
   },
   "nav": {
     "home": "Trang chủ",
@@ -180,7 +182,17 @@
     "share": "Chia sẻ",
     "newThread": "Thread mới",
     "replyTo": "Phản hồi",
-    "addToThread": "Thêm vào thread"
+    "addToThread": "Thêm vào thread",
+    "replyLoading": "Đang bình luận...",
+    "quoteTo": "Trích dẫn bài viết",
+    "quote": "Trích dẫn",
+    "quoteLoading": "Đang trích dẫn bài viết...",
+    "quoteSuccess": "Trích dẫn thành công",
+    "embedTitle": "Embed bài viết",
+    "copy": "Sao chép",
+    "copied": "Đã sao chép!",
+    "viewPost": "Xem bài viết",
+    "replySuccess": "Bình luận thành công"
   },
   "reset": {
     "loading": "Đang đặt lại mật khẩu...",

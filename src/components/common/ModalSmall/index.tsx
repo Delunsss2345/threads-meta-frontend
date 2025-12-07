@@ -38,7 +38,7 @@ export default function ModalSmall({
   };
 
   return (
-    <ModalPopup mode="custom" onClose={onCancel}>
+    <ModalPopup isMobileSheet={false} mode="custom" onClose={onCancel}>
       <div
         className={cn(
           "bg-white rounded-xl w-[340px] max-w-full",

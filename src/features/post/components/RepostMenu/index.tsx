@@ -1,12 +1,14 @@
 import MenuPopup from "@/components/common/MenuPopup";
+import SheetPopup from "@/components/common/SheetPopup";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { repostPost } from "@/features/post";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useModal } from "@/hooks/use-modal";
 import { cn } from "@/lib/utils";
 import type { AppDispatch } from "@/types/redux";
 import { MessageSquareQuote, Repeat2 } from "lucide-react";
 import type { ReactNode } from "react";
-import { isValidElement } from "react";
+import { isValidElement, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
@@ -29,6 +31,8 @@ const RepostMenu = ({
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { show, hide } = useModal();
+  const [openSheet, setOpenSheet] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleRepost = async () => {
     if (!post) return;
@@ -68,6 +72,7 @@ const RepostMenu = ({
       onClick: () => {
         if (!post) return;
         show(<QuoteModal post={post} onClose={hide} />);
+        setOpenSheet(false);
       },
     },
   ];
@@ -93,7 +98,31 @@ const RepostMenu = ({
       </button>
     );
   }
+  if (isMobile) {
+    return (
+      <>
+        <button className={cn(className)} onClick={() => setOpenSheet(true)}>
+          {children}
+        </button>
 
+        <SheetPopup title="repost" open={openSheet} onOpenChange={setOpenSheet}>
+          <div className="p-2 space-y-1">
+            {repostMenu.map((item, i) => (
+              <button
+                key={i}
+                onClick={item.onClick}
+                className="w-full flex items-center justify-between px-4 py-4 
+       text-sm rounded-lg bg-background transition border"
+              >
+                <span className="font-semibold text-md">{item.label}</span>
+                {item.icon}
+              </button>
+            ))}
+          </div>
+        </SheetPopup>
+      </>
+    );
+  }
   return (
     <MenuPopup
       motionProps={{

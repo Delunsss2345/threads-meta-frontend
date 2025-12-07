@@ -26,7 +26,7 @@ export default function ModalFollow({ user, onClose }: ModalFollowProps) {
   //   };
   if (!user) return;
   return (
-    <ModalPopup mode="custom" onClose={onClose}>
+    <ModalPopup isMobileSheet={false} mode="custom" onClose={onClose}>
       <div className="bg-white rounded-2xl w-[360px] max-w-full shadow-xl p-5 relative">
         <div className="flex items-start justify-between">
           <div>

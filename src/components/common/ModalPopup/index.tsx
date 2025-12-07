@@ -1,7 +1,9 @@
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { type ReactNode } from "react";
 import PortalModal from "../PortalModal";
+import SheetModal from "../SheetModal";
 
 interface ModalPopupProps {
   children: ReactNode;
@@ -12,16 +14,30 @@ interface ModalPopupProps {
   closeOnBackdropClick?: boolean;
   closeOnEsc?: boolean;
   lockScroll?: boolean;
+  title?: string;
+  isMobileSheet?: boolean;
 }
 
 const ModalPopup = ({
   children,
   onClose,
+  title,
   className,
   customModalClassName,
   mode = "auto",
   closeOnBackdropClick = true,
+  isMobileSheet = true,
 }: ModalPopupProps) => {
+  const isMobile = useIsMobile();
+
+  if (isMobile && isMobileSheet) {
+    return (
+      <SheetModal open={true} onClose={onClose} title={title}>
+        {children}
+      </SheetModal>
+    );
+  }
+
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget && closeOnBackdropClick) {
       onClose();
@@ -37,7 +53,7 @@ const ModalPopup = ({
         animate={{ opacity: 1 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
         className={cn(
-          "fixed inset-0 bg-black/50 flex items-center pt-[10vh] justify-center z-20",
+          "fixed inset-0 bg-black/50 flex items-center pt-[10vh] justify-center z-50",
           className,
           mode === "subtract" && "block absolute bg-transparent"
         )}
