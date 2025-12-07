@@ -76,6 +76,10 @@
     "forgotPasswordDescription": "Nhập email của bạn để nhận liên kết đặt lại mật khẩu.",
     "verifying": "Đang xác minh...",
     "goToLogin": "Đi tới trang đăng nhập",
+    "loginRequiredTitle": "Đăng nhập để tiếp tục",
+    "loginRequiredDescription": "Tham gia Threads để chia sẻ suy nghĩ của bạn...",
+    "loginModalTitle": "Đăng nhập để tiếp tục",
+    "loginModalDesc": "Tham gia Threads để kết nối và chia sẻ...",
     "error": {
       "usernameInvalid": "Tên đăng nhập không hợp lệ",
       "usernameRule": "Tên đăng nhập chỉ được chứa chữ cái, số, dấu gạch ngang (-) và gạch dưới (_)",

@@ -13,7 +13,12 @@ import { useNavigate } from "react-router-dom";
 
 import Footer from "@/components/common/ModalPopup/Footer";
 import Header from "@/components/common/ModalPopup/Header";
-import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import UserPostForm from "@/features/post/components/UserPostForm";
 import { useCreatePost } from "@/hooks/use-create-post";
 import { useTranslation } from "react-i18next";
@@ -62,8 +67,8 @@ const NavMobile: React.FC = () => {
         <AuthSocialModal
           onClose={hide}
           onContinue={hide}
-          title="Login to continue"
-          description="Join Threads to share thoughts..."
+          title={t("auth.loginModalTitle")}
+          description={t("auth.loginModalDesc")}
         />
       );
       return;
@@ -79,11 +84,11 @@ const NavMobile: React.FC = () => {
         <AuthSocialModal
           onClose={hide}
           onContinue={() => {
-            navigator("/login");
+            navigate("/login");
             hide();
           }}
-          title="Login to continue"
-          description="Join Threads to share thoughts..."
+          title={t("auth.loginRequiredTitle")}
+          description={t("auth.loginRequiredDescription")}
         />
       );
       return;
@@ -117,7 +122,12 @@ const NavMobile: React.FC = () => {
       </nav>
 
       <Sheet modal={false} open={openSheet}>
-        <SheetContent side="bottom" className="h-[100vh]">
+        <SheetTitle>Nav Mobile</SheetTitle>
+        <SheetContent
+          aria-describedby={undefined}
+          side="bottom"
+          className="h-[100vh]"
+        >
           <SheetHeader className="p-0">
             <Header
               className="p-10"

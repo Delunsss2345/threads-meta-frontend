@@ -18,6 +18,7 @@ interface MenuPopupProps {
     transition?: Record<string, any>;
   };
   mode?: "short" | "long" | "medium";
+  isMobilePopup?: boolean;
 }
 
 const MenuPopup = ({
@@ -33,6 +34,7 @@ const MenuPopup = ({
     medium: "w-72 *:px-3",
     long: "w-96 *:px-4",
   };
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger onClick={(e) => e.stopPropagation()} asChild>

@@ -8,7 +8,7 @@ interface SheetPopupProps {
   children: React.ReactNode;
   className?: string;
   showHandle?: boolean;
-  title: string;
+  title?: string;
 }
 
 const SheetPopup = ({
@@ -29,8 +29,9 @@ const SheetPopup = ({
       )}
 
       <Sheet modal={false} open={open} onOpenChange={onOpenChange}>
-        <SheetTitle>{title}</SheetTitle>
+        <SheetTitle>{title ?? "SheetPopup"}</SheetTitle>
         <SheetContent
+          aria-describedby={undefined}
           side="bottom"
           className={cn(
             "rounded-t-2xl p-0 bg-primary-foreground z-50",

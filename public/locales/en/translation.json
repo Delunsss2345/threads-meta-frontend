@@ -77,6 +77,10 @@
     "forgotPasswordDescription": "Enter your email to receive the password reset link.",
     "verifying": "Verifying...",
     "goToLogin": "Go to login page",
+    "loginRequiredTitle": "Login to continue",
+    "loginRequiredDescription": "Join Threads to share thoughts...",
+    "loginModalTitle": "Login to continue",
+    "loginModalDesc": "Join Threads to connect and share...",
 
     "error": {
       "usernameInvalid": "Invalid username",
