@@ -107,21 +107,6 @@
 - **Light Mode**: Sáng, tươi sáng, phù hợp ban ngày
 - **Dark Mode**: Tối, dễ nhìn, phù hợp ban đêm
 - **System Mode**: Tự động theo theme hệ thống
-
-### Layout
-
-```
-┌─────────────────────────────────────────────────┐
-│  Header (Logo, Search, Profile)                │
-├──────────┬──────────────────────┬───────────────┤
-│          │                      │               │
-│ Sidebar  │   Main Feed          │  Suggestions  │
-│  Nav     │   (Posts, Replies)   │  (Users)      │
-│          │                      │               │
-│          │                      │               │
-└──────────┴──────────────────────┴───────────────┘
-```
-
 ---
 
 ## Công Nghệ
