@@ -1,20 +1,53 @@
-# Threads Meta Clone - Frontend
+<div align="center">
 
-![React](https://img.shields.io/badge/React-19.2.0-blue?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)
-![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.x-38B2AC?logo=tailwind-css)
-![Redux](https://img.shields.io/badge/Redux_Toolkit-2.9-764ABC?logo=redux)
+# Threads Meta Clone
+
+### Nền tảng mạng xã hội hiện đại lấy cảm hứng từ Threads của Meta
+
+[![Live Demo](https://img.shields.io/badge/demo-live-success?style=for-the-badge)](https://threads-meta-frontend.vercel.app/)
+[![React](https://img.shields.io/badge/React-19.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-4.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Redux](https://img.shields.io/badge/Redux-2.9-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
+
+[Live Demo](https://threads-meta-frontend.vercel.app/) • [Documentation](#documentation) • [Report Bug](https://github.com/Delunsss2345/threads-meta-frontend/issues) • [Request Feature](https://github.com/Delunsss2345/threads-meta-frontend/issues)
+
+</div>
+
+---
+
+## Giới Thiệu Dự Án
+
+Threads Meta Clone là một ứng dụng mạng xã hội đầy đủ tính năng được xây dựng với các công nghệ tiên tiến nhất. Dự án này tái tạo các chức năng cốt lõi của nền tảng Threads của Meta, với giao diện hiện đại, responsive, hỗ trợ dark/light theme, tương tác real-time và trải nghiệm người dùng mượt mà.
+
+### Điểm Nổi Bật
+
+- **Giao diện pixel-perfect** - Tái tạo trung thực thiết kế Threads
+- **Hỗ trợ theme** - Dark/Light mode với chuyển đổi mượt mà
+- **Responsive hoàn toàn** - Tối ưu cho mobile, tablet và desktop
+- **Hiệu năng cao** - Xây dựng với Vite và tối ưu với React 19 Compiler
+- **Bảo mật** - Xác thực JWT với refresh token flow
+- **Đa ngôn ngữ** - Hỗ trợ Tiếng Việt và English
+- **Accessibility** - Tuân thủ các chuẩn về khả năng tiếp cận
+
+---
 
 ## Mục Lục
 
 - [Tính Năng](#tính-năng)
-- [Giao Diện](#giao-diện)
 - [Công Nghệ](#công-nghệ)
-- [Cài Đặt](#cài-đặt)
-- [Chạy Dự Án](#chạy-dự-án)
-- [Cấu Trúc Thư Mục](#cấu-trúc-thư-mục)
-- [Cấu Hình](#cấu-hình)
+- [Bắt Đầu](#bắt-đầu)
+  - [Yêu Cầu](#yêu-cầu)
+  - [Cài Đặt](#cài-đặt)
+  - [Biến Môi Trường](#biến-môi-trường)
+- [Sử Dụng](#sử-dụng)
+- [Cấu Trúc Dự Án](#cấu-trúc-dự-án)
+- [Đóng Góp](#đóng-góp)
+- [License](#license)
+- [Liên Hệ](#liên-hệ)
+
+---
 
 ---
 
@@ -22,158 +55,150 @@
 
 ### Xác Thực & Bảo Mật
 
-- **Đăng ký/Đăng nhập** với username/email và password
-- **Xác thực email** qua token
-- **Quên mật khẩu** & **Reset password** qua email
-- **Refresh token** tự động khi access token hết hạn
-- **Protected routes** với authentication middleware
-- **Debounced validation** cho username/email (real-time check)
+- Đăng ký/Đăng nhập với username/email
+- Xác thực email qua token
+- Quên mật khẩu & đặt lại mật khẩu
+- Tự động refresh token khi hết hạn
+- Protected routes với authentication middleware
+- Validation username/email real-time
 
-### Quản Lý Bài Viết (Posts/Threads)
+### Quản Lý Bài Viết
 
-- **Tạo bài viết** với text, hình ảnh (upload multiple), emoji
-- **Reply** (trả lời bài viết)
-- **Quote** (trích dẫn bài viết)
-- **Repost** (đăng lại bài viết)
-- **Like/Unlike** bài viết
-- **Save/Unsave** bài viết (lưu để đọc sau)
-- **Hide post** (ẩn bài viết khỏi feed)
-- **Delete post** (chỉ tác giả mới xóa được)
-- **Load more** với infinite scroll (Virtuoso)
-- **Real-time interaction** với Redux state management
+- Tạo bài viết với text, hình ảnh, và emoji
+- Trả lời bài viết
+- Trích dẫn bài viết (quote posts)
+- Repost bài viết
+- Like/Unlike bài viết
+- Lưu bài viết
+- Ẩn bài viết
+- Xóa bài viết của mình
+- Infinite scroll với virtual scrolling (react-virtuoso)
+- Quản lý state real-time với Redux
 
-### Quản Lý Hồ Sơ Người Dùng
+### Quản Lý Hồ Sơ
 
-- **Edit profile** (avatar, bio, name)
-- **User preview card** (hover để xem thông tin nhanh)
-- **Verified badge** cho tài khoản đã xác minh
-- **Privacy settings**
+- Chỉnh sửa profile (avatar, bio, tên hiển thị)
+- Xem thông tin user nhanh khi hover
+- Verified badge cho tài khoản đã xác minh
+- Cài đặt quyền riêng tư
+- Follow/Unfollow người dùng
+- Xem danh sách followers và following
 
 ### Tìm Kiếm & Khám Phá
 
-- **Search users** với debounce
-- **User suggestions** (đề xuất follow)
+- Tìm kiếm người dùng với debounced input
+- Gợi ý người dùng nên follow
 
-### Responsive UI/UX
+### Giao Diện & UX
 
-- **Mobile-first design** responsive hoàn toàn
-- **Dark/Light mode** toggle với next-themes
-- **Smooth animations** với Framer Motion
-- **Loading states** (skeleton screens, spinners)
-- **Error boundaries** & fallback UI
-- **Toast notifications** với Sonner
+- **Thiết kế mobile-first** responsive hoàn toàn
+- **Dark/Light/System theme** chuyển đổi mượt mà
+- **Animations mượt mà** sử dụng Framer Motion
+- **Loading states** với skeleton screens
+- **Error boundaries** với fallback UI
+- **Toast notifications** sử dụng Sonner
 - **Modal system** (centered, drawer, bottom sheet)
-- **Virtual scrolling** với react-virtuoso (performance optimization)
-- **Drag & drop** với @dnd-kit (sắp xếp, reorder)
+- **Virtual scrolling** tối ưu hiệu năng
+- **Drag & drop** hỗ trợ
 
-### Đa Ngôn Ngữ (i18n)
+### Đa Ngôn Ngữ
 
-- **Hỗ trợ 2 ngôn ngữ**: Tiếng Việt, English
-- **Auto-detect** ngôn ngữ trình duyệt
-- **Switch language** real-time không reload page
+- Hỗ trợ 2 ngôn ngữ: Tiếng Việt (vi) và English (en)
+- Tự động phát hiện ngôn ngữ trình duyệt
+- Đổi ngôn ngữ real-time không cần reload trang
 
-### UI Components
+### Trải Nghiệm Phát Triển
 
-- **shadcn/ui** components với Radix UI primitives
-- **Custom components**: AvatarGroup, ModalPopup, MenuPopup, etc.
-- **Form components** với React Hook Form + Zod validation
-- **Icon library** với Lucide React
-- **Emoji picker** (emoji-picker-react)
-- **QR code generator** (qrcode.react, qr-code-styling)
-- **Image viewer/slider** với Swiper
+- TypeScript với strict mode
+- Cấu hình ESLint + Prettier
+- Kiến trúc feature-based dễ mở rộng
+- Custom hooks tái sử dụng
+- Tích hợp Redux DevTools
+- Axios interceptors xử lý lỗi tập trung
 
-### Developer Experience
-
-- **TypeScript** với strict mode
-- **ESLint** + **Prettier** config
-- **Feature-based architecture** (dễ scale & maintain)
-- **Custom hooks** tái sử dụng
-- **Redux DevTools** integration
-- **Axios interceptors** cho error handling
-- **Environment variables** với Vite
-
----
-
-## Giao Diện
-
-### Responsive Design
-
-- **Mobile (< 768px)**: Bottom navigation, fullscreen modals, swipe gestures
-- **Tablet (768px - 1024px)**: Sidebar navigation, 2-column layout
-- **Desktop (> 1024px)**: 3-column layout, hover effects, preview cards
-
-### Theme System
-
-- **Light Mode**: Sáng, tươi sáng, phù hợp ban ngày
-- **Dark Mode**: Tối, dễ nhìn, phù hợp ban đêm
-- **System Mode**: Tự động theo theme hệ thống
 ---
 
 ## Công Nghệ
 
-### Frontend Core
+<details>
+<summary><b>Frontend Core</b></summary>
 
-- **React 19.2.0** - UI library với React Compiler
-- **TypeScript 5.x** - Type safety
-- **Vite 6.x** - Build tool & dev server
+- **React 19.2.0** - Thư viện UI với React Compiler
+- **TypeScript 5.x** - Kiểm tra kiểu tĩnh
+- **Vite 6.x** - Build tool thế hệ mới
 
-### State Management
+</details>
 
-- **Redux Toolkit 2.9** - Global state management
-- **React Hook Form 7.x** - Form state management
-- **Zod** - Schema validation
+<details>
+<summary><b>Quản Lý State</b></summary>
 
-### Styling
+- **Redux Toolkit 2.9** - Quản lý state toàn cục
+- **React Hook Form 7.x** - Quản lý state form
+- **Zod** - Validation schema
 
-- **Tailwind CSS 4.x** - Utility-first CSS
+</details>
+
+<details>
+<summary><b>Styling & UI</b></summary>
+
+- **Tailwind CSS 4.x** - CSS framework utility-first
+- **Radix UI** - Headless UI primitives
+- **shadcn/ui** - Thư viện component tái sử dụng
+- **Framer Motion** - Thư viện animation
+- **Lucide React** - Thư viện icon
 - **class-variance-authority** - Component variants
-- **clsx** - Conditional classnames
 - **tailwindcss-animate** - Animation utilities
 
-### UI Components
+</details>
 
-- **Radix UI** - Headless UI primitives
-  - Avatar, Checkbox, Dialog, Dropdown, Label, Popover, Separator, Switch, Tabs, Toggle, Tooltip
-- **shadcn/ui** - Pre-built components
-- **Lucide React** - Icon library
-- **Framer Motion** - Animation library
-
-### Networking & Data
+<details>
+<summary><b>Data Fetching & API</b></summary>
 
 - **Axios 1.13** - HTTP client với interceptors
-- **i18next** - Internationalization
-- **react-i18next** - React integration cho i18n
+- **i18next** - Framework đa ngôn ngữ
+- **react-i18next** - Tích hợp React cho i18n
 
-### Performance & UX
+</details>
 
-- **react-virtuoso** - Virtual scrolling
-- **Sonner** - Toast notifications
-- **next-themes** - Theme switching
+<details>
+<summary><b>Performance & UX</b></summary>
 
-### Dev Tools
+- **react-virtuoso** - Virtual scrolling cho danh sách lớn
+- **Sonner** - Hệ thống toast notification
+
+</details>
+
+<details>
+<summary><b>Development Tools</b></summary>
 
 - **ESLint 9.x** - Code linting
-- **TypeScript ESLint** - TypeScript linting rules
-- **Vite Plugin React** - Fast refresh
+- **TypeScript ESLint** - Linting rules cho TypeScript
+- **Vite Plugin React** - Fast refresh và HMR
+
+</details>
 
 ---
 
-## Cài Đặt
+## Bắt Đầu
 
-### Yêu Cầu Hệ Thống
+### Yêu Cầu
+
+Trước khi bắt đầu, đảm bảo bạn đã cài đặt:
 
 - **Node.js** >= 18.0.0
 - **npm** >= 9.0.0 hoặc **yarn** >= 1.22.0
-- **Git** (để clone repository)
+- **Git**
 
-### Bước 1: Clone Repository
+### Cài Đặt
+
+1. **Clone repository**
 
 ```bash
 git clone https://github.com/Delunsss2345/threads-meta-frontend.git
 cd threads-meta-frontend
 ```
 
-### Bước 2: Cài Đặt Dependencies
+2. **Cài đặt dependencies**
 
 ```bash
 # Sử dụng npm
@@ -186,33 +211,41 @@ yarn install
 pnpm install
 ```
 
-### Bước 3: Cấu Hình Environment Variables
+3. **Thiết lập biến môi trường**
 
-Tạo file `.env` ở root directory:
+Tạo file `.env` trong thư mục root:
 
-```bash
+```env
 # API Configuration
-VITE_BASE_API='Của bạn'
-VITE_BASE_URL='Của bạn'
+VITE_BASE_API=your_api_url
+VITE_BASE_URL=http://localhost:5173
 ```
 
-**Lưu ý:** File `.env.example` đã có sẵn template, bạn có thể copy:
+> **Lưu ý:** Bạn có thể copy `.env.example` làm template:
+>
+> ```bash
+> cp .env.example .env
+> ```
 
-```bash
-cp .env.example .env
-```
-
----
-
-## Chạy Dự Án
-
-### Development Mode
+4. **Khởi động development server**
 
 ```bash
 npm run dev
 ```
 
-Ứng dụng sẽ chạy tại: **http://localhost:5173**
+Ứng dụng sẽ chạy tại **http://localhost:5173**
+
+---
+
+## Sử Dụng
+
+### Chế Độ Development
+
+```bash
+npm run dev
+```
+
+Chạy ứng dụng ở chế độ development với hot module replacement (HMR).
 
 ### Build Production
 
@@ -220,165 +253,196 @@ npm run dev
 npm run build
 ```
 
-Output sẽ được generate trong folder `dist/`
+Build ứng dụng cho production vào thư mục `dist/`.
 
-### Preview Production Build
+### Xem Trước Build
 
 ```bash
 npm run preview
 ```
 
-Preview build tại: **http://localhost:4173**
+Xem trước production build tại **http://localhost:4173**
 
-### Linting & Code Quality
+### Kiểm Tra Code
 
 ```bash
-# Check linting errors
+# Kiểm tra lỗi linting
 npm run lint
 
-# Auto-fix linting errors
+# Tự động sửa lỗi linting
 npm run lint:fix
 ```
 
 ---
 
-## Cấu Trúc Thư Mục
+---
+
+## Cấu Trúc Dự Án
 
 ```
-ThreadsUI/
+threads-meta-frontend/
 ├── public/                      # Static assets
 │   ├── locales/                # i18n translation files
-│   │   ├── en/
-│   │   │   └── translation.json
-│   │   └── vi/
-│   │       └── translation.json
+│   │   ├── en/translation.json
+│   │   └── vi/translation.json
 │   └── images/                 # Public images
 │
 ├── src/
-│   ├── assets/                 # Private assets (images, fonts)
+│   ├── components/             # Reusable components
+│   │   ├── common/            # Shared UI components
+│   │   ├── layout/            # Layout components
+│   │   └── ui/                # shadcn/ui components
 │   │
-│   ├── components/             # Shared components
-│   │   ├── common/            # Common UI components
-│   │   │   ├── Icon/         # Icon components
-│   │   │   ├── Loading/      # Loading states
-│   │   │   ├── Skeleton/     # Skeleton screens
-│   │   │   ├── ModalPopup/   # Modal system
-│   │   │   ├── MenuPopup/    # Dropdown menus
-│   │   │   └── ...
-│   │   ├── layout/           # Layout components
-│   │   │   ├── AuthProvider/ # Authentication context
-│   │   │   ├── ThemeProvider/# Theme context
-│   │   │   ├── ModalProvider/# Modal management
-│   │   │   └── AppRoutes/    # Route configuration
-│   │   └── ui/               # shadcn/ui components
-│   │       ├── button.tsx
-│   │       ├── input.tsx
-│   │       ├── form.tsx
-│   │       └── ...
-│   │
-│   ├── features/              # Feature-based modules
+│   ├── features/              # Feature modules (Redux slices)
 │   │   ├── auth/             # Authentication
-│   │   │   ├── components/  # LoginForm, RegisterForm, etc.
-│   │   │   ├── api.ts       # Auth API calls
-│   │   │   ├── hooks.ts     # useAuth, useLogin, etc.
-│   │   │   ├── slice.ts     # Redux slice
-│   │   │   ├── selectors.ts # Redux selectors
-│   │   │   └── index.ts     # Public exports
-│   │   │
 │   │   ├── post/             # Posts/Threads
-│   │   │   ├── components/  # Post, PostForm, ReplyModal, etc.
-│   │   │   ├── api.ts
-│   │   │   ├── hooks.ts
-│   │   │   ├── slice.ts
-│   │   │   ├── selectors.ts
-│   │   │   └── index.ts
-│   │   │
 │   │   ├── user/             # User management
-│   │   │   ├── components/  # UserPreviewCard, FollowButton, etc.
-│   │   │   ├── api.ts
-│   │   │   ├── hooks.ts
-│   │   │   ├── slice.ts
-│   │   │   └── index.ts
-│   │   │
 │   │   ├── search/           # Search functionality
 │   │   ├── activity/         # Activity feed
 │   │   ├── upload/           # File upload
-│   │   └── modal/            # Modal state management
+│   │   └── modal/            # Modal state
 │   │
 │   ├── pages/                 # Page components
-│   │   ├── Home/             # Homepage feed
-│   │   ├── Auth/             # Login, Register, ForgotPassword, etc.
-│   │   ├── Profile/          # User profile pages
-│   │   ├── PostDetail/       # Post detail view
-│   │   ├── Search/           # Search page
-│   │   ├── ActivityPage/     # Activity/notifications
-│   │   ├── Settings/         # Settings page
-│   │   ├── Following/        # Following feed
-│   │   ├── Liked/            # Liked posts
-│   │   ├── Saved/            # Saved posts
-│   │   └── NotFound/         # 404 page
-│   │
-│   ├── layouts/              # Page layouts
-│   │   ├── DefaultLayout/   # Main app layout
-│   │   ├── AuthLayout/      # Auth pages layout
-│   │   └── SettingLayout/   # Settings layout
-│   │
-│   ├── hooks/                # Custom hooks
-│   │   ├── use-auth.ts
-│   │   ├── use-modal.ts
-│   │   ├── use-debounce.ts
-│   │   ├── use-mobile.ts
-│   │   └── ...
-│   │
-│   ├── lib/                  # Utility libraries
-│   │   ├── utils.ts         # Helper functions
-│   │   └── i18n.ts          # i18n utilities (useT hook)
-│   │
-│   ├── schema/               # Zod schemas
-│   │   ├── auth.schema.ts   # Auth validation schemas
-│   │   └── post.schema.ts   # Post validation schemas
-│   │
-│   ├── store/                # Redux store
-│   │   └── index.ts         # Store configuration
-│   │
-│   ├── types/                # TypeScript types
-│   │   ├── auth.ts
-│   │   ├── post.ts
-│   │   ├── user.ts
-│   │   ├── api.ts
-│   │   └── redux.ts
-│   │
-│   ├── utils/                # Utility functions
-│   │   ├── http.ts          # Axios instance & interceptors
-│   │   ├── format-time.ts   # Time formatting
-│   │   └── isPublicApi.ts   # API route helpers
-│   │
-│   ├── config/               # Configuration files
-│   │   └── config.tsx       # App configuration
-│   │
-│   ├── constant/             # Constants
-│   │   ├── pagination.ts
-│   │   ├── pageTitles.ts
-│   │   └── componentsMap.tsx
-│   │
-│   ├── i18n.ts               # i18next configuration
-│   ├── App.tsx               # Root component
-│   ├── main.tsx              # Entry point
-│   └── index.css             # Global styles
+│   ├── layouts/               # Page layouts
+│   ├── hooks/                 # Custom React hooks
+│   ├── lib/                   # Utility libraries
+│   ├── schema/                # Zod validation schemas
+│   ├── store/                 # Redux store configuration
+│   ├── types/                 # TypeScript type definitions
+│   ├── utils/                 # Utility functions
+│   ├── config/                # App configuration
+│   └── constant/              # Constants
 │
-├── .env                       # Environment variables
-├── .env.example              # Environment template
-├── .gitignore                # Git ignore rules
-├── components.json           # shadcn/ui config
-├── eslint.config.js          # ESLint configuration
-├── index.html                # HTML template
-├── package.json              # Dependencies
-├── tsconfig.json             # TypeScript config
-├── tsconfig.app.json         # App TypeScript config
-├── tsconfig.node.json        # Node TypeScript config
-├── vite.config.ts            # Vite configuration
-├── vercel.json               # Vercel deployment config
-└── README.md                 # This file
+├── .env                        # Environment variables
+├── .env.example               # Environment template
+├── package.json               # Dependencies
+├── tsconfig.json              # TypeScript configuration
+├── vite.config.ts             # Vite configuration
+├── tailwind.config.js         # Tailwind CSS configuration
+└── vercel.json                # Vercel deployment config
+```
+
+<details>
+<summary><b>Xem cấu trúc chi tiết</b></summary>
+
+### Kiến Trúc Feature-Based
+
+Mỗi feature module tuân theo cấu trúc:
+
+```
+features/
+└── [feature-name]/
+    ├── components/         # Components của feature
+    ├── api.ts             # API calls cho feature này
+    ├── hooks.ts           # Custom hooks cho feature này
+    ├── slice.ts           # Redux slice
+    ├── selectors.ts       # Redux selectors
+    └── index.ts           # Public exports
+```
+
+Kiến trúc này cung cấp:
+
+- **Scalability** - Dễ dàng thêm features mới
+- **Maintainability** - Tách biệt rõ ràng các concerns
+- **Reusability** - Components và hooks chia sẻ
+- **Testability** - Các feature modules độc lập
+
+</details>
+
+---
+
+## Đóng Góp
+
+Mọi đóng góp đều rất được trân trọng. Bất kỳ đóng góp nào của bạn đều **rất có ý nghĩa**.
+
+### Cách Đóng Góp
+
+1. Fork dự án
+2. Tạo Feature Branch (`git checkout -b feature/TinhNangMoi`)
+3. Commit thay đổi (`git commit -m 'Add: Mô tả ngắn gọn'`)
+4. Push lên Branch (`git push origin feature/TinhNangMoi`)
+5. Mở Pull Request
+
+### Chuẩn Code
+
+- **TypeScript** - Sử dụng strict mode, tránh `any`
+- **Components** - Sử dụng functional components với hooks
+- **Quy ước đặt tên**:
+  - Files: `kebab-case.tsx`
+  - Components: `PascalCase`
+  - Functions/variables: `camelCase`
+  - Constants: `UPPER_SNAKE_CASE`
+- **Imports** - Sử dụng absolute imports với `@/` prefix
+- **Comments** - Viết comments cho logic phức tạp
+
+### Quy Ước Commit
+
+Tuân theo chuẩn [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: thêm tính năng mới
+fix: sửa lỗi
+docs: cập nhật tài liệu
+style: format code (không thay đổi logic)
+refactor: refactor code
+test: thêm hoặc cập nhật tests
+chore: cập nhật dependencies hoặc config
 ```
 
 ---
+
+## License
+
+Dự án này được phân phối dưới giấy phép **MIT License** - xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+
+---
+
+## Tác Giả
+
+**Delunsss2345**
+
+- GitHub: [@Delunsss2345](https://github.com/Delunsss2345)
+- Repository: [threads-meta-frontend](https://github.com/Delunsss2345/threads-meta-frontend)
+
+---
+
+## Lời Cảm Ơn
+
+Cảm ơn đặc biệt đến:
+
+- [Meta Threads](https://threads.net) - Cảm hứng UI/UX
+- [shadcn/ui](https://ui.shadcn.com) - Thư viện component tuyệt vời
+- [Radix UI](https://radix-ui.com) - Accessible primitives
+- [Tailwind CSS](https://tailwindcss.com) - CSS framework utility-first
+- [React](https://react.dev) - Thư viện cho web và native interfaces
+
+---
+
+## Hỗ Trợ
+
+Nếu bạn gặp vấn đề hoặc có câu hỏi:
+
+1. **Kiểm tra Issues** - Xem [GitHub Issues](https://github.com/Delunsss2345/threads-meta-frontend/issues)
+2. **Tạo Issue mới** - Mở issue mới với labels phù hợp
+3. **Discussions** - Tham gia [GitHub Discussions](https://github.com/Delunsss2345/threads-meta-frontend/discussions)
+
+---
+
+## Trạng Thái Dự Án
+
+![GitHub last commit](https://img.shields.io/github/last-commit/Delunsss2345/threads-meta-frontend)
+![GitHub issues](https://img.shields.io/github/issues/Delunsss2345/threads-meta-frontend)
+![GitHub stars](https://img.shields.io/github/stars/Delunsss2345/threads-meta-frontend)
+![GitHub forks](https://img.shields.io/github/forks/Delunsss2345/threads-meta-frontend)
+
+---
+
+<div align="center">
+
+### Nếu bạn thấy dự án hữu ích, hãy cho một star!
+
+**[Về đầu trang](#threads-meta-clone)**
+
+Made with love by [Delunsss2345](https://github.com/Delunsss2345)
+
+</div>

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { useDebounceInput } from "@/hooks/use-debouce-input";
 import {
+  AuthErrorMessage,
   RegisterSchemaBody,
   type RegisterSchemaBodyType,
 } from "@/schema/auth.schema";
@@ -12,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { authApi } from "../../api";
 import { useAuth } from "../../hooks";
 
 interface RegisterFormProps {
@@ -25,6 +27,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
   const form = useForm<RegisterSchemaBodyType>({
     resolver: zodResolver(RegisterSchemaBody),
     mode: "onChange",
+    reValidateMode: "onChange",
     defaultValues: {
       username: "",
       email: "",
@@ -36,11 +39,33 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (values: RegisterSchemaBodyType) => {
+    const usernameRes = await authApi.validateUsername({
+      username: values.username,
+    });
+    if (!usernameRes.data.available) {
+      form.setError("username", {
+        type: "manual",
+        message: AuthErrorMessage.USERNAME_EXISTS,
+      });
+      return;
+    }
+
+    const emailRes = await authApi.validateEmail({ email: values.email });
+    if (!emailRes.data.available) {
+      form.setError("email", {
+        type: "manual",
+        message: AuthErrorMessage.EMAIL_EXISTS,
+      });
+      return;
+    }
+
     await onRegister(values);
     form.reset();
   };
 
-  useDebounceInput<RegisterSchemaBodyType>({ form });
+  useDebounceInput<RegisterSchemaBodyType>({
+    form,
+  });
 
   return (
     <Form {...form}>

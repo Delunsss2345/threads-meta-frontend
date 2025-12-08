@@ -39,14 +39,9 @@ const RegisterSchemaBody = z
 
     password_confirmation: z.string(),
   })
-  .superRefine(({ password_confirmation, password }, ctx) => {
-    if (password_confirmation !== password) {
-      ctx.addIssue({
-        code: "custom",
-        message: AuthErrorMessage.PASSWORD_CONFIRM_NOT_MATCH,
-        path: ["password_confirmation"],
-      });
-    }
+  .refine((data) => data.password === data.password_confirmation, {
+    message: AuthErrorMessage.PASSWORD_CONFIRM_NOT_MATCH,
+    path: ["password_confirmation"],
   });
 
 const ForgotPasswordSchemaBody = z.object({
