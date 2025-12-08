@@ -27,7 +27,7 @@ export default function ModalFollow({ user, onClose }: ModalFollowProps) {
   if (!user) return;
   return (
     <ModalPopup isMobileSheet={false} mode="custom" onClose={onClose}>
-      <div className="bg-white rounded-2xl w-[360px] max-w-full shadow-xl p-5 relative">
+      <div className="bg-primary-foreground rounded-2xl w-[360px] max-w-full shadow-xl p-5 relative">
         <div className="flex items-start justify-between">
           <div>
             <h2 className="font-bold text-lg leading-tight">{user?.name}</h2>
@@ -45,7 +45,7 @@ export default function ModalFollow({ user, onClose }: ModalFollowProps) {
         {/* Follow button */}
         <Button
           //   onClick={() => handleFollowing(user.id)}
-          className="w-full h-11 mt-6 rounded-xl bg-black text-primary-foreground font-semibold hover:bg-black/90 cursor-pointer"
+          className="w-full h-11 mt-6 rounded-xl bg-background text-primary font-semibold hover:bg-background/50  cursor-pointer"
         >
           {"Theo dõi"}
         </Button>

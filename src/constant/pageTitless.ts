@@ -8,6 +8,7 @@ export const PAGE_TITLES_BY_PATH: Record<string, string> = {
   "/": "home",
   "/search": "search",
   "/favorites": "favorites",
+  "/ghost_posts" : "ghost_posts",
   "/profile": "profile",
   "/profile/replies": "profile",
   "/profile/media": "profile",

@@ -91,6 +91,10 @@
       "usernameExists": "Tên đăng nhập đã tồn tại"
     }
   },
+  "autoDelete": {
+    "title": "Chưa có bài viết tự biến mất nào",
+    "description": "Hệ thống sẽ lưu trữ bài viết tự hủy sau 24 giờ và chuyển thread trả lời vào tin nhắn. Chỉ mình bạn xem được ai đã thích và trả lời."
+  },
   "account": {
     "sensitiveContent": "Nội dung nhạy cảm",
     "politicalContent": "Nội dung mang tính chính trị",
@@ -337,7 +341,13 @@
     "addLink": "Thêm liên kết",
     "yourLinks": "Liên kết của bạn",
     "linkTitle": "Tiêu đề",
-    "linkUrl": "URL"
+    "linkUrl": "URL",
+    "title": "Trang cá nhân",
+    "bioEmpty": "Bạn chưa có tiểu sử",
+    "uploadAvatar": "Tải ảnh lên",
+    "removeAvatar": "Gỡ ảnh hiện tại",
+    "saveSuccess": "Cập nhật thành công",
+    "saveError": "Có lỗi xảy ra"
   },
   "loginCard": {
     "title": "Đăng nhập hoặc đăng ký Threads",

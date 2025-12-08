@@ -333,7 +333,17 @@
     "addLink": "Add link",
     "yourLinks": "Your links",
     "linkTitle": "Title",
-    "linkUrl": "URL"
+    "linkUrl": "URL",
+    "title": "Profile settings",
+    "bioEmpty": "You haven’t added a bio yet",
+    "uploadAvatar": "Upload photo",
+    "removeAvatar": "Remove current photo",
+    "saveSuccess": "Profile updated successfully",
+    "saveError": "An error occurred"
+  },
+  "autoDelete": {
+    "title": "No disappearing posts yet",
+    "description": "The system will store self-destructing posts for 24 hours and move reply threads into messages. Only you can see who liked or replied."
   },
   "privacy": {
     "privateProfile": "Private profile",

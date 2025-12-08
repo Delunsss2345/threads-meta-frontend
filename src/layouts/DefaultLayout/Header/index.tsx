@@ -51,7 +51,7 @@ const Header = ({
         {!PAGE_TITLES_BY_PATH[textHeader ?? pathname] ? (
           "Threads"
         ) : isAuthenticated &&
-          ["/", "/following", "/autoDelete"].includes(pathname) ? (
+          ["/", "/following", "/ghost_posts"].includes(pathname) ? (
           <ChoiceHome />
         ) : (
           t(`nav.${PAGE_TITLES_BY_PATH[textHeader || pathname]}`)

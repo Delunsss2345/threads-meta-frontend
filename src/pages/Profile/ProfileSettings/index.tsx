@@ -41,31 +41,20 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
   );
 
   const [links, setLinks] = useState<{ title: string; url: string }[]>([]);
-  const [newLink, setNewLink] = useState<{ title: string; url: string }>({
-    title: "",
-    url: "",
-  });
+  const [newLink, setNewLink] = useState({ title: "", url: "" });
 
   if (!user) return null;
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleUploadFile = () => {
-    inputRef.current?.click();
-  };
+  const handleUploadFile = () => inputRef.current?.click();
 
-  const handleSaveBio = () => {
-    setActiveModal("main");
-  };
-
-  const handleSaveName = () => {
-    setActiveModal("main");
-  };
+  const handleSaveBio = () => setActiveModal("main");
+  const handleSaveName = () => setActiveModal("main");
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     const image = e.target.files?.[0];
-    if (!image) return;
-    setPreviewAvatar(image);
+    if (image) setPreviewAvatar(image);
   };
 
   const handleAddLink = () => {
@@ -74,47 +63,37 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
     setNewLink({ title: "", url: "" });
   };
 
-  const handleRemoveLink = (index: number) => {
-    setLinks((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleUpdateLink = (
-    index: number,
-    field: "title" | "url",
-    value: string
-  ) => {
+  const handleUpdateLink = (i: number, field: "title" | "url", val: string) => {
     setLinks((prev) => {
-      const updated = [...prev];
-      updated[index][field] = value;
-      return updated;
+      const copy = [...prev];
+      copy[i][field] = val;
+      return copy;
     });
   };
 
   const updateUser = async () => {
     try {
       if (previewAvatar) {
-        const avatar = new FormData();
-        avatar.append("avatar", previewAvatar);
-        await uploadApi.uploadAvatar(avatar);
+        const fd = new FormData();
+        fd.append("avatar", previewAvatar);
+        await uploadApi.uploadAvatar(fd);
       }
 
-      const updateUserFormData = new FormData();
-      updateUserFormData.append("_method", "PUT");
-      if (previewBio !== undefined && previewBio !== null) {
-        updateUserFormData.append("bio", previewBio);
-      }
-      if (previewName !== undefined && previewName !== null) {
-        updateUserFormData.append("name", previewName);
-      }
+      const form = new FormData();
+      form.append("_method", "PUT");
+      if (previewBio != null) form.append("bio", previewBio);
+      if (previewName != null) form.append("name", previewName);
 
-      await toast.promise(dispatch(updateAuthForUser(updateUserFormData)), {
-        success: "Cập nhập thành công",
-        error: "Có lỗi xảy ra",
+      await toast.promise(dispatch(updateAuthForUser(form)), {
+        success: t("profileSettings.saveSuccess"),
+        error: t("profileSettings.saveError"),
       });
+
       onClose();
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Có lỗi xảy ra");
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.message || t("profileSettings.saveError")
+      );
     }
   };
 
@@ -124,14 +103,19 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
         {activeModal === "main" && (
           <>
             <div className="md:hidden block -mb-6">
-              <Header headerText={"Trang cá nhân"} onClose={onClose} />
+              <Header
+                headerText={t("profileSettings.title")}
+                onClose={onClose}
+              />
             </div>
+
             <CardContent className="p-0">
               <div className="flex items-center justify-between p-4">
                 <div className="flex-1">
                   <h3 className="font-semibold mb-1">
                     {t("profileSettings.name")}
                   </h3>
+
                   <div
                     onClick={() => setActiveModal("name")}
                     className="flex items-center gap-2 text-sm cursor-pointer"
@@ -148,54 +132,36 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                 </div>
 
                 <input
-                  onChange={handleChangeImage}
+                  type="file"
                   ref={inputRef}
                   accept="image/*"
-                  type="file"
                   className="hidden"
+                  onChange={handleChangeImage}
                 />
 
                 <MenuPopup
-                  className={
-                    "hover:!bg-transparent !p-0 size-14 cursor-pointer border rounded-full"
-                  }
+                  className="hover:!bg-transparent !p-0 size-14 cursor-pointer border rounded-full"
                   mode="long"
                   buttonActive={
                     <AvatarGroup
                       size={12}
                       url={
                         (previewAvatar && URL.createObjectURL(previewAvatar)) ||
-                        user?.avatar_url ||
-                        ""
+                        user.avatar_url
                       }
-                      fallBack={user?.username?.slice(0, 2).toUpperCase()}
-                      classNameFallback="bg-primary-foreground"
+                      fallBack={user.username.slice(0, 2).toUpperCase()}
                     />
                   }
-                  motionProps={{
-                    initial: {
-                      opacity: 0,
-                      x: 0,
-                    },
-                    animate: {
-                      opacity: 1,
-                      x: 0,
-                    },
-                    exit: {
-                      opacity: 0,
-                      x: 0,
-                    },
-                  }}
                   customPopup="-translate-x-1/2"
                 >
-                  <DropdownMenuItem
-                    onClick={handleUploadFile}
-                    className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-                  >
-                    <span>Tải ảnh lên</span>
+                  <DropdownMenuItem onClick={handleUploadFile}>
+                    {t("profileSettings.uploadAvatar")}
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
-                    <span className="text-red-500">Gỡ ảnh hiện tại</span>
+
+                  <DropdownMenuItem>
+                    <span className="text-red-500">
+                      {t("profileSettings.removeAvatar")}
+                    </span>
                   </DropdownMenuItem>
                 </MenuPopup>
               </div>
@@ -209,10 +175,9 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                 <h3 className="font-semibold mb-1">
                   {t("profileSettings.bio")}
                 </h3>
+
                 <p className="text-sm text-muted-foreground">
-                  {previewBio ||
-                    user?.bio ||
-                    "Tài khoản mới tạo làm gì có tiểu sử"}
+                  {previewBio || user.bio || t("profileSettings.bioEmpty")}
                 </p>
               </div>
 
@@ -269,7 +234,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                   <h3 className="font-semibold mb-1">
                     {t("profileSettings.profilePrivacy")}
                   </h3>
-                  <p className="text-sm text-muted-foreground whitespace-break-spaces">
+                  <p className="text-sm text-muted-foreground">
                     {t("profileSettings.profilePrivacyDesc")}
                   </p>
                 </div>
@@ -290,7 +255,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                 <Button
                   disabled={loadingRequest}
                   onClick={updateUser}
-                  className="w-full bg-black hover:bg-black/90 text-white h-12 rounded-xl font-semibold place-items-center cursor-pointer"
+                  className="w-full bg-black hover:bg-black/90 text-white h-12 rounded-xl font-semibold"
                 >
                   {loadingRequest ? <Spinner /> : t("profileSettings.done")}
                 </Button>

@@ -14,6 +14,7 @@ import { createInteraction } from "./helper";
 
 export interface PostsState {
   items: PostItem[];
+  itemsFollowing: PostItem[];
   reposts: PostItem[];
   replies: ReplyData[];
   loading: boolean;
@@ -31,6 +32,12 @@ export interface PostsState {
     total: number;
     last_page: number;
   };
+  paginationFollowing: {
+    current_page: number;
+    total: number;
+    last_page: number;
+  };
+  continuePageFollowing: boolean;
   continueReplies: boolean;
   continuePage: boolean;
   loaded: boolean;
@@ -38,6 +45,7 @@ export interface PostsState {
 
 const initialState: PostsState = {
   items: [],
+  itemsFollowing: [],
   replies: [],
   reposts: [],
   loading: false,
@@ -55,6 +63,12 @@ const initialState: PostsState = {
     total: 0,
     last_page: 1,
   },
+  paginationFollowing: {
+    current_page: 1,
+    total: 0,
+    last_page: 1,
+  },
+  continuePageFollowing: true,
   continueReplies: true,
   continuePage: true,
   loaded: false,
@@ -74,6 +88,28 @@ export const getFeeds = createAsyncThunk<PostResponse>(
   async (_, { rejectWithValue }) => {
     try {
       return await postApi.getFeeds();
+    } catch (error) {
+      return rejectWithValue(parseError(error));
+    }
+  }
+);
+
+export const getFeedsByFollowing = createAsyncThunk<PostResponse>(
+  "posts/feed-following",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await postApi.getFeedsByFollowing();
+    } catch (error) {
+      return rejectWithValue(parseError(error));
+    }
+  }
+);
+
+export const loadMoreFeedsByFollowing = createAsyncThunk<PostResponse, number>(
+  "posts/load-more-following",
+  async (page = 2, { rejectWithValue }) => {
+    try {
+      return await postApi.getFeedsByFollowing(page);
     } catch (error) {
       return rejectWithValue(parseError(error));
     }
@@ -286,6 +322,44 @@ export const postsSlice = createSlice({
     builder.addCase(loadMoreThreads.rejected, (state, action) => {
       state.error = action.payload as string;
       state.continuePage = false;
+    });
+
+    builder.addCase(getFeedsByFollowing.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builder.addCase(getFeedsByFollowing.fulfilled, (state, action) => {
+      state.loading = false;
+      state.itemsFollowing = action.payload.data;
+      state.paginationFollowing = action.payload.pagination;
+      state.continuePageFollowing =
+        action.payload.pagination.current_page * PER_PAGE <
+        action.payload.pagination.total;
+      state.loaded = true;
+    });
+
+    builder.addCase(loadMoreFeedsByFollowing.pending, (state) => {
+      state.error = null;
+    });
+
+    builder.addCase(loadMoreFeedsByFollowing.fulfilled, (state, action) => {
+      const { current_page, total } = action.payload.pagination;
+
+      state.itemsFollowing.push(...action.payload.data);
+      state.paginationFollowing = action.payload.pagination;
+
+      state.continuePageFollowing = current_page * PER_PAGE < total;
+    });
+
+    builder.addCase(loadMoreFeedsByFollowing.rejected, (state, action) => {
+      state.error = action.payload as string;
+      state.continuePageFollowing = false;
+    });
+
+    builder.addCase(getFeedsByFollowing.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
     });
 
     // Load more replies

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const tabs = [
   { key: "", label: "Dành cho bạn" },
   { key: "following", label: "Đang theo dõi" },
-  { key: "autoDelete", label: "Bài viết tự hủy" },
+  { key: "ghost_posts", label: "Bài viết tự hủy" },
 ];
 
 interface ChoiceHomeProps {

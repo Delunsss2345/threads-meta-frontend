@@ -10,6 +10,7 @@ import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import ResetPassword from "@/pages/Auth/ResetPassword";
 import VerifyEmail from "@/pages/Auth/VerifyEmail";
+import AutoDelete from "@/pages/AutoDelete";
 import Embed from "@/pages/Embed";
 import Following from "@/pages/Following";
 import Help from "@/pages/Help";
@@ -117,6 +118,14 @@ export const config: RouteObject[] = [
         element: (
           <PrivateRouter>
             <Following />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "ghost_posts",
+        element: (
+          <PrivateRouter>
+            <AutoDelete />
           </PrivateRouter>
         ),
       },

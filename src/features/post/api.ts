@@ -13,6 +13,10 @@ export const postApi = {
     http.get<PostResponse>(
       `/posts/feed?type=for_you&page=${page}&per_page=${PER_PAGE}`
     ),
+  getFeedsByFollowing: (page: number = 1) =>
+    http.get<PostResponse>(
+      `/posts/feed?type=following&page=${page}&per_page=${PER_PAGE}`
+    ),
   postThread: (payload: FormData) =>
     http.post<CreatePostResponse>("/posts", payload, {
       headers: {
