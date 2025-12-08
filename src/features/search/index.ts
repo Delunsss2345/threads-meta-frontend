@@ -1,1 +1,1 @@
-export * from "./search-slice";
+export * from "./slice";

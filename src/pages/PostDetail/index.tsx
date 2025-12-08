@@ -8,15 +8,15 @@ import {
   resetReplies,
   selectPostsState,
 } from "@/features/post";
-import Post from "@/features/post/components";
 import { mapPost } from "@/features/post/map";
 import type { PostItem, ReplyItem } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
 import ScrollTop from "@/components/common/ScrollTop";
+import InfiniteList from "@/components/post/InfiniteList";
+import PostCard from "@/components/post/PostCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import InfiniteList from "@/features/post/components/InfiniteList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -66,7 +66,7 @@ const PostDetail = () => {
       <ScrollTop />
       <Card className="border-0 shadow-none bg-primary-foreground rounded-none">
         <CardContent className="space-y-3 p-0!">
-          <Post mode="detail" post={mapPost(postDetail ?? singlePost)} />
+          <PostCard mode="detail" post={mapPost(postDetail ?? singlePost)} />
 
           <div className="flex flex-col items-center justify-between text-sm pt-2 px-4 gap-4">
             <Separator />
@@ -106,7 +106,7 @@ const PostDetail = () => {
               )
             }
             itemContent={(index, reply: ReplyItem) => (
-              <Post
+              <PostCard
                 key={reply.id}
                 onClick={() =>
                   navigator(`/${reply.user.username}/post/${reply.id}`, {

@@ -3,7 +3,6 @@ import HomeIcon from "@/components/common/Icon/HomeIcon";
 import SubtractIcon from "@/components/common/Icon/SubtractIcon";
 import UserIcon from "@/components/common/Icon/UserIcon";
 import { Button } from "@/components/ui/button";
-import AuthSocialModal from "@/features/auth/components/LoginModal";
 import { useAuth } from "@/features/auth/hooks";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useModal } from "@/hooks/use-modal";
@@ -11,6 +10,7 @@ import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import AuthSocialModal from "@/components/auth/LoginModal";
 import Footer from "@/components/common/ModalPopup/Footer";
 import Header from "@/components/common/ModalPopup/Header";
 import {
@@ -19,7 +19,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import UserPostForm from "@/features/post/components/UserPostForm";
+import UserPostForm from "@/components/user/UserPostForm";
 import { useCreatePost } from "@/hooks/use-create-post";
 import { useTranslation } from "react-i18next";
 

@@ -1,5 +1,5 @@
+import PostForm from "@/components/post/PostForm";
 import { useAuth } from "@/features/auth/hooks";
-import PostForm from "@/features/post/components/PostForm";
 import { useTranslation } from "react-i18next";
 import CardStepupProfile from "../CardStepupProfile";
 

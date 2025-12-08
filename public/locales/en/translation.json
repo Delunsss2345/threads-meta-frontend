@@ -17,6 +17,7 @@
     "error": "An error has occurred!",
     "close": "Close"
   },
+  "viewOnThreads": "View on Threads",
   "nav": {
     "home": "Home",
     "search": "Search",

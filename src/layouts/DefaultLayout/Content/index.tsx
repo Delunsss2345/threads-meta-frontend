@@ -1,9 +1,7 @@
-import AddColumnIcon from "@/components/common/Icon/AddColIcon";
-import LoginCard from "@/features/auth/components/LoginPanel";
-import MenuAddContent from "@/pages/Home/MenuAddContent";
 import { useLocation } from "react-router-dom";
 import Column from "../Column";
 import HeaderMobile from "../HeaderMobile";
+import LoginCard from "@/components/auth/LoginPanel";
 interface ContentProps {
   children: React.ReactNode;
 }

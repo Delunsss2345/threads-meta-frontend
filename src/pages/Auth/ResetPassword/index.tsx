@@ -1,11 +1,11 @@
+import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
+import RestPasswordFound from "@/components/auth/RestPasswordFailed";
 import LoadingFetch from "@/components/common/LoadingFetch";
 import {
   restPassword,
   selectAuthValidateToken,
   validateRestToken,
 } from "@/features/auth";
-import { ResetPasswordForm } from "@/features/auth/components/ResetPasswordForm";
-import RestPasswordFound from "@/features/auth/components/RestPasswordFailed";
 import { useAuth } from "@/features/auth/hooks";
 import type { ResetPasswordSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";

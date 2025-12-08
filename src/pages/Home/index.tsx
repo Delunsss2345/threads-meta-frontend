@@ -1,10 +1,6 @@
 import SkeletonPost from "@/components/common/Skeleton/SkeletonPost";
 import { useAuth } from "@/features/auth/hooks";
 import { getFeeds, loadMoreThreads, selectPostsState } from "@/features/post";
-import Post from "@/features/post/components";
-import FeedTabs from "@/features/post/components/FeedTabs";
-import PostForm from "@/features/post/components/PostForm";
-import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";
 
@@ -13,8 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import LoadingFetch from "@/components/common/LoadingFetch";
-import InfiniteList from "@/features/post/components/InfiniteList";
+import FeedTabs from "@/components/post/FeedTabs";
+import InfiniteList from "@/components/post/InfiniteList";
+import PostCard from "@/components/post/PostCard";
+import PostForm from "@/components/post/PostForm";
 import { KeepAlive } from "react-activation";
+import { mapPost } from "@/features/post/map";
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const Home = () => {
         continuePage={continuePage}
         skeleton={<SkeletonPost />}
         itemContent={(index, post: PostItem) => (
-          <Post
+          <PostCard
             onClick={() => handleNavigateToDetail(post.id, post.user.username)}
             post={mapPost(post)}
           />

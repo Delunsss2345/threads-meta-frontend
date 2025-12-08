@@ -1,5 +1,5 @@
+import LoginForm from "@/components/auth/LoginForm";
 import { login } from "@/features/auth";
-import LoginForm from "@/features/auth/components/LoginForm";
 import type { LoginSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
 import { useTranslation } from "react-i18next";

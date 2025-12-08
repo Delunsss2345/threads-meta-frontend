@@ -15,10 +15,10 @@ import SheetPopup from "../SheetPopup";
 export type MenuItem = {
   label: string;
   icon?: ReactNode;
-  isAuth?: boolean;      
-  isHeader?: boolean;    
-  className?: string;    
-  onClick?: () => void; 
+  isAuth?: boolean;
+  isHeader?: boolean;
+  className?: string;
+  onClick?: () => void;
 };
 interface MenuPopupProps {
   buttonActive: React.ReactNode;

@@ -5,15 +5,15 @@ import SearchIcon from "@/components/common/Icon/SearchIcon";
 import SubtractIcon from "@/components/common/Icon/SubtractIcon";
 import UserIcon from "@/components/common/Icon/UserIcon";
 import Logo from "@/components/common/Logo";
-import AuthSocialModal from "@/features/auth/components/LoginModal";
 import { useCurrentUser } from "@/features/auth/hooks";
-import NewPostModal from "@/features/post/components/NewPostModal";
 import { useModal } from "@/hooks/use-modal";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
 import SlideUpMenu from "./SideUpMenu";
+import AuthSocialModal from "@/components/auth/LoginModal";
+import NewPostModal from "@/components/post/NewPostModal";
 
 const NAV_CONFIG = [
   { key: "home", Icon: HomeIcon, link: "/" },

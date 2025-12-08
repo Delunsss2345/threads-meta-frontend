@@ -9,8 +9,7 @@ import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { Switch } from "@/components/ui/switch";
 import { selectAuthState, updateAuthForUser } from "@/features/auth";
 import { useAuth } from "@/features/auth/hooks";
-import { uploadApi } from "@/features/upload/api";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { uploadApi } from "@/services/uploadService";
 import type { AppDispatch } from "@/types/redux";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { ChevronRight, Globe, Lock } from "lucide-react";
@@ -27,7 +26,8 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
   const { user } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
   const { loadingRequest } = useSelector(selectAuthState);
-  const isMobile = useIsMobile();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const [activeModal, setActiveModal] = useState<
     "main" | "name" | "bio" | "links"
   >("main");
@@ -44,8 +44,6 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
   const [newLink, setNewLink] = useState({ title: "", url: "" });
 
   if (!user) return null;
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleUploadFile = () => inputRef.current?.click();
 
@@ -234,7 +232,7 @@ const ProfileSettings = ({ onClose }: { onClose: () => void }) => {
                   <h3 className="font-semibold mb-1">
                     {t("profileSettings.profilePrivacy")}
                   </h3>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground text-wrap">
                     {t("profileSettings.profilePrivacyDesc")}
                   </p>
                 </div>

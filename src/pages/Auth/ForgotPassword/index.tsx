@@ -1,7 +1,7 @@
+import { ForgotPasswordForm } from "@/components/auth/ForgotPasswordForm";
 import { forgotPassword } from "@/features/auth";
-import { authApi } from "@/features/auth/api";
-import { ForgotPasswordForm } from "@/features/auth/components/ForgotPasswordForm";
 import type { ForgotPasswordSchemaBodyType } from "@/schema/auth.schema";
+import { authApi } from "@/services/authService";
 import type { AppDispatch } from "@/types/redux";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";

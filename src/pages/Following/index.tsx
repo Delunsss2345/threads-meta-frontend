@@ -5,9 +5,6 @@ import {
   loadMoreFeedsByFollowing,
   selectPostsState,
 } from "@/features/post";
-import Post from "@/features/post/components";
-import FeedTabs from "@/features/post/components/FeedTabs";
-import PostForm from "@/features/post/components/PostForm";
 import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import type { AppDispatch } from "@/types/redux";
@@ -17,8 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import LoadingFetch from "@/components/common/LoadingFetch";
-import InfiniteList from "@/features/post/components/InfiniteList";
 import { KeepAlive } from "react-activation";
+import PostForm from "@/components/post/PostForm";
+import FeedTabs from "@/components/post/FeedTabs";
+import InfiniteList from "@/components/post/InfiniteList";
+import PostCard from "@/components/post/PostCard";
 
 const Following = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -75,7 +75,7 @@ const Following = () => {
         continuePage={continuePageFollowing}
         skeleton={<SkeletonPost />}
         itemContent={(index, post: PostItem) => (
-          <Post
+          <PostCard
             onClick={() => handleNavigateToDetail(post.id, post.user.username)}
             post={mapPost(post)}
           />

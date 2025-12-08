@@ -3,8 +3,8 @@ import {
   createSlice,
   type PayloadAction,
 } from "@reduxjs/toolkit";
+import { userApi } from "../../services/userService";
 import type { MappedUser } from "../post/components/type";
-import { userApi } from "./api";
 
 export type UserState = {
   loadingRequest: boolean;

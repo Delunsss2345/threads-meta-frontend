@@ -9,7 +9,7 @@ import type {
   ReplyResponse,
 } from "@/types/post";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postApi } from "./api";
+import { postApi } from "../../services/postService";
 import { createInteraction } from "./helper";
 
 export interface PostsState {

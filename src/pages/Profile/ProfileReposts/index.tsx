@@ -1,6 +1,6 @@
+import PostCard from "@/components/post/PostCard";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import { selectPostsState } from "@/features/post";
-import Post from "@/features/post/components";
 import { mapPost } from "@/features/post/map";
 import type { PostItem } from "@/types/post";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const ProfileReposts = () => {
         reposts.map(
           (repost: PostItem) =>
             repost?.original_post && (
-              <Post
+              <PostCard
                 onClick={() =>
                   navigator(
                     `/${repost.user.username}/post/${repost.original_post_id}`

@@ -1,10 +1,10 @@
 import { Loading } from "@/components/common/Loading";
-import FixedNewPostButton from "@/features/post/components/FixedNewPostButton";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Content from "./Content";
 import Navbar from "./Navbar";
 import NavMobile from "./Navbar/NavMobile";
+import FixedNewPostButton from "@/components/post/FixedNewPostButton";
 
 interface DefaultLayoutProps {
   requireAuth?: boolean;
