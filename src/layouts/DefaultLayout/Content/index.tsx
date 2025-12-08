@@ -44,7 +44,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
       <div className="md:pl-[100px] dynamic-columns  mt-[24px] md:mt-0 h-full flex items-start gap-5">
         <Column pathName={location.pathname}>{children}</Column>
         <LoginCard />
-        <div className="hidden relative md:block h-screen">
+        {/* <div className="hidden relative md:block h-screen">
           <div className="absolute top-1/2">
             <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
               <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
@@ -52,7 +52,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
               </MenuAddContent>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </main>
   );
