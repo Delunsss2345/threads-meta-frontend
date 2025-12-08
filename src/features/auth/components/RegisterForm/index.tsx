@@ -74,27 +74,14 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
         className="flex flex-col items-center space-y-3"
         noValidate
       >
-        {/* Username */}
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem className="w-90">
-              <Input placeholder={t("auth.usernamePlaceholder")} {...field} />
-              <FormMessageI18n />
-            </FormItem>
-          )}
-        />
-
-        {/* Email */}
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="w-90">
               <Input
-                placeholder={t("auth.emailPlaceholder")}
-                type="email"
+                disabled={authLoading}
+                placeholder={t("auth.usernamePlaceholder")}
                 {...field}
               />
               <FormMessageI18n />
@@ -102,13 +89,29 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           )}
         />
 
-        {/* Password */}
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="w-90">
+              <Input
+                disabled={authLoading}
+                type="email"
+                placeholder={t("auth.emailPlaceholder")}
+                {...field}
+              />
+              <FormMessageI18n />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem className="w-90">
               <Input
+                disabled={authLoading}
                 type="password"
                 placeholder={t("auth.passwordPlaceholder")}
                 {...field}
@@ -118,13 +121,13 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           )}
         />
 
-        {/* Confirm Password */}
         <FormField
           control={form.control}
           name="password_confirmation"
           render={({ field }) => (
             <FormItem className="w-90">
               <Input
+                disabled={authLoading}
                 type="password"
                 placeholder={t("auth.confirmPasswordPlaceholder")}
                 {...field}

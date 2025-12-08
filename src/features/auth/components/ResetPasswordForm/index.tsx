@@ -61,17 +61,24 @@ export const ResetPasswordForm = ({
             name="email"
             render={({ field }) => (
               <FormItem className="w-full">
-                <Input type="email" placeholder={t("auth.email")} {...field} />
+                <Input
+                  disabled={authLoading}
+                  type="email"
+                  placeholder={t("auth.email")}
+                  {...field}
+                />
                 <FormMessageI18n />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem className="w-full">
                 <Input
+                  disabled={authLoading}
                   type="password"
                   placeholder={t("auth.newPassword")}
                   {...field}
@@ -87,6 +94,7 @@ export const ResetPasswordForm = ({
             render={({ field }) => (
               <FormItem className="w-full">
                 <Input
+                  disabled={authLoading}
                   type="password"
                   placeholder={t("auth.confirmPassword")}
                   {...field}

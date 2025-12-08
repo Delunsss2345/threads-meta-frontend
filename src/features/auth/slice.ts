@@ -193,8 +193,8 @@ export const authSlice = createSlice({
 
     builder.addCase(register.fulfilled, (state, action) => {
       state.authLoading = false;
-      state.currentUser = action.payload.data.user;
-      state.accessToken = action.payload.data.access_token;
+      // state.currentUser = action.payload.data.user;
+      // state.accessToken = action.payload.data.access_token;
     });
 
     builder.addCase(register.rejected, (state) => {

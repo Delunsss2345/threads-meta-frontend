@@ -34,7 +34,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onLogin)}
-        className="flex flex-col items-center space-y-3"
+        className="flex flex-col items-center space-y-3 bg-background"
         noValidate
       >
         <FormField
@@ -42,7 +42,11 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           name="login"
           render={({ field }) => (
             <FormItem className="w-90">
-              <Input placeholder={t("auth.usernamePlaceholder")} {...field} />
+              <Input
+                disabled={authLoading}
+                placeholder={t("auth.usernamePlaceholder")}
+                {...field}
+              />
               <FormMessageI18n />
             </FormItem>
           )}
@@ -54,6 +58,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           render={({ field }) => (
             <FormItem className="w-90">
               <Input
+                disabled={authLoading}
                 type="password"
                 placeholder={t("auth.passwordPlaceholder")}
                 {...field}

@@ -1,8 +1,6 @@
 import AddColumnIcon from "@/components/common/Icon/AddColIcon";
-import { selectIsAuthenticated } from "@/features/auth";
 import LoginCard from "@/features/auth/components/LoginPanel";
 import MenuAddContent from "@/pages/Home/MenuAddContent";
-import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Column from "../Column";
 import HeaderMobile from "../HeaderMobile";
@@ -12,7 +10,6 @@ interface ContentProps {
 
 const Content: React.FC<ContentProps> = ({ children }) => {
   const location = useLocation();
-  const isAuth = useSelector(selectIsAuthenticated);
 
   // const columns = useSelector(selectColumns);
   // const dispatch = useDispatch();
@@ -46,19 +43,16 @@ const Content: React.FC<ContentProps> = ({ children }) => {
       <HeaderMobile />
       <div className="md:pl-[100px] dynamic-columns  mt-[24px] md:mt-0 h-full flex items-start gap-5">
         <Column pathName={location.pathname}>{children}</Column>
-        {!isAuth ? (
-          <LoginCard />
-        ) : (
-          <div className="hidden relative md:block h-screen">
-            <div className="absolute top-1/2">
-              <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
-                <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
-                  <AddColumnIcon size={20} />
-                </MenuAddContent>
-              </div>
+        <LoginCard />
+        <div className="hidden relative md:block h-screen">
+          <div className="absolute top-1/2">
+            <div className="size-10 flex items-center justify-center p-2 rounded-full bg-[#ccc]/10 shadow-2xl">
+              <MenuAddContent className="text-[#ccc] !hover:text-black transition-colors cursor-pointer">
+                <AddColumnIcon size={20} />
+              </MenuAddContent>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </main>
   );

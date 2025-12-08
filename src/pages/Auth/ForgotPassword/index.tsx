@@ -3,9 +3,9 @@ import { authApi } from "@/features/auth/api";
 import { ForgotPasswordForm } from "@/features/auth/components/ForgotPasswordForm";
 import type { ForgotPasswordSchemaBodyType } from "@/schema/auth.schema";
 import type { AppDispatch } from "@/types/redux";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { useTranslation } from "react-i18next";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +24,7 @@ const ForgotPassword = () => {
       } else {
         toast.error(t("auth.emailNotFound"));
       }
-    } catch (error) {
+    } catch {
       toast.error(t("auth.unknownError"));
     }
   };

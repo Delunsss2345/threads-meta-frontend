@@ -43,6 +43,7 @@ const Home = () => {
       (post: PostItem) => post.user.username !== user?.username
     );
   }, [feeds, user?.username]);
+
   if (!loaded) {
     return <LoadingFetch />;
   }

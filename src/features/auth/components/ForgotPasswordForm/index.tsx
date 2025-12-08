@@ -57,6 +57,7 @@ export const ForgotPasswordForm = ({
             render={({ field }) => (
               <FormItem className="w-full">
                 <Input
+                  disabled={authLoading}
                   type="email"
                   placeholder={t("auth.emailPlaceholder")}
                   {...field}

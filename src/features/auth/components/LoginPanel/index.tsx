@@ -4,11 +4,13 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Instagram } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
 export default function LoginCard() {
   const isMobile = useIsMobile();
+  const { isAuthenticated } = useAuth();
   const { t } = useTranslation();
-  if (isMobile) return null;
+  if (isMobile || isAuthenticated) return null;
   return (
     <div className="hidden sticky top-[60px] lg:flex justify-center items-center">
       <Card className="w-[320px] text-center border border-gray-200 shadow-sm overflow-hidden rounded-2xl">
