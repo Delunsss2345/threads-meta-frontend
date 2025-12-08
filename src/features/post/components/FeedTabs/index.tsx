@@ -1,3 +1,4 @@
+import { useAuth } from "@/features/auth/hooks";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -10,9 +11,9 @@ const FeedTabs: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const activeTab = location.pathname; 
-
+  const { isAuthenticated } = useAuth();
+  const activeTab = location.pathname;
+  if (!isAuthenticated) return null;
   return (
     <div className="sticky z-30 top-12 bg-primary-foreground">
       <div className="relative flex justify-around text-sm font-medium text-muted-foreground">

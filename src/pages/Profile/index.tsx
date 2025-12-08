@@ -27,7 +27,7 @@ const Profile = () => {
   const { show, hide } = useModal();
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+
   useEffect(() => {
     if (activeTab === "reposts") {
       dispatch(getRepost(user.id));
