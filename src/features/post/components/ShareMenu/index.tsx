@@ -1,4 +1,4 @@
-import MenuPopup from "@/components/common/MenuPopup";
+import MenuPopup, { type MenuItem } from "@/components/common/MenuPopup";
 import { useModal } from "@/hooks/use-modal";
 import { cn } from "@/lib/utils";
 import { Code, Image, Link2 } from "lucide-react";
@@ -25,7 +25,7 @@ const ShareMenu = ({
   const { t } = useTranslation();
   const { show, hide } = useModal();
 
-  const shareMenu = [
+  const shareMenu: MenuItem[] = [
     {
       icon: <Link2 />,
       label: t("menu.copyLink"),

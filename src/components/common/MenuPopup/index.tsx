@@ -9,9 +9,17 @@ import { useAuth } from "@/features/auth/hooks";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import SheetPopup from "../SheetPopup";
 
+export type MenuItem = {
+  label: string;
+  icon?: ReactNode;
+  isAuth?: boolean;      
+  isHeader?: boolean;    
+  className?: string;    
+  onClick?: () => void; 
+};
 interface MenuPopupProps {
   buttonActive: React.ReactNode;
   children?: React.ReactNode;
@@ -25,7 +33,7 @@ interface MenuPopupProps {
   };
   mode?: "short" | "long" | "medium";
   isMobilePopup?: boolean;
-  items?: any[];
+  items?: MenuItem[];
 }
 
 const MenuPopup = ({
@@ -45,7 +53,7 @@ const MenuPopup = ({
   };
   const [openSheet, setOpenSheet] = useState(false);
   const isMobile = useIsMobile();
-  if (isMobile && items?.length >= 1) {
+  if (isMobile && items && items?.length >= 1) {
     return (
       <>
         <button

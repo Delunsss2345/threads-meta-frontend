@@ -308,6 +308,12 @@
     "description": "The link is broken or the page no longer exists. Go back to continue exploring.",
     "back": "Go back"
   },
+  "repost": {
+    "reposting": "Reposting...",
+    "unreposting": "Undoing repost...",
+    "repostSuccess": "Reposted successfully",
+    "unrepostSuccess": "Undo repost successfully"
+  },
   "profileSettings": {
     "name": "Name",
     "bio": "Bio",

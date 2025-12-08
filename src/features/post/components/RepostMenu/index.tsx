@@ -1,4 +1,4 @@
-import MenuPopup from "@/components/common/MenuPopup";
+import MenuPopup, { type MenuItem } from "@/components/common/MenuPopup";
 import { repostPost } from "@/features/post";
 import { useModal } from "@/hooks/use-modal";
 import { cn } from "@/lib/utils";
@@ -33,14 +33,14 @@ const RepostMenu = ({
     if (!post) return;
 
     try {
-      await toast.promise(dispatch(repostPost(post.id)), {
+      await toast.promise(dispatch(repostPost(post.id)).unwrap(), {
         loading: post.is_reposted_by_auth
-          ? "Đang hủy đăng lại..."
-          : "Đang đăng lại...",
+          ? t("repost.unreposting")
+          : t("repost.reposting"),
         success: post.is_reposted_by_auth
-          ? "Đã hủy đăng lại"
-          : "Đăng lại thành công",
-        error: "Thao tác thất bại",
+          ? t("repost.unrepostSuccess")
+          : t("repost.repostSuccess"),
+        error: t("common.error"),
       });
     } catch (error) {
       console.log(error);
@@ -52,10 +52,10 @@ const RepostMenu = ({
   );
 
   const repostLabel = post?.is_reposted_by_auth
-    ? t("menu.unrepost") || "Hủy đăng lại"
+    ? t("menu.unrepost")
     : t("menu.repost");
 
-  const repostMenu = [
+  const repostMenu: MenuItem[] = [
     {
       icon: repostIcon,
       label: repostLabel,

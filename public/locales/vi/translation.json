@@ -356,6 +356,12 @@
     "signUpToShare": "Đăng ký để chia sẻ",
     "signUpToShareDesc": "Chia sẻ có sẵn khi bạn tạo tài khoản."
   },
+  "repost": {
+    "reposting": "Đang đăng lại...",
+    "unreposting": "Đang hủy đăng lại...",
+    "repostSuccess": "Đăng lại thành công",
+    "unrepostSuccess": "Đã hủy đăng lại"
+  },
   "restPasswordFound": {
     "title": "Liên kết không hợp lệ",
     "description": "Liên kết đặt lại mật khẩu đã hết hạn hoặc không hợp lệ. Vui lòng yêu cầu một liên kết mới.",

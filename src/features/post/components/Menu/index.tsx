@@ -1,4 +1,4 @@
-import MenuPopup from "@/components/common/MenuPopup";
+import MenuPopup, { type MenuItem } from "@/components/common/MenuPopup";
 import ModalSmall from "@/components/common/ModalSmall";
 import { hidePost, savePost } from "@/features/post";
 import { useModal } from "@/hooks/use-modal";
@@ -50,7 +50,7 @@ const Menu = ({
     toast.success(t("menu.copyLinkSuccess"));
   };
 
-  const items = [
+  const items : MenuItem[] = [
     {
       icon: <Bookmark />,
       label: t("menu.save"),

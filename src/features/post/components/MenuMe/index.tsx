@@ -1,4 +1,4 @@
-import MenuPopup from "@/components/common/MenuPopup";
+import MenuPopup, { type MenuItem } from "@/components/common/MenuPopup";
 import ModalSmall from "@/components/common/ModalSmall";
 import { postApi } from "@/features/post/api";
 import { useModal } from "@/hooks/use-modal";
@@ -44,7 +44,7 @@ const MenuMe = ({
     toast.success(t("menu.copyLinkSuccess"));
   };
 
-  const items = [
+  const items: MenuItem[] = [
     {
       label: t("menu.postDetails"),
       icon: <Info />,
