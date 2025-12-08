@@ -41,7 +41,7 @@ export default function ModalSmall({
     <ModalPopup isMobileSheet={false} mode="custom" onClose={onCancel}>
       <div
         className={cn(
-          "bg-white rounded-xl w-[340px] max-w-full",
+          "bg-primary-foreground border-primary rounded-xl w-[340px] max-w-full",
           "flex flex-col shadow-[0_0_20px_rgba(0,0,0,0.15)]"
         )}
       >
@@ -60,7 +60,7 @@ export default function ModalSmall({
         <div className="px-2 border-t border-gray-200 flex gap-0 relative">
           <Button
             variant="ghost"
-            className="flex-1 py-1 px-0 hover:bg-transparent border-r border-gray-200 rounded-none"
+            className="flex-1 py-1 px-0  cursor-pointer border-r border-gray-200 rounded-none"
             onClick={onCancel}
           >
             {t("modal.cancel")}
@@ -69,7 +69,7 @@ export default function ModalSmall({
           <Button
             variant="ghost"
             className={cn(
-              "flex-1 py-1 px-0 hover:bg-transparent rounded-none text-red-600 font-semibold"
+              "flex-1 py-1 px-0 cursor-pointer  rounded-none text-red-600 font-semibold"
             )}
             onClick={handleConfirm}
           >

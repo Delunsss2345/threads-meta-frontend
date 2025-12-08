@@ -342,7 +342,14 @@ export const postsSlice = createSlice({
       }
     );
     builder.addCase(replyThreads.fulfilled, (state, action) => {
-      state.replies.unshift(action.payload.data);
+      const newReply = action.payload.data as ReplyData;
+
+      if (
+        state.replies.length === 0 ||
+        state.replies[0].parent_id === newReply.parent_id
+      ) {
+        state.replies.unshift(newReply);
+      }
     });
 
     // respost post

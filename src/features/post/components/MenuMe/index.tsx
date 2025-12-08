@@ -1,5 +1,6 @@
 import MenuPopup, { type MenuItem } from "@/components/common/MenuPopup";
 import ModalSmall from "@/components/common/ModalSmall";
+import { useAuth } from "@/features/auth/hooks";
 import { postApi } from "@/features/post/api";
 import { useModal } from "@/hooks/use-modal";
 import {
@@ -24,7 +25,7 @@ const MenuMe = ({
 }) => {
   const { t } = useTranslation();
   const { show, hide } = useModal();
-
+  const {user} = useAuth() ; 
   const handleDelete = async (id: number) => {
     try {
       const result = await postApi.deleteThread(id);
@@ -39,7 +40,7 @@ const MenuMe = ({
   };
 
   const handleCopyLink = async () => {
-    const url = `${window.location.origin}/thread/${threadId}`;
+    const url = `${window.location.origin}/${user.username}/post/${threadId}`;
     await navigator.clipboard.writeText(url);
     toast.success(t("menu.copyLinkSuccess"));
   };
