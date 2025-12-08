@@ -1,6 +1,8 @@
 const TymIcon = ({
   size = 18,
   color = "currentColor",
+  active = false,
+  activeColor = "none",
   strokeWidth = 1.25,
   ...props
 }) => {
@@ -10,7 +12,7 @@ const TymIcon = ({
       width={size}
       height={size}
       viewBox="0 0 18 18"
-      fill="none"
+      fill={active ? activeColor : "none"}
       stroke={color}
       strokeWidth={strokeWidth}
       strokeLinecap="round"

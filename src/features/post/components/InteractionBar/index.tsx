@@ -109,7 +109,7 @@ const InteractionBar = ({
             isComment ? "!px-1 scale-90" : ""
           } ${ctx?.post.is_liked_by_auth ? "text-red-500" : ""}`}
         >
-          <TymIcon size={iconSize} className={iconClass} />
+          <TymIcon activeColor="red" active={ctx?.post.is_liked_by_auth} size={iconSize} className={iconClass} />
           <span
             className={`${textSize} interaction-bar`}
             data-label="like"
