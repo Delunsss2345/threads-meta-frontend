@@ -26,8 +26,7 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
 
   const form = useForm<RegisterSchemaBodyType>({
     resolver: zodResolver(RegisterSchemaBody),
-    mode: "onChange",
-    reValidateMode: "onChange",
+    mode: "onSubmit",
     defaultValues: {
       username: "",
       email: "",
